@@ -18,3 +18,21 @@ SELECT
 cod_adm, cod_campanha, papel
 FROM adm_campanha
 """ 
+
+UPDATE = """
+UPDATE adm_campanha
+SET papel = ?
+WHERE cod_adm = ? AND cod_campanha = ?
+"""
+
+DELETE = """
+DELETE FROM adm_campanha
+WHERE cod_adm = ? AND cod_campanha = ?
+"""
+
+OBTER_POR_ID = """
+SELECT adm.cod_adm, adm.cod_campanha, adm.papel
+cod_adm, cod_campanha, papel
+FROM adm_campanha adm
+WHERE cod_adm = ? AND cod_campanha = ?
+"""
