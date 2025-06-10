@@ -19,3 +19,20 @@ SELECT
 cod_campanha, titulo, descricao, data_inicio, data_fim, status
 FROM campanha
 """ 
+
+UPDATE = """
+UPDATE cod_campanha, titulo, descricao, data_inicio, data_fim, status
+SET titulo = ?, descricao = ?, data_inicio = ?, data_fim = ?, status = ?
+WHERE cod_campanha = ?;
+"""
+
+DELETE = """
+DELETE FROM campanha
+WHERE cod_campanha = ?;
+"""
+
+OBTER_POR_ID = """
+SELECT c.cod_campanha, c.titulo, c.descricao, c.data_inicio, c.data_fim, c.status
+FROM campanha c
+WHERE c.cod_campanha = ?;
+"""

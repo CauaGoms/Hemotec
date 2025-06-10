@@ -21,18 +21,21 @@ FROM adm_campanha
 
 UPDATE = """
 UPDATE adm_campanha
-SET papel = ?
-WHERE cod_adm = ? AND cod_campanha = ?
+SET cod_campanha = ?, papel = ?
+WHERE cod_adm = ?;
 """
 
 DELETE = """
 DELETE FROM adm_campanha
-WHERE cod_adm = ? AND cod_campanha = ?
+WHERE cod_adm = ?;
 """
 
 OBTER_POR_ID = """
-SELECT adm.cod_adm, adm.cod_campanha, adm.papel
-cod_adm, cod_campanha, papel
+SELECT adm.cod_adm, campanha.cod_campanha, adm.papel
 FROM adm_campanha adm
-WHERE cod_adm = ? AND cod_campanha = ?
+campanha c
+adm_unidade au
+WHERE adm.cod_adm = c.cod_campanha 
+AND adm.cod_adm = au.cod_adm
+AND adm.cod_adm = ?;
 """

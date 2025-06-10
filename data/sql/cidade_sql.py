@@ -16,3 +16,20 @@ SELECT
 cod_estado, nome_cidade, sigla_estado
 FROM cidade
 """ 
+
+UPDATE = """
+UPDATE cod_estado, nome_cidade, sigla_estado
+SET nome_cidade = ?, sigla_estado = ?
+WHERE cod_cidade = ?;
+"""
+
+DELETE = """
+DELETE FROM cidade
+WHERE cod_cidade = ?;
+"""
+
+OBTER_POR_ID = """
+SELECT c.cod_estado, c.nome_cidade, c.sigla_estado
+FROM cidade c
+WHERE c.cod_cidade = ?;
+"""
