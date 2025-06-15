@@ -39,13 +39,13 @@
                             <a class="nav-link active" href="#">Início</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Sobre</a>
+                            <a class="nav-link" href="sobre.html">Sobre</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Campanhas</a>
+                            <a class="nav-link" href="campanha.html">Campanhas</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Contato</a>
+                            <a class="nav-link" href="contato.html">Contato</a>
                         </li>
                     </ul>
                 </div>
@@ -167,7 +167,7 @@
     <!-- Informações Importantes Section -->
     <section class="container my-5">
         <div class="row">
-            <div class="col-lg-8 mb-4">
+            <div class="col-lg-12 mb-4"> <!-- Informações Importantes now takes full width -->
                 <div class="card border-0 shadow-sm">
                     <div class="card-body p-4">
                         <h3 class="card-title text-danger mb-3">
@@ -214,48 +214,111 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-4 mb-4">
-                <div class="card border-0 shadow-sm h-100">
+        </div> <!-- End of row for Informações Importantes -->
+
+        <!-- Estoque Atual Section (now below and expanded) -->
+        <div class="row">
+            <div class="col-lg-12 mb-4">
+                <div class="card border-0 shadow-sm">
                     <div class="card-body p-4 d-flex flex-column">
                         <h4 class="card-title text-danger mb-3">
                             <i class="fas fa-exclamation-triangle me-2"></i>Estoque Atual
                         </h4>
-                        <div class="mb-3">
-                            <div class="d-flex justify-content-between align-items-center mb-2">
-                                <span class="fw-bold">O+</span>
-                                <span class="badge bg-danger">Crítico</span>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <!-- O+ -->
+                                <div class="mb-3">
+                                    <div class="d-flex justify-content-between align-items-center mb-2">
+                                        <span class="fw-bold">O+</span>
+                                        <span class="badge bg-danger">Crítico</span>
+                                    </div>
+                                    <div class="progress mb-2" style="height: 8px;">
+                                        <div class="progress-bar bg-danger" role="progressbar" style="width: 20%;" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
+                                    </div>
+                                </div>
+                                <!-- A+ -->
+                                <div class="mb-3">
+                                    <div class="d-flex justify-content-between align-items-center mb-2">
+                                        <span class="fw-bold">A+</span>
+                                        <span class="badge bg-warning">Baixo</span>
+                                    </div>
+                                    <div class="progress mb-2" style="height: 8px;">
+                                        <div class="progress-bar bg-warning" role="progressbar" style="width: 35%;" aria-valuenow="35" aria-valuemin="0" aria-valuemax="100"></div>
+                                    </div>
+                                </div>
+                                <!-- B+ -->
+                                <div class="mb-3">
+                                    <div class="d-flex justify-content-between align-items-center mb-2">
+                                        <span class="fw-bold">B+</span>
+                                        <span class="badge bg-success">Adequado</span>
+                                    </div>
+                                    <div class="progress mb-2" style="height: 8px;">
+                                        <div class="progress-bar bg-success" role="progressbar" style="width: 70%;" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>
+                                    </div>
+                                </div>
+                                <!-- AB+ -->
+                                <div class="mb-3">
+                                    <div class="d-flex justify-content-between align-items-center mb-2">
+                                        <span class="fw-bold">AB+</span>
+                                        <span class="badge bg-warning">Baixo</span>
+                                    </div>
+                                    <div class="progress mb-2" style="height: 8px;">
+                                        <div class="progress-bar bg-warning" role="progressbar" style="width: 30%;" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="progress mb-2" style="height: 8px;">
-                                <div class="progress-bar bg-danger" role="progressbar" style="width: 20%;" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
-                            </div>
-                        </div>
-                        <div class="mb-3">
-                            <div class="d-flex justify-content-between align-items-center mb-2">
-                                <span class="fw-bold">A+</span>
-                                <span class="badge bg-warning">Baixo</span>
-                            </div>
-                            <div class="progress mb-2" style="height: 8px;">
-                                <div class="progress-bar bg-warning" role="progressbar" style="width: 35%;" aria-valuenow="35" aria-valuemin="0" aria-valuemax="100"></div>
-                            </div>
-                        </div>
-                        <div class="mb-3">
-                            <div class="d-flex justify-content-between align-items-center mb-2">
-                                <span class="fw-bold">B+</span>
-                                <span class="badge bg-success">Adequado</span>
-                            </div>
-                            <div class="progress mb-2" style="height: 8px;">
-                                <div class="progress-bar bg-success" role="progressbar" style="width: 70%;" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>
+                            <div class="col-md-6">
+                                <!-- O- -->
+                                <div class="mb-3">
+                                    <div class="d-flex justify-content-between align-items-center mb-2">
+                                        <span class="fw-bold">O-</span>
+                                        <span class="badge bg-warning">Moderado</span>
+                                    </div>
+                                    <div class="progress mb-2" style="height: 8px;">
+                                        <div class="progress-bar bg-warning" role="progressbar" style="width: 45%;" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100"></div>
+                                    </div>
+                                </div>
+                                <!-- A- -->
+                                <div class="mb-3">
+                                    <div class="d-flex justify-content-between align-items-center mb-2">
+                                        <span class="fw-bold">A-</span>
+                                        <span class="badge bg-success">Adequado</span>
+                                    </div>
+                                    <div class="progress mb-2" style="height: 8px;">
+                                        <div class="progress-bar bg-success" role="progressbar" style="width: 65%;" aria-valuenow="65" aria-valuemin="0" aria-valuemax="100"></div>
+                                    </div>
+                                </div>
+                                <!-- B- -->
+                                <div class="mb-3">
+                                    <div class="d-flex justify-content-between align-items-center mb-2">
+                                        <span class="fw-bold">B-</span>
+                                        <span class="badge bg-danger">Crítico</span>
+                                    </div>
+                                    <div class="progress mb-2" style="height: 8px;">
+                                        <div class="progress-bar bg-danger" role="progressbar" style="width: 25%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                    </div>
+                                </div>
+                                <!-- AB- -->
+                                <div class="mb-3">
+                                    <div class="d-flex justify-content-between align-items-center mb-2">
+                                        <span class="fw-bold">AB-</span>
+                                        <span class="badge bg-success">Adequado</span>
+                                    </div>
+                                    <div class="progress mb-2" style="height: 8px;">
+                                        <div class="progress-bar bg-success" role="progressbar" style="width: 80%;" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <div class="mt-auto">
                             <div class="alert alert-danger mb-0" role="alert">
-                                <small><i class="fas fa-heart me-1"></i> Sua doação pode salvar vidas! Tipos O+ e A+ são urgentes.</small>
+                                <small><i class="fas fa-heart me-1"></i> Sua doação pode salvar vidas! Tipos O+, A+ e B- são urgentes.</small>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
+        </div> <!-- End of row for Estoque Atual -->
     </section>
 
     <!-- Footer -->
