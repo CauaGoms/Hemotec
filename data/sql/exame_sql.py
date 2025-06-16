@@ -20,3 +20,22 @@ SELECT
 cod_exame, cod_doacao, data_exame, tipo_exame, resultado, arquivo
 FROM exame
 """ 
+
+UPDATE = """
+UPDATE cod_exame, cod_doacao, data_exame, tipo_exame, resultado, arquivo
+SET cod_doacao = ?, data_exame = ?, tipo_exame = ?, resultado = ?, arquivo = ?
+WHERE cod_exame = ?;
+"""
+
+DELETE = """
+DELETE FROM exame
+WHERE cod_exame = ?;
+"""
+
+OBTER_POR_ID = """
+SELECT e.cod_exame, d.cod_doacao, e.data_exame, e.tipo_exame, e.resultado, e.arquivo
+FROM exame e,
+doacao d
+WHERE e.cod_doacao = d.cod_doacao
+AND e.cod_exame = ?;
+"""

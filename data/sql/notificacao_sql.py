@@ -21,3 +21,22 @@ SELECT
 cod_notificacao, cod_adm, destino, tipo, mensagem, status, data_envio
 FROM notificacao
 """ 
+
+UPDATE = """
+UPDATE cod_notificacao, cod_adm, destino, tipo, mensagem, status, data_envio
+SET cod_adm = ?, destino = ?, tipo = ?, mensagem = ?, status = ?, data_envio = ?
+WHERE cod_notificacao = ?;
+"""
+
+DELETE = """
+DELETE FROM notificacao
+WHERE cod_notificacao = ?;
+"""
+
+OBTER_POR_ID = """
+SELECT n.cod_notificacao, a.cod_adm, n.destino, n.tipo, n.mensagem, n.status, n.data_envio
+FROM notificacao n,
+adm_unidade a
+WHERE n.cod_adm = a.cod_adm
+AND n.cod_notificacao = ?;
+"""

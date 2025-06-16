@@ -27,3 +27,22 @@ cod_usuario, nome, email, senha, cpf, data_nascimento, status, data_cadastro, ru
 FROM usuario
 ORDER BY nome
 """ 
+
+UPDATE = """
+UPDATE cod_usuario, nome, email, senha, cpf, data_nascimento, status, data_cadastro, rua_usuario, bairro_usuario, cidade_usuario, cep_usuario
+SET nome = ?, email = ?, senha = ?, cpf = ?, data_nascimento = ?, status = ?, data_cadastro = ?, rua_usuario = ?, bairro_usuario = ?, cidade_usuario = ?, cep_usuario = ?
+WHERE cod_usuario = ?;
+"""
+
+DELETE = """
+DELETE FROM usuario
+WHERE cod_usuario = ?;
+"""
+
+OBTER_POR_ID = """
+SELECT u.cod_usuario, u.nome, u.email, u.senha, u.cpf, u.data_nascimento, u.status, u.data_cadastro, u.rua_usuario, u.bairro_usuario, c.cod_cidade, u.cep_usuario
+FROM usuario u,
+cidade c
+WHERE u.cidade_usuario = c.cod_cidade
+AND u.cod_usuario = ?;
+"""

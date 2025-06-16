@@ -21,3 +21,24 @@ SELECT
 cod_doacao, cod_doador, cod_exame, data_hora, quantidade, status
 FROM doacao
 """ 
+
+UPDATE = """
+UPDATE cod_doacao, cod_doador, cod_exame, data_hora, quantidade, status
+SET cod_doador = ?, cod_exame = ?, data_hora = ?, quantidade = ?, status = ?
+WHERE cod_doacao = ?;
+"""
+
+DELETE = """
+DELETE FROM doacao
+WHERE cod_doacao = ?;
+"""
+
+OBTER_POR_ID = """
+SELECT d.cod_doacao, o.cod_doador, e.cod_exame, d.data_hora, d.quantidade, d.status
+FROM doacao d,
+doador o,
+exame e
+WHERE d.cod_doador = o.cod_doador
+AND d.cod_exame = e.cod_exame
+AND d.cod_doacao = ?;
+"""

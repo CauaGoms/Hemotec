@@ -22,3 +22,26 @@ SELECT
 cod_doador, cod_doacao, cod_agendamento, tipo_sanguineo, fator_rh, elegivel
 FROM doador
 """ 
+
+UPDATE = """
+UPDATE cod_doador, cod_doacao, cod_agendamento, tipo_sanguineo, fator_rh, elegivel
+SET cod_doacao = ?, cod_agendamento = ?, tipo_sanguineo = ?, fator_rh = ?, elegivel = ?
+WHERE cod_doador = ?;
+"""
+
+DELETE = """
+DELETE FROM doador
+WHERE cod_doador = ?;
+"""
+
+OBTER_POR_ID = """
+SELECT o.cod_doador, e.cod_doacao, a.cod_agendamento, d.data_hora, d.quantidade, d.status
+FROM doador d,
+usuario o,
+doacao e,
+agendamento a
+WHERE d.cod_doador = o.cod_usuario
+AND d.cod_doacao = e.cod_doacao
+AND d.cod_agendamento = a.cod_agendamento
+AND d.cod_doador = ?;
+"""

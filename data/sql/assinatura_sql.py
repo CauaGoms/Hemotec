@@ -38,7 +38,7 @@ WHERE cod_assinatura = ?;
 
 OBTER_POR_ID = """
 SELECT a.cod_assinatura, i.cnpj, p.cod_plano, l.cod_licenca, a.data_inicio, a.data_fim, a.valor, a.qtd_licenca
-FROM assinatura a
+FROM assinatura a,
 instituicao i,
 plano p,
 licenca l

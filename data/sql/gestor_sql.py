@@ -18,3 +18,24 @@ SELECT
 cod_gestor, cnpj, instituicao
 FROM gestor
 """ 
+
+UPDATE = """
+UPDATE cod_gestor, cnpj, instituicao
+SET cnpj = ?, instituicao = ?
+WHERE cod_gestor = ?;
+"""
+
+DELETE = """
+DELETE FROM gestor
+WHERE cod_gestor = ?;
+"""
+
+OBTER_POR_ID = """
+SELECT u.cod_gestor, i.cnpj, g.instituicao
+FROM gestor g,
+usuario u,
+instituicao i
+WHERE g.cod_gestor = u.cod_usuario
+AND g.cnpj = i.cnpj
+AND g.cod_gestor = ?;
+"""

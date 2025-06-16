@@ -3,6 +3,6 @@ from dataclasses import dataclass
 
 @dataclass
 class Cidade:
-    cod_estado: int
+    cod_cidade: int
     nome_cidade: str
     sigla_estado: str

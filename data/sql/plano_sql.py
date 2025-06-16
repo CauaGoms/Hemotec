@@ -20,3 +20,22 @@ SELECT
 cod_plano, cod_assinatura, qtd_licenca, nome, valor, validade
 FROM plano
 """ 
+
+UPDATE = """
+UPDATE cod_plano, cod_assinatura, qtd_licenca, nome, valor, validade
+SET cod_assinatura = ?, qtd_licenca = ?, nome = ?, valor = ?, validade = ?
+WHERE cod_plano = ?;
+"""
+
+DELETE = """
+DELETE FROM plano
+WHERE cod_plano = ?;
+"""
+
+OBTER_POR_ID = """
+SELECT p.cod_plano, a.cod_assinatura, p.qtd_licenca, p.nome, p.valor, p.validade
+FROM plano p, 
+assinatura a
+WHERE p.cod_assinatura = a.cod_assinatura
+AND p.cod_plano = ?;
+"""

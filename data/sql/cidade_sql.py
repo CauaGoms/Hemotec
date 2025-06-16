@@ -1,6 +1,6 @@
 CRIAR_TABELA = """
 CREATE TABLE IF NOT EXISTS cidade (
-cod_estado INTEGER PRIMARY KEY AUTOINCREMENT,
+cod_cidade INTEGER PRIMARY KEY AUTOINCREMENT,
 nome_cidade TEXT NOT NULL,
 sigla_estado TEXT NOT NULL
 )
@@ -13,12 +13,12 @@ VALUES (?, ?)
 
 OBTER_TODOS = """
 SELECT 
-cod_estado, nome_cidade, sigla_estado
+cod_cidade, nome_cidade, sigla_estado
 FROM cidade
 """ 
 
 UPDATE = """
-UPDATE cod_estado, nome_cidade, sigla_estado
+UPDATE cod_cidade, nome_cidade, sigla_estado
 SET nome_cidade = ?, sigla_estado = ?
 WHERE cod_cidade = ?;
 """
@@ -29,7 +29,7 @@ WHERE cod_cidade = ?;
 """
 
 OBTER_POR_ID = """
-SELECT c.cod_estado, c.nome_cidade, c.sigla_estado
+SELECT c.cod_cidade, c.nome_cidade, c.sigla_estado
 FROM cidade c
 WHERE c.cod_cidade = ?;
 """

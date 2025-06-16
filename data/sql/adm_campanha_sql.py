@@ -31,9 +31,9 @@ WHERE cod_adm = ?;
 """
 
 OBTER_POR_ID = """
-SELECT adm.cod_adm, campanha.cod_campanha, adm.papel
-FROM adm_campanha adm
-campanha c
+SELECT adm.cod_adm, c.cod_campanha, adm.papel
+FROM adm_campanha adm,
+campanha c,
 adm_unidade au
 WHERE adm.cod_adm = c.cod_campanha 
 AND adm.cod_adm = au.cod_adm

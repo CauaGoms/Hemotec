@@ -20,3 +20,22 @@ SELECT
 cod_estoque, cod_unidade, tipo_sanguineo, fator_rh, quantidade, data_atualizacao
 FROM estoque
 """ 
+
+UPDATE = """
+UPDATE cod_estoque, cod_unidade, tipo_sanguineo, fator_rh, quantidade, data_atualizacao
+SET cod_unidade = ?, tipo_sanguineo = ?, fator_rh = ?, quantidade = ?, data_atualizacao = ?
+WHERE cod_estoque = ?;
+"""
+
+DELETE = """
+DELETE FROM estoque
+WHERE cod_estoque = ?;
+"""
+
+OBTER_POR_ID = """
+SELECT e.cod_estoque, u.cod_unidade, e.tipo_sanguineo, e.fator_rh, e.quantidade, e.data_atualizacao
+FROM estoque e,
+unidade u
+WHERE e.cod_unidade = u.cod_unidade
+AND e.cod_estoque = ?;
+"""
