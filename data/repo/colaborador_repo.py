@@ -53,16 +53,15 @@ def update(self, colaborador: Colaborador) -> bool:
         cursor.execute(
             UPDATE,
             (
-                agendamento.cod_agendamento,
-                agendamento.cod_colaborador,
-                agendamento.cod_doador,
-                agendamento.data_hora,
+                colaborador.cod_colaborador,
+                colaborador.cod_agendamento,
+                colaborador.funcao
             ),
         )
         return cursor.rowcount > 0
 
-def delete(self, cod_agendamento: int) -> bool:
+def delete(self, cod_colaborador: int) -> bool:
     with self._connect() as conn:
         cursor = conn.cursor()
-        cursor.execute(DELETE, (cod_agendamento,))
+        cursor.execute(DELETE, (cod_colaborador,))
         return cursor.rowcount > 0
