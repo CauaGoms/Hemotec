@@ -193,6 +193,9 @@ body {
     background: white;
     margin-bottom: 2rem;
     position: relative;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
 }
 
 .campaign-card:hover {
