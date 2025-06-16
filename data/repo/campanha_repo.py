@@ -65,7 +65,7 @@ def update(self, campanha: Campanha) -> bool:
                 campanha.descricao,
                 campanha.data_inicio,
                 campanha.data_fim,
-                campanha.status,
+                campanha.status
             ),
         )
         return cursor.rowcount > 0
