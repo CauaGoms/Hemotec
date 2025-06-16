@@ -35,7 +35,7 @@ WHERE cod_doador = ?;
 """
 
 OBTER_POR_ID = """
-SELECT o.cod_doador, e.cod_doacao, a.cod_agendamento, d.data_hora, d.quantidade, d.status
+SELECT o.cod_doador, e.cod_doacao, a.cod_agendamento, d.tipo_sanguineo, d.fator_rh, d.elegivel
 FROM doador d,
 usuario o,
 doacao e,
