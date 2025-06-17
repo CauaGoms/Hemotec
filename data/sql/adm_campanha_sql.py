@@ -1,9 +1,10 @@
 CRIAR_TABELA = """
 CREATE TABLE IF NOT EXISTS adm_campanha (
-cod_adm INTEGER PRIMARY KEY NOT NULL,
-cod_campanha INTEGER PRIMARY KEY NOT NULL,
+cod_adm INTEGER NOT NULL,
+cod_campanha INTEGER NOT NULL,
 papel TEXT NOT NULL,
-FOREIGN KEY (cod_adm) REFERENCES adm(cod_adm),
+PRIMARY KEY (cod_adm, cod_campanha),
+FOREIGN KEY (cod_adm) REFERENCES adm_unidade(cod_adm),
 FOREIGN KEY (cod_campanha) REFERENCES campanha(cod_campanha)
 )
 """
