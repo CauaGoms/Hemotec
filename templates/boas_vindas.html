@@ -1,4 +1,23 @@
 {% extends "navbar_footer.html" %}
+{% block custom_css %}
+<link href="/static/css/boas_vindas.css" rel="stylesheet">
+{% endblock %}
+
+{% block hero_section %}
+<!-- Hero Section -->
+<section class="hero-section">
+    <div class="container">
+        <div class="hero-content">
+            <h1 class="hero-title">Bem-vindo ao Sistema Hemotec</h1>
+            <p class="hero-subtitle">Transformando doações em esperança, conectando vidas através do sangue</p>
+            <a href="login.html">
+                <button class="btn btn-primary btn-login">Fazer Login</button>
+            </a>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
 {% block campanha %}
 <!-- Campanhas Section -->
 <section class="container">

@@ -49,9 +49,13 @@ exame_repo.criar_tabela()
 
 @app.get("/")
 async def get_root():
-    response = templates.TemplateResponse("boas_vindas.html", {"request": {}})
+    response = templates.TemplateResponse("boas_vindas.html", {"request": {}, "active_page": "inicio"})
     return response
 
+@app.get("/sobre")
+async def get_root():
+    response = templates.TemplateResponse("sobre.html", {"request": {}, "active_page": "sobre"})
+    return response
 
 # @app.get("/admin/produtos")
 # async def get_produtos():
