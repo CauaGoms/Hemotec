@@ -23,9 +23,6 @@ from data.repo import doador_repo
 from data.repo import doacao_repo
 from data.repo import exame_repo
 
-
-
-
 app = FastAPI()
 app.mount("/static", StaticFiles(directory="static"), name="static")
 templates = Jinja2Templates(directory="templates")
@@ -50,11 +47,10 @@ doacao_repo.criar_tabela()
 exame_repo.criar_tabela()
 
 
-# @app.get("/")
-# async def get_root():
-#     produtos = produto_repo.obter_todos()
-#     response = templates.TemplateResponse("boas_vindas_teste.html", {"request": {}, "produtos": produtos})
-#     return response
+@app.get("/")
+async def get_root():
+    response = templates.TemplateResponse("boas_vindas.html", {"request": {}})
+    return response
 
 
 # @app.get("/admin/produtos")
