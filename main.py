@@ -67,6 +67,36 @@ async def get_root():
     response = templates.TemplateResponse("boas_vindas_contato.html", {"request": {}, "active_page": "contato"})
     return response
 
+@app.get("/login")
+async def get_root():
+    response = templates.TemplateResponse("login.html", {"request": {}})
+    return response
+
+@app.get("/recuperar_senha")
+async def get_root():
+    response = templates.TemplateResponse("esqueceu_senha.html", {"request": {}})
+    return response
+
+@app.get("/cadastro")
+async def get_root():
+    response = templates.TemplateResponse("cadastro.html", {"request": {}})
+    return response
+
+@app.get("/doador")
+async def get_root():
+    response = templates.TemplateResponse("doador_inicio.html", {"request": {}})
+    return response
+
+@app.get("/doador/campanha")
+async def get_root():
+    response = templates.TemplateResponse("doador_campanha.html", {"request": {}})
+    return response
+
+@app.get("/doador/novo_doador")
+async def get_root():
+    response = templates.TemplateResponse("primeira_doacao.html", {"request": {}})
+    return response
+
 # @app.get("/admin/produtos")
 # async def get_produtos():
 #     produtos = produto_repo.obter_todos()
