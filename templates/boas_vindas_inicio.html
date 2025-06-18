@@ -1,9 +1,10 @@
-{% extends "navbar_footer.html" %}
+{% extends "boas_vindas_#base.html" %}
 {% block custom_css %}
 <link href="/static/css/boas_vindas.css" rel="stylesheet">
 {% endblock %}
 
-{% block hero_section %}
+
+{% block corpo_inicio %}
 <!-- Hero Section -->
 <section class="hero-section">
     <div class="container">
@@ -16,9 +17,7 @@
         </div>
     </div>
 </section>
-{% endblock %}
 
-{% block campanha %}
 <!-- Campanhas Section -->
 <section class="container">
     <div class="text-center mb-5">
@@ -66,6 +65,7 @@
         </div>
     </div>
 </section>
+
 <!-- Quote Section -->
 <section class="quote-section">
     <div class="container text-center">
@@ -73,9 +73,7 @@
         <p class="quote-author">— Campanha Nacional de Doação de Sangue</p>
     </div>
 </section>
-{% endblock %}
 
-{% block nosso_impacto %}
 <!-- Stats Section -->
 <section class="container">
     <div class="text-center mb-5">
@@ -120,9 +118,7 @@
         </div>
     </div>
 </section>
-{% endblock %}
 
-{% block informacoes_estoque %}
 <!-- Informações Importantes Section -->
 <section class="container my-5">
     <div class="row">

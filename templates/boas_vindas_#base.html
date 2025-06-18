@@ -4,15 +4,15 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Hemotec - Sistema de Gestão de Hemocentros</title>
-        <!-- Bootstrap CSS -->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-        <!-- Font Awesome -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-        <!-- Google Fonts -->
         <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
-        <!-- Custom CSS -->
+
+        <!-- CSS de de cada tela fica aqui -->
         {% block custom_css %}
         {% endblock %}
+
+        <!-- Estilo do footer de todas as telas de boas vindas -->
         <style>
             .footer {
                 background-color: #343a40;
@@ -86,7 +86,7 @@
         <!-- Navbar -->
         <nav class="navbar navbar-expand-lg navbar-light fixed-top">
             <div class="container">
-                <a class="navbar-brand d-flex align-items-center" href="boas_vindas_teste.html">
+                <a class="navbar-brand d-flex align-items-center" href="/">
                     <img src="/static/img/logo_vermelha.svg" alt="Hemotec Logo">
                     <span class="ms-2">Hemotec</span>
                 </a>
@@ -101,36 +101,38 @@
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav ms-auto">
                         <li class="nav-item">
-                            <a class="nav-link {% if active_page == 'inicio' %}active{% endif %}" href="boas_vindas_teste.html">Início</a>
+                            <a class="nav-link {% if active_page == 'inicio' %}active{% endif %}" href="/">Início</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link {% if active_page == 'sobre' %}active{% endif %}" href="sobre.html">Sobre</a>
+                            <a class="nav-link {% if active_page == 'sobre' %}active{% endif %}" href="/sobre">Sobre</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link {% if active_page == 'campanha' %}active{% endif %}" href="campanha.html">Campanhas</a>
+                            <a class="nav-link {% if active_page == 'campanha' %}active{% endif %}" href="/campanha">Campanhas</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link {% if active_page == 'contato' %}active{% endif %}" href="contato.html">Contato</a>
+                            <a class="nav-link {% if active_page == 'contato' %}active{% endif %}" href="/contato">Contato</a>
                         </li>
                     </ul>
                 </div>
             </div>
         </nav>
-        <!-- Hero Section -->
-        {% block hero_section %}
+        
+        <!-- Aqui fica o conteúdo da tela inicio -->
+        {% block corpo_inicio %}
         {% endblock %}
-        <!-- Campanhas Section -->
-        {% block campanha %}
-        {% endblock %}
-        <!-- Stats Section -->
-        {% block nosso_impacto %}
-        {% endblock %}
-        <!-- Informações Importantes Section -->
-        {% block informacoes_estoque %}
-        {% endblock %}
-        <!-- Corpo_sobre -->
+        
+        <!-- Aqui fica o conteúdo da tela sobre -->
         {% block corpo_sobre %}
         {% endblock %}
+
+        <!-- Aqui fica o conteúdo da tela campanha -->
+        {% block corpo_campanha %}
+        {% endblock %}
+
+        <!-- Aqui fica o conteúdo da tela contato -->
+        {% block corpo_contato %}
+        {% endblock %}
+
         <!-- Footer -->
         <footer class="footer">
             <div class="container">
@@ -158,16 +160,16 @@
                             <h5>Links Rápidos</h5>
                             <ul>
                                 <li>
-                                    <a href="#">Início</a>
+                                    <a href="/">Início</a>
                                 </li>
                                 <li>
-                                    <a href="#">Sobre</a>
+                                    <a href="/sobre">Sobre</a>
                                 </li>
                                 <li>
-                                    <a href="#">Campanhas</a>
+                                    <a href="/campanha">Campanhas</a>
                                 </li>
                                 <li>
-                                    <a href="#">Contato</a>
+                                    <a href="/contato">Contato</a>
                                 </li>
                             </ul>
                         </div>
@@ -216,8 +218,10 @@
                 </div>
             </div>
         </footer>
-        <!-- Bootstrap JS Bundle with Popper -->
+
+        <!-- Bootstrap JS -->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
         <!-- Custom JS -->
         {% block custom_jvs %}
         {% endblock %}

@@ -1,0 +1,378 @@
+{% extends "boas_vindas_#base.html" %}
+{% block custom_css %}
+<link href="/static/css/contato.css" rel="stylesheet">
+{% endblock %}
+
+{% block corpo_contato %}
+<!-- Hero Section -->
+<section class="hero-section">
+    <div class="floating-elements">
+        <i class="fas fa-envelope floating-element" style="font-size: 3rem;"></i>
+        <i class="fas fa-phone floating-element" style="font-size: 2.5rem;"></i>
+        <i class="fas fa-map-marker-alt floating-element" style="font-size: 3.5rem;"></i>
+    </div>
+    <div class="container">
+        <div class="hero-content">
+            <h1 class="hero-title">Entre em Contato</h1>
+            <p class="hero-subtitle">Estamos aqui para ajudar! Envie sua mensagem, tire suas dúvidas ou encontre o hemocentro mais próximo.</p>
+        </div>
+    </div>
+</section>
+<!-- Informações de Contato -->
+<section class="container mb-5">
+    <div class="text-center mb-5">
+        <h2 class="section-title">Nossos Canais</h2>
+    </div>
+    <div class="row fade-in">
+        <div class="col-md-4 mb-4">
+            <div class="contact-card h-100">
+                <div class="contact-icon">
+                    <i class="fas fa-phone-alt"></i>
+                </div>
+                <h4 class="contact-title">Telefone</h4>
+                <p class="contact-info">
+                    (XX) XXXX-XXXX
+                    <br>
+                    (XX) XXXX-XXXX (WhatsApp)
+                </p>
+            </div>
+        </div>
+        <div class="col-md-4 mb-4">
+            <div class="contact-card h-100">
+                <div class="contact-icon">
+                    <i class="fas fa-envelope"></i>
+                </div>
+                <h4 class="contact-title">Email</h4>
+                <p class="contact-info">
+                    <a href="mailto:contato@hemotec.com.br">contato@hemotec.com.br</a>
+                    <br>
+                    <a href="mailto:suporte@hemotec.com.br">suporte@hemotec.com.br</a>
+                </p>
+            </div>
+        </div>
+        <div class="col-md-4 mb-4">
+            <div class="contact-card h-100">
+                <div class="contact-icon">
+                    <i class="fas fa-map-marker-alt"></i>
+                </div>
+                <h4 class="contact-title">Endereço</h4>
+                <p class="contact-info">
+                    Rua Exemplo, 123, Bairro Modelo
+                    <br>
+                    Cidade, Estado - CEP XXXXX-XXX
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Formulário de Contato -->
+<section class="container mb-5">
+    <div class="text-center mb-5">
+        <h2 class="section-title">Envie sua Mensagem</h2>
+    </div>
+    <div class="form-container fade-in">
+        <form id="contactForm">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="name" class="form-label">Nome Completo</label>
+                        <input
+                            type="text"
+                            class="form-control"
+                            id="name"
+                            name="name"
+                            required
+                        >
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="email" class="form-label">Email</label>
+                        <input
+                            type="email"
+                            class="form-control"
+                            id="email"
+                            name="email"
+                            required
+                        >
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="phone" class="form-label">Telefone (Opcional)</label>
+                        <input
+                            type="tel"
+                            class="form-control"
+                            id="phone"
+                            name="phone"
+                        >
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="subject" class="form-label">Assunto</label>
+                        <select
+                            class="form-select"
+                            id="subject"
+                            name="subject"
+                            required
+                        >
+                            <option value="" disabled selected>Selecione o assunto...</option>
+                            <option value="duvida">Dúvida</option>
+                            <option value="sugestao">Sugestão</option>
+                            <option value="reclamacao">Reclamação</option>
+                            <option value="parceria">Parceria</option>
+                            <option value="outro">Outro</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="message" class="form-label">Mensagem</label>
+                <textarea
+                    class="form-control"
+                    id="message"
+                    name="message"
+                    rows="6"
+                    required
+                ></textarea>
+            </div>
+            <div class="text-center">
+                <button type="submit" class="btn-submit">Enviar Mensagem</button>
+            </div>
+        </form>
+        <div class="success-message" id="successMessage">
+            <i class="fas fa-check-circle me-2"></i>
+            Sua mensagem foi enviada com sucesso! Entraremos em contato em breve.
+        </div>
+    </div>
+</section>
+<!-- FAQ -->
+<section class="container mb-5">
+    <div class="text-center mb-5">
+        <h2 class="section-title">Perguntas Frequentes</h2>
+    </div>
+    <div class="faq-section fade-in">
+        <div class="accordion" id="faqAccordion">
+            <div class="accordion-item mb-3">
+                <h2 class="accordion-header">
+                    <button
+                        class="accordion-button"
+                        type="button"
+                        data-bs-toggle="collapse"
+                        data-bs-target="#faq1"
+                    >
+                        Como posso agendar uma doação?
+                    </button>
+                </h2>
+                <div id="faq1" class="accordion-collapse collapse show" data-bs-parent="#faqAccordion">
+                    <div class="accordion-body">
+                        Você pode agendar sua doação através do nosso aplicativo móvel ou diretamente no site, na seção "Agendar Doação". Basta escolher o hemocentro mais próximo, a data e o horário disponíveis.
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-item mb-3">
+                <h2 class="accordion-header">
+                    <button
+                        class="accordion-button collapsed"
+                        type="button"
+                        data-bs-toggle="collapse"
+                        data-bs-target="#faq2"
+                    >
+                        Quais são os requisitos para doar sangue?
+                    </button>
+                </h2>
+                <div id="faq2" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                    <div class="accordion-body">
+                        Os requisitos básicos são: ter entre 16 e 69 anos (menores de 18 com consentimento), pesar mais de 50kg, estar em boas condições de saúde e apresentar documento oficial com foto. Consulte a lista completa em nossa seção "Quem Pode Doar".
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-item mb-3">
+                <h2 class="accordion-header">
+                    <button
+                        class="accordion-button collapsed"
+                        type="button"
+                        data-bs-toggle="collapse"
+                        data-bs-target="#faq3"
+                    >
+                        Como o Hemotec utiliza meus dados?
+                    </button>
+                </h2>
+                <div id="faq3" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                    <div class="accordion-body">
+                        Seus dados são utilizados exclusivamente para o gerenciamento das doações e para comunicação sobre campanhas e necessidades dos hemocentros. Seguimos rigorosamente a LGPD e garantimos a segurança e privacidade das suas informações.
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-item mb-3">
+                <h2 class="accordion-header">
+                    <button
+                        class="accordion-button collapsed"
+                        type="button"
+                        data-bs-toggle="collapse"
+                        data-bs-target="#faq4"
+                    >
+                        Posso cancelar ou reagendar minha doação?
+                    </button>
+                </h2>
+                <div id="faq4" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                    <div class="accordion-body">
+                        Sim, você pode cancelar ou reagendar sua doação através do aplicativo ou site com antecedência mínima de 24 horas. Isso nos ajuda a organizar melhor o fluxo de doadores.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Mapa -->
+<section class="container mb-5">
+    <div class="text-center mb-5">
+        <h2 class="section-title">Nossa Localização</h2>
+    </div>
+    <div class="map-container fade-in">
+        <div class="map-placeholder">
+            <i class="fas fa-map-marked-alt me-2"></i>
+            Placeholder para o Mapa Interativo (Google Maps API)
+        </div>
+    </div>
+</section>
+<!-- Redes Sociais -->
+<section class="container mb-5">
+    <div class="text-center mb-5">
+        <h2 class="section-title">Siga-nos</h2>
+    </div>
+    <div class="social-links fade-in">
+        <a href="#" class="social-link" aria-label="Facebook">
+            <i class="fab fa-facebook-f"></i>
+        </a>
+        <a href="#" class="social-link" aria-label="Instagram">
+            <i class="fab fa-instagram"></i>
+        </a>
+        <a href="#" class="social-link" aria-label="Twitter">
+            <i class="fab fa-twitter"></i>
+        </a>
+        <a href="#" class="social-link" aria-label="LinkedIn">
+            <i class="fab fa-linkedin-in"></i>
+        </a>
+    </div>
+</section>
+<!-- Banner de Emergência -->
+<section class="container mb-5">
+    <div class="emergency-banner fade-in">
+        <h4 class="emergency-title">
+            <i class="fas fa-exclamation-triangle me-2"></i>Emergências e Necessidades Urgentes
+        </h4>
+        <p>Para situações de emergência ou necessidades urgentes de sangue, entre em contato diretamente com o hemocentro mais próximo ou ligue para:</p>
+        <div class="emergency-phone">190 (Polícia) / 192 (SAMU) / 193 (Bombeiros)</div>
+    </div>
+</section>
+{% endblock %}
+
+<!-- Custom JavaScript -->
+{% block custom_jvs %}
+<script>
+        // Validação do formulário de contato
+        function initializeFormValidation( ) {
+            const form = document.getElementById("contactForm");
+            const successMessage = document.getElementById("successMessage");
+
+            form.addEventListener("submit", function (e) {
+                e.preventDefault();
+                if (form.checkValidity()) {
+                    // Simular envio de formulário
+                    console.log("Formulário enviado:");
+                    console.log("Nome:", form.name.value);
+                    console.log("Email:", form.email.value);
+                    console.log("Telefone:", form.phone.value);
+                    console.log("Assunto:", form.subject.value);
+                    console.log("Mensagem:", form.message.value);
+
+                    successMessage.style.display = "block";
+                    form.reset();
+                    setTimeout(() => {
+                        successMessage.style.display = "none";
+                    }, 5000);
+                } else {
+                    form.classList.add("was-validated");
+                }
+            });
+        }
+
+        // Animação de fade-in ao scroll
+        function handleScrollAnimations() {
+            const elements = document.querySelectorAll(".fade-in");
+            
+            elements.forEach(element => {
+                const elementTop = element.getBoundingClientRect().top;
+                const elementVisible = 150;
+                
+                if (elementTop < window.innerHeight - elementVisible) {
+                    element.classList.add("visible");
+                }
+            });
+        }
+
+        // Navbar scroll effect
+        function handleNavbarScroll() {
+            const navbar = document.querySelector(".navbar");
+            if (window.scrollY > 50) {
+                navbar.style.backgroundColor = "rgba(255, 255, 255, 0.95)";
+                navbar.style.backdropFilter = "blur(10px)";
+            } else {
+                navbar.style.backgroundColor = "white";
+                navbar.style.backdropFilter = "none";
+            }
+        }
+
+        // Event listeners
+        window.addEventListener("scroll", () => {
+            handleScrollAnimations();
+            handleNavbarScroll();
+        });
+
+        // Intersection Observer para animações mais suaves
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: "0px 0px -50px 0px"
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add("visible");
+                }
+            });
+        }, observerOptions);
+
+        // Observar elementos para animação
+        document.querySelectorAll(".fade-in").forEach(el => {
+            observer.observe(el);
+        });
+
+        // Smooth scrolling para links internos
+        document.querySelectorAll("a[href^=\"#\"]").forEach(anchor => {
+            anchor.addEventListener("click", function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute("href"));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: "smooth",
+                        block: "start"
+                    });
+                }
+            });
+        });
+
+        // Inicializar funcionalidades na carga da página
+        document.addEventListener("DOMContentLoaded", () => {
+            initializeFormValidation();
+            handleScrollAnimations();
+            handleNavbarScroll();
+        });
+</script>
+{% endblock %}
+</body>
+</html>
