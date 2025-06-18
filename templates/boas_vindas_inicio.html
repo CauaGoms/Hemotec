@@ -353,4 +353,70 @@
     </div>
     <!-- End of row for Estoque Atual -->
 </section>
+
+<!-- Mapa -->
+<section class="container mb-5">
+  <div class="text-center mb-5">
+    <h2 class="section-title">Unidades de Coleta</h2>
+  </div>
+  <div class="map-container fade-in">
+    <div id="mapa" style="height: 500px; width: 100%; border-radius: 8px;"></div>
+  </div>
+</section>
+
+<!-- Leaflet.js -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+{% endblock %}
+
+<!-- Custmom JavaScript do Map -->
+{% block custom_js %}
+<script>
+  const mapa = L.map('mapa').setView([-20.839, -41.112], 12);
+
+  // Camada de fundo do OpenStreetMap
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '© OpenStreetMap contributors'
+  }).addTo(mapa);
+
+  // Ícone personalizado da gota (imagem local)
+  const iconeGota = L.icon({
+    iconUrl: 'img/gota.png', // Caminho local
+    iconSize: [40, 40],
+    iconAnchor: [20, 40],
+    popupAnchor: [0, -35]
+  });
+
+  // Ícone azul para o usuário
+  const iconeUsuario = L.icon({
+    iconUrl: 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png',
+    iconSize: [32, 32],
+    iconAnchor: [16, 32]
+  });
+
+  // Carregar unidades do arquivo JSON
+  /*fetch('/templates/unidades.json')
+    .then(res => res.json())
+    .then(unidades => {
+      unidades.forEach(u => {
+        L.marker([u.lat, u.lon], { icon: iconeGota }).addTo(mapa)
+          .bindPopup(`<strong>${u.nome}</strong><br>${u.cidade}<br><em>${u.horario}</em>`);
+      });
+    })
+    .catch(err => {
+      alert("Erro ao carregar as unidades.");
+      console.error(err);
+    });*/
+
+  // Localização do usuário (opcional)
+  mapa.locate({ setView: true, maxZoom: 14 });
+  mapa.on('locationfound', function(e) {
+    L.marker(e.latlng, { icon: iconeUsuario }).addTo(mapa)
+      .bindPopup("Você está aqui");
+  });
+
+  mapa.on('locationerror', function() {
+    alert("Não conseguimos acessar sua localização.");
+  });
+</script>
 {% endblock %}

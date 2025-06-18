@@ -46,7 +46,6 @@ doador_repo.criar_tabela()
 doacao_repo.criar_tabela()
 exame_repo.criar_tabela()
 
-
 @app.get("/")
 async def get_root():
     response = templates.TemplateResponse("boas_vindas_inicio.html", {"request": {}, "active_page": "inicio"})

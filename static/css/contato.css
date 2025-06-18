@@ -306,37 +306,6 @@ body {
     box-shadow: 0 10px 25px rgba(224, 32, 32, 0.3);
 }
 
-.map-container {
-    background: white;
-    border-radius: 20px;
-    padding: 2rem;
-    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
-    position: relative;
-    overflow: hidden;
-}
-
-.map-container::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 4px;
-    background: linear-gradient(90deg, var(--hemotec-red), var(--hemotec-light-red));
-}
-
-.map-placeholder {
-    height: 400px;
-    background: linear-gradient(135deg, #f8f9fa, #e9ecef);
-    border-radius: 15px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #666;
-    font-size: 1.2rem;
-    border: 2px dashed #dee2e6;
-}
-
 .faq-section {
     background: white;
     border-radius: 20px;
