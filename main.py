@@ -83,12 +83,32 @@ async def get_root():
 
 @app.get("/doador")
 async def get_root():
-    response = templates.TemplateResponse("doador_inicio.html", {"request": {}})
+    response = templates.TemplateResponse("doador_inicio.html", {"request": {}, "active_page": "home"})
     return response
 
 @app.get("/doador/campanha")
 async def get_root():
-    response = templates.TemplateResponse("doador_campanha.html", {"request": {}})
+    response = templates.TemplateResponse("doador_campanha.html", {"request": {}, "active_page": "campanha"})
+    return response
+
+@app.get("/doador/agendamento")
+async def get_root():
+    response = templates.TemplateResponse("doador_agendamento.html", {"request": {}, "active_page": "agendamento"})
+    return response
+
+@app.get("/doador/notificacao")
+async def get_root():
+    response = templates.TemplateResponse("doador_notificacao.html", {"request": {}, "active_page": "notificacao"})
+    return response
+
+@app.get("/doador/meu_perfil")
+async def get_root():
+    response = templates.TemplateResponse("doador_meu_perfil.html", {"request": {}, "active_page": "perfil"})
+    return response
+
+@app.get("/doador/configuracoes")
+async def get_root():
+    response = templates.TemplateResponse("doador_configuracoes.html", {"request": {}, "active_page": "perfil"})
     return response
 
 @app.get("/doador/novo_doador")

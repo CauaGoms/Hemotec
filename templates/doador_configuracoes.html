@@ -1,0 +1,751 @@
+{% extends "doador_#base.html" %}
+{% block custom_css %}
+<link href="/static/css/configuracoes.css" rel="stylesheet">
+{% endblock %}
+
+{% block corpo_campanha %}
+<!-- Back Arrow -->
+<a href="/doador/dashboard" class="back-arrow" aria-label="Voltar para o dashboard">
+    <i class="fas fa-arrow-left"></i>
+</a>
+
+<!-- Hero Section -->
+<section class="hero-section">
+    <div class="container">
+        <div class="hero-content">
+            <h1 class="hero-title">
+                <i class="fas fa-cog me-3"></i>
+                Configurações
+            </h1>
+            <p class="hero-subtitle">Personalize sua experiência e gerencie suas preferências no sistema Hemotec</p>
+        </div>
+    </div>
+</section>
+
+<div class="container">
+    <!-- Menu de Configurações -->
+    <div class="settings-navigation fade-in">
+        <div class="row mb-4">
+            <div class="col-12">
+                <div class="nav-tabs-container">
+                    <ul class="nav nav-tabs settings-tabs" id="settingsTabs" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link active" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab">
+                                <i class="fas fa-user me-2"></i>Perfil
+                            </button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="notifications-tab" data-bs-toggle="tab" data-bs-target="#notifications" type="button" role="tab">
+                                <i class="fas fa-bell me-2"></i>Notificações
+                            </button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="privacy-tab" data-bs-toggle="tab" data-bs-target="#privacy" type="button" role="tab">
+                                <i class="fas fa-shield-alt me-2"></i>Privacidade
+                            </button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="preferences-tab" data-bs-toggle="tab" data-bs-target="#preferences" type="button" role="tab">
+                                <i class="fas fa-sliders-h me-2"></i>Preferências
+                            </button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="security-tab" data-bs-toggle="tab" data-bs-target="#security" type="button" role="tab">
+                                <i class="fas fa-lock me-2"></i>Segurança
+                            </button>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Conteúdo das Configurações -->
+    <div class="settings-content fade-in">
+        <div class="tab-content" id="settingsTabContent">
+            
+            <!-- Aba Perfil -->
+            <div class="tab-pane fade show active" id="profile" role="tabpanel">
+                <div class="settings-section">
+                    <div class="section-header">
+                        <h3><i class="fas fa-user me-2"></i>Informações do Perfil</h3>
+                        <p>Atualize suas informações pessoais e dados de contato</p>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-4 mb-4">
+                            <div class="profile-photo-section">
+                                <div class="current-photo">
+                                    <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&q=80" alt="Foto do Perfil" id="profileImage">
+                                    <div class="photo-overlay">
+                                        <i class="fas fa-camera"></i>
+                                    </div>
+                                </div>
+                                <button class="btn btn-outline-primary btn-sm mt-3" onclick="changeProfilePhoto( )">
+                                    <i class="fas fa-upload me-2"></i>Alterar Foto
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-8">
+                            <form id="profileForm">
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label">Nome Completo</label>
+                                        <input type="text" class="form-control" value="João Silva Santos" id="fullName">
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label">Email</label>
+                                        <input type="email" class="form-control" value="joao.silva@email.com" id="email">
+                                    </div>
+                                </div>
+                                
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label">Telefone</label>
+                                        <input type="tel" class="form-control" value="(11) 99999-9999" id="phone">
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label">Data de Nascimento</label>
+                                        <input type="date" class="form-control" value="1990-05-15" id="birthDate">
+                                    </div>
+                                </div>
+                                
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label">Tipo Sanguíneo</label>
+                                        <select class="form-select" id="bloodType">
+                                            <option value="A+">A+</option>
+                                            <option value="A-">A-</option>
+                                            <option value="B+">B+</option>
+                                            <option value="B-">B-</option>
+                                            <option value="AB+">AB+</option>
+                                            <option value="AB-">AB-</option>
+                                            <option value="O+" selected>O+</option>
+                                            <option value="O-">O-</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label">Peso (kg)</label>
+                                        <input type="number" class="form-control" value="75" id="weight">
+                                    </div>
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <label class="form-label">Endereço</label>
+                                    <input type="text" class="form-control" value="Rua das Flores, 123 - Centro" id="address">
+                                </div>
+                                
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label">Cidade</label>
+                                        <input type="text" class="form-control" value="São Paulo" id="city">
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label">CEP</label>
+                                        <input type="text" class="form-control" value="01234-567" id="zipCode">
+                                    </div>
+                                </div>
+                                
+                                <div class="form-actions">
+                                    <button type="submit" class="btn btn-primary">
+                                        <i class="fas fa-save me-2"></i>Salvar Alterações
+                                    </button>
+                                    <button type="button" class="btn btn-outline-secondary" onclick="resetProfileForm()">
+                                        <i class="fas fa-undo me-2"></i>Cancelar
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Aba Notificações -->
+            <div class="tab-pane fade" id="notifications" role="tabpanel">
+                <div class="settings-section">
+                    <div class="section-header">
+                        <h3><i class="fas fa-bell me-2"></i>Preferências de Notificação</h3>
+                        <p>Configure como e quando você deseja receber notificações</p>
+                    </div>
+                    
+                    <div class="notification-settings">
+                        <div class="notification-group">
+                            <h5>Notificações por Email</h5>
+                            <div class="setting-item">
+                                <div class="setting-info">
+                                    <strong>Campanhas de Doação</strong>
+                                    <p>Receba informações sobre novas campanhas e eventos</p>
+                                </div>
+                                <div class="setting-control">
+                                    <div class="form-check form-switch">
+                                        <input class="form-check-input" type="checkbox" id="emailCampaigns" checked>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="setting-item">
+                                <div class="setting-info">
+                                    <strong>Lembretes de Doação</strong>
+                                    <p>Lembrete quando você estiver apto a doar novamente</p>
+                                </div>
+                                <div class="setting-control">
+                                    <div class="form-check form-switch">
+                                        <input class="form-check-input" type="checkbox" id="emailReminders" checked>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="setting-item">
+                                <div class="setting-info">
+                                    <strong>Resultados de Exames</strong>
+                                    <p>Notificação quando os resultados estiverem disponíveis</p>
+                                </div>
+                                <div class="setting-control">
+                                    <div class="form-check form-switch">
+                                        <input class="form-check-input" type="checkbox" id="emailResults" checked>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="notification-group">
+                            <h5>Notificações Push</h5>
+                            <div class="setting-item">
+                                <div class="setting-info">
+                                    <strong>Alertas Urgentes</strong>
+                                    <p>Notificações sobre necessidades críticas de sangue</p>
+                                </div>
+                                <div class="setting-control">
+                                    <div class="form-check form-switch">
+                                        <input class="form-check-input" type="checkbox" id="pushUrgent" checked>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="setting-item">
+                                <div class="setting-info">
+                                    <strong>Confirmações de Agendamento</strong>
+                                    <p>Confirmações e lembretes de agendamentos</p>
+                                </div>
+                                <div class="setting-control">
+                                    <div class="form-check form-switch">
+                                        <input class="form-check-input" type="checkbox" id="pushAppointments" checked>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="notification-group">
+                            <h5>Frequência de Notificações</h5>
+                            <div class="setting-item">
+                                <div class="setting-info">
+                                    <strong>Resumo Semanal</strong>
+                                    <p>Receba um resumo das atividades da semana</p>
+                                </div>
+                                <div class="setting-control">
+                                    <select class="form-select">
+                                        <option value="never">Nunca</option>
+                                        <option value="weekly" selected>Semanal</option>
+                                        <option value="monthly">Mensal</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Aba Privacidade -->
+            <div class="tab-pane fade" id="privacy" role="tabpanel">
+                <div class="settings-section">
+                    <div class="section-header">
+                        <h3><i class="fas fa-shield-alt me-2"></i>Configurações de Privacidade</h3>
+                        <p>Controle quem pode ver suas informações e atividades</p>
+                    </div>
+                    
+                    <div class="privacy-settings">
+                        <div class="privacy-group">
+                            <h5>Visibilidade do Perfil</h5>
+                            <div class="setting-item">
+                                <div class="setting-info">
+                                    <strong>Perfil Público</strong>
+                                    <p>Permitir que outros doadores vejam seu perfil básico</p>
+                                </div>
+                                <div class="setting-control">
+                                    <div class="form-check form-switch">
+                                        <input class="form-check-input" type="checkbox" id="publicProfile">
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="setting-item">
+                                <div class="setting-info">
+                                    <strong>Histórico de Doações</strong>
+                                    <p>Exibir seu histórico de doações para outros doadores</p>
+                                </div>
+                                <div class="setting-control">
+                                    <div class="form-check form-switch">
+                                        <input class="form-check-input" type="checkbox" id="donationHistory" checked>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="privacy-group">
+                            <h5>Compartilhamento de Dados</h5>
+                            <div class="setting-item">
+                                <div class="setting-info">
+                                    <strong>Dados para Pesquisa</strong>
+                                    <p>Permitir o uso de dados anonimizados para pesquisas científicas</p>
+                                </div>
+                                <div class="setting-control">
+                                    <div class="form-check form-switch">
+                                        <input class="form-check-input" type="checkbox" id="dataResearch">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="privacy-group">
+                            <h5>Controle de Dados (LGPD)</h5>
+                            <div class="setting-item">
+                                <div class="setting-info">
+                                    <strong>Baixar Meus Dados</strong>
+                                    <p>Solicitar um arquivo com todos os seus dados cadastrados</p>
+                                </div>
+                                <div class="setting-control">
+                                    <button class="btn btn-outline-primary btn-sm" onclick="downloadMyData()">
+                                        <i class="fas fa-download me-2"></i>Baixar
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <div class="setting-item">
+                                <div class="setting-info">
+                                    <strong>Corrigir Meus Dados</strong>
+                                    <p>Solicitar correção de informações incorretas</p>
+                                </div>
+                                <div class="setting-control">
+                                    <button class="btn btn-outline-primary btn-sm" onclick="correctMyData()">
+                                        <i class="fas fa-edit me-2"></i>Corrigir
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <div class="setting-item">
+                                <div class="setting-info">
+                                    <strong>Excluir Minha Conta</strong>
+                                    <p>Solicitar a exclusão permanente da sua conta e dados</p>
+                                </div>
+                                <div class="setting-control">
+                                    <button class="btn btn-danger btn-sm" onclick="deleteMyAccount()">
+                                        <i class="fas fa-trash-alt me-2"></i>Excluir
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Aba Preferências -->
+            <div class="tab-pane fade" id="preferences" role="tabpanel">
+                <div class="settings-section">
+                    <div class="section-header">
+                        <h3><i class="fas fa-sliders-h me-2"></i>Preferências Gerais</h3>
+                        <p>Ajuste as configurações de exibição e comportamento do aplicativo</p>
+                    </div>
+                    
+                    <div class="general-preferences">
+                        <div class="preference-group">
+                            <h5>Aparência</h5>
+                            <div class="setting-item">
+                                <div class="setting-info">
+                                    <strong>Tema do Aplicativo</strong>
+                                    <p>Escolha entre tema claro, escuro ou automático</p>
+                                </div>
+                                <div class="setting-control">
+                                    <select class="form-select" id="appTheme">
+                                        <option value="light" selected>Claro</option>
+                                        <option value="dark">Escuro</option>
+                                        <option value="auto">Automático</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <div class="setting-item">
+                                <div class="setting-info">
+                                    <strong>Tamanho da Fonte</strong>
+                                    <p>Ajuste o tamanho do texto para melhor leitura</p>
+                                </div>
+                                <div class="setting-control">
+                                    <select class="form-select" id="fontSize">
+                                        <option value="small">Pequeno</option>
+                                        <option value="medium" selected>Médio</option>
+                                        <option value="large">Grande</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="preference-group">
+                            <h5>Idioma e Região</h5>
+                            <div class="setting-item">
+                                <div class="setting-info">
+                                    <strong>Idioma do Aplicativo</strong>
+                                    <p>Selecione o idioma de exibição</p>
+                                </div>
+                                <div class="setting-control">
+                                    <select class="form-select" id="appLanguage">
+                                        <option value="pt-br" selected>Português (Brasil)</option>
+                                        <option value="en">English</option>
+                                        <option value="es">Español</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <div class="setting-item">
+                                <div class="setting-info">
+                                    <strong>Fuso Horário</strong>
+                                    <p>Seu fuso horário atual</p>
+                                </div>
+                                <div class="setting-control">
+                                    <select class="form-select" id="timeZone">
+                                        <option value="GMT-3" selected>GMT-3 (Brasília)</option>
+                                        <option value="GMT-4">GMT-4 (Manaus)</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="preference-group">
+                            <h5>Funcionalidades Inteligentes</h5>
+                            <div class="setting-item">
+                                <div class="setting-info">
+                                    <strong>Agendamento Automático</strong>
+                                    <p>Permitir que o sistema sugira agendamentos</p>
+                                </div>
+                                <div class="setting-control">
+                                    <div class="form-check form-switch">
+                                        <input class="form-check-input" type="checkbox" id="autoSchedule">
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="setting-item">
+                                <div class="setting-info">
+                                    <strong>Lembretes Inteligentes</strong>
+                                    <p>Receber lembretes baseados em seu histórico de doações</p>
+                                </div>
+                                <div class="setting-control">
+                                    <div class="form-check form-switch">
+                                        <input class="form-check-input" type="checkbox" id="smartReminders" checked>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Aba Segurança -->
+            <div class="tab-pane fade" id="security" role="tabpanel">
+                <div class="settings-section">
+                    <div class="section-header">
+                        <h3><i class="fas fa-lock me-2"></i>Segurança da Conta</h3>
+                        <p>Gerencie suas credenciais e atividades de segurança</p>
+                    </div>
+                    
+                    <div class="security-settings">
+                        <div class="security-group">
+                            <h5>Alterar Senha</h5>
+                            <div class="setting-item">
+                                <div class="setting-info">
+                                    <strong>Senha Atual</strong>
+                                    <p>Insira sua senha atual para confirmar</p>
+                                </div>
+                                <div class="setting-control">
+                                    <input type="password" class="form-control" id="currentPassword">
+                                </div>
+                            </div>
+                            
+                            <div class="setting-item">
+                                <div class="setting-info">
+                                    <strong>Nova Senha</strong>
+                                    <p>Mínimo de 8 caracteres, com letras, números e símbolos</p>
+                                </div>
+                                <div class="setting-control">
+                                    <input type="password" class="form-control" id="newPassword">
+                                </div>
+                            </div>
+                            
+                            <div class="setting-item">
+                                <div class="setting-info">
+                                    <strong>Confirmar Nova Senha</strong>
+                                    <p>Repita sua nova senha</p>
+                                </div>
+                                <div class="setting-control">
+                                    <input type="password" class="form-control" id="confirmNewPassword">
+                                </div>
+                            </div>
+                            
+                            <div class="form-actions">
+                                <button class="btn btn-primary" onclick="changePassword()">
+                                    <i class="fas fa-key me-2"></i>Alterar Senha
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="security-group">
+                            <h5>Autenticação de Dois Fatores (2FA)</h5>
+                            <div class="setting-item">
+                                <div class="setting-info">
+                                    <strong>Status do 2FA</strong>
+                                    <p>Adicione uma camada extra de segurança à sua conta</p>
+                                </div>
+                                <div class="setting-control">
+                                    <div class="form-check form-switch">
+                                        <input class="form-check-input" type="checkbox" id="twoFactorAuth">
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="form-actions">
+                                <button class="btn btn-outline-primary" onclick="setupTwoFactorAuth()">
+                                    <i class="fas fa-qrcode me-2"></i>Configurar 2FA
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="security-group">
+                            <h5>Sessões Ativas</h5>
+                            <p>Gerencie os dispositivos onde sua conta está logada</p>
+                            <div class="active-sessions">
+                                <div class="session-item">
+                                    <div class="session-info">
+                                        <strong><i class="fas fa-desktop me-2"></i>Desktop (Windows)</strong>
+                                        <p>Local: São Paulo, Brasil</p>
+                                        <p>Último Acesso: 19 de Junho de 2025, 10:30</p>
+                                    </div>
+                                    <div class="session-actions">
+                                        <button class="btn btn-outline-danger btn-sm" onclick="logoutSession('desktop')">
+                                            <i class="fas fa-sign-out-alt me-2"></i>Sair
+                                        </button>
+                                    </div>
+                                </div>
+                                
+                                <div class="session-item">
+                                    <div class="session-info">
+                                        <strong><i class="fas fa-mobile-alt me-2"></i>Mobile (Android)</strong>
+                                        <p>Local: Rio de Janeiro, Brasil</p>
+                                        <p>Último Acesso: 19 de Junho de 2025, 09:15</p>
+                                    </div>
+                                    <div class="session-actions">
+                                        <button class="btn btn-outline-danger btn-sm" onclick="logoutSession('mobile')">
+                                            <i class="fas fa-sign-out-alt me-2"></i>Sair
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="form-actions">
+                                <button class="btn btn-danger" onclick="logoutAllSessions()">
+                                    <i class="fas fa-power-off me-2"></i>Sair de Todas as Sessões
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="security-group">
+                            <h5>Histórico de Segurança</h5>
+                            <p>Visualize atividades recentes relacionadas à segurança da sua conta</p>
+                            <div class="security-log">
+                                <div class="log-item">
+                                    <strong>Login bem-sucedido</strong>
+                                    <p>Dispositivo: Desktop (Windows) - IP: 192.168.1.100</p>
+                                    <small>19 de Junho de 2025, 10:30</small>
+                                </div>
+                                <div class="log-item">
+                                    <strong>Tentativa de login falha</strong>
+                                    <p>Dispositivo: Desconhecido - IP: 203.0.113.45</p>
+                                    <small>18 de Junho de 2025, 23:45</small>
+                                </div>
+                                <div class="log-item">
+                                    <strong>Senha alterada</strong>
+                                    <p>Dispositivo: Desktop (Windows)</p>
+                                    <small>15 de Junho de 2025, 14:00</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- Floating Save Button -->
+<button class="floating-save-btn" id="floatingSaveBtn" style="display: none;">
+    <i class="fas fa-save me-2"></i>Salvar Alterações
+</button>
+
+<!-- Toast Notifications Container -->
+<div id="toastContainer"></div>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- Custom JavaScript -->
+<script>
+    document.addEventListener("DOMContentLoaded", function( ) {
+        const settingsForm = document.getElementById("profileForm");
+        const floatingSaveBtn = document.getElementById("floatingSaveBtn");
+        let hasChanges = false;
+
+        function showToast(message, type = "info") {
+            const toastContainer = document.getElementById("toastContainer");
+            const toast = document.createElement("div");
+            toast.className = `toast-notification toast-${type}`;
+            toast.innerHTML = `
+                <i class="fas fa-${type === "success" ? "check-circle" : type === "error" ? "times-circle" : "info-circle"} me-2"></i>
+                ${message}
+            `;
+            toastContainer.appendChild(toast);
+
+            setTimeout(() => {
+                toast.classList.add("show");
+            }, 100);
+
+            setTimeout(() => {
+                toast.classList.remove("show");
+                toast.addEventListener("transitionend", () => toast.remove());
+            }, 3000);
+        }
+
+        function markAsChanged() {
+            if (!hasChanges) {
+                hasChanges = true;
+                floatingSaveBtn.style.display = "block";
+            }
+        }
+
+        function markAsSaved() {
+            hasChanges = false;
+            floatingSaveBtn.style.display = "none";
+        }
+
+        // Event listeners para detectar mudanças nos formulários
+        document.querySelectorAll(".settings-content input, .settings-content select, .settings-content textarea").forEach(element => {
+            element.addEventListener("change", markAsChanged);
+            element.addEventListener("keyup", markAsChanged);
+        });
+
+        // Listener para o botão flutuante de salvar
+        floatingSaveBtn.addEventListener("click", function() {
+            // Aqui você pode adicionar a lógica para salvar todas as configurações
+            // Por exemplo, coletar dados de todos os formulários e enviar via AJAX
+            showToast("Configurações salvas com sucesso!", "success");
+            markAsSaved();
+        });
+
+        // Funções de exemplo para as ações dos botões
+        window.changeProfilePhoto = function() {
+            showToast("Abrindo seletor de fotos... (Funcionalidade em desenvolvimento)", "info");
+        };
+
+        window.resetProfileForm = function() {
+            // Lógica para resetar o formulário de perfil
+            document.getElementById("profileForm").reset();
+            showToast("Formulário de perfil resetado.", "info");
+            markAsSaved();
+        };
+
+        window.downloadMyData = function() {
+            showToast("Solicitação de download de dados enviada. Você receberá um email em breve. (Funcionalidade em desenvolvimento)", "success");
+        };
+
+        window.correctMyData = function() {
+            showToast("Redirecionando para o formulário de correção de dados... (Funcionalidade em desenvolvimento)", "info");
+        };
+
+        window.deleteMyAccount = function() {
+            if (confirm("Tem certeza que deseja excluir sua conta? Esta ação é irreversível.")) {
+                showToast("Sua solicitação de exclusão de conta foi enviada. (Funcionalidade em desenvolvimento)", "warning");
+            }
+        };
+
+        window.changePassword = function() {
+            const currentPass = document.getElementById("currentPassword").value;
+            const newPass = document.getElementById("newPassword").value;
+            const confirmNewPass = document.getElementById("confirmNewPassword").value;
+
+            if (newPass !== confirmNewPass) {
+                showToast("As novas senhas não coincidem!", "error");
+                return;
+            }
+            if (newPass.length < 8) {
+                showToast("A nova senha deve ter no mínimo 8 caracteres!", "error");
+                return;
+            }
+            // Lógica para alterar a senha
+            showToast("Senha alterada com sucesso!", "success");
+            document.getElementById("currentPassword").value = "";
+            document.getElementById("newPassword").value = "";
+            document.getElementById("confirmNewPassword").value = "";
+            markAsSaved();
+        };
+
+        window.setupTwoFactorAuth = function() {
+            showToast("Iniciando configuração de Autenticação de Dois Fatores... (Funcionalidade em desenvolvimento)", "info");
+        };
+
+        window.logoutSession = function(device) {
+            showToast(`Sessão em ${device} encerrada. (Funcionalidade em desenvolvimento)`, "info");
+        };
+
+        window.logoutAllSessions = function() {
+            if (confirm("Tem certeza que deseja sair de todas as sessões ativas?")) {
+                showToast("Você saiu de todas as sessões. (Funcionalidade em desenvolvimento)", "success");
+            }
+        };
+
+        // Animação de fade-in ao scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: "0px 0px -50px 0px"
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add("visible");
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll(".fade-in").forEach(el => {
+            observer.observe(el);
+        });
+
+        // Navbar scroll effect (se houver navbar fixa)
+        function handleNavbarScroll() {
+            const navbar = document.querySelector(".navbar");
+            if (navbar) {
+                if (window.scrollY > 50) {
+                    navbar.style.backgroundColor = "rgba(255, 255, 255, 0.95)";
+                    navbar.style.backdropFilter = "blur(10px)";
+                } else {
+                    navbar.style.backgroundColor = "white";
+                    navbar.style.backdropFilter = "none";
+                }
+            }
+        }
+
+        window.addEventListener("scroll", handleNavbarScroll);
+
+        // Inicializar na carga da página
+        handleNavbarScroll();
+    });
+</script>
+{% endblock %}

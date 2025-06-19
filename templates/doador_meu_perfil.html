@@ -1,0 +1,498 @@
+{% extends "doador_#base.html" %}
+{% block custom_css %}
+<link href="/static/css/meu_perfil.css" rel="stylesheet">
+{% endblock %}
+
+{% block corpo_campanha %}
+<main class="container" style="padding-top: 100px;">
+        <!-- Profile Header -->
+        <div class="profile-header">
+            <div class="profile-header-content text-center">
+                <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Foto do perfil" class="profile-avatar">
+                <h2 class="profile-name">João Silva</h2>
+                <p class="profile-role">Colaborador - Hemocentro Regional</p>
+                
+                <div class="profile-stats">
+                    <div class="profile-stat">
+                        <div class="profile-stat-number">24</div>
+                        <div class="profile-stat-label">Doações</div>
+                    </div>
+                    <div class="profile-stat">
+                        <div class="profile-stat-number">3</div>
+                        <div class="profile-stat-label">Campanhas</div>
+                    </div>
+                    <div class="profile-stat">
+                        <div class="profile-stat-number">15</div>
+                        <div class="profile-stat-label">Agendamentos</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Profile Tabs -->
+        <ul class="nav nav-tabs profile-tabs" id="profileTab" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="info-tab" data-bs-toggle="tab" data-bs-target="#info" type="button" role="tab" aria-controls="info" aria-selected="true">
+                    <i class="fas fa-user-circle me-2"></i>Informações
+                </button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="donations-tab" data-bs-toggle="tab" data-bs-target="#donations" type="button" role="tab" aria-controls="donations" aria-selected="false">
+                    <i class="fas fa-tint me-2"></i>Histórico de Doações
+                </button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="settings-tab" data-bs-toggle="tab" data-bs-target="#settings" type="button" role="tab" aria-controls="settings" aria-selected="false">
+                    <i class="fas fa-cog me-2"></i>Configurações
+                </button>
+            </li>
+        </ul>
+        
+        <!-- Tab Content -->
+        <div class="tab-content" id="profileTabContent">
+            <!-- Informações Tab -->
+            <div class="tab-pane fade show active" id="info" role="tabpanel" aria-labelledby="info-tab">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="profile-card">
+                            <div class="card-header profile-card-header d-flex justify-content-between align-items-center">
+                                <span><i class="fas fa-id-card me-2"></i>Informações Pessoais</span>
+                                <button class="edit-btn" onclick="editProfile()">
+                                    <i class="fas fa-pencil-alt"></i>
+                                </button>
+                            </div>
+                            <div class="card-body profile-card-body">
+                                <div class="profile-info-item">
+                                    <div class="profile-info-icon">
+                                        <i class="fas fa-user"></i>
+                                    </div>
+                                    <div class="profile-info-content">
+                                        <div class="profile-info-label">Nome Completo</div>
+                                        <div class="profile-info-value">João da Silva Oliveira</div>
+                                    </div>
+                                </div>
+                                
+                                <div class="profile-info-item">
+                                    <div class="profile-info-icon">
+                                        <i class="fas fa-envelope"></i>
+                                    </div>
+                                    <div class="profile-info-content">
+                                        <div class="profile-info-label">E-mail</div>
+                                        <div class="profile-info-value">joao.silva@exemplo.com</div>
+                                    </div>
+                                </div>
+                                
+                                <div class="profile-info-item">
+                                    <div class="profile-info-icon">
+                                        <i class="fas fa-phone"></i>
+                                    </div>
+                                    <div class="profile-info-content">
+                                        <div class="profile-info-label">Telefone</div>
+                                        <div class="profile-info-value">(28) 99999-9999</div>
+                                    </div>
+                                </div>
+                                
+                                <div class="profile-info-item">
+                                    <div class="profile-info-icon">
+                                        <i class="fas fa-birthday-cake"></i>
+                                    </div>
+                                    <div class="profile-info-content">
+                                        <div class="profile-info-label">Data de Nascimento</div>
+                                        <div class="profile-info-value">15/03/1985</div>
+                                    </div>
+                                </div>
+                                
+                                <div class="profile-info-item">
+                                    <div class="profile-info-icon">
+                                        <i class="fas fa-map-marker-alt"></i>
+                                    </div>
+                                    <div class="profile-info-content">
+                                        <div class="profile-info-label">Endereço</div>
+                                        <div class="profile-info-value">Rua das Flores, 123 - Centro, Cachoeiro de Itapemirim - ES</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-lg-6">
+                        <div class="profile-card">
+                            <div class="card-header profile-card-header d-flex justify-content-between align-items-center">
+                                <span><i class="fas fa-heartbeat me-2"></i>Informações de Saúde</span>
+                                <button class="edit-btn" onclick="editHealthInfo()">
+                                    <i class="fas fa-pencil-alt"></i>
+                                </button>
+                            </div>
+                            <div class="card-body profile-card-body">
+                                <div class="profile-info-item">
+                                    <div class="profile-info-icon">
+                                        <i class="fas fa-tint"></i>
+                                    </div>
+                                    <div class="profile-info-content">
+                                        <div class="profile-info-label">Tipo Sanguíneo</div>
+                                        <div class="profile-info-value">O+ (Positivo)</div>
+                                    </div>
+                                </div>
+                                
+                                <div class="profile-info-item">
+                                    <div class="profile-info-icon">
+                                        <i class="fas fa-ruler"></i>
+                                    </div>
+                                    <div class="profile-info-content">
+                                        <div class="profile-info-label">Altura/Peso</div>
+                                        <div class="profile-info-value">175 cm / 72 kg</div>
+                                    </div>
+                                </div>
+                                
+                                <div class="profile-info-item">
+                                    <div class="profile-info-icon">
+                                        <i class="fas fa-pills"></i>
+                                    </div>
+                                    <div class="profile-info-content">
+                                        <div class="profile-info-label">Medicamentos</div>
+                                        <div class="profile-info-value">Nenhum</div>
+                                    </div>
+                                </div>
+                                
+                                <div class="profile-info-item">
+                                    <div class="profile-info-icon">
+                                        <i class="fas fa-allergies"></i>
+                                    </div>
+                                    <div class="profile-info-content">
+                                        <div class="profile-info-label">Alergias</div>
+                                        <div class="profile-info-value">Nenhuma conhecida</div>
+                                    </div>
+                                </div>
+                                
+                                <div class="profile-info-item">
+                                    <div class="profile-info-icon">
+                                        <i class="fas fa-procedures"></i>
+                                    </div>
+                                    <div class="profile-info-content">
+                                        <div class="profile-info-label">Condições Médicas</div>
+                                        <div class="profile-info-value">Nenhuma</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-12">
+                        <div class="profile-card">
+                            <div class="card-header profile-card-header d-flex justify-content-between align-items-center">
+                                <span><i class="fas fa-briefcase me-2"></i>Informações Profissionais</span>
+                                <button class="edit-btn" onclick="editProfessionalInfo()">
+                                    <i class="fas fa-pencil-alt"></i>
+                                </button>
+                            </div>
+                            <div class="card-body profile-card-body">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="profile-info-item">
+                                            <div class="profile-info-icon">
+                                                <i class="fas fa-building"></i>
+                                            </div>
+                                            <div class="profile-info-content">
+                                                <div class="profile-info-label">Hemocentro</div>
+                                                <div class="profile-info-value">Hemocentro Regional de Cachoeiro</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="profile-info-item">
+                                            <div class="profile-info-icon">
+                                                <i class="fas fa-user-tag"></i>
+                                            </div>
+                                            <div class="profile-info-content">
+                                                <div class="profile-info-label">Cargo</div>
+                                                <div class="profile-info-value">Técnico de Enfermagem</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="profile-info-item">
+                                            <div class="profile-info-icon">
+                                                <i class="fas fa-id-badge"></i>
+                                            </div>
+                                            <div class="profile-info-content">
+                                                <div class="profile-info-label">Matrícula</div>
+                                                <div class="profile-info-value">HC-2023-0456</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="profile-info-item">
+                                            <div class="profile-info-icon">
+                                                <i class="fas fa-calendar-alt"></i>
+                                            </div>
+                                            <div class="profile-info-content">
+                                                <div class="profile-info-label">Data de Admissão</div>
+                                                <div class="profile-info-value">15/03/2023</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Histórico de Doações Tab -->
+            <div class="tab-pane fade" id="donations" role="tabpanel" aria-labelledby="donations-tab">
+                <div class="profile-card">
+                    <div class="card-header profile-card-header">
+                        <i class="fas fa-history me-2"></i>Últimas Doações
+                    </div>
+                    <div class="card-body profile-card-body">
+                        <div class="donation-history-item">
+                            <div class="donation-date">
+                                <div class="donation-day">12</div>
+                                <div class="donation-month">Jun 2025</div>
+                            </div>
+                            <div class="donation-details">
+                                <div class="donation-location">Hemocentro Regional de Cachoeiro</div>
+                                <div class="donation-type">Tipo sanguíneo: O+ | 450ml</div>
+                            </div>
+                            <div class="donation-status">
+                                <span class="badge bg-success">Concluída</span>
+                            </div>
+                        </div>
+                        
+                        <div class="donation-history-item">
+                            <div class="donation-date">
+                                <div class="donation-day">10</div>
+                                <div class="donation-month">Abr 2025</div>
+                            </div>
+                            <div class="donation-details">
+                                <div class="donation-location">Hemocentro Regional de Cachoeiro</div>
+                                <div class="donation-type">Tipo sanguíneo: O+ | 450ml</div>
+                            </div>
+                            <div class="donation-status">
+                                <span class="badge bg-success">Concluída</span>
+                            </div>
+                        </div>
+                        
+                        <div class="donation-history-item">
+                            <div class="donation-date">
+                                <div class="donation-day">15</div>
+                                <div class="donation-month">Fev 2025</div>
+                            </div>
+                            <div class="donation-details">
+                                <div class="donation-location">Unidade Móvel - Praça Jerônimo Monteiro</div>
+                                <div class="donation-type">Tipo sanguíneo: O+ | 450ml</div>
+                            </div>
+                            <div class="donation-status">
+                                <span class="badge bg-success">Concluída</span>
+                            </div>
+                        </div>
+                        
+                        <div class="donation-history-item">
+                            <div class="donation-date">
+                                <div class="donation-day">05</div>
+                                <div class="donation-month">Dez 2024</div>
+                            </div>
+                            <div class="donation-details">
+                                <div class="donation-location">Hemocentro Regional de Cachoeiro</div>
+                                <div class="donation-type">Tipo sanguíneo: O+ | 450ml</div>
+                            </div>
+                            <div class="donation-status">
+                                <span class="badge bg-success">Concluída</span>
+                            </div>
+                        </div>
+                        
+                        <div class="donation-history-item">
+                            <div class="donation-date">
+                                <div class="donation-day">20</div>
+                                <div class="donation-month">Set 2024</div>
+                            </div>
+                            <div class="donation-details">
+                                <div class="donation-location">Hemocentro Regional de Cachoeiro</div>
+                                <div class="donation-type">Tipo sanguíneo: O+ | 450ml</div>
+                            </div>
+                            <div class="donation-status">
+                                <span class="badge bg-success">Concluída</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="text-center mt-3">
+                    <button class="btn btn-outline-danger">
+                        <i class="fas fa-file-pdf me-2"></i>Baixar Histórico Completo (PDF)
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Configurações Tab -->
+            <div class="tab-pane fade" id="settings" role="tabpanel" aria-labelledby="settings-tab">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="profile-card">
+                            <div class="card-header profile-card-header">
+                                <i class="fas fa-lock me-2"></i>Segurança da Conta
+                            </div>
+                            <div class="card-body profile-card-body">
+                                <div class="profile-info-item">
+                                    <div class="profile-info-icon">
+                                        <i class="fas fa-key"></i>
+                                    </div>
+                                    <div class="profile-info-content">
+                                        <div class="profile-info-label">Senha</div>
+                                        <div class="profile-info-value">••••••••</div>
+                                        <button class="btn btn-sm btn-outline-danger mt-2" onclick="changePassword()">
+                                            Alterar Senha
+                                        </button>
+                                    </div>
+                                </div>
+                                
+                                <div class="profile-info-item">
+                                    <div class="profile-info-icon">
+                                        <i class="fas fa-shield-alt"></i>
+                                    </div>
+                                    <div class="profile-info-content">
+                                        <div class="profile-info-label">Autenticação de Dois Fatores</div>
+                                        <div class="profile-info-value">Desativada</div>
+                                        <div class="form-check form-switch mt-2">
+                                            <input class="form-check-input" type="checkbox" id="twoFactorSwitch">
+                                            <label class="form-check-label" for="twoFactorSwitch">Ativar autenticação de dois fatores</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-lg-6">
+                        <div class="profile-card">
+                            <div class="card-header profile-card-header">
+                                <i class="fas fa-bell me-2"></i>Preferências de Notificação
+                            </div>
+                            <div class="card-body profile-card-body">
+                                <div class="mb-3">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="emailNotifications" checked>
+                                        <label class="form-check-label" for="emailNotifications">
+                                            Receber notificações por e-mail
+                                        </label>
+                                    </div>
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="smsNotifications" checked>
+                                        <label class="form-check-label" for="smsNotifications">
+                                            Receber notificações por SMS
+                                        </label>
+                                    </div>
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="appNotifications" checked>
+                                        <label class="form-check-label" for="appNotifications">
+                                            Receber notificações no aplicativo
+                                        </label>
+                                    </div>
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="donationReminders" checked>
+                                        <label class="form-check-label" for="donationReminders">
+                                            Lembretes de próxima doação
+                                        </label>
+                                    </div>
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="campaignUpdates" checked>
+                                        <label class="form-check-label" for="campaignUpdates">
+                                            Atualizações de campanhas
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-12">
+                        <div class="profile-card">
+                            <div class="card-header profile-card-header d-flex justify-content-between align-items-center">
+                                <span><i class="fas fa-trash-alt me-2"></i>Zona de Perigo</span>
+                            </div>
+                            <div class="card-body profile-card-body">
+                                <div class="alert alert-warning">
+                                    <h5 class="alert-heading"><i class="fas fa-exclamation-triangle me-2"></i>Atenção!</h5>
+                                    <p>Essas ações são irreversíveis. Tenha certeza do que está fazendo antes de prosseguir.</p>
+                                </div>
+                                
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <h6>Exportar meus dados</h6>
+                                        <p class="mb-0">Baixe uma cópia de todos os seus dados armazenados em nosso sistema.</p>
+                                    </div>
+                                    <button class="btn btn-outline-secondary">
+                                        <i class="fas fa-file-export me-2"></i>Exportar Dados
+                                    </button>
+                                </div>
+                                
+                                <hr>
+                                
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <h6>Encerrar minha conta</h6>
+                                        <p class="mb-0">Isso removerá permanentemente sua conta e todos os dados associados.</p>
+                                    </div>
+                                    <button class="btn btn-outline-danger" onclick="confirmAccountDeletion()">
+                                        <i class="fas fa-user-slash me-2"></i>Encerrar Conta
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+{% endblock %}
+
+<!-- Custom JavaScript -->
+{% block custom_js %}
+<script>
+        function editProfile() {
+            alert('Abrindo edição de perfil...');
+            // Implementar lógica para edição do perfil
+        }
+        
+        function editHealthInfo() {
+            alert('Abrindo edição de informações de saúde...');
+            // Implementar lógica para edição das informações de saúde
+        }
+        
+        function editProfessionalInfo() {
+            alert('Abrindo edição de informações profissionais...');
+            // Implementar lógica para edição das informações profissionais
+        }
+        
+        function changePassword() {
+            alert('Abrindo formulário para alteração de senha...');
+            // Implementar lógica para alteração de senha
+        }
+        
+        function confirmAccountDeletion() {
+            if (confirm('Tem certeza que deseja encerrar sua conta? Esta ação é irreversível e todos os seus dados serão permanentemente removidos.')) {
+                alert('Sua conta será encerrada. Você será redirecionado para a página inicial.');
+                // Implementar lógica para encerramento de conta
+                // window.location.href = 'login.html';
+            }
+        }
+        
+        // Ativar tooltips
+        var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+        var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+            return new bootstrap.Tooltip(tooltipTriggerEl);
+        });
+    </script>
+{% endblock %}

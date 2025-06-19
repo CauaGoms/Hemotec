@@ -4,7 +4,297 @@
 {% endblock %}
 
 {% block corpo_campanha %}
-<!-- colocar corpo da campanha aqui -->
+<!-- Hero Section -->
+<section class="hero-section">
+    <div class="floating-elements">
+        <i class="fas fa-bullhorn floating-element" style="font-size: 3rem;"></i>
+        <i class="fas fa-heart floating-element" style="font-size: 2.5rem;"></i>
+        <i class="fas fa-users floating-element" style="font-size: 3.5rem;"></i>
+    </div>
+    <div class="container">
+        <div class="hero-content">
+            <h1 class="hero-title">Campanhas de Doação</h1>
+            <p class="hero-subtitle">Participe das nossas campanhas e ajude a salvar vidas. Cada doação faz a diferença!</p>
+        </div>
+    </div>
+</section>
+<!-- Campanha em Destaque -->
+<section class="container">
+    <div class="featured-campaign fade-in">
+        <div class="featured-content">
+            <div class="row align-items-center">
+                <div class="col-md-8">
+                    <h2 class="featured-title">Junho Vermelho 2025</h2>
+                    <p class="featured-subtitle">Mês Nacional do Doador de Sangue - Participe da maior campanha de doação do ano!</p>
+                    <div class="row">
+                        <div class="col-md-4 text-center">
+                            <div class="stat-number text-white">2.500</div>
+                            <div class="stat-label text-white-50">Meta de Doações</div>
+                        </div>
+                        <div class="col-md-4 text-center">
+                            <div class="stat-number text-white">1.847</div>
+                            <div class="stat-label text-white-50">Doações Realizadas</div>
+                        </div>
+                        <div class="col-md-4 text-center">
+                            <div class="stat-number text-white">74%</div>
+                            <div class="stat-label text-white-50">Meta Alcançada</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 text-center">
+                    <a href="#" class="btn btn-light btn-lg px-4 py-3" style="border-radius: 25px; font-weight: 600;">
+                        <i class="fas fa-heart me-2"></i>
+                        Participar Agora
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Filtros e Busca -->
+<section class="container">
+    <div class="campaign-filter fade-in">
+        <div class="row align-items-center">
+            <div class="col-md-6">
+                <div class="search-box">
+                    <i class="fas fa-search search-icon"></i>
+                    <input
+                        type="text"
+                        class="search-input"
+                        placeholder="Buscar campanhas..."
+                        id="searchInput"
+                    >
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="text-center">
+                    <button class="filter-btn active" data-filter="all">Todas</button>
+                    <button class="filter-btn" data-filter="active">Ativas</button>
+                    <button class="filter-btn" data-filter="upcoming">Próximas</button>
+                    <button class="filter-btn" data-filter="ended">Encerradas</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Lista de Campanhas -->
+<section class="container mb-5">
+    <div class="text-center mb-5">
+        <h2 class="section-title">Todas as Campanhas</h2>
+    </div>
+    <div class="row" id="campaignsList">
+        <!-- Campanha 1 -->
+        <div class="col-md-6 col-lg-4 campaign-item fade-in mb-5" data-category="active" data-title="doação coletiva empresarial">
+            <div class="campaign-card">
+                <div class="position-relative">
+                    <img src="https://images.unsplash.com/photo-1579154204601-01588f351e67?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" class="card-img-top campaign-image" alt="Doação Coletiva">
+                    <div class="campaign-status status-active">Ativa</div>
+                </div>
+                <div class="campaign-body">
+                    <h5 class="campaign-title">Doação Coletiva Empresarial</h5>
+                    <div class="campaign-meta">
+                        <i class="fas fa-calendar"></i>
+                        <span>15/05/2025 - 30/06/2025</span>
+                    </div>
+                    <div class="campaign-meta">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span>Empresas Parceiras</span>
+                    </div>
+                    <p>Empresas se unem para promover a doação de sangue entre seus colaboradores. Participe desta iniciativa corporativa solidária.</p>
+                    <div class="campaign-progress">
+                        <div class="progress">
+                            <div class="progress-bar" style="width: 65%"></div>
+                        </div>
+                        <div class="progress-text d-flex justify-content-between">
+                            <span>650 doações</span>
+                            <span>Meta: 1000</span>
+                        </div>
+                    </div>
+                    <a href="#" class="btn-campaign">Saiba Mais</a>
+                </div>
+            </div>
+        </div>
+        <!-- Campanha 2 -->
+        <div class="col-md-6 col-lg-4 campaign-item fade-in mb-5" data-category="upcoming" data-title="volta às aulas solidária">
+            <div class="campaign-card">
+                <div class="position-relative">
+                    <img src="https://images.unsplash.com/photo-1497486751825-1233686d5d80?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" class="card-img-top campaign-image" alt="Volta às Aulas">
+                    <div class="campaign-status status-upcoming">Próxima</div>
+                </div>
+                <div class="campaign-body">
+                    <h5 class="campaign-title">Volta às Aulas Solidária</h5>
+                    <div class="campaign-meta">
+                        <i class="fas fa-calendar"></i>
+                        <span>01/08/2025 - 31/08/2025</span>
+                    </div>
+                    <div class="campaign-meta">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span>Universidades e Escolas</span>
+                    </div>
+                    <p>Campanha direcionada para estudantes e professores. Promovendo a cultura de doação no ambiente educacional.</p>
+                    <div class="campaign-progress">
+                        <div class="progress">
+                            <div class="progress-bar" style="width: 0%"></div>
+                        </div>
+                        <div class="progress-text d-flex justify-content-between">
+                            <span>0 doações</span>
+                            <span>Meta: 800</span>
+                        </div>
+                    </div>
+                    <a href="#" class="btn-campaign">Agendar Participação</a>
+                </div>
+            </div>
+        </div>
+        <!-- Campanha 3 -->
+        <div class="col-md-6 col-lg-4 campaign-item fade-in mb-5" data-category="active" data-title="maratona de doação">
+            <div class="campaign-card">
+                <div class="position-relative">
+                    <img src="https://images.unsplash.com/photo-1559757148-5c350d0d3c56?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" class="card-img-top campaign-image" alt="Maratona">
+                    <div class="campaign-status status-active">Ativa</div>
+                </div>
+                <div class="campaign-body">
+                    <h5 class="campaign-title">Maratona de Doação</h5>
+                    <div class="campaign-meta">
+                        <i class="fas fa-calendar"></i>
+                        <span>10/06/2025 - 17/06/2025</span>
+                    </div>
+                    <div class="campaign-meta">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span>Múltiplos Locais</span>
+                    </div>
+                    <p>Uma semana intensa de doações com postos móveis em diversos pontos da cidade. Participe desta maratona solidária!</p>
+                    <div class="campaign-progress">
+                        <div class="progress">
+                            <div class="progress-bar" style="width: 85%"></div>
+                        </div>
+                        <div class="progress-text d-flex justify-content-between">
+                            <span>425 doações</span>
+                            <span>Meta: 500</span>
+                        </div>
+                    </div>
+                    <a href="#" class="btn-campaign">Participar</a>
+                </div>
+            </div>
+        </div>
+        <!-- Campanha 4 -->
+        <div class="col-md-6 col-lg-4 campaign-item fade-in mb-5" data-category="ended" data-title="maio amarelo">
+            <div class="campaign-card">
+                <div class="position-relative">
+                    <img src="https://images.unsplash.com/photo-1582750433449-648ed127bb54?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" class="card-img-top campaign-image" alt="Maio Amarelo">
+                    <div class="campaign-status status-ended">Encerrada</div>
+                </div>
+                <div class="campaign-body">
+                    <h5 class="campaign-title">Maio Amarelo</h5>
+                    <div class="campaign-meta">
+                        <i class="fas fa-calendar"></i>
+                        <span>01/05/2025 - 31/05/2025</span>
+                    </div>
+                    <div class="campaign-meta">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span>Hospitais de Trauma</span>
+                    </div>
+                    <p>Campanha focada na conscientização sobre acidentes de trânsito e a importância do sangue em emergências.</p>
+                    <div class="campaign-progress">
+                        <div class="progress">
+                            <div class="progress-bar" style="width: 100%"></div>
+                        </div>
+                        <div class="progress-text d-flex justify-content-between">
+                            <span>1200 doações</span>
+                            <span>Meta: 1000</span>
+                        </div>
+                    </div>
+                    <a href="#" class="btn-campaign">Ver Resultados</a>
+                </div>
+            </div>
+        </div>
+        <!-- Campanha 5 -->
+        <div class="col-md-6 col-lg-4 campaign-item fade-in mb-5" data-category="upcoming" data-title="setembro dourado">
+            <div class="campaign-card">
+                <div class="position-relative">
+                    <img src="https://images.unsplash.com/photo-1576091160399-112ba8d25d1f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" class="card-img-top campaign-image" alt="Setembro Dourado">
+                    <div class="campaign-status status-upcoming">Próxima</div>
+                </div>
+                <div class="campaign-body">
+                    <h5 class="campaign-title">Setembro Dourado</h5>
+                    <div class="campaign-meta">
+                        <i class="fas fa-calendar"></i>
+                        <span>01/09/2025 - 30/09/2025</span>
+                    </div>
+                    <div class="campaign-meta">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span>Centros Oncológicos</span>
+                    </div>
+                    <p>Mês de conscientização sobre o câncer infantil. Doações especiais para apoiar o tratamento de crianças e adolescentes.</p>
+                    <div class="campaign-progress">
+                        <div class="progress">
+                            <div class="progress-bar" style="width: 0%"></div>
+                        </div>
+                        <div class="progress-text d-flex justify-content-between">
+                            <span>0 doações</span>
+                            <span>Meta: 600</span>
+                        </div>
+                    </div>
+                    <a href="#" class="btn-campaign">Agendar Participação</a>
+                </div>
+            </div>
+        </div>
+        <!-- Campanha 6 -->
+        <div class="col-md-6 col-lg-4 campaign-item fade-in mb-5" data-category="active" data-title="doadores de primeira viagem">
+            <div class="campaign-card">
+                <div class="position-relative">
+                    <img src="https://images.unsplash.com/photo-1584036561566-baf8f5f1b144?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1632&q=80" class="card-img-top campaign-image" alt="Primeira Doação">
+                    <div class="campaign-status status-active">Ativa</div>
+                </div>
+                <div class="campaign-body">
+                    <h5 class="campaign-title">Doadores de Primeira Viagem</h5>
+                    <div class="campaign-meta">
+                        <i class="fas fa-calendar"></i>
+                        <span>01/06/2025 - 31/07/2025</span>
+                    </div>
+                    <div class="campaign-meta">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span>Todos os Hemocentros</span>
+                    </div>
+                    <p>Campanha especial para quem nunca doou sangue. Acompanhamento personalizado e orientações completas.</p>
+                    <div class="campaign-progress">
+                        <div class="progress">
+                            <div class="progress-bar" style="width: 45%"></div>
+                        </div>
+                        <div class="progress-text d-flex justify-content-between">
+                            <span>270 doações</span>
+                            <span>Meta: 600</span>
+                        </div>
+                    </div>
+                    <a href="#" class="btn-campaign">Primeira Doação</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Estatísticas das Campanhas -->
+<section class="container mb-5">
+    <div class="text-center mb-5">
+        <h2 class="section-title">Impacto das Campanhas</h2>
+    </div>
+    <div class="stats-grid fade-in">
+        <div class="stat-item">
+            <div class="stat-number" data-target="25">0</div>
+            <div class="stat-label">Campanhas Realizadas</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-number" data-target="12500">0</div>
+            <div class="stat-label">Doações Arrecadadas</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-number" data-target="50000">0</div>
+            <div class="stat-label">Vidas Impactadas</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-number" data-target="150">0</div>
+            <div class="stat-label">Parceiros Envolvidos</div>
+        </div>
+    </div>
+</section>
 {% endblock %}
 
 <!-- Custom JavaScript -->
