@@ -16,9 +16,10 @@ VALUES (?, ?, ?, ?, ?)
 """
 
 OBTER_TODOS = """
-SELECT 
-cod_exame, cod_doacao, data_exame, tipo_exame, resultado, arquivo
-FROM exame
+SELECT e.cod_exame, d.cod_doacao, e.data_exame, e.tipo_exame, e.resultado, e.arquivo
+FROM exame e,
+doacao d
+WHERE e.cod_doacao = d.cod_doacao
 """ 
 
 UPDATE = """

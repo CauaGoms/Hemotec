@@ -15,9 +15,12 @@ VALUES (?, ?, ?)
 """ 
 
 OBTER_TODOS = """
-SELECT 
-cod_licenca, cod_assinatura, cod_unidade, status
-FROM licenca
+SELECT l.cod_licenca, a.cod_assinatura, u.cod_unidade, l.status
+FROM licenca l,
+assinatura a,
+unidade u
+WHERE l.cod_assinatura = a.cod_assinatura
+AND l.cod_unidade = u.cod_unidade
 """ 
 
 UPDATE = """

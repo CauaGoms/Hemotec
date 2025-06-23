@@ -40,8 +40,8 @@ def obter_todos() -> list[Plano]:
                 for row in rows]
         return plano
     
-def obter_por_id(self, cod_plano: int) -> Optional[Plano]:
-    with self._connect() as conn:
+def obter_por_id(cod_plano: int) -> Optional[Plano]:
+    with get_connection() as conn:
         cursor = conn.cursor()
         cursor.execute(OBTER_POR_ID, (cod_plano,))
         row = cursor.fetchone()
@@ -56,8 +56,8 @@ def obter_por_id(self, cod_plano: int) -> Optional[Plano]:
                 )
         return None
     
-def update(self, plano: Plano) -> bool:
-    with self._connect() as conn:
+def update(plano: Plano) -> bool:
+    with get_connection() as conn:
         cursor = conn.cursor()
         cursor.execute(
             UPDATE,
@@ -72,8 +72,8 @@ def update(self, plano: Plano) -> bool:
         )
         return cursor.rowcount > 0
 
-def delete(self, cod_plano: int) -> bool:
-    with self._connect() as conn:
+def delete(cod_plano: int) -> bool:
+    with get_connection() as conn:
         cursor = conn.cursor()
         cursor.execute(DELETE, (cod_plano,))
         return cursor.rowcount > 0

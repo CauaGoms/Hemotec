@@ -18,9 +18,12 @@ VALUES (?, ?, ?, ? , ?, ?)
 """
 
 OBTER_TODOS = """
-SELECT 
-cod_agendamento, cod_colaborador, cod_doador, data_hora, status, observacoes, tipo_agendamento
-FROM agendamento
+SELECT a.cod_agendamento, c.cod_colaborador, d.cod_doador, a.data_hora, a.status, a.observacoes, a.tipo_agendamento
+FROM agendamento a,
+colaborador c,
+doador d
+WHERE a.cod_colaborador = c.cod_colaborador
+AND a.cod_doador = d.cod_doador
 """ 
 
 UPDATE = """

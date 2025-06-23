@@ -45,8 +45,8 @@ def obter_todos() -> list[Instituicao]:
                 for row in rows]
         return instituicao
     
-def obter_por_id(self, cod_instituicao: int) -> Optional[Instituicao]:
-    with self._connect() as conn:
+def obter_por_id(cod_instituicao: int) -> Optional[Instituicao]:
+    with get_connection() as conn:
         cursor = conn.cursor()
         cursor.execute(OBTER_POR_ID, (cod_instituicao,))
         row = cursor.fetchone()
@@ -64,8 +64,8 @@ def obter_por_id(self, cod_instituicao: int) -> Optional[Instituicao]:
             )
         return None
     
-def update(self, instituicao: Instituicao) -> bool:
-    with self._connect() as conn:
+def update(instituicao: Instituicao) -> bool:
+    with get_connection() as conn:
         cursor = conn.cursor()
         cursor.execute(
             UPDATE,
@@ -83,8 +83,8 @@ def update(self, instituicao: Instituicao) -> bool:
         )
         return cursor.rowcount > 0
 
-def delete(self, cod_instituicao: int) -> bool:
-    with self._connect() as conn:
+def delete(cod_instituicao: int) -> bool:
+    with get_connection() as conn:
         cursor = conn.cursor()
         cursor.execute(DELETE, (cod_instituicao,))
         return cursor.rowcount > 0

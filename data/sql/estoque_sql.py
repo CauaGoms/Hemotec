@@ -16,9 +16,10 @@ VALUES (?, ?, ?, ?, ?)
 """
 
 OBTER_TODOS = """
-SELECT 
-cod_estoque, cod_unidade, tipo_sanguineo, fator_rh, quantidade, data_atualizacao
-FROM estoque
+SELECT e.cod_estoque, u.cod_unidade, e.tipo_sanguineo, e.fator_rh, e.quantidade, e.data_atualizacao
+FROM estoque e,
+unidade u
+WHERE e.cod_unidade = u.cod_unidade
 """ 
 
 UPDATE = """

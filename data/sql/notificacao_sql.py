@@ -17,9 +17,10 @@ VALUES (?, ?, ?, ?, ?, ?)
 """ 
 
 OBTER_TODOS = """
-SELECT 
-cod_notificacao, cod_adm, destino, tipo, mensagem, status, data_envio
-FROM notificacao
+SELECT n.cod_notificacao, a.cod_adm, n.destino, n.tipo, n.mensagem, n.status, n.data_envio
+FROM notificacao n,
+adm_unidade a
+WHERE n.cod_adm = a.cod_adm
 """ 
 
 UPDATE = """

@@ -33,8 +33,8 @@ def obter_todos() -> list[Adm_campanha]:
                 for row in rows]
         return adm_campanha
     
-def obter_por_id(self, cod_adm: int) -> Optional[Adm_campanha]:
-    with self._connect() as conn:
+def obter_por_id(cod_adm: int) -> Optional[Adm_campanha]:
+    with get_connection() as conn:
         cursor = conn.cursor()
         cursor.execute(OBTER_POR_ID, (cod_adm,))
         row = cursor.fetchone()
@@ -46,8 +46,8 @@ def obter_por_id(self, cod_adm: int) -> Optional[Adm_campanha]:
             )
         return None
     
-def update(self, adm_campanha: Adm_campanha) -> bool:
-    with self._connect() as conn:
+def update(adm_campanha: Adm_campanha) -> bool:
+    with get_connection() as conn:
         cursor = conn.cursor()
         cursor.execute(
             UPDATE,
@@ -59,8 +59,8 @@ def update(self, adm_campanha: Adm_campanha) -> bool:
         )
         return cursor.rowcount > 0
 
-def delete(self, cod_adm: int) -> bool:
-    with self._connect() as conn:
+def delete(cod_adm: int) -> bool:
+    with get_connection() as conn:
         cursor = conn.cursor()
         cursor.execute(DELETE, (cod_adm,))
         return cursor.rowcount > 0

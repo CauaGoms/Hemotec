@@ -41,8 +41,8 @@ def obter_todos() -> list[Notificacao]:
                 for row in rows]
         return notificacao
     
-def obter_por_id(self, cod_notificacao: int) -> Optional[Notificacao]:
-    with self._connect() as conn:
+def obter_por_id(cod_notificacao: int) -> Optional[Notificacao]:
+    with get_connection() as conn:
         cursor = conn.cursor()
         cursor.execute(OBTER_POR_ID, (cod_notificacao,))
         row = cursor.fetchone()
@@ -58,8 +58,8 @@ def obter_por_id(self, cod_notificacao: int) -> Optional[Notificacao]:
                 ) 
         return None
     
-def update(self, notificacao: Notificacao) -> bool:
-    with self._connect() as conn:
+def update(notificacao: Notificacao) -> bool:
+    with get_connection() as conn:
         cursor = conn.cursor()
         cursor.execute(
             UPDATE,
@@ -75,8 +75,8 @@ def update(self, notificacao: Notificacao) -> bool:
         )
         return cursor.rowcount > 0
 
-def delete(self, cod_notificacao: int) -> bool:
-    with self._connect() as conn:
+def delete(cod_notificacao: int) -> bool:
+    with get_connection() as conn:
         cursor = conn.cursor()
         cursor.execute(DELETE, (cod_notificacao,))
         return cursor.rowcount > 0
