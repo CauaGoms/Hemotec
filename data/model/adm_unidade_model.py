@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from usuario_model import Usuario
+from data.model.usuario_model import Usuario
 
 @dataclass
 class Adm_unidade(Usuario):
