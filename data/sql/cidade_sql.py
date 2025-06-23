@@ -12,9 +12,8 @@ VALUES (?, ?)
 """
 
 OBTER_TODOS = """
-SELECT 
-cod_cidade, nome_cidade, sigla_estado
-FROM cidade
+SELECT c.cod_cidade, c.nome_cidade, c.sigla_estado
+FROM cidade c
 """ 
 
 UPDATE = """

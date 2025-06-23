@@ -17,9 +17,14 @@ VALUES (?, ?, ?, ?, ?)
 """
 
 OBTER_TODOS = """
-SELECT 
-cod_adm, cod_unidade, cod_notificacao, permissao_envio_campanha, permissao_envio_notificacao
-FROM adm_unidade
+SELECT usu.cod_adm, u.cod_unidade, n.cod_notificacao, adm.permissao_envio_campanha, adm.permissao_envio_notificacao
+FROM adm_unidade adm,
+unidade u,
+notificacao n,
+usuario usu
+WHERE adm.cod_adm = usu.cod_usuario
+AND adm.cod_unidade = u.cod_unidade
+AND adm.cod_notificacao = n.cod_notificacao
 """ 
 
 UPDATE = """

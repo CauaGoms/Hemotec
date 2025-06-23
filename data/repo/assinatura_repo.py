@@ -43,8 +43,8 @@ def obter_todos() -> list[Assinatura]:
                 for row in rows]
         return assinatura
     
-def obter_por_id(self, cod_assinatuta: int) -> Optional[Assinatura]:
-    with self._connect() as conn:
+def obter_por_id(cod_assinatuta: int) -> Optional[Assinatura]:
+    with get_connection() as conn:
         cursor = conn.cursor()
         cursor.execute(OBTER_POR_ID, (cod_assinatuta,))
         row = cursor.fetchone()
@@ -61,8 +61,8 @@ def obter_por_id(self, cod_assinatuta: int) -> Optional[Assinatura]:
             )
         return None
     
-def update(self, assinatura: Assinatura) -> bool:
-    with self._connect() as conn:
+def update(assinatura: Assinatura) -> bool:
+    with get_connection() as conn:
         cursor = conn.cursor()
         cursor.execute(
             UPDATE,
@@ -79,8 +79,8 @@ def update(self, assinatura: Assinatura) -> bool:
         )
         return cursor.rowcount > 0
 
-def delete(self, cod_assinatura: int) -> bool:
-    with self._connect() as conn:
+def delete(cod_assinatura: int) -> bool:
+    with get_connection() as conn:
         cursor = conn.cursor()
         cursor.execute(DELETE, (cod_assinatura,))
         return cursor.rowcount > 0

@@ -4,6 +4,7 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 import uvicorn
 
+from data.model.usuario_model import Usuario
 from data.repo import cidade_repo
 from data.repo import campanha_repo
 from data.repo import usuario_repo
@@ -72,6 +73,34 @@ async def get_root():
     response = templates.TemplateResponse("login.html", {"request": {}})
     return response
 
+# @app.post("/login")
+# async def post_login(
+#     email: str = Form(...),
+#     senha: str = Form(...)
+# ):
+#     usuario = usuario_repo.obter_por_email(email)
+#     if usuario and usuario.senha == senha:
+#         return RedirectResponse("/doador_inicio", status_code=303)
+#         # elif usuario.tipo == "instituicao":
+#         #     return RedirectResponse("/instituicao", status_code=303)
+#         # elif usuario.tipo == "doador":
+#         #     return RedirectResponse("/doador", status_code=303)
+#     else:
+#         raise Exception("Usuário ou senha inválidos.")
+
+# async def post_produto_cadastrar(
+#     nome: str = Form(...),
+#     descricao: str = Form(...),
+#     preco: float = Form(...),
+#     quantidade: int = Form(...)
+# ):
+#     produto = Produto(0, nome, descricao, preco, quantidade)
+#     id_produto = produto_repo.inserir(produto)
+#     if id_produto == None:
+#         raise Exception("Erro ao inserir produto.")
+#     else:
+#         return RedirectResponse("/produtos", status_code=303)
+
 @app.get("/recuperar_senha")
 async def get_root():
     response = templates.TemplateResponse("esqueceu_senha.html", {"request": {}})
@@ -81,6 +110,38 @@ async def get_root():
 async def get_root():
     response = templates.TemplateResponse("cadastro.html", {"request": {}})
     return response
+
+@app.post("/cadastro")
+async def post_cadastro(
+    nome: str = Form(...),
+    email: str = Form(...),
+    senha: str = Form(...),
+    cpf: str = Form(...),
+    data_nascimento: str = Form(...),
+    rua_usuario: str = Form(...),
+    bairro_usuario: str = Form(...),
+    cidade_usuario: str = Form(...),
+    cep_usuario: str = Form(...)
+):
+    usu = Usuario(0, nome, email, senha, cpf, data_nascimento, rua_usuario, bairro_usuario, cidade_usuario, cep_usuario)
+    usuario = usuario_repo.inserir(usu)
+    if usuario == None:
+        raise Exception("Erro ao cadastrar usuário.")
+    else:
+        return RedirectResponse("/login", status_code=303)
+    
+# async def post_produto_cadastrar(
+#     nome: str = Form(...),
+#     descricao: str = Form(...),
+#     preco: float = Form(...),
+#     quantidade: int = Form(...)
+# ):
+#     produto = Produto(0, nome, descricao, preco, quantidade)
+#     id_produto = produto_repo.inserir(produto)
+#     if id_produto == None:
+#         raise Exception("Erro ao inserir produto.")
+#     else:
+#         return RedirectResponse("/produtos", status_code=303)
 
 @app.get("/doador")
 async def get_root():

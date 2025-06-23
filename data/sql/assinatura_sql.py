@@ -20,9 +20,14 @@ VALUES (?, ?, ?, ?, ?, ?, ?)
 """
 
 OBTER_TODOS = """
-SELECT 
-cod_assinatura, cnpj, cod_plano, cod_licenca, data_inicio, data_fim, valor, qtd_licenca
-FROM assinatura
+SELECT a.cod_assinatura, i.cnpj, p.cod_plano, l.cod_licenca, a.data_inicio, a.data_fim, a.valor, a.qtd_licenca
+FROM assinatura a,
+instituicao i,
+plano p,
+licenca l
+WHERE a.cnpj = i.cnpj
+AND a.cod_plano = p.cod_plano
+AND a.cod_licenca = l.cod_licenca
 """ 
 
 UPDATE = """

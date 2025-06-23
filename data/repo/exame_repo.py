@@ -39,8 +39,8 @@ def obter_todos() -> list[Exame]:
                 for row in rows]
         return exame
     
-def obter_por_id(self, cod_exame: int) -> Optional[Exame]:
-    with self._connect() as conn:
+def obter_por_id(cod_exame: int) -> Optional[Exame]:
+    with get_connection() as conn:
         cursor = conn.cursor()
         cursor.execute(OBTER_POR_ID, (cod_exame,))
         row = cursor.fetchone()
@@ -55,8 +55,8 @@ def obter_por_id(self, cod_exame: int) -> Optional[Exame]:
                 ) 
         return None
     
-def update(self, exame: Exame) -> bool:
-    with self._connect() as conn:
+def update(exame: Exame) -> bool:
+    with get_connection() as conn:
         cursor = conn.cursor()
         cursor.execute(
             UPDATE,
@@ -71,8 +71,8 @@ def update(self, exame: Exame) -> bool:
         )
         return cursor.rowcount > 0
 
-def delete(self, cod_exame: int) -> bool:
-    with self._connect() as conn:
+def delete(cod_exame: int) -> bool:
+    with get_connection() as conn:
         cursor = conn.cursor()
         cursor.execute(DELETE, (cod_exame,))
         return cursor.rowcount > 0

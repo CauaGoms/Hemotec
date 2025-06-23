@@ -15,9 +15,8 @@ VALUES (?, ?, ?, ?, ?)
 """
 
 OBTER_TODOS = """
-SELECT 
-cod_campanha, titulo, descricao, data_inicio, data_fim, status
-FROM campanha
+SELECT c.cod_campanha, c.titulo, c.descricao, c.data_inicio, c.data_fim, c.status
+FROM campanha c
 """ 
 
 UPDATE = """

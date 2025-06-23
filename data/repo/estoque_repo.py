@@ -39,8 +39,8 @@ def obter_todos() -> list[Estoque]:
                 for row in rows]
         return estoque
     
-def obter_por_id(self, cod_estoque: int) -> Optional[Estoque]:
-    with self._connect() as conn:
+def obter_por_id(cod_estoque: int) -> Optional[Estoque]:
+    with get_connection() as conn:
         cursor = conn.cursor()
         cursor.execute(OBTER_POR_ID, (cod_estoque,))
         row = cursor.fetchone()
@@ -55,8 +55,8 @@ def obter_por_id(self, cod_estoque: int) -> Optional[Estoque]:
             )
         return None
     
-def update(self, estoque: Estoque) -> bool:
-    with self._connect() as conn:
+def update(estoque: Estoque) -> bool:
+    with get_connection() as conn:
         cursor = conn.cursor()
         cursor.execute(
             UPDATE,
@@ -71,8 +71,8 @@ def update(self, estoque: Estoque) -> bool:
         )
         return cursor.rowcount > 0
 
-def delete(self, cod_estoque: int) -> bool:
-    with self._connect() as conn:
+def delete(cod_estoque: int) -> bool:
+    with get_connection() as conn:
         cursor = conn.cursor()
         cursor.execute(DELETE, (cod_estoque,))
         return cursor.rowcount > 0

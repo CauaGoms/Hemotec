@@ -15,9 +15,12 @@ VALUES (?, ?, ?)
 """
 
 OBTER_TODOS = """
-SELECT 
-cod_adm, cod_campanha, papel
-FROM adm_campanha
+SELECT adm.cod_adm, c.cod_campanha, adm.papel
+FROM adm_campanha adm,
+campanha c,
+adm_unidade au
+WHERE adm.cod_campanha = c.cod_campanha
+AND adm.cod_adm = au.cod_adm
 """ 
 
 UPDATE = """

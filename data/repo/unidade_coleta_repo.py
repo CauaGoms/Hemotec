@@ -52,8 +52,8 @@ def obter_todos() -> list[Unidade_coleta]:
                 for row in rows]
         return unidade_coleta
     
-def obter_por_id(self, cod_unidade_coleta: int) -> Optional[Unidade_coleta]:
-    with self._connect() as conn:
+def obter_por_id(cod_unidade_coleta: int) -> Optional[Unidade_coleta]:
+    with get_connection() as conn:
         cursor = conn.cursor()
         cursor.execute(OBTER_POR_ID, (cod_unidade_coleta,))
         row = cursor.fetchone()
@@ -84,8 +84,8 @@ def obter_coordenada():
             for row in resultados
         ]
 
-def update(self, unidade_coleta: Unidade_coleta) -> bool:
-    with self._connect() as conn:
+def update(unidade_coleta: Unidade_coleta) -> bool:
+    with get_connection() as conn:
         cursor = conn.cursor()
         cursor.execute(
             UPDATE,
@@ -106,8 +106,8 @@ def update(self, unidade_coleta: Unidade_coleta) -> bool:
         )
         return cursor.rowcount > 0
 
-def delete(self, cod_unidade_coleta: int) -> bool:
-    with self._connect() as conn:
+def delete(cod_unidade_coleta: int) -> bool:
+    with get_connection() as conn:
         cursor = conn.cursor()
         cursor.execute(DELETE, (cod_unidade_coleta,))
         return cursor.rowcount > 0

@@ -18,9 +18,14 @@ VALUES (?, ?, ?, ?, ?, ?)
 """
 
 OBTER_TODOS = """
-SELECT 
-cod_doador, cod_doacao, cod_agendamento, tipo_sanguineo, fator_rh, elegivel
-FROM doador
+SELECT o.cod_doador, e.cod_doacao, a.cod_agendamento, d.tipo_sanguineo, d.fator_rh, d.elegivel
+FROM doador d,
+usuario o,
+doacao e,
+agendamento a
+WHERE d.cod_doador = o.cod_usuario
+AND d.cod_doacao = e.cod_doacao
+AND d.cod_agendamento = a.cod_agendamento
 """ 
 
 UPDATE = """

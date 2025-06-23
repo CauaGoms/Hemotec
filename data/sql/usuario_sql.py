@@ -22,10 +22,10 @@ VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
 """
 
 OBTER_TODOS = """
-SELECT 
-cod_usuario, nome, email, senha, cpf, data_nascimento, status, data_cadastro, rua_usuario, bairro_usuario, cidade_usuario, cep_usuario
-FROM usuario
-ORDER BY nome
+SELECT u.cod_usuario, u.nome, u.email, u.senha, u.cpf, u.data_nascimento, u.status, u.data_cadastro, u.rua_usuario, u.bairro_usuario, c.cod_cidade, u.cep_usuario
+FROM usuario u,
+cidade c
+WHERE u.cidade_usuario = c.cod_cidade
 """ 
 
 UPDATE = """
@@ -46,3 +46,11 @@ cidade c
 WHERE u.cidade_usuario = c.cod_cidade
 AND u.cod_usuario = ?;
 """
+
+# OBTER_POR_EMAIL = """
+# SELECT u.cod_usuario, u.nome, u.email, u.senha, u.cpf, u.data_nascimento, u.status, u.data_cadastro, u.rua_usuario, u.bairro_usuario, c.cod_cidade, u.cep_usuario
+# FROM usuario u,
+# cidade c
+# WHERE u.cidade_usuario = c.cod_cidade
+# AND u.email = ?;
+# """

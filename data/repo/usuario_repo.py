@@ -50,8 +50,8 @@ def obter_todos() -> list[Usuario]:
                 for row in rows]
         return usuario
     
-def obter_por_id(self, cod_usuario: int) -> Optional[Usuario]:
-    with self._connect() as conn:
+def obter_por_id(cod_usuario: int) -> Optional[Usuario]:
+    with get_connection() as conn:
         cursor = conn.cursor()
         cursor.execute(OBTER_POR_ID, (cod_usuario,))
         row = cursor.fetchone()
@@ -72,8 +72,30 @@ def obter_por_id(self, cod_usuario: int) -> Optional[Usuario]:
             )
         return None
     
-def update(self, usuario: Usuario) -> bool:
-    with self._connect() as conn:
+# def obter_por_email(email: str) -> Optional[Usuario]:
+#     with get_connection() as conn:
+#         cursor = conn.cursor()
+#         cursor.execute(OBTER_POR_EMAIL, (email,))
+#         row = cursor.fetchone()
+#         if row:
+#             return Usuario(
+#                 cod_usuario=row["cod_usuario"],  
+#                 nome=row["nome"],         
+#                 email=row["email"],
+#                 senha=row["senha"],
+#                 cpf=row["cpf"],
+#                 data_nascimento=row["data_nascimento"],
+#                 status=row["status"],
+#                 data_cadastro=row["data_cadastro"],
+#                 rua_usuario=row["rua_usuario"],
+#                 bairro_usuario=row["bairro_usuario"],
+#                 cidade_usuario=row["cidade_usuario"],
+#                 cep_usuario=row["cep_usuario"])
+        
+#         return None
+    
+def update(usuario: Usuario) -> bool:
+    with get_connection() as conn:
         cursor = conn.cursor()
         cursor.execute(
             UPDATE,
@@ -94,8 +116,8 @@ def update(self, usuario: Usuario) -> bool:
         )
         return cursor.rowcount > 0
 
-def delete(self, cod_usuario: int) -> bool:
-    with self._connect() as conn:
+def delete(cod_usuario: int) -> bool:
+    with get_connection() as conn:
         cursor = conn.cursor()
         cursor.execute(DELETE, (cod_usuario,))
         return cursor.rowcount > 0

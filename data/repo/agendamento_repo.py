@@ -40,8 +40,8 @@ def obter_todos() -> list[Agendamento]:
                 for row in rows]
         return agendamento
     
-def obter_por_id(self, cod_agendamento: int) -> Optional[Agendamento]:
-    with self._connect() as conn:
+def obter_por_id(cod_agendamento: int) -> Optional[Agendamento]:
+    with get_connection() as conn:
         cursor = conn.cursor()
         cursor.execute(OBTER_POR_ID, (cod_agendamento,))
         row = cursor.fetchone()
@@ -57,8 +57,8 @@ def obter_por_id(self, cod_agendamento: int) -> Optional[Agendamento]:
             )
         return None
     
-def update(self, agendamento: Agendamento) -> bool:
-    with self._connect() as conn:
+def update(agendamento: Agendamento) -> bool:
+    with get_connection() as conn:
         cursor = conn.cursor()
         cursor.execute(
             UPDATE,
@@ -71,8 +71,8 @@ def update(self, agendamento: Agendamento) -> bool:
         )
         return cursor.rowcount > 0
 
-def delete(self, cod_agendamento: int) -> bool:
-    with self._connect() as conn:
+def delete(cod_agendamento: int) -> bool:
+    with get_connection() as conn:
         cursor = conn.cursor()
         cursor.execute(DELETE, (cod_agendamento,))
         return cursor.rowcount > 0

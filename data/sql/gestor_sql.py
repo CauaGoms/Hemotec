@@ -14,9 +14,12 @@ VALUES (?, ?, ?)
 """
 
 OBTER_TODOS = """
-SELECT 
-cod_gestor, cnpj, instituicao
-FROM gestor
+SELECT u.cod_gestor, i.cnpj, g.instituicao
+FROM gestor g,
+usuario u,
+instituicao i
+WHERE g.cod_gestor = u.cod_usuario
+AND g.cnpj = i.cnpj
 """ 
 
 UPDATE = """
