@@ -21,12 +21,12 @@
         <img src="/static/img/logo_vermelha.svg" alt="Hemotec Logo" class="logo-login">
         </a>
         <h2 class="login-title">Acesso ao Sistema</h2>
-        <form>
+        <form method="POST" action="/login">
             <div class="mb-3">
-                <input type="email" class="form-control" id="email" placeholder="Seu e-mail" required>
+                <input type="email" class="form-control" id="email" placeholder="Seu e-mail" required name="email">
             </div>
             <div class="mb-3">
-                <input type="password" class="form-control" id="password" placeholder="Sua senha" required>
+                <input type="password" class="form-control" id="password" placeholder="Sua senha" required name="senha">
             </div>
             <a href="dashboard.html">
             <button type="submit" class="btn btn-primary btn-login">Entrar</button>
