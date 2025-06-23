@@ -365,8 +365,8 @@
 <!-- Custmom JavaScript do Map -->
 {% block custom_js %}
 <script>
+  const unidades = {{ coordenada | tojson }};
   const mapa = L.map('mapa').setView([-20.839, -41.112], 12);
-  /*const unidades = {{ coordenada | tojson }};*/
 
   // Camada de fundo do OpenStreetMap
   L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -388,14 +388,14 @@
     iconAnchor: [16, 32]
   });
 
-  if (Array.isArray(unidades) && unidades.length > 0) {
-    unidades.forEach(function(unidade) {
-      const nome = Object.keys(unidade)[0];
-      const coords = unidade[nome];
-      L.marker(coords, { icon: iconeGota }).addTo(mapa)
-        .bindPopup(`<strong>${nome}</strong>`);
-    });
-  }
+  // Adiciona marcadores das unidades vindas do backend
+  unidades.forEach(function(unidade) {
+    // unidade é um dicionário: {nome: [lat, lon]}
+    const nome = Object.keys(unidade)[0];
+    const coords = unidade[nome];
+    L.marker(coords, { icon: iconeGota }).addTo(mapa)
+      .bindPopup(`<strong>${nome}</strong>`);
+  });
 
   // Localização do usuário (opcional)
   mapa.locate({ setView: true, maxZoom: 14 });
