@@ -4,7 +4,6 @@
 
 - [ ] 
 - [ ] Conferir ordem do update dos repos no slq
-- [ ] Fazer a atualização de senha separado no sql
 
 - [ ] Aplicar as coordenadas das unidades presentes no banco no maps do `boas_vindas_inicio`
 - [ ] Cadastro no banco de dados para fazer login de verdade
