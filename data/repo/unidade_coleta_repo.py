@@ -23,7 +23,9 @@ def inserir(unidade_coleta: Unidade_coleta) -> Optional[int]:
             unidade_coleta.rua_unidade,
             unidade_coleta.bairro_unidade,
             unidade_coleta.cidade_unidade,
-            unidade_coleta.cep_unidade))
+            unidade_coleta.cep_unidade,
+            unidade_coleta.latitude,
+            unidade_coleta.longitude))
         return cursor.lastrowid
     
 
@@ -43,7 +45,9 @@ def obter_todos() -> list[Unidade_coleta]:
                 rua_unidade=row["rua_unidade"],
                 bairro_unidade=row["bairro_unidade"],
                 cidade_unidade=row["cidade_unidade"],
-                cep_unidade=row["cep_unidade"]
+                cep_unidade=row["cep_unidade"],
+                latitude=row["latitude"],
+                longitude=row["longitude"]
                 )  
                 for row in rows]
         return unidade_coleta
@@ -64,10 +68,22 @@ def obter_por_id(self, cod_unidade_coleta: int) -> Optional[Unidade_coleta]:
                 rua_unidade=row["rua_unidade"],
                 bairro_unidade=row["bairro_unidade"],
                 cidade_unidade=row["cidade_unidade"],
-                cep_unidade=row["cep_unidade"]
+                cep_unidade=row["cep_unidade"],
+                latitude=row["latitude"],
+                longitude=row["longitude"]
             )
         return None
     
+def obter_coordenada():
+    with get_connection() as conn:
+        cursor = conn.cursor()
+        cursor.execute("SELECT nome, latitude, longitude FROM unidade_coleta")
+        resultados = cursor.fetchall()
+        return [
+            {row["nome"]: [row["latitude"], row["longitude"]]}
+            for row in resultados
+        ]
+
 def update(self, unidade_coleta: Unidade_coleta) -> bool:
     with self._connect() as conn:
         cursor = conn.cursor()
@@ -83,7 +99,9 @@ def update(self, unidade_coleta: Unidade_coleta) -> bool:
                 unidade_coleta.rua_unidade,
                 unidade_coleta.bairro_unidade,
                 unidade_coleta.cidade_unidade,
-                unidade_coleta.cep_unidade
+                unidade_coleta.cep_unidade,
+                unidade_coleta.latitude,
+                unidade_coleta.longitude,
             ),
         )
         return cursor.rowcount > 0

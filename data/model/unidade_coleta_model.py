@@ -13,3 +13,5 @@ class Unidade_coleta:
     bairro_unidade: str
     cidade_unidade: int
     cep_unidade: str
+    latitude: float
+    longitude: float

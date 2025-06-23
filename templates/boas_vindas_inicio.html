@@ -17,7 +17,6 @@
         </div>
     </div>
 </section>
-
 <!-- Campanhas Section -->
 <section class="container">
     <div class="text-center mb-5">
@@ -65,7 +64,6 @@
         </div>
     </div>
 </section>
-
 <!-- Quote Section -->
 <section class="quote-section">
     <div class="container text-center">
@@ -73,7 +71,6 @@
         <p class="quote-author">— Campanha Nacional de Doação de Sangue</p>
     </div>
 </section>
-
 <!-- Stats Section -->
 <section class="container">
     <div class="text-center mb-5">
@@ -118,7 +115,6 @@
         </div>
     </div>
 </section>
-
 <!-- Informações Importantes Section -->
 <section class="container my-5">
     <div class="row">
@@ -353,26 +349,24 @@
     </div>
     <!-- End of row for Estoque Atual -->
 </section>
-
 <!-- Mapa -->
 <section class="container mb-5">
-  <div class="text-center mb-5">
-    <h2 class="section-title">Unidades de Coleta</h2>
-  </div>
-  <div class="map-container fade-in">
-    <div id="mapa" style="height: 500px; width: 100%; border-radius: 8px;"></div>
-  </div>
+    <div class="text-center mb-5">
+        <h2 class="section-title">Unidades de Coleta</h2>
+    </div>
+    <div class="map-container fade-in">
+        <div id="mapa" style="height: 500px; width: 100%; border-radius: 8px;"></div>
+    </div>
 </section>
-
 <!-- Leaflet.js -->
-<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 {% endblock %}
-
 <!-- Custmom JavaScript do Map -->
 {% block custom_js %}
 <script>
   const mapa = L.map('mapa').setView([-20.839, -41.112], 12);
+  /*const unidades = {{ coordenada | tojson }};*/
 
   // Camada de fundo do OpenStreetMap
   L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -394,19 +388,14 @@
     iconAnchor: [16, 32]
   });
 
-  // Carregar unidades do arquivo JSON
-  /*fetch('/templates/unidades.json')
-    .then(res => res.json())
-    .then(unidades => {
-      unidades.forEach(u => {
-        L.marker([u.lat, u.lon], { icon: iconeGota }).addTo(mapa)
-          .bindPopup(`<strong>${u.nome}</strong><br>${u.cidade}<br><em>${u.horario}</em>`);
-      });
-    })
-    .catch(err => {
-      alert("Erro ao carregar as unidades.");
-      console.error(err);
-    });*/
+  if (Array.isArray(unidades) && unidades.length > 0) {
+    unidades.forEach(function(unidade) {
+      const nome = Object.keys(unidade)[0];
+      const coords = unidade[nome];
+      L.marker(coords, { icon: iconeGota }).addTo(mapa)
+        .bindPopup(`<strong>${nome}</strong>`);
+    });
+  }
 
   // Localização do usuário (opcional)
   mapa.locate({ setView: true, maxZoom: 14 });

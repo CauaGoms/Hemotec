@@ -48,7 +48,8 @@ exame_repo.criar_tabela()
 
 @app.get("/")
 async def get_root():
-    response = templates.TemplateResponse("boas_vindas_inicio.html", {"request": {}, "active_page": "inicio"})
+    coordenada = unidade_coleta_repo.obter_coordenada() or []
+    response = templates.TemplateResponse("boas_vindas_inicio.html", {"request": {}, "active_page": "inicio", "coordenada": coordenada})
     return response
 
 @app.get("/sobre")
