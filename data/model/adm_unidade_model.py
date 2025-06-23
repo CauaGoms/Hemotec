@@ -1,8 +1,8 @@
 from dataclasses import dataclass
-
+from usuario_model import Usuario
 
 @dataclass
-class Adm_unidade:
+class Adm_unidade(Usuario):
     cod_adm: int
     cod_unidade: int
     cod_notificacao: int

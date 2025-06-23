@@ -19,7 +19,6 @@ def inserir(gestor: Gestor) -> Optional[int]:
             gestor.instituicao))
         return cursor.lastrowid
     
-
 def obter_todos() -> list[Gestor]:
     with get_connection() as conn:
         cursor = conn.cursor()
