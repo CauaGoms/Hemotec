@@ -23,7 +23,7 @@
         <h2 class="register-title">Cadastre-se</h2>
         <!-- Exemplo de estrutura para cadastro multi-etapas -->
 
-<form id="cadastroForm" method="post">
+<form id="cadastroForm" method="POST" action="/cadastro">
     <!-- Seção 1: Dados Pessoais -->
     <div class="form-section" id="cadastroSection1">
         <h3>Dados Pessoais</h3>
@@ -52,9 +52,6 @@
             </div>
         <div class="mb-3">
                 <input type="text" class="form-control" id="rua" placeholder="Rua" required name="rua_usuario">
-            </div>
-        <div class="mb-3">
-                <input type="text" class="form-control" id="numero" placeholder="Número" required name="numero_usuario">
             </div>
         <div class="mb-3">
                 <input type="text" class="form-control" id="bairro" placeholder="Bairro" required name="bairro_usuario">
