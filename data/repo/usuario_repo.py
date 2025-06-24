@@ -67,7 +67,7 @@ def obter_por_id(cod_usuario: int) -> Optional[Usuario]:
                 data_cadastro=row["data_cadastro"],
                 rua_usuario=row["rua_usuario"],
                 bairro_usuario=row["bairro_usuario"],
-                cod_cidade=row["cod_cidade"],
+                cod_cidade=row["cidade_usuario"],
                 cep_usuario=row["cep_usuario"],
                 telefone=row["telefone"]
             )

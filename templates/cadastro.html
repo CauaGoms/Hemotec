@@ -23,7 +23,7 @@
         <h2 class="register-title">Cadastre-se</h2>
         <!-- Exemplo de estrutura para cadastro multi-etapas -->
 
-<form id="cadastroForm" method="POST" action="/cadastro">
+<form method="post" action="/cadastro">
     <!-- Seção 1: Dados Pessoais -->
     <div class="form-section" id="cadastroSection1">
         <h3>Dados Pessoais</h3>
@@ -131,13 +131,13 @@ function cadastroValidateCurrentStep() {
     return true;
 }
 
-// Submit do cadastro
+/*// Submit do cadastro
 document.getElementById('cadastroForm').addEventListener('submit', function(e) {
     e.preventDefault();
     if (!cadastroValidateCurrentStep()) return;
     alert('Cadastro realizado com sucesso!');
     // Aqui você pode enviar os dados via AJAX ou redirecionar
-});
+});*/
 </script>
 
 <!-- Script para funcionalidade do CEP e máscaras -->

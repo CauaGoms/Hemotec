@@ -18,7 +18,7 @@ FOREIGN KEY (cidade_usuario) REFERENCES cidade(cod_cidade)
 """
 
 INSERIR = """
-INSERT INTO cliente (nome, email, senha, cpf, data_nascimento, status, data_cadastro, rua_usuario, bairro_usuario, cidade_usuario, cep_usuario, telefone) 
+INSERT INTO usuario (nome, email, senha, cpf, data_nascimento, status, data_cadastro, rua_usuario, bairro_usuario, cidade_usuario, cep_usuario, telefone) 
 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
 """
 
