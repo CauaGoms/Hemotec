@@ -98,14 +98,16 @@ async def get_root():
 @app.post("/cadastro")
 async def post_cadastro(
     nome: str = Form(...),
-    email: str = Form(...),
-    senha: str = Form(...),
     cpf: str = Form(...),
     data_nascimento: str = Form(...),
+    email: str = Form(...),
+    telefone: str = Form(...),
+    cep_usuario: str = Form(...),
     rua_usuario: str = Form(...),
     bairro_usuario: str = Form(...),
     cidade_usuario: str = Form(...),
-    cep_usuario: str = Form(...)
+    senha: str = Form(...)
+    
 ):
     status = 1
     data_cadastro = date.today().isoformat()
