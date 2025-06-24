@@ -55,10 +55,10 @@ def update(licenca: Licenca) -> bool:
         cursor.execute(
             UPDATE,
             (
-                licenca.cod_licenca,
                 licenca.cod_assinatura,
                 licenca.cod_unidade,
-                licenca.status
+                licenca.status,
+                licenca.cod_licenca
             ),
         )
         return cursor.rowcount > 0

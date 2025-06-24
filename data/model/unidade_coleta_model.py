@@ -15,3 +15,4 @@ class Unidade_coleta:
     cep_unidade: str
     latitude: float
     longitude: float
+    telefone: str

@@ -67,14 +67,14 @@ def update(assinatura: Assinatura) -> bool:
         cursor.execute(
             UPDATE,
             (
-                assinatura.cod_assinatura,
                 assinatura.cnpj,
                 assinatura.cod_plano,
                 assinatura.cod_licenca,
                 assinatura.data_inicio,
                 assinatura.data_fim,
                 assinatura.valor,
-                assinatura.qtd_licenca
+                assinatura.qtd_licenca,
+                assinatura.cod_assinatura
             ),
         )
         return cursor.rowcount > 0

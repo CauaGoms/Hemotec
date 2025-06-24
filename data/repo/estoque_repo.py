@@ -61,12 +61,12 @@ def update(estoque: Estoque) -> bool:
         cursor.execute(
             UPDATE,
             (
-                estoque.cod_estoque,
                 estoque.cod_unidade,
                 estoque.tipo_sanguineo,
                 estoque.fator_rh,
                 estoque.quantidade,
-                estoque.data_atualizacao
+                estoque.data_atualizacao,
+                estoque.cod_estoque
             ),
         )
         return cursor.rowcount > 0

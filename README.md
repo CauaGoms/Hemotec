@@ -2,7 +2,6 @@
 
 ## Próximos Passos
 
-- [ ] 
 - [ ] Conferir ordem do update dos repos no slq
 
 - [ ] Aplicar as coordenadas das unidades presentes no banco no maps do `boas_vindas_inicio`

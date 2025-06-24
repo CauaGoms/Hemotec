@@ -12,4 +12,5 @@ class Instituicao:
     bairro_instituicao: str
     cidade_instituicao: int
     cep_instituicao: str
+    telefone: str
     

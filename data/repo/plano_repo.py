@@ -62,12 +62,12 @@ def update(plano: Plano) -> bool:
         cursor.execute(
             UPDATE,
             (
-                plano.cod_plano,
                 plano.cod_assinatura,
                 plano.qtd_licenca,
                 plano.nome,
                 plano.valor,
-                plano.validade
+                plano.validade,
+                plano.cod_plano
             ),
         )
         return cursor.rowcount > 0

@@ -60,12 +60,12 @@ def update(doacao: Doacao) -> bool:
         cursor.execute(
             UPDATE,
             (
-                doacao.cod_doacao,
                 doacao.cod_doador,
                 doacao.cod_exame,
                 doacao.data_hora,
                 doacao.quantidade,
-                doacao.status
+                doacao.status,
+                doacao.cod_doacao
             ),
         )
         return cursor.rowcount > 0

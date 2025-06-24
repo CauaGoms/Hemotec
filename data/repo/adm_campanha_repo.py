@@ -52,9 +52,9 @@ def update(adm_campanha: Adm_campanha) -> bool:
         cursor.execute(
             UPDATE,
             (
-                adm_campanha.cod_adm,
                 adm_campanha.cod_campanha,
-                adm_campanha.papel
+                adm_campanha.papel,
+                adm_campanha.cod_adm
             ),
         )
         return cursor.rowcount > 0

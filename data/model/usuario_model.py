@@ -15,3 +15,4 @@ class Usuario:
     bairro_usuario: str
     cidade_usuario: int
     cep_usuario: str
+    telefone: str

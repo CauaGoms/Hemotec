@@ -22,7 +22,8 @@ def inserir(instituicao: Instituicao) -> Optional[int]:
             instituicao.rua_instituicao,
             instituicao.bairro_instituicao,
             instituicao.cidade_instituicao,
-            instituicao.cep_instituicao))
+            instituicao.cep_instituicao,
+            instituicao.telefone))
         return cursor.lastrowid
     
 
@@ -41,7 +42,8 @@ def obter_todos() -> list[Instituicao]:
                 rua_instituicao=row["rua_instituicao"],
                 bairro_instituicao=row["bairro_instituicao"],
                 cidade_instituicao=row["cidade_instituicao"],
-                cep_instituicao=row["cep_instituicao"])  
+                cep_instituicao=row["cep_instituicao"],
+                telefone=row["telefone"])  
                 for row in rows]
         return instituicao
     
@@ -60,7 +62,8 @@ def obter_por_id(cod_instituicao: int) -> Optional[Instituicao]:
                 rua_instituicao=row["rua_instituicao"],
                 bairro_instituicao=row["bairro_instituicao"],
                 cidade_instituicao=row["cidade_instituicao"],
-                cep_instituicao=row["cep_instituicao"]
+                cep_instituicao=row["cep_instituicao"],
+                telefone=row["telefone"]
             )
         return None
     
@@ -70,7 +73,6 @@ def update(instituicao: Instituicao) -> bool:
         cursor.execute(
             UPDATE,
             (
-                instituicao.cnpj,
                 instituicao.cod_gestor,
                 instituicao.cod_assinatura,
                 instituicao.nome,
@@ -78,7 +80,9 @@ def update(instituicao: Instituicao) -> bool:
                 instituicao.rua_instituicao,
                 instituicao.bairro_instituicao,
                 instituicao.cidade_instituicao,
-                instituicao.cep_instituicao
+                instituicao.cep_instituicao,
+                instituicao.telefone,
+                instituicao.cnpj
             ),
         )
         return cursor.rowcount > 0

@@ -63,10 +63,10 @@ def update(agendamento: Agendamento) -> bool:
         cursor.execute(
             UPDATE,
             (
-                agendamento.cod_agendamento,
                 agendamento.cod_colaborador,
                 agendamento.cod_doador,
                 agendamento.data_hora,
+                agendamento.cod_agendamento
             ),
         )
         return cursor.rowcount > 0

@@ -12,6 +12,7 @@ cidade_unidade INTEGER NOT NULL,
 cep_unidade TEXT NOT NULL,
 latitude REAL NOT NULL,
 longitude REAL NOT NULL,
+telefone TEXT NOT NULL,
 FOREIGN KEY (cod_adm) REFERENCES adm_unidade(cod_adm),
 FOREIGN KEY (cod_licenca) REFERENCES licenca(cod_licenca),
 FOREIGN KEY (cod_estoque) REFERENCES estoque(cod_estoque),
@@ -20,12 +21,12 @@ FOREIGN KEY (cidade_unidade) REFERENCES cidade(cod_cidade)
 """
 
 INSERIR = """
-INSERT INTO unidade_coleta (cod_adm, cod_licenca, cod_estoque, nome, email, rua_unidade, bairro_unidade, cidade_unidade, cep_unidade, latitude, longitude) 
-VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+INSERT INTO unidade_coleta (cod_adm, cod_licenca, cod_estoque, nome, email, rua_unidade, bairro_unidade, cidade_unidade, cep_unidade, latitude, longitude, telefone) 
+VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
 """
 
 OBTER_TODOS = """
-SELECT u.cod_unidade, a.cod_adm, l.cod_licenca, e.cod_estoque, u.nome, u.email, u.rua_unidade, u.bairro_unidade, c.cod_cidade, u.cep_unidade, u.latitude, u.longitude
+SELECT u.cod_unidade, a.cod_adm, l.cod_licenca, e.cod_estoque, u.nome, u.email, u.rua_unidade, u.bairro_unidade, c.cod_cidade, u.cep_unidade, u.latitude, u.longitude, u.telefone
 FROM unidade_coleta u,
 adm_unidade a,
 licenca l,
@@ -38,8 +39,8 @@ AND u.cidade_unidade = c.cod_cidade
 """ 
 
 UPDATE = """
-UPDATE cod_unidade, cod_adm, cod_licenca, cod_estoque, nome, email, rua_unidade, bairro_unidade, cidade_unidade, cep_unidade, latitude, longitude
-SET cod_adm = ?, cod_licenca = ?, cod_estoque = ?, nome = ?, email = ?, rua_unidade = ?, bairro_unidade = ?, cidade_unidade = ?, cep_unidade = ?
+UPDATE cod_unidade, cod_adm, cod_licenca, cod_estoque, nome, email, rua_unidade, bairro_unidade, cidade_unidade, cep_unidade, latitude, longitude, telefone
+SET cod_adm = ?, cod_licenca = ?, cod_estoque = ?, nome = ?, email = ?, rua_unidade = ?, bairro_unidade = ?, cidade_unidade = ?, cep_unidade = ?, latitude = ?, longitude = ?, telefone = ?
 WHERE cod_unidade = ?;
 """
 
@@ -49,7 +50,7 @@ WHERE cod_unidade = ?;
 """
 
 OBTER_POR_ID = """
-SELECT u.cod_unidade, a.cod_adm, l.cod_licenca, e.cod_estoque, u.nome, u.email, u.rua_unidade, u.bairro_unidade, c.cod_cidade, u.cep_unidade, u.latitude, u.longitude
+SELECT u.cod_unidade, a.cod_adm, l.cod_licenca, e.cod_estoque, u.nome, u.email, u.rua_unidade, u.bairro_unidade, c.cod_cidade, u.cep_unidade, u.latitude, u.longitude, u.telefone
 FROM unidade_coleta u,
 adm_unidade a,
 licenca l,

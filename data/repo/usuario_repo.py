@@ -22,7 +22,8 @@ def inserir(usuario: Usuario, cursor: Any) -> Optional[int]:
         usuario.rua_usuario,
         usuario.bairro_usuario,
         usuario.cidade_usuario,
-        usuario.cep_usuario))
+        usuario.cep_usuario,
+        usuario.telefone))
     return cursor.lastrowid
     
 
@@ -44,7 +45,8 @@ def obter_todos() -> list[Usuario]:
                 rua_usuario=row["rua_usuario"],
                 bairro_usuario=row["bairro_usuario"],
                 cidade_usuario=row["cidade_usuario"],
-                cep_usuario=row["cep_usuario"])  
+                cep_usuario=row["cep_usuario"],
+                telefone=row["telefone"])  
                 for row in rows]
         return usuario
     
@@ -66,7 +68,8 @@ def obter_por_id(cod_usuario: int) -> Optional[Usuario]:
                 rua_usuario=row["rua_usuario"],
                 bairro_usuario=row["bairro_usuario"],
                 cod_cidade=row["cod_cidade"],
-                cep_usuario=row["cep_usuario"]
+                cep_usuario=row["cep_usuario"],
+                telefone=row["telefone"]
             )
         return None
     
@@ -88,7 +91,8 @@ def obter_por_email(email: str) -> Optional[Usuario]:
                 rua_usuario=row["rua_usuario"],
                 bairro_usuario=row["bairro_usuario"],
                 cidade_usuario=row["cidade_usuario"],
-                cep_usuario=row["cep_usuario"])
+                cep_usuario=row["cep_usuario"],
+                telefone=row["telefone"])
         
         return None
     
@@ -96,7 +100,6 @@ def update(usuario: Usuario, cursor:Any) -> bool:
     cursor.execute(
         UPDATE,
         (
-            usuario.cod_usuario,
             usuario.nome,
             usuario.email,
             usuario.senha,
@@ -107,7 +110,9 @@ def update(usuario: Usuario, cursor:Any) -> bool:
             usuario.rua_usuario,
             usuario.bairro_usuario,
             usuario.cidade_usuario,
-            usuario.cep_usuario
+            usuario.cep_usuario,
+            usuario.telefone,
+            usuario.cod_usuario
         ))
     return cursor.rowcount > 0
 

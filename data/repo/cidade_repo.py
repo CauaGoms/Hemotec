@@ -51,9 +51,9 @@ def update(cidade: Cidade) -> bool:
         cursor.execute(
             UPDATE,
             (
-                cidade.cod_cidade,
                 cidade.nome_cidade,
-                cidade.sigla_estado
+                cidade.sigla_estado,
+                cidade.cod_cidade
             ),
         )
         return cursor.rowcount > 0

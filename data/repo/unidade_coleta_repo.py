@@ -25,7 +25,9 @@ def inserir(unidade_coleta: Unidade_coleta) -> Optional[int]:
             unidade_coleta.cidade_unidade,
             unidade_coleta.cep_unidade,
             unidade_coleta.latitude,
-            unidade_coleta.longitude))
+            unidade_coleta.longitude,
+            unidade_coleta.telefone
+            ))
         return cursor.lastrowid
     
 
@@ -47,7 +49,8 @@ def obter_todos() -> list[Unidade_coleta]:
                 cidade_unidade=row["cidade_unidade"],
                 cep_unidade=row["cep_unidade"],
                 latitude=row["latitude"],
-                longitude=row["longitude"]
+                longitude=row["longitude"],
+                telefone=row["telefone"]
                 )  
                 for row in rows]
         return unidade_coleta
@@ -70,7 +73,8 @@ def obter_por_id(cod_unidade_coleta: int) -> Optional[Unidade_coleta]:
                 cidade_unidade=row["cidade_unidade"],
                 cep_unidade=row["cep_unidade"],
                 latitude=row["latitude"],
-                longitude=row["longitude"]
+                longitude=row["longitude"],
+                telefone=row["telefone"]
             )
         return None
     
@@ -90,7 +94,6 @@ def update(unidade_coleta: Unidade_coleta) -> bool:
         cursor.execute(
             UPDATE,
             (
-                unidade_coleta.cod_unidade,
                 unidade_coleta.cod_adm,
                 unidade_coleta.cod_licenca,
                 unidade_coleta.cod_estoque,
@@ -102,6 +105,8 @@ def update(unidade_coleta: Unidade_coleta) -> bool:
                 unidade_coleta.cep_unidade,
                 unidade_coleta.latitude,
                 unidade_coleta.longitude,
+                unidade_coleta.telefone,
+                unidade_coleta.cod_unidade
             ),
         )
         return cursor.rowcount > 0

@@ -64,13 +64,13 @@ def update(notificacao: Notificacao) -> bool:
         cursor.execute(
             UPDATE,
             (
-                notificacao.cod_notificacao,
                 notificacao.cod_adm,
                 notificacao.destino,
                 notificacao.tipo,
                 notificacao.mensagem,
                 notificacao.status,
-                notificacao.data_envio
+                notificacao.data_envio,
+                notificacao.cod_notificacao
             ),
         )
         return cursor.rowcount > 0

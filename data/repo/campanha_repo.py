@@ -60,12 +60,12 @@ def update(campanha: Campanha) -> bool:
         cursor.execute(
             UPDATE,
             (
-                campanha.cod_campanha,
                 campanha.titulo,
                 campanha.descricao,
                 campanha.data_inicio,
                 campanha.data_fim,
-                campanha.status
+                campanha.status,
+                campanha.cod_campanha
             ),
         )
         return cursor.rowcount > 0
