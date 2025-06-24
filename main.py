@@ -3,6 +3,7 @@ from fastapi.responses import RedirectResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 import uvicorn
+from datetime import date
 
 from data.model.usuario_model import Usuario
 from data.repo import cidade_repo
@@ -94,24 +95,26 @@ async def get_root():
     response = templates.TemplateResponse("cadastro.html", {"request": {}})
     return response
 
-# @app.post("/cadastro")
-# async def post_cadastro(
-#     nome: str = Form(...),
-#     email: str = Form(...),
-#     senha: str = Form(...),
-#     cpf: str = Form(...),
-#     data_nascimento: str = Form(...),
-#     rua_usuario: str = Form(...),
-#     bairro_usuario: str = Form(...),
-#     cidade_usuario: str = Form(...),
-#     cep_usuario: str = Form(...)
-# ):
-#     usu = Usuario(0, nome, email, senha, cpf, data_nascimento, rua_usuario, bairro_usuario, cidade_usuario, cep_usuario)
-#     usuario = usuario_repo.inserir(usu)
-#     if usuario == None:
-#         raise Exception("Erro ao cadastrar usuário.")
-#     else:
-#         return RedirectResponse("/login", status_code=303)
+@app.post("/cadastro")
+async def post_cadastro(
+    nome: str = Form(...),
+    email: str = Form(...),
+    senha: str = Form(...),
+    cpf: str = Form(...),
+    data_nascimento: str = Form(...),
+    rua_usuario: str = Form(...),
+    bairro_usuario: str = Form(...),
+    cidade_usuario: str = Form(...),
+    cep_usuario: str = Form(...)
+):
+    status = 1
+    data_cadastro = date.today().isoformat()
+    usu = Usuario(0, nome, email, senha, cpf, data_nascimento, status, data_cadastro, rua_usuario, bairro_usuario, cidade_usuario, cep_usuario)
+    usuario = usuario_repo.inserir(usu)
+    if usuario == None:
+        raise Exception("Erro ao cadastrar usuário.")
+    else:
+        return RedirectResponse("/login", status_code=303)
     
 # async def post_produto_cadastrar(
 #     nome: str = Form(...),
