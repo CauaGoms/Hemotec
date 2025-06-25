@@ -6,10 +6,14 @@ from data.model.usuario_model import Usuario
 from data.util import get_connection
 
 def criar_tabela() -> bool:
-    with get_connection() as conn:
-        cursor = conn.cursor()
-        cursor.execute(CRIAR_TABELA)
-        return cursor.rowcount > 0
+    try:
+        with get_connection() as conn:
+            cursor = conn.cursor()
+            cursor.execute(CRIAR_TABELA)
+            return True
+    except Exception as e:
+        print(f"Erro ao criar tabela da categoria: {e}")
+        return False
     
 
 def inserir(doador: Doador) -> Optional[int]:
@@ -35,7 +39,12 @@ def inserir(doador: Doador) -> Optional[int]:
             doador.cod_agendamento,
             doador.tipo_sanguineo,
             doador.fator_rh,
-            doador.elegivel))
+            doador.elegivel,
+            doador.altura,
+            doador.peso,
+            doador.profissao,
+            doador.contato_emergencia,
+            doador.telefone_emergencia))
         return cod_doador
     
 
@@ -63,7 +72,12 @@ def obter_todos() -> list[Doador]:
                 cod_agendamento=row["cod_agendamento"],
                 tipo_sanguineo=row["tipo_sanguineo"],
                 fator_rh=row["fator_rh"],
-                elegivel=row["elegivel"])
+                elegivel=row["elegivel"],
+                altura=row["altura"],
+                peso=row["peso"],
+                profissao=row["profissao"],
+                contato_emergencia=row["contato_emergencia"],
+                telefone_emergencia=row["telefone_emergencia"])
                 for row in rows]
         return doador
     
@@ -90,7 +104,12 @@ def obter_por_id(cod_doador: int) -> Optional[Doador]:
             cod_agendamento=row["cod_agendamento"],
             tipo_sanguineo=row["tipo_sanguineo"],
             fator_rh=row["fator_rh"],
-            elegivel=row["elegivel"])
+            elegivel=row["elegivel"],
+            altura=row["altura"],
+            peso=row["peso"],
+            profissao=row["profissao"],
+            contato_emergencia=row["contato_emergencia"],
+            telefone_emergencia=row["telefone_emergencia"])
         return doador
     
 def update(doador: Doador) -> bool:
@@ -117,6 +136,11 @@ def update(doador: Doador) -> bool:
             doador.tipo_sanguineo,
             doador.fator_rh,
             doador.elegivel,
+            doador.altura,
+            doador.peso,
+            doador.profissao,
+            doador.contato_emergencia,
+            doador.telefone_emergencia,
             doador.cod_doador))
         return (cursor.rowcount > 0)
 
