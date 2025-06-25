@@ -59,6 +59,7 @@ prontuario_repo.criar_tabela()
 
 
 email_usuario = ""
+
 @app.get("/")
 async def get_root():
     coordenada = unidade_coleta_repo.obter_coordenada() or []
@@ -120,7 +121,7 @@ async def post_cadastro(
     senha: str = Form(...)
 ):
     
-    email_usuario= email
+    email_usuario = email
     # Verifica se já existe usuário com esse e-mail
     if usuario_repo.obter_por_email(email):
         raise Exception("Já existe uma conta cadastrada com esse e-mail.")
@@ -220,6 +221,7 @@ async def post_novo_doador(
         fator_rh = "+"
     elif tipo_sanguineo.endswith("-"):
         fator_rh = "-"
+
     # 3. Crie o doador usando os dados do usuário buscado
     doador = Doador(
         0, 0, 0, tipo_sanguineo, fator_rh, elegivel, altura, peso, profissao, contato_emergencia, telefone_emergencia

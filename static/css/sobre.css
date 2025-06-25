@@ -262,11 +262,12 @@ body {
 .team-member {
     text-align: center;
     margin-bottom: 2rem;
+    width: 200px;
 }
 
 .team-photo {
-    width: 120px;
-    height: 120px;
+    width: 160px;
+    height: 160px;
     border-radius: 50%;
     object-fit: cover;
     border: 5px solid var(--hemotec-red);
