@@ -10,3 +10,8 @@ class Doador(Usuario):
     tipo_sanguineo: str
     fator_rh: str
     elegivel: str
+    altura: float
+    peso: float
+    profissao: str
+    contato_emergencia: str
+    telefone_emergencia: str
