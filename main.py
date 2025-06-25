@@ -4,8 +4,10 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 import uvicorn
 from datetime import date
+from data.util import get_connection
 
 from data.model.usuario_model import Usuario
+
 from data.repo import cidade_repo
 from data.repo import campanha_repo
 from data.repo import usuario_repo
@@ -24,7 +26,9 @@ from data.repo import agendamento_repo
 from data.repo import doador_repo
 from data.repo import doacao_repo
 from data.repo import exame_repo
-from data.util import get_connection
+# from data.repo import prontuario_repo
+
+# from data.repo.doador_repo import verificar_idade_doador
 
 app = FastAPI()
 app.mount("/static", StaticFiles(directory="static"), name="static")
@@ -48,6 +52,7 @@ agendamento_repo.criar_tabela()
 doador_repo.criar_tabela()
 doacao_repo.criar_tabela()
 exame_repo.criar_tabela()
+# prontuario_repo.criar_tabela()
 
 @app.get("/")
 async def get_root():
@@ -123,20 +128,7 @@ async def post_cadastro(
     if usuario_id is None:
         raise Exception("Erro ao cadastrar usuário.")
     else:
-        return RedirectResponse("/login", status_code=303)
-
-# async def post_produto_cadastrar(
-#     nome: str = Form(...),
-#     descricao: str = Form(...),
-#     preco: float = Form(...),
-#     quantidade: int = Form(...)
-# ):
-#     produto = Produto(0, nome, descricao, preco, quantidade)
-#     id_produto = produto_repo.inserir(produto)
-#     if id_produto == None:
-#         raise Exception("Erro ao inserir produto.")
-#     else:
-#         return RedirectResponse("/produtos", status_code=303)
+        return RedirectResponse("/doador/novo_doador", status_code=303)
 
 @app.get("/doador")
 async def get_root():
@@ -172,6 +164,53 @@ async def get_root():
 async def get_root():
     response = templates.TemplateResponse("primeira_doacao.html", {"request": {}})
     return response
+
+@app.post("/doador/novo_doador")
+async def post_novo_doador(
+    altura: float = Form(...),
+    peso: int = Form(...),
+    # tipo_sanguineo: str = Form(...),
+    profissao: str = Form(...),
+    contato_emergencia: str = Form(...),
+    telefone_emergencia: str = Form(...),
+    comorbidades: str = Form(...),
+    medicamentos: str = Form(...),
+    fuma: str = Form(...),
+    bebe: str = Form(...),
+    atividade_fisica: str = Form(...),
+    jejum: str = Form(...),
+    sono: str = Form(...),
+    bebida: str = Form(...),
+    sintomas_gripe: str = Form(...),
+    tatuagem: str = Form(...),
+    termos: str = Form(...),
+    alerta: str = Form(...)
+):
+
+    prontuario = Prontuario()
+    with get_connection() as conn:
+        cursor = conn.cursor()
+        prontuario_id = usuario_repo.inserir(prontuario, cursor)
+        conn.commit()
+    if prontuario_id is None:
+        raise Exception("Erro ao cadastrar prontuario.")
+    else:
+        return RedirectResponse("/doador", status_code=303)
+
+# @app.route('/doador/novo_doador')
+# def primeira_doacao():
+#     cod_doador = ... # recupere o código do doador logado
+#     idade_apta = verificar_idade_doador(cod_doador)
+#     return templates.TemplateResponse("primeira_doacao.html", {"request": {}, "idade_apta": idade_apta})
+
+
+
+
+
+
+
+
+
 
 # @app.get("/admin/produtos")
 # async def get_produtos():
