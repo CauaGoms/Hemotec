@@ -40,3 +40,43 @@ class TestCidadeRepo:
         assert cidade_db.nome_cidade == "Cidade atualizada", "O nome da cidade atualizada não confere"
         assert cidade_db.sigla_estado == "sigla atualizada", "A sigla do estado atualizada não confere"
         
+    def test_delete_cidade(self, test_db):
+        #Arrange
+        criar_tabela()
+        cidade_teste = Cidade(0, "Cidade teste", "sigla teste")
+        id_cidade_inserida = inserir(cidade_teste)
+        #Act
+        resultado = delete(id_cidade_inserida)
+        #Assert
+        assert resultado == True, "O resultado da exclusão deveria ser True"
+        cidade_exculida = obter_por_id(id_cidade_inserida)
+        assert cidade_exculida is None, "A cidade não foi excluída corretamente, deveria ser None"
+
+    # def test_obter_todos_cidade(self, test_db):
+    #     #Arrange
+    #     criar_tabela()
+    #     for i in range(10):
+    #         cidade_teste = Cidade(0, f"Cidade {i+1}", f"sigla {i+1}")
+    #         inserir(cidade_teste)
+    #     #Act
+    #     cidades_1 = obter_todos(1, 10)
+    #     cidades_2 = obter_todos(2, 4)
+    #     cidades_3 = obter_todos(3, 4)
+    #     #Assert
+    #     assert len(cidades_1) == 10, "A primeira consulta deveria retornar 10 cidades na primeira página"
+    #     assert len(cidades_2) == 4, "A segunda consulta deveria retornar 4 cidades na segunda página"
+    #     assert len(cidades_3) == 2, "A terceira consulta deveria retornar 2 cidades na terceira página"
+    #     assert cidades_3[0].cod_cidade == 8, "A primeira cidade da terceira página deveria ter o ID 8"
+
+    def test_obter_por_id_cidade(self, test_db):
+        #Arrange
+        criar_tabela()
+        cidade_teste = Cidade(0, "Cidade teste", "sigla teste")
+        id_cidade_inserida = inserir(cidade_teste)
+        #Act
+        cidade_db = obter_por_id(id_cidade_inserida)
+        #Assert
+        assert cidade_db is not None, "A Cidade obtida não deveria ser None"
+        assert cidade_db.cod_cidade == id_cidade_inserida, "O ID da Cidade obtida deveria ser igual ao ID da cidade inserido"
+        assert cidade_db.nome_cidade == "Cidade teste", "O nome da Cidade obtida deveria ser igual ao nome da cidade inserido"
+        assert cidade_db.sigla_estado == "sigla teste", "A sigla do estado obtida deveria ser igual a sigla do estado da cidade inserida"
