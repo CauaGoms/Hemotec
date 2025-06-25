@@ -31,7 +31,7 @@ AND a.cod_licenca = l.cod_licenca
 """ 
 
 UPDATE = """
-UPDATE cod_assinatura, cnpj, cod_plano, cod_licenca, data_inicio, data_fim, valor, qtd_licenca
+UPDATE assinatura
 SET cnpj = ?, cod_plano = ?, cod_licenca = ?, data_inicio = ?, data_fim = ?, valor = ?, qtd_licenca = ?
 WHERE cod_assinatura = ?;
 """
