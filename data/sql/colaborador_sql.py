@@ -23,7 +23,7 @@ AND c.cod_agendamento = a.cod_agendamento
 """ 
 
 UPDATE = """
-UPDATE cod_colaborador, cod_agendamento, funcao
+UPDATE colaborador
 SET cod_agendamento = ?, funcao = ?
 WHERE cod_colaborador = ?;
 """

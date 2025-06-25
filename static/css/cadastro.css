@@ -51,6 +51,7 @@ body {
 .btn-register {
     background-color: var(--hemotec-red);
     border-color: var(--hemotec-red);
+    color: white;
     padding: 0.8rem 2.5rem;
     font-size: 1.1rem;
     font-weight: 500;
@@ -62,6 +63,7 @@ body {
 
 .btn-register:hover,
 .btn-register:focus {
+    color: white;
     background-color: var(--hemotec-dark-red);
     border-color: var(--hemotec-dark-red);
     transform: translateY(-3px);
@@ -98,4 +100,24 @@ body {
 
 .login-link:hover {
     text-decoration: underline;
+}
+
+.btn-outline-danger {
+    border-radius: 50px;
+    padding: 0.8rem 2.5rem;
+    font-size: 1.1rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.btn-small {
+    padding: 0.9rem 1.5rem;
+    font-size: 0.95rem;
+    width: 70%;
+}
+
+.btn-sml {
+    padding: 0.9rem 1.0rem;
+    font-size: 0.95rem;
+    width: 50%;
 }

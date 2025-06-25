@@ -10,13 +10,18 @@ class Prontuario:
     diabetes: bool
     hipertensao: bool
     cardiopatia: bool
-    epilepsia: bool
     cancer: bool
     nenhuma: bool
     outros: bool
-    outros_detalhe: str
     medicamentos: str
-    fumante: str      # "nao", "sim", "parei"
-    alcool: str       # "nao", "social", "regular"
-    atividade: str    # "nao", "leve", "moderada", "intensa"
+    fumante: str
+    alcool: str
+    atividade: str
+    jejum: str
+    sono: str
+    bebida: str
+    sintomas_gripais: str
+    tatuagem: str
+    termos: str
+    alerta: str
     

@@ -3,9 +3,9 @@
 ## Próximos Passos
 
 - [ ] Conferir ordem do update dos repos no slq
-
 - [ ] Aplicar as coordenadas das unidades presentes no banco no maps do `boas_vindas_inicio`
 - [ ] Cadastro no banco de dados para fazer login de verdade
+- [ ] Mudar nome para database.py no lugar de util
  
 ## Ideias de Aplicação
 

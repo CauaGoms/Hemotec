@@ -23,7 +23,7 @@ WHERE e.cod_unidade = u.cod_unidade
 """ 
 
 UPDATE = """
-UPDATE cod_estoque, cod_unidade, tipo_sanguineo, fator_rh, quantidade, data_atualizacao
+UPDATE estoque
 SET cod_unidade = ?, tipo_sanguineo = ?, fator_rh = ?, quantidade = ?, data_atualizacao = ?
 WHERE cod_estoque = ?;
 """

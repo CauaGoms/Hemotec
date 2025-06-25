@@ -7,15 +7,20 @@ data_atualizacao INTEGER NOT NULL,
 diabetes INTEGER NOT NULL,
 hipertensao INTEGER NOT NULL,
 cardiopatia INTEGER NOT NULL,
-epilepsia INTEGER NOT NULL,
 cancer INTEGER NOT NULL,
 nenhuma INTEGER NOT NULL,
 outros INTEGER NOT NULL,
-outros_detalhe TEXT,
 medicamentos TEXT NOT NULL,
 fumante TEXT NOT NULL,
 alcool TEXT NOT NULL,
 atividade TEXT NOT NULL,
+jejum TEXT NOT NULL,
+sono TEXT NOT NULL,
+bebida TEXT NOT NULL,
+sintomas_gripais TEXT NOT NULL,
+tatuagem TEXT NOT NULL,
+termos TEXT NOT NULL,
+alerta TEXT NOT NULL,
 FOREIGN KEY (cod_doador) REFERENCES doador(cod_doador)
 )
 """
@@ -23,16 +28,13 @@ FOREIGN KEY (cod_doador) REFERENCES doador(cod_doador)
 INSERIR = """
 INSERT INTO prontuario (
 cod_doador, data_criacao, data_atualizacao, diabetes, hipertensao,
-cardiopatia, epilepsia, cancer, nenhuma, outros, outros_detalhe,
-medicamentos, fumante, alcool, atividade
-) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+cardiopatia, cancer, nenhuma, outros, medicamentos, fumante, alcool, atividade, jejum, sono, bebida, sintomas_gripais, tatuagem, termos, alerta
+) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
 """
 
 OBTER_TODOS = """
 SELECT p.cod_prontuario, d.cod_doador, p.data_criacao, p.data_atualizacao,
-p.diabetes, p.hipertensao, p.cardiopatia, p.epilepsia, p.cancer,
-p.nenhuma, p.outros, p.outros_detalhe, p.medicamentos,
-p.fumante, p.alcool, p.atividade
+p.diabetes, p.hipertensao, p.cardiopatia, p.cancer, p.nenhuma, p.outros, p.medicamentos, p.fumante, p.alcool, p.atividade, p.jejum, p.sono, p.bebida, p.sintomas_gripais, p.tatuagem, p.termos, p.alerta
 FROM prontuario p, 
 doador d
 WHERE p.cod_doador = d.cod_doador
@@ -40,19 +42,20 @@ WHERE p.cod_doador = d.cod_doador
 
 UPDATE = """
 UPDATE prontuario
-SET cod_assinatura = ?, qtd_licenca = ?, nome = ?, valor = ?, validade = ?
-WHERE cod_plano = ?;
+SET cod_doador = ?, data_criacao = ?, data_atualizacao = ?, diabetes = ?, hipertensao = ?,
+cardiopatia = ?, cancer = ?, nenhuma = ?, outros = ?, medicamentos = ?, fumante = ?, alcool = ?, atividade = ?, jejum = ?, sono = ?, bebida = ?, sintomas_gripais = ?, tatuagem = ?, termos = ?, alerta = ?
+WHERE cod_prontuario = ?;
 """
 
 DELETE = """
-DELETE FROM plano
-WHERE cod_plano = ?;
+DELETE FROM prontuario
+WHERE cod_prontuario = ?;
 """
 
 OBTER_POR_ID = """
-SELECT p.cod_plano, a.cod_assinatura, p.qtd_licenca, p.nome, p.valor, p.validade
-FROM plano p, 
-assinatura a
-WHERE p.cod_assinatura = a.cod_assinatura
-AND p.cod_plano = ?;
+SELECT p.cod_prontuario, d.cod_doador, p.data_criacao, p.data_atualizacao, p.diabetes, p.hipertensao, p.cardiopatia, p.cancer, p.nenhuma, p.outros, p.medicamentos, p.fumante, p.alcool, p.atividade, p.jejum, p.sono, p.bebida, p.sintomas_gripais, p.tatuagem, p.termos, p.alerta
+FROM prontuario p, 
+doador d
+WHERE p.cod_doador = d.cod_doador
+AND p.cod_prontuario = ?;
 """

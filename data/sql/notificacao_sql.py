@@ -24,7 +24,7 @@ WHERE n.cod_adm = a.cod_adm
 """ 
 
 UPDATE = """
-UPDATE cod_notificacao, cod_adm, destino, tipo, mensagem, status, data_envio
+UPDATE notificacao
 SET cod_adm = ?, destino = ?, tipo = ?, mensagem = ?, status = ?, data_envio = ?
 WHERE cod_notificacao = ?;
 """

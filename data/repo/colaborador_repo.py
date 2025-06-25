@@ -6,10 +6,14 @@ from data.model.usuario_model import Usuario
 from data.util import get_connection
 
 def criar_tabela() -> bool:
-    with get_connection() as conn:
-        cursor = conn.cursor()
-        cursor.execute(CRIAR_TABELA)
-        return cursor.rowcount > 0
+    try:
+        with get_connection() as conn:
+            cursor = conn.cursor()
+            cursor.execute(CRIAR_TABELA)
+            return True
+    except Exception as e:
+        print(f"Erro ao criar tabela da categoria: {e}")
+        return False
     
 
 def inserir(colaborador: Colaborador) -> Optional[int]:
