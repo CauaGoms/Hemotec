@@ -24,7 +24,7 @@ AND l.cod_unidade = u.cod_unidade
 """ 
 
 UPDATE = """
-UPDATE cod_licenca, cod_assinatura, cod_unidade, status
+UPDATE licenca
 SET cod_assinatura = ?, cod_unidade = ?, status = ?
 WHERE cod_licenca = ?;
 """

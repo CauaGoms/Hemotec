@@ -19,4 +19,3 @@ class Prontuario:
     fumante: str      # "nao", "sim", "parei"
     alcool: str       # "nao", "social", "regular"
     atividade: str    # "nao", "leve", "moderada", "intensa"
-    

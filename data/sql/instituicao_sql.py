@@ -33,7 +33,7 @@ AND i.cidade_instituicao = c.cod_cidade
 """
 
 UPDATE = """
-UPDATE cnpj, cod_gestor, cod_assinatura, nome, email, rua_instituicao, bairro_instituicao, cidade_instituicao, cep_instituicao
+UPDATE instituicao
 SET cod_gestor = ?, cod_assinatura = ?, nome = ?, email = ?, rua_instituicao = ?, bairro_instituicao = ?, cidade_instituicao = ?, cep_instituicao = ?, telefone = ?
 WHERE cnpj = ?;
 """

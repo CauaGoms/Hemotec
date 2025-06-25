@@ -26,7 +26,7 @@ AND d.cod_exame = e.cod_exame
 """ 
 
 UPDATE = """
-UPDATE cod_doacao, cod_doador, cod_exame, data_hora, quantidade, status
+UPDATE doacao
 SET cod_doador = ?, cod_exame = ?, data_hora = ?, quantidade = ?, status = ?
 WHERE cod_doacao = ?;
 """
