@@ -4,9 +4,12 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 import uvicorn
 from datetime import date
+
 from data.util import get_connection
 
 from data.model.usuario_model import Usuario
+from data.model.prontuario_model import Prontuario
+from data.model.doador_model import Doador
 
 from data.repo import cidade_repo
 from data.repo import campanha_repo
@@ -27,10 +30,7 @@ from data.repo import doador_repo
 from data.repo import doacao_repo
 from data.repo import exame_repo
 from data.repo import prontuario_repo
-from data.util import get_connection
-# from data.repo import prontuario_repo
-
-# from data.repo.doador_repo import verificar_idade_doador
+from data.repo import prontuario_repo
 
 app = FastAPI()
 app.mount("/static", StaticFiles(directory="static"), name="static")
@@ -55,8 +55,10 @@ doador_repo.criar_tabela()
 doacao_repo.criar_tabela()
 exame_repo.criar_tabela()
 prontuario_repo.criar_tabela()
-# prontuario_repo.criar_tabela()
+prontuario_repo.criar_tabela()
 
+
+email_usuario = ""
 @app.get("/")
 async def get_root():
     coordenada = unidade_coleta_repo.obter_coordenada() or []
@@ -117,6 +119,8 @@ async def post_cadastro(
     cidade_usuario: str = Form(...),
     senha: str = Form(...)
 ):
+    
+    email_usuario= email
     # Verifica se já existe usuário com esse e-mail
     if usuario_repo.obter_por_email(email):
         raise Exception("Já existe uma conta cadastrada com esse e-mail.")
@@ -172,31 +176,62 @@ async def get_root():
 async def post_novo_doador(
     altura: float = Form(...),
     peso: int = Form(...),
-    # tipo_sanguineo: str = Form(...),
+    tipo_sanguineo: str = Form(...),
     profissao: str = Form(...),
     contato_emergencia: str = Form(...),
     telefone_emergencia: str = Form(...),
-    comorbidades: str = Form(...),
-    medicamentos: str = Form(...),
-    fuma: str = Form(...),
-    bebe: str = Form(...),
-    atividade_fisica: str = Form(...),
-    jejum: str = Form(...),
-    sono: str = Form(...),
-    bebida: str = Form(...),
-    sintomas_gripe: str = Form(...),
-    tatuagem: str = Form(...),
-    termos: str = Form(...),
-    alerta: str = Form(...)
+    diabetes: bool = Form(False),
+    hipertensao: bool = Form(False),
+    cardiopatia: bool = Form(False),
+    cancer: bool = Form(False),
+    nenhuma: bool = Form(False),
+    outros: bool = Form(False),
+    medicamentos: str = Form("Nenhum"),
+    fumante: str = Form("Não"),
+    alcool: str = Form("Não"),
+    atividade_fisica: str = Form("Não"),
+    jejum: str = Form(False),
+    sono: str = Form(False),
+    bebida: str = Form(False),
+    sintomas_gripais: str = Form(False),
+    tatuagem: str = Form(False),
+    termos: str = Form(False),
+    alerta: str = Form(False)
 ):
+    # 1. Obtenha o identificador do usuário logado
+    email_usuario = email_usuario  
 
-    prontuario = Prontuario()
+    # 2. Busque o usuário no banco
+    usuario = usuario_repo.obter_por_email(email_usuario)
+    if not usuario:
+        raise Exception("Usuário não encontrado.")
+
+    data_atualizacao = date.today().isoformat()
+    prontuario = Prontuario(
+        0, 0, data_atualizacao, data_atualizacao, diabetes, hipertensao, cardiopatia, cancer, nenhuma, outros,
+        medicamentos, fumante, alcool, atividade_fisica, jejum, sono, bebida, sintomas_gripais, tatuagem, termos, alerta
+    )
+
+    elegivel = True  # Defina a elegibilidade como True por padrão
+
+    # extraindo o fator Rh do tipo sanguíneo
+    fator_rh = ""
+    if tipo_sanguineo.endswith("+"):
+        fator_rh = "+"
+    elif tipo_sanguineo.endswith("-"):
+        fator_rh = "-"
+    # 3. Crie o doador usando os dados do usuário buscado
+    doador = Doador(
+        0, 0, 0, tipo_sanguineo, fator_rh, elegivel, altura, peso, profissao, contato_emergencia, telefone_emergencia
+    )
+
     with get_connection() as conn:
         cursor = conn.cursor()
         prontuario_id = usuario_repo.inserir(prontuario, cursor)
+        doador_id = doador_repo.inserir(doador, cursor)
         conn.commit()
-    if prontuario_id is None:
-        raise Exception("Erro ao cadastrar prontuario.")
+    if prontuario_id or doador_id is None:
+        raise Exception("Erro ao cadastrar prontuario ou doador.")
     else:
         return RedirectResponse("/doador", status_code=303)
 
