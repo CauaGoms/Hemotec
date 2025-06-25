@@ -23,7 +23,7 @@ AND g.cnpj = i.cnpj
 """ 
 
 UPDATE = """
-UPDATE cod_gestor, cnpj, instituicao
+UPDATE gestor
 SET cnpj = ?, instituicao = ?
 WHERE cod_gestor = ?;
 """

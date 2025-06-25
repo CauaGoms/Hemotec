@@ -23,7 +23,7 @@ WHERE p.cod_assinatura = a.cod_assinatura
 """ 
 
 UPDATE = """
-UPDATE cod_plano, cod_assinatura, qtd_licenca, nome, valor, validade
+UPDATE plano
 SET cod_assinatura = ?, qtd_licenca = ?, nome = ?, valor = ?, validade = ?
 WHERE cod_plano = ?;
 """

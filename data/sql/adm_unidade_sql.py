@@ -28,7 +28,7 @@ AND adm.cod_notificacao = n.cod_notificacao
 """ 
 
 UPDATE = """
-UPDATE cod_adm, cod_unidade, cod_notificacao, permissao_envio_campanha, permissao_envio_notificacao
+UPDATE adm_unidade
 SET cod_unidade = ?, cod_notificacao = ?, permissao_envio_campanha = ?, permissao_envio_notificacao = ?
 WHERE cod_adm = ?;
 """

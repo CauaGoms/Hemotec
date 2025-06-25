@@ -39,7 +39,7 @@ AND u.cidade_unidade = c.cod_cidade
 """ 
 
 UPDATE = """
-UPDATE cod_unidade, cod_adm, cod_licenca, cod_estoque, nome, email, rua_unidade, bairro_unidade, cidade_unidade, cep_unidade, latitude, longitude, telefone
+UPDATE unidade_coleta
 SET cod_adm = ?, cod_licenca = ?, cod_estoque = ?, nome = ?, email = ?, rua_unidade = ?, bairro_unidade = ?, cidade_unidade = ?, cep_unidade = ?, latitude = ?, longitude = ?, telefone = ?
 WHERE cod_unidade = ?;
 """

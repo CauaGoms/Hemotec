@@ -17,7 +17,7 @@ FROM cidade c
 """ 
 
 UPDATE = """
-UPDATE cod_cidade, nome_cidade, sigla_estado
+UPDATE cidade
 SET nome_cidade = ?, sigla_estado = ?
 WHERE cod_cidade = ?;
 """

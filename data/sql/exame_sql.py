@@ -23,7 +23,7 @@ WHERE e.cod_doacao = d.cod_doacao
 """ 
 
 UPDATE = """
-UPDATE cod_exame, cod_doacao, data_exame, tipo_exame, resultado, arquivo
+UPDATE exame
 SET cod_doacao = ?, data_exame = ?, tipo_exame = ?, resultado = ?, arquivo = ?
 WHERE cod_exame = ?;
 """
