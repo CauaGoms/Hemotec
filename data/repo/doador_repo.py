@@ -4,6 +4,7 @@ from data.model.doador_model import Doador
 from data.sql.doador_sql import *
 from data.model.usuario_model import Usuario
 from data.util import get_connection
+from datetime import date
 
 def criar_tabela() -> bool:
     try:
@@ -150,3 +151,21 @@ def delete(cod_doador: int) -> bool:
         cursor.execute(DELETE, (cod_doador,))
         usuario_repo.delete(cod_doador, cursor)
         return (cursor.rowcount > 0)
+
+# def calcular_idade(data_nascimento: str) -> int:
+#     # data_nascimento no formato 'YYYY-MM-DD'
+#     nascimento = date.fromisoformat(data_nascimento)
+#     hoje = date.today()
+#     idade = hoje.year - nascimento.year - ((hoje.month, hoje.day) < (nascimento.month, nascimento.day))
+#     return idade
+
+# def verificar_idade_doador(cod_doador: int) -> bool:
+#     with get_connection() as conn:
+#         cursor = conn.cursor()
+#         cursor.execute(OBTER_IDADE, (cod_doador,))
+#         row = cursor.fetchone()
+#         if row:
+#             idade = calcular_idade(row["data_nascimento"])
+#             # Critério: idade entre 16 e 69 anos
+#             return 16 <= idade <= 69
+#         return False

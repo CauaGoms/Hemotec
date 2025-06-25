@@ -55,3 +55,15 @@ AND d.cod_doacao = e.cod_doacao
 AND d.cod_agendamento = a.cod_agendamento
 AND d.cod_doador = ?;
 """
+
+# OBTER_IDADE = """
+# SELECT data_nascimento 
+# FROM doador d,
+# usuario o,
+# doacao e,
+# agendamento a
+# WHERE d.cod_doador = o.cod_usuario
+# AND d.cod_doacao = e.cod_doacao
+# AND d.cod_agendamento = a.cod_agendamento
+# WHERE cod_doador = ?
+# """
