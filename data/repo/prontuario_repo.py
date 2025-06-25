@@ -24,15 +24,20 @@ def inserir(prontuario: Prontuario) -> Optional[int]:
             prontuario.diabetes,
             prontuario.hipertensao,
             prontuario.cardiopatia,
-            prontuario.epilepsia,
             prontuario.cancer,
             prontuario.nenhuma,
             prontuario.outros,
-            prontuario.outros_detalhe,
             prontuario.medicamentos,
             prontuario.fumante,
             prontuario.alcool,
-            prontuario.atividade))
+            prontuario.atividade,
+            prontuario.jejum,
+            prontuario.sono,
+            prontuario.bebida,
+            prontuario.sintomas_gripais,
+            prontuario.tatuagem,
+            prontuario.termos,
+            prontuario.alerta))
         return cursor.lastrowid
     
 
@@ -50,15 +55,20 @@ def obter_todos() -> list[Prontuario]:
                 diabetes=row["diabetes"],
                 hipertensao=row["hipertensao"],
                 cardiopatia=row["cardiopatia"],
-                epilepsia=row["epilepsia"],
                 cancer=row["cancer"],
                 nenhuma=row["nenhuma"],
                 outros=row["outros"],
-                outros_detalhe=row["outros_detalhe"],
                 medicamentos=row["medicamentos"],
                 fumante=row["fumante"],
                 alcool=row["alcool"],
-                atividade=row["atividade"])  
+                atividade=row["atividade"],
+                jejum=row["jejum"],
+                sono=row["sono"],
+                bebida=row["bebida"],
+                sintomas_gripais=row["sintomas_gripais"],
+                tatuagem=row["tatuagem"],
+                termos=row["termos"],
+                alerta=row["alerta"])  
                 for row in rows]
         return prontuario
     
@@ -76,15 +86,20 @@ def obter_por_id(cod_prontuario: int) -> Optional[Prontuario]:
                 diabetes=row["diabetes"],
                 hipertensao=row["hipertensao"],
                 cardiopatia=row["cardiopatia"],
-                epilepsia=row["epilepsia"],
                 cancer=row["cancer"],
                 nenhuma=row["nenhuma"],
                 outros=row["outros"],
-                outros_detalhe=row["outros_detalhe"],
                 medicamentos=row["medicamentos"],
                 fumante=row["fumante"],
                 alcool=row["alcool"],
-                atividade=row["atividade"]
+                atividade=row["atividade"],
+                jejum=row["jejum"],
+                sono=row["sono"],
+                bebida=row["bebida"],
+                sintomas_gripais=row["sintomas_gripais"],
+                tatuagem=row["tatuagem"],
+                termos=row["termos"],
+                alerta=row["alerta"]
             )
         return None
     
@@ -100,15 +115,20 @@ def update(prontuario: Prontuario) -> bool:
                 prontuario.diabetes,
                 prontuario.hipertensao,
                 prontuario.cardiopatia,
-                prontuario.epilepsia,
                 prontuario.cancer,
                 prontuario.nenhuma,
                 prontuario.outros,
-                prontuario.outros_detalhe,
                 prontuario.medicamentos,
                 prontuario.fumante,
                 prontuario.alcool,
                 prontuario.atividade,
+                prontuario.jejum,
+                prontuario.sono,
+                prontuario.bebida,
+                prontuario.sintomas_gripais,
+                prontuario.tatuagem,
+                prontuario.termos,
+                prontuario.alerta,
                 prontuario.cod_prontuario
             ),
         )
