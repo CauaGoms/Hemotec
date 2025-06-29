@@ -21,3 +21,18 @@ def test_db():
     os.close(db_fd)
     if os.path.exists(db_path):
         os.unlink(db_path)
+
+@pytest.fixture
+def cidade_exemplo():
+    from data.model.cidade_model import Cidade
+    cidade = Cidade(0, "nome_cidade teste", "sigla_estado teste")
+    return cidade
+
+@pytest.fixture
+def lista_cidades_exemplo():
+    from data.model.cidade_model import Cidade
+    cidades = []
+    for i in range(1, 11):
+        cidade = Cidade(0, f'nome_cidade {i:02d}', f'sigla_estado {i:02d}')
+        cidades.append(cidade)
+    return cidades
