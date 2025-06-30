@@ -1,6 +1,6 @@
 from data.repo import usuario_repo, cidade_repo
 from data.model.usuario_model import Usuario
-
+from data.util.database import get_connection
 class TestUsuarioRepo:
     def test_criar_tabela_usuario(self, test_db):
         #Arrange
@@ -11,27 +11,30 @@ class TestUsuarioRepo:
 
     def test_inserir(self, test_db, usuario_exemplo, cidade_exemplo):
         #Arrange
-        cidade_repo.criar_tabela()
-        cidade_repo.inserir(cidade_exemplo)
-        usuario_repo.criar_tabela()
-        #Act
-        id_tabela_inserida = usuario_repo.inserir(usuario_exemplo)
-        #Assert
-        dados_db = usuario_repo.obter_por_id(id_tabela_inserida)
-        assert dados_db is not None, "O usuário inserido não deveria ser None"
-        assert dados_db.cod_usuario == 1, "O ID do usuário inserido deveria ser igual a 1"
-        assert dados_db.nome == "nome teste", "O nome do usuário inserida não confere"
-        assert dados_db.email == "email teste", "O email do usuário inserido não confere"
-        assert dados_db.senha == "senha teste", "A sigla do estado inserida não confere"
-        assert dados_db.cpf == "cpf teste", "O CPF do usuário inserido não confere"
-        assert dados_db.data_nascimento.strftime('%Y-%m-%d') == "2025-01-01", "A data de nascimento do usuário inserido não confere"
-        assert dados_db.status == True, "O status do usuário inserido não confere"
-        assert dados_db.data_cadastro.strftime('%Y-%m-%d') == "2025-01-01", "A data de cadastro do usuário inserido não confere"
-        assert dados_db.rua_usuario == "rua_usuario teste", "A rua do usuário inserido não confere"
-        assert dados_db.bairro_usuario == "bairro_usuario teste", "O bairro do usuário inserido não confere"
-        assert dados_db.cidade_usuario == 1, "A cidade do usuário inserido não confere"
-        assert dados_db.cep_usuario == "cep_usuario teste", "O CEP do usuário inserido não confere"
-        assert dados_db.telefone == "telefone teste", "O telefone do usuário inserido não confere"
+        with get_connection() as conn:
+            cursor = conn.cursor()
+            cidade_repo.criar_tabela()
+            cidade_repo.inserir(cidade_exemplo)
+            usuario_repo.criar_tabela()
+            #Act
+            id_tabela_inserida = usuario_repo.inserir(usuario_exemplo, cursor)
+            conn.commit()
+            #Assert
+            dados_db = usuario_repo.obter_por_id(id_tabela_inserida)
+            assert dados_db is not None, "O usuário inserido não deveria ser None"
+            assert dados_db.cod_usuario == 1, "O ID do usuário inserido deveria ser igual a 1"
+            assert dados_db.nome == "nome teste", "O nome do usuário inserida não confere"
+            assert dados_db.email == "email teste", "O email do usuário inserido não confere"
+            assert dados_db.senha == "senha teste", "A sigla do estado inserida não confere"
+            assert dados_db.cpf == "cpf teste", "O CPF do usuário inserido não confere"
+            assert dados_db.data_nascimento.strftime('%Y-%m-%d') == "2025-01-01", "A data de nascimento do usuário inserido não confere"
+            assert dados_db.status == True, "O status do usuário inserido não confere"
+            assert dados_db.data_cadastro.strftime('%Y-%m-%d') == "2025-01-01", "A data de cadastro do usuário inserido não confere"
+            assert dados_db.rua_usuario == "rua_usuario teste", "A rua do usuário inserido não confere"
+            assert dados_db.bairro_usuario == "bairro_usuario teste", "O bairro do usuário inserido não confere"
+            assert dados_db.cidade_usuario == 1, "A cidade do usuário inserido não confere"
+            assert dados_db.cep_usuario == "cep_usuario teste", "O CEP do usuário inserido não confere"
+            assert dados_db.telefone == "telefone teste", "O telefone do usuário inserido não confere"
 
 
     def test_update_existente(self, test_db, usuario_exemplo, cidade_exemplo):

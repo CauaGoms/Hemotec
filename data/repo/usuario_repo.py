@@ -19,7 +19,7 @@ def criar_tabela() -> bool:
 
 def inserir(usuario: Usuario, cursor: Any) -> Optional[int]:
     cursor.execute(INSERIR, (
-        usuario.nome, 
+        usuario.nome,
         usuario.email, 
         usuario.senha,
         usuario.cpf,
