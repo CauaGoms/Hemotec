@@ -1,4 +1,5 @@
 import os
+from sqlite3 import Connection
 from typing import Optional
 from data.model.estoque_model import Estoque
 from data.sql.estoque_sql import *
@@ -82,7 +83,7 @@ def delete(cod_estoque: int) -> bool:
         cursor.execute(DELETE, (cod_estoque,))
         return cursor.rowcount > 0
     
-def inserir_dados_iniciais(conexao: get_connection) -> None:
+def inserir_dados_iniciais(conexao: Connection) -> None:
     lista = obter_todos()
     if lista: 
         return

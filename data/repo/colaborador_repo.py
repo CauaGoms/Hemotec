@@ -1,4 +1,5 @@
 import os
+from sqlite3 import Connection
 from typing import Optional
 from data.repo import usuario_repo
 from data.model.colaborador_model import Colaborador
@@ -120,7 +121,7 @@ def delete(cod_colaborador: int) -> bool:
         usuario_repo.delete(cod_colaborador, cursor)
         return (cursor.rowcount > 0)
     
-def inserir_dados_iniciais(conexao: get_connection) -> None:
+def inserir_dados_iniciais(conexao: Connection) -> None:
     lista = obter_todos()
     if lista: 
         return

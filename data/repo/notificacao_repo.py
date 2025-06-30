@@ -1,4 +1,5 @@
 import os
+from sqlite3 import Connection
 from typing import Optional
 from data.model.notificacao_model import Notificacao
 from data.sql.notificacao_sql import *
@@ -86,7 +87,7 @@ def delete(cod_notificacao: int) -> bool:
         cursor.execute(DELETE, (cod_notificacao,))
         return cursor.rowcount > 0
     
-def inserir_dados_iniciais(conexao: get_connection) -> None:
+def inserir_dados_iniciais(conexao: Connection) -> None:
     lista = obter_todos()
     if lista: 
         return

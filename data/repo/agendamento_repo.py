@@ -1,4 +1,5 @@
 import os
+from sqlite3 import Connection
 from typing import Optional
 from data.model.agendamento_model import Agendamento
 from data.sql.agendamento_sql import *
@@ -82,7 +83,7 @@ def delete(cod_agendamento: int) -> bool:
         cursor.execute(DELETE, (cod_agendamento,))
         return cursor.rowcount > 0
     
-def inserir_dados_iniciais(conexao: get_connection) -> None:
+def inserir_dados_iniciais(conexao: Connection) -> None:
     lista = obter_todos()
     if lista: 
         return
