@@ -79,19 +79,19 @@ def lista_usuarios_exemplo():
     usuarios = []
     for i in range(1, 11):
         usuario = Usuario(
-            0,
-            f'nome {i:02d}',
-            f'email {i:02d}',
-            f'senha {i:02d}',
-            f'cpf {i:02d}',
-            datetime(2025, 1, i).date(),
-            True,
-            datetime(2025, 1, i).date(),
-            f'rua_usuario {i:02d}',
-            f'bairro_usuario {i:02d}',
-            i,  # Supondo que a cidade tenha o ID igual ao índice
-            f'cep_usuario {i:02d}',
-            f'telefone {i:02d}'
+            cod_usuario=0,
+            nome=f'nome {i:02d}',
+            email=f'email {i:02d}',
+            senha=f'senha {i:02d}',
+            cpf=f'cpf {i:02d}',
+            data_nascimento=datetime(2025, 1, i).date(),
+            status=True,  # Status alternando entre True e False
+            data_cadastro=datetime(2025, 1, i).date(),
+            rua_usuario=f'rua_usuario {i:02d}',
+            bairro_usuario=f'bairro_usuario {i:02d}',
+            cidade_usuario=i,  # Supondo que a cidade tenha o ID igual ao índice
+            cep_usuario=f'cep_usuario {i:02d}',
+            telefone=f'telefone {i:02d}'
         )
         usuarios.append(usuario)
     return usuarios
