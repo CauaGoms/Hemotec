@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-
+from datetime import datetime
 
 @dataclass
 class Usuario:
@@ -8,9 +8,9 @@ class Usuario:
     email: str
     senha: str
     cpf: str
-    data_nascimento: str
+    data_nascimento: datetime
     status: bool
-    data_cadastro: str
+    data_cadastro: datetime
     rua_usuario: str
     bairro_usuario: str
     cidade_usuario: int

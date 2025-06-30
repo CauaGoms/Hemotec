@@ -1,11 +1,140 @@
-import sys
-import os
-from data.repo.usuario_repo import *
+from data.repo import usuario_repo, cidade_repo
 
 class TestUsuarioRepo:
     def test_criar_tabela_usuario(self, test_db):
         #Arrange
         #Act
-        resultado = criar_tabela()
+        resultado = usuario_repo.criar_tabela()
         #Assert
         assert resultado == True, "A criação da tabela deveria retornar True"
+
+    def test_inserir(self, test_db, usuario_exemplo, cidade_exemplo):
+        #Arrange
+        cidade_repo.criar_tabela()
+        cidade_repo.inserir(cidade_exemplo)
+        usuario_repo.criar_tabela()
+        #Act
+        id_tabela_inserida = usuario_repo.inserir(usuario_exemplo)
+        #Assert
+        dados_db = usuario_repo.obter_por_id(id_tabela_inserida)
+        assert dados_db is not None, "O usuário inserido não deveria ser None"
+        assert dados_db.cod_usuario == 1, "O ID do usuário inserido deveria ser igual a 1"
+        assert dados_db.nome == "nome teste", "O nome do usuário inserida não confere"
+        assert dados_db.email == "email teste", "O email do usuário inserido não confere"
+        assert dados_db.senha == "senha teste", "A sigla do estado inserida não confere"
+        assert dados_db.cpf == "cpf teste", "O CPF do usuário inserido não confere"
+        assert dados_db.data_nascimento.strftime('%Y-%m-%d') == "2025-01-01", "A data de nascimento do usuário inserido não confere"
+        assert dados_db.status == True, "O status do usuário inserido não confere"
+        assert dados_db.data_cadastro.strftime('%Y-%m-%d') == "2025-01-01", "A data de cadastro do usuário inserido não confere"
+        assert dados_db.rua_usuario == "rua_usuario teste", "A rua do usuário inserido não confere"
+        assert dados_db.bairro_usuario == "bairro_usuario teste", "O bairro do usuário inserido não confere"
+        assert dados_db.cidade_usuario == 1, "A cidade do usuário inserido não confere"
+        assert dados_db.cep_usuario == "cep_usuario teste", "O CEP do usuário inserido não confere"
+        assert dados_db.telefone == "telefone teste", "O telefone do usuário inserido não confere"
+
+
+    def test_update_existente(self, test_db, usuario_exemplo, cidade_exemplo):
+        #Arrange
+        cidade_repo.criar_tabela()
+        cidade_repo.inserir(cidade_exemplo)
+        usuario_repo.criar_tabela()
+        id_tabela_inserida = usuario_repo.inserir(usuario_exemplo)
+        tabela_inserida = usuario_repo.obter_por_id(id_tabela_inserida)
+        #Act
+        tabela_inserida.nome = "nome atualizada"
+        tabela_inserida.email = "email atualizada"
+        tabela_inserida.senha = "senha atualizada"
+        tabela_inserida.cpf = "cpf atualizado"
+        tabela_inserida.data_nascimento = "2000-01-01"
+        tabela_inserida.status = False
+        tabela_inserida.data_cadastro = "2000-01-01"
+        tabela_inserida.rua_usuario = "rua_usuario atualizada"
+        tabela_inserida.bairro_usuario = "bairro_usuario atualizado"
+        tabela_inserida.cep_usuario = "cep_usuario atualizado"
+        tabela_inserida.telefone = "telefone atualizado"
+        resultado = usuario_repo.update(tabela_inserida)
+        #Assert
+        assert resultado == True, "A atualização do usuário deveria retornar True"
+        dados_db = usuario_repo.obter_por_id(id_tabela_inserida)
+        assert dados_db.nome == "nome atualizada", "O nome da cidade atualizada não confere"
+        assert dados_db.email == "email atualizada", "A sigla do estado atualizada não confere"
+        assert dados_db.senha == "senha atualizada", "A senha do usuário atualizado não confere"
+        assert dados_db.cpf == "cpf atualizado", "O CPF do usuário atualizado não confere"
+        assert dados_db.data_nascimento.strftime('%Y-%m-%d') == "2000-01-01", "A data de nascimento do usuário atualizado não confere"
+        assert dados_db.status == False, "O status do usuário atualizado não confere"
+        assert dados_db.data_cadastro.strftime('%Y-%m-%d') == "2000-01-01", "A data de cadastro do usuário atualizado não confere"
+        assert dados_db.rua_usuario == "rua_usuario atualizada", "A rua do usuário atualizado não confere"
+        assert dados_db.bairro_usuario == "bairro_usuario atualizado", "O bairro do usuário atualizado não confere"
+        assert dados_db.cep_usuario == "cep_usuario atualizado", "O CEP do usuário atualizado não confere"
+        assert dados_db.telefone == "telefone atualizado", "O telefone do usuário atualizado não confere"
+
+    def test_update_inexistente(self, test_db, cidade_exemplo):
+        #Arrange
+        criar_tabela()
+        cidade_exemplo.cod_cidade = 999  # ID inexistente
+        #Act
+        resultado = update(cidade_exemplo)
+        #Assert
+        assert resultado == False, "A atualização de uma cidade inexistente deveria retornar False"
+        
+    def test_delete_existente(self, test_db, cidade_exemplo):
+        #Arrange
+        criar_tabela()
+        id_tabela_inserida = inserir(cidade_exemplo)
+        #Act
+        resultado = delete(id_tabela_inserida)
+        #Assert
+        assert resultado == True, "O resultado da exclusão deveria ser True"
+        tabela_exculida = obter_por_id(id_tabela_inserida)
+        assert tabela_exculida is None, "A cidade não foi excluída corretamente, deveria ser None"
+
+    def test_delete_inexistente(self, test_db):
+        #Arrange
+        criar_tabela()
+        #Act
+        resultado = delete(999)  # ID inexistente
+        #Assert
+        assert resultado == False, "A exclusão de uma cidade inexistente deveria retornar False"
+
+    def test_obter_todos(self, test_db, lista_cidades_exemplo):
+        #Arrange
+        criar_tabela()
+        for cidade in lista_cidades_exemplo:
+            inserir(cidade)
+        #Act
+        dados_db = obter_todos()
+        #Assert
+        assert len(dados_db) == 10, "Deveria retornar 10 cidades"
+        for i, cidade in enumerate(dados_db):
+            assert cidade.cod_cidade == i + 1, f"O ID da cidade {i+1} não confere"
+            assert cidade.nome_cidade == f'nome_cidade {i+1:02d}', f"O nome da cidade {i+1} não confere"
+            assert cidade.sigla_estado == f'sigla_estado {i+1:02d}', f"A sigla do estado da cidade {i+1} não confere"
+        
+    def test_obter_todos_vazia(self, test_db):
+        #Arrange
+        criar_tabela()
+        #Act
+        dados_db = obter_todos()
+        #Assert
+        assert isinstance(dados_db, list), "Deveria retornar uma lista"
+        assert len(dados_db) == 0, "Deveria retornar uma lista vazia de cidades"
+
+    def test_obter_por_id_existente(self, test_db, cidade_exemplo):
+        #Arrange
+        criar_tabela()
+        id_tabela_inserida = inserir(cidade_exemplo)
+        #Act
+        dados_db = obter_por_id(id_tabela_inserida)
+        #Assert
+        assert dados_db is not None, "A Cidade obtida não deveria ser None"
+        assert dados_db.cod_cidade == id_tabela_inserida, "O ID da Cidade obtida deveria ser igual ao ID da cidade inserido"
+        assert dados_db.nome_cidade == "nome_cidade teste", "O nome da Cidade obtida deveria ser igual ao nome da cidade inserido"
+        assert dados_db.sigla_estado == "sigla_estado teste", "A sigla do estado obtida deveria ser igual a sigla do estado da cidade inserida"
+
+    def test_obter_por_id_inexistente(self, test_db):
+        #Arrange
+        criar_tabela()
+        #Act
+        dados_db = obter_por_id(999)
+        #Assert
+        assert dados_db is None, "A Cidade obtida deveria ser None para um ID inexistente"

@@ -1,9 +1,10 @@
+import os
 from typing import Optional
 from data.repo import usuario_repo
 from data.model.adm_unidade_model import Adm_unidade
 from data.sql.adm_unidade_sql import *
 from data.model.usuario_model import Usuario
-from data.util import get_connection
+from data.util.database import get_connection
 
 def criar_tabela() -> bool:
     try:
@@ -126,3 +127,12 @@ def delete(cod_adm: int) -> bool:
         cursor.execute(DELETE, (cod_adm,))
         usuario_repo.delete(cod_adm, cursor)
         return (cursor.rowcount > 0)
+    
+def inserir_dados_iniciais(conexao: get_connection) -> None:
+    lista = obter_todos()
+    if lista: 
+        return
+    caminho_arquivo_sql = os.path.join(os.path.dirname(__file__), '../data/insert_categorias.sql')
+    with open(caminho_arquivo_sql, 'r', encoding='utf-8') as arquivo:
+        sql_inserts = arquivo.read()
+        conexao.execute(sql_inserts)

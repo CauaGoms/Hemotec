@@ -23,7 +23,7 @@ VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
 """
 
 OBTER_TODOS = """
-SELECT u.cod_usuario, u.nome, u.email, u.senha, u.cpf, u.data_nascimento, u.status, u.data_cadastro, u.rua_usuario, u.bairro_usuario, c.cod_cidade, u.cep_usuario, u.telefone
+SELECT u.cod_usuario, u.nome, u.email, u.senha, u.cpf, u.data_nascimento, u.status, u.data_cadastro, u.rua_usuario, u.bairro_usuario, u.cidade_usuario, u.cep_usuario, u.telefone
 FROM usuario u,
 cidade c
 WHERE u.cidade_usuario = c.cod_cidade
@@ -31,7 +31,7 @@ WHERE u.cidade_usuario = c.cod_cidade
 
 UPDATE = """
 UPDATE usuario
-SET nome = ?, email = ?, senha = ?, cpf = ?, data_nascimento = ?, status = ?, data_cadastro = ?, rua_usuario = ?, bairro_usuario = ?, cidade_usuario = ?, cep_usuario = ?, telefone = ?
+SET nome = ?, email = ?, senha = ?, cpf = ?, data_nascimento = ?, status = ?, data_cadastro = ?, rua_usuario = ?, bairro_usuario = ?, cep_usuario = ?, telefone = ?
 WHERE cod_usuario = ?;
 """
 
@@ -47,7 +47,7 @@ WHERE cod_usuario = ?;
 """
 
 OBTER_POR_ID = """
-SELECT u.cod_usuario, u.nome, u.email, u.senha, u.cpf, u.data_nascimento, u.status, u.data_cadastro, u.rua_usuario, u.bairro_usuario, c.cod_cidade, u.cep_usuario, u.telefone
+SELECT u.cod_usuario, u.nome, u.email, u.senha, u.cpf, u.data_nascimento, u.status, u.data_cadastro, u.rua_usuario, u.bairro_usuario, u.cidade_usuario, u.cep_usuario, u.telefone
 FROM usuario u,
 cidade c
 WHERE u.cidade_usuario = c.cod_cidade

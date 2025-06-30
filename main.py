@@ -5,7 +5,7 @@ from fastapi.templating import Jinja2Templates
 import uvicorn
 from datetime import date
 
-from data.util import get_connection
+from data.util.database import get_connection
 
 from data.model.usuario_model import Usuario
 from data.model.prontuario_model import Prontuario
