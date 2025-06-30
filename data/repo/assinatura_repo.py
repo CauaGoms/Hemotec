@@ -4,6 +4,7 @@ from typing import Optional
 from data.model.assinatura_model import Assinatura
 from data.sql.assinatura_sql import *
 from data.util.database import get_connection
+from datetime import datetime
 
 def criar_tabela() -> bool:
     try:
@@ -41,8 +42,8 @@ def obter_todos() -> list[Assinatura]:
                 cnpj=row["cnpj"],
                 cod_plano=row["cod_plano"],
                 cod_licenca=row["cod_licenca"],
-                data_inicio=row["data_inicio"],
-                data_fim=row["data_fim"],
+                data_inicio=datetime.strptime(row["data_inicio"], '%Y-%m-%d'),
+                data_fim=datetime.strptime(row["data_fim"], '%Y-%m-%d'),
                 valor=row["valor"],
                 qtd_licenca=row["qtd_licenca"]
                 )  
@@ -60,8 +61,8 @@ def obter_por_id(cod_assinatuta: int) -> Optional[Assinatura]:
                 cnpj=row["cnpj"],
                 cod_plano=row["cod_plano"],
                 cod_licenca=row["cod_licenca"],
-                data_inicio=row["data_inicio"],
-                data_fim=row["data_fim"],
+                data_inicio=datetime.strptime(row["data_inicio"], '%Y-%m-%d'),
+                data_fim=datetime.strptime(row["data_fim"], '%Y-%m-%d'),
                 valor=row["valor"],
                 qtd_licenca=row["qtd_licenca"]
             )

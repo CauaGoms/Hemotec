@@ -4,6 +4,7 @@ from typing import Optional
 from data.model.notificacao_model import Notificacao
 from data.sql.notificacao_sql import *
 from data.util.database import get_connection
+from datetime import datetime
 
 def criar_tabela() -> bool:
     try:
@@ -43,7 +44,7 @@ def obter_todos() -> list[Notificacao]:
                 tipo=row["tipo"],
                 mensagem=row["mensagem"],
                 status=row["status"],
-                data_envio=row["data_envio"]) 
+                data_envio=datetime.strptime(row["data_envio"], '%Y-%m-%d')) 
                 for row in rows]
         return notificacao
     
@@ -60,7 +61,7 @@ def obter_por_id(cod_notificacao: int) -> Optional[Notificacao]:
                 tipo=row["tipo"],
                 mensagem=row["mensagem"],
                 status=row["status"],
-                data_envio=row["data_envio"]
+                data_envio=datetime.strptime(row["data_envio"], '%Y-%m-%d')
                 ) 
         return None
     

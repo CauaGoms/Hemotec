@@ -1,4 +1,5 @@
 from dataclasses import dataclass
+from datetime import datetime
 
 
 @dataclass
@@ -8,5 +9,5 @@ class Estoque:
     tipo_sanguineo: str
     fator_rh: str
     quantidade: int
-    data_atualizacao: str
+    data_atualizacao: datetime
     

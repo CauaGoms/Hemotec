@@ -4,6 +4,7 @@ from typing import Optional
 from data.model.prontuario_model import Prontuario
 from data.sql.prontuario_sql import *
 from data.util.database import get_connection
+from datetime import datetime
 
 def criar_tabela() -> bool:
     try:
@@ -52,8 +53,8 @@ def obter_todos() -> list[Prontuario]:
             Prontuario(
                 cod_prontuario=row["cod_prontuario"],
                 cod_doador=row["cod_doador"],
-                data_criacao=row["data_criacao"],
-                data_atualizacao=row["data_atualizacao"],
+                data_criacao=datetime.strptime(row["data_criacao"], '%Y-%m-%d'),
+                data_atualizacao=datetime.strptime(row["data_atualizacao"], '%Y-%m-%d'),
                 diabetes=row["diabetes"],
                 hipertensao=row["hipertensao"],
                 cardiopatia=row["cardiopatia"],
@@ -83,8 +84,8 @@ def obter_por_id(cod_prontuario: int) -> Optional[Prontuario]:
             return Prontuario(
                 cod_prontuario=row["cod_prontuario"],
                 cod_doador=row["cod_doador"],
-                data_criacao=row["data_criacao"],
-                data_atualizacao=row["data_atualizacao"],
+                data_criacao=datetime.strptime(row["data_criacao"], '%Y-%m-%d'),
+                data_atualizacao=datetime.strptime(row["data_atualizacao"], '%Y-%m-%d'),
                 diabetes=row["diabetes"],
                 hipertensao=row["hipertensao"],
                 cardiopatia=row["cardiopatia"],

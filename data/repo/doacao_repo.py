@@ -4,6 +4,7 @@ from typing import Optional
 from data.model.doacao_model import Doacao
 from data.sql.doacao_sql import *
 from data.util.database import get_connection
+from datetime import datetime
 
 def criar_tabela() -> bool:
     try:
@@ -38,7 +39,7 @@ def obter_todos() -> list[Doacao]:
                 cod_doacao=row["cod_doacao"],
                 cod_doador=row["cod_doador"],
                 cod_exame=row["cod_exame"],
-                data_hora=row["data_hora"],
+                data_hora=datetime.strptime(row["data_hora"], '%Y-%m-%d %H:%M:%S'),
                 quantidade=row["quantidade"],
                 status=row["status"])  
                 for row in rows]
@@ -54,7 +55,7 @@ def obter_por_id(cod_doacao: int) -> Optional[Doacao]:
                 cod_doacao=row["cod_doacao"],
                 cod_doador=row["cod_doador"],
                 cod_exame=row["cod_exame"],
-                data_hora=row["data_hora"],
+                data_hora=datetime.strptime(row["data_hora"], '%Y-%m-%d %H:%M:%S'),
                 quantidade=row["quantidade"],
                 status=row["status"]
             )

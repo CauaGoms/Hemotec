@@ -30,7 +30,6 @@ from data.repo import doador_repo
 from data.repo import doacao_repo
 from data.repo import exame_repo
 from data.repo import prontuario_repo
-from data.repo import prontuario_repo
 
 app = FastAPI()
 app.mount("/static", StaticFiles(directory="static"), name="static")
@@ -54,7 +53,6 @@ agendamento_repo.criar_tabela()
 doador_repo.criar_tabela()
 doacao_repo.criar_tabela()
 exame_repo.criar_tabela()
-prontuario_repo.criar_tabela()
 prontuario_repo.criar_tabela()
 
 

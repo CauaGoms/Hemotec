@@ -4,6 +4,7 @@ from typing import Optional
 from data.model.exame_model import Exame
 from data.sql.exame_sql import *
 from data.util.database import get_connection
+from datetime import datetime
 
 def criar_tabela() -> bool:
     try:
@@ -38,7 +39,7 @@ def obter_todos() -> list[Exame]:
             Exame(
                 cod_exame=row["cod_exame"],
                 cod_doacao=row["cod_doacao"],
-                data_exame=row["data_exame"],
+                data_exame=datetime.strptime(row["data_exame"], '%Y-%m-%d'),
                 tipo_exame=row["tipo_exame"],
                 resultado=row["resultado"],
                 arquivo=row["arquivo"]) 
@@ -54,7 +55,7 @@ def obter_por_id(cod_exame: int) -> Optional[Exame]:
             return Exame(
                 cod_exame=row["cod_exame"],
                 cod_doacao=row["cod_doacao"],
-                data_exame=row["data_exame"],
+                data_exame=datetime.strptime(row["data_exame"], '%Y-%m-%d'),
                 tipo_exame=row["tipo_exame"],
                 resultado=row["resultado"],
                 arquivo=row["arquivo"]

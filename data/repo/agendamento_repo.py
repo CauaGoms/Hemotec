@@ -4,6 +4,7 @@ from typing import Optional
 from data.model.agendamento_model import Agendamento
 from data.sql.agendamento_sql import *
 from data.util.database import get_connection
+from datetime import datetime
 
 def criar_tabela() -> bool:
     try:
@@ -39,7 +40,7 @@ def obter_todos() -> list[Agendamento]:
                 cod_agendamento=row["cod_agendamento"],
                 cod_colaborador=row["cod_colaborador"],
                 cod_doador=row["cod_doador"],
-                data_hora=row["data_hora"],
+                data_hora=datetime.strptime(row["data_hora"], '%Y-%m-%d %H:%M:%S'),
                 status=row["status"],
                 observacoes=row["observacoes"],
                 tipo_agendamento=row["tipo_agendamento"])  
@@ -56,7 +57,7 @@ def obter_por_id(cod_agendamento: int) -> Optional[Agendamento]:
                 cod_agendamento=row["cod_agendamento"],
                 cod_colaborador=row["cod_colaborador"],
                 cod_doador=row["cod_doador"],
-                data_hora=row["data_hora"],
+                data_hora=datetime.strptime(row["data_hora"], '%Y-%m-%d %H:%M:%S'),
                 status=row["status"],
                 observacoes=row["observacoes"],
                 tipo_agendamento=row["tipo_agendamento"]

@@ -1,12 +1,13 @@
 from dataclasses import dataclass
+from datetime import datetime
 
 
 @dataclass
 class Prontuario:
     cod_prontuario: int
     cod_doador: int
-    data_criacao: str
-    data_atualizacao: str
+    data_criacao: datetime
+    data_atualizacao: datetime
     diabetes: bool
     hipertensao: bool
     cardiopatia: bool

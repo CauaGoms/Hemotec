@@ -1,4 +1,5 @@
 from dataclasses import dataclass
+from datetime import datetime
 
 
 @dataclass
@@ -7,7 +8,7 @@ class Assinatura:
     cnpj: str
     cod_plano: int
     cod_licenca: int
-    data_inicio: str
-    data_fim: str
+    data_inicio: datetime
+    data_fim: datetime
     valor: float
     qtd_licenca: int

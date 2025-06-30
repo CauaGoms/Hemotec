@@ -1,4 +1,5 @@
 from dataclasses import dataclass
+from datetime import datetime
 
 
 @dataclass
@@ -9,4 +10,4 @@ class Notificacao:
     tipo: str
     mensagem: str
     status: int
-    data_envio: str
+    data_envio: datetime

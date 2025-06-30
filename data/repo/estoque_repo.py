@@ -4,6 +4,7 @@ from typing import Optional
 from data.model.estoque_model import Estoque
 from data.sql.estoque_sql import *
 from data.util.database import get_connection
+from datetime import datetime
 
 def criar_tabela() -> bool:
     try:
@@ -41,7 +42,7 @@ def obter_todos() -> list[Estoque]:
                 tipo_sanguineo=row["tipo_sanguineo"],
                 fator_rh=row["fator_rh"],
                 quantidade=row["quantidade"],
-                data_atualizacao=row["data_atualizacao"])
+                data_atualizacao=datetime.strptime(row["data_atualizacao"], '%Y-%m-%d'))
                 for row in rows]
         return estoque
     
@@ -57,7 +58,7 @@ def obter_por_id(cod_estoque: int) -> Optional[Estoque]:
                 tipo_sanguineo=row["tipo_sanguineo"],
                 fator_rh=row["fator_rh"],
                 quantidade=row["quantidade"],
-                data_atualizacao=row["data_atualizacao"]
+                data_atualizacao=datetime.strptime(row["data_atualizacao"], '%Y-%m-%d')
             )
         return None
     
