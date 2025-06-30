@@ -17,22 +17,20 @@ def criar_tabela() -> bool:
         return False
     
 
-def inserir(usuario: Usuario) -> Optional[int]:
-    with get_connection() as conn:
-        cursor = conn.cursor()
-        cursor.execute(INSERIR, (
-            usuario.nome, 
-            usuario.email, 
-            usuario.senha,
-            usuario.cpf,
-            usuario.data_nascimento,
-            usuario.status,
-            usuario.data_cadastro,
-            usuario.rua_usuario,
-            usuario.bairro_usuario,
-            usuario.cidade_usuario,
-            usuario.cep_usuario,
-            usuario.telefone))
+def inserir(usuario: Usuario, cursor: Any) -> Optional[int]:
+    cursor.execute(INSERIR, (
+        usuario.nome, 
+        usuario.email, 
+        usuario.senha,
+        usuario.cpf,
+        usuario.data_nascimento,
+        usuario.status,
+        usuario.data_cadastro,
+        usuario.rua_usuario,
+        usuario.bairro_usuario,
+        usuario.cidade_usuario,
+        usuario.cep_usuario,
+        usuario.telefone))
     return cursor.lastrowid
     
 
