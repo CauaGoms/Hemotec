@@ -1,6 +1,7 @@
 CRIAR_TABELA = """
 CREATE TABLE IF NOT EXISTS instituicao (
-cnpj INTEGER PRIMARY KEY NOT NULL, 
+cod_instituicao INTEGER PRIMARY KEY AUTOINCREMENT,
+cnpj TEXT NOT NULL, 
 nome TEXT NOT NULL,
 email TEXT NOT NULL, 
 rua_instituicao TEXT NOT NULL, 
@@ -18,7 +19,7 @@ VALUES (?, ?, ?, ?, ?, ?, ?, ?)
 """
 
 OBTER_TODOS = """
-SELECT i.cnpj, i.nome, i.email, i.rua_instituicao, i.bairro_instituicao, c.cidade_instituicao, i.cep_instituicao, i.telefone
+SELECT i.cod_instituicao, i.cnpj, i.nome, i.email, i.rua_instituicao, i.bairro_instituicao, c.cidade_instituicao, i.cep_instituicao, i.telefone
 FROM instituicao i,
 cidade c
 WHERE i.cidade_instituicao = c.cod_cidade
@@ -26,19 +27,19 @@ WHERE i.cidade_instituicao = c.cod_cidade
 
 UPDATE = """
 UPDATE instituicao
-SET nome = ?, email = ?, rua_instituicao = ?, bairro_instituicao = ?, cidade_instituicao = ?, cep_instituicao = ?, telefone = ?
-WHERE cnpj = ?;
+SET cnpj = ?, nome = ?, email = ?, rua_instituicao = ?, bairro_instituicao = ?, cep_instituicao = ?, telefone = ?
+WHERE cod_instituicao = ?;
 """
 
 DELETE = """
 DELETE FROM instituicao
-WHERE cnpj = ?;
+WHERE cod_instituicao = ?;
 """
 
 OBTER_POR_ID = """
-SELECT i.cnpj, i.nome, i.email, i.rua_instituicao, i.bairro_instituicao, c.cidade_instituicao, i.cep_instituicao, i.telefone
+SELECT i.cod_instituicao, i.cnpj, i.nome, i.email, i.rua_instituicao, i.bairro_instituicao, i.cidade_instituicao, i.cep_instituicao, i.telefone
 FROM instituicao i,
 cidade c
 WHERE i.cidade_instituicao = c.cod_cidade
-AND i.cnpj = ?;
+AND i.cod_instituicao = ?;
 """

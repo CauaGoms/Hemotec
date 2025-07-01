@@ -38,6 +38,7 @@ def obter_todos() -> list[Instituicao]:
         rows = cursor.fetchall()
         instituicao = [
             Instituicao(
+                cod_instituicao=row[0],
                 cnpj=row["cnpj"],
                 nome=row["nome"],
                 email=row["email"],
@@ -56,6 +57,7 @@ def obter_por_id(cod_instituicao: int) -> Optional[Instituicao]:
         row = cursor.fetchone()
         if row:
             return Instituicao(
+                cod_instituicao=row["cod_instituicao"],
                 cnpj=row["cnpj"],
                 nome=row["nome"],
                 email=row["email"],
@@ -73,14 +75,14 @@ def update(instituicao: Instituicao) -> bool:
         cursor.execute(
             UPDATE,
             (
+                instituicao.cnpj,
                 instituicao.nome,
                 instituicao.email,
                 instituicao.rua_instituicao,
                 instituicao.bairro_instituicao,
-                instituicao.cidade_instituicao,
                 instituicao.cep_instituicao,
                 instituicao.telefone,
-                instituicao.cnpj
+                instituicao.cod_instituicao
             ),
         )
         return cursor.rowcount > 0

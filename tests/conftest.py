@@ -26,7 +26,10 @@ def test_db():
 @pytest.fixture
 def cidade_exemplo():
     from data.model.cidade_model import Cidade
-    cidade = Cidade(0, "nome_cidade teste", "sigla_estado teste")
+    cidade = Cidade(
+        cod_cidade=0, 
+        nome_cidade="nome_cidade teste", 
+        sigla_estado="sigla_estado teste")
     return cidade
 
 @pytest.fixture
@@ -34,14 +37,23 @@ def lista_cidades_exemplo():
     from data.model.cidade_model import Cidade
     cidades = []
     for i in range(1, 11):
-        cidade = Cidade(0, f'nome_cidade {i:02d}', f'sigla_estado {i:02d}')
+        cidade = Cidade(
+            cod_cidade=0, 
+            nome_cidade=f'nome_cidade {i:02d}', 
+            sigla_estado=f'sigla_estado {i:02d}')
         cidades.append(cidade)
     return cidades
 
 @pytest.fixture
 def campanha_exemplo():
     from data.model.campanha_model import Campanha
-    campanha = Campanha(0, "titulo teste", "descricao teste", datetime(2025, 1, 1).date(), datetime(2025, 1, 1).date(), "status teste")
+    campanha = Campanha(
+        cod_campanha=0, 
+        titulo="titulo teste", 
+        descricao="descricao teste", 
+        data_inicio=datetime(2025, 1, 1).date(), 
+        data_fim=datetime(2025, 1, 1).date(), 
+        status="status teste")
     return campanha
 
 @pytest.fixture
@@ -49,7 +61,13 @@ def lista_campanhas_exemplo():
     from data.model.campanha_model import Campanha
     campanhas = []
     for i in range(1, 11):
-        campanha = Campanha(0, f'titulo {i:02d}', f'descricao {i:02d}', datetime(2025, 1, i).date(), datetime(2025, 1, i).date(), f"status {i:02d}")
+        campanha = Campanha(
+            cod_campanha=0, 
+            titulo=f'titulo {i:02d}', 
+            descricao=f'descricao {i:02d}', 
+            data_inicio=datetime(2025, 1, i).date(), 
+            data_fim=datetime(2025, 1, i).date(), 
+            status=f"status {i:02d}")
         campanhas.append(campanha)
     return campanhas
 
@@ -148,14 +166,15 @@ def lista_gestores_exemplo():
 def instituicao_exemplo():
     from data.model.instituicao_model import Instituicao
     instituicao = Instituicao(
-        "cnpj teste", 
-        "nome teste",
-        "email teste",
-        "rua_instituicao teste",
-        "bairro_instituicao teste",
-        1,
-        "cep_instituicao teste",
-        "telefone teste"
+        cod_instituicao=0,
+        cnpj="cnpj teste", 
+        nome="nome teste",
+        email="email teste",
+        rua_instituicao="rua_instituicao teste",
+        bairro_instituicao="bairro_instituicao teste",
+        cidade_instituicao=1,
+        cep_instituicao="cep_instituicao teste",
+        telefone="telefone teste"
         )
     return instituicao
 
@@ -165,14 +184,15 @@ def lista_instituicoes_exemplo():
     instituicoes = []
     for i in range(1, 11):
         instituicao = Instituicao(
-            f'cnpj {i:02d}', 
-            f'nome {i:02d}',
-            f'email {i:02d}',
-            f'rua_instituicao {i:02d}',
-            f'bairro_instituicao {i:02d}',
-            i,
-            f'cep_instituicao {i:02d}',
-            f'telefone {i:02d}'
+            cod_instituicao=0,
+            cnpj=f'cnpj {i:02d}', 
+            nome=f'nome {i:02d}',
+            email=f'email {i:02d}',
+            rua_instituicao=f'rua_instituicao {i:02d}',
+            bairro_instituicao=f'bairro_instituicao {i:02d}',
+            cidade_instituicao=i,
+            cep_instituicao=f'cep_instituicao {i:02d}',
+            telefone=f'telefone {i:02d}'
         )
         instituicoes.append(instituicao)
     return instituicoes
