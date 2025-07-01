@@ -184,5 +184,3 @@ class TestUsuarioRepo:
     
     def test_obter_por_email_existente(self, test_db, cidade_exemplo, usuario_exemplo):
         pass
-
-    def
