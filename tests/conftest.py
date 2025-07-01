@@ -149,8 +149,6 @@ def instituicao_exemplo():
     from data.model.instituicao_model import Instituicao
     instituicao = Instituicao(
         "cnpj teste", 
-        1, 
-        1,
         "nome teste",
         "email teste",
         "rua_instituicao teste",
@@ -168,8 +166,6 @@ def lista_instituicoes_exemplo():
     for i in range(1, 11):
         instituicao = Instituicao(
             f'cnpj {i:02d}', 
-            i, 
-            i,
             f'nome {i:02d}',
             f'email {i:02d}',
             f'rua_instituicao {i:02d}',
@@ -188,7 +184,6 @@ def assinatura_exemplo():
         cod_assinatura=1,
         cnpj="cnpj teste",
         cod_plano=1,
-        cod_licenca=1,
         data_inicio=datetime(2025, 1, 1).date(),
         data_fim=datetime(2025, 1, 1).date(),
         valor=10.0,
@@ -205,7 +200,6 @@ def lista_assinaturas_exemplo():
             cod_assinatura=i,
             cnpj=f'cnpj {i:02d}',
             cod_plano=i,
-            cod_licenca=i,
             data_inicio=datetime(2025, 1, i).date(),
             data_fim=datetime(2025, 1, i).date(),
             valor=float(i * 10),
@@ -219,7 +213,6 @@ def plano_exemplo():
     from data.model.plano_model import Plano
     plano = Plano(
         cod_plano=1,
-        cod_assinatura=1,
         qtd_licenca=10,
         nome="nome teste",
         valor=10.0,
@@ -234,7 +227,6 @@ def lista_planos_exemplo():
     for i in range(1, 11):
         plano = Plano(
             cod_plano=i,
-            cod_assinatura=i,
             qtd_licenca=i * 10,
             nome=f'nome {i:02d}',
             valor=float(i * 10),
@@ -249,7 +241,6 @@ def licenca_exemplo():
     licenca = Licenca(
         cod_licenca=1,
         cod_assinatura=1,
-        cod_unidade=1,
         status=1
     )
     return licenca
@@ -262,7 +253,6 @@ def lista_licencas_exemplo():
         licenca = Licenca(
             cod_licenca=i,
             cod_assinatura=i,
-            cod_unidade=i,
             status=i 
         )
         licencas.append(licenca)
@@ -274,7 +264,6 @@ def adm_unidade_exemplo():
     adm_unidade = Adm_unidade(
         cod_adm=1,
         cod_unidade=1,
-        cod_notificacao=1,
         permissao_envio_campanha=True,
         permissao_envio_notificacao=True,
         nome="nome teste",
@@ -300,7 +289,6 @@ def lista_adm_unidades_exemplo():
         adm_unidade = Adm_unidade(
             cod_adm=i,
             cod_unidade=i,
-            cod_notificacao=i,
             permissao_envio_campanha=True,
             permissao_envio_notificacao=True,
             nome=f'nome {i:02d}',
@@ -347,9 +335,7 @@ def unidade_coleta_exemplo():
     from data.model.unidade_coleta_model import Unidade_coleta
     unidade_coleta = Unidade_coleta(
         cod_unidade=1,
-        cod_adm=1,
         cod_licenca=1,
-        cod_estoque=1,
         nome="nome teste",
         email="email teste",
         rua_unidade="rua_unidade teste",
@@ -369,9 +355,7 @@ def lista_unidades_coleta_exemplo():
     for i in range(1, 11):
         unidade_coleta = Unidade_coleta(
             cod_unidade=i,
-            cod_adm=i,
             cod_licenca=i,
-            cod_estoque=i,
             nome=f'nome {i:02d}',
             email=f'email {i:02d}',
             rua_unidade=f'rua_unidade {i:02d}',
@@ -450,7 +434,6 @@ def colaborador_exemplo():
     from data.model.colaborador_model import Colaborador
     colaborador = Colaborador(
         cod_colaborador=1,
-        cod_agendamento=1,
         funcao="funcao teste",
         nome="nome teste",
         email="email teste",
@@ -474,7 +457,6 @@ def lista_colaboradores_exemplo():
     for i in range(1, 11):
         colaborador = Colaborador(
             cod_colaborador=i,
-            cod_agendamento=i,
             funcao=f'funcao {i:02d}',
             nome=f'nome {i:02d}',
             email=f'email {i:02d}',
@@ -528,8 +510,6 @@ def doador_exemplo():
     from data.model.doador_model import Doador
     doador = Doador(
         cod_doador=1,
-        cod_doacao=1,
-        cod_agendamento=1,
         tipo_sanguineo="tipo_sanguineo teste",
         fator_rh="fator_rh teste",
         elegivel="elegivel teste",
@@ -560,8 +540,6 @@ def lista_doadores_exemplo():
     for i in range(1, 11):
         doador = Doador(
             cod_doador=i,
-            cod_doacao=i,
-            cod_agendamento=i,
             tipo_sanguineo=f'tipo_sanguineo {i:02d}',
             fator_rh=f'fator_rh {i:02d}',
             elegivel=f'elegivel {i:02d}',
@@ -592,7 +570,6 @@ def doacao_exemplo():
     doacao = Doacao(
         cod_doacao=1,
         cod_doador=1,
-        cod_exame=1,
         data_hora=datetime(2025, 1, 1, 1, 0, 0),
         quantidade=10,
         status=1
@@ -607,7 +584,6 @@ def lista_doacoes_exemplo():
         doacao = Doacao(
             cod_doacao=i,
             cod_doador=i,
-            cod_exame=i,
             data_hora=datetime(2025, 1, i, i, 0, 0),
             quantidade=i * 10,
             status=i

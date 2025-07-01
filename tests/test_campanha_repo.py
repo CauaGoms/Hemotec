@@ -23,21 +23,6 @@ class TestCampanhaRepo:
         assert dados_db.data_fim.strftime("%Y-%m-%d") == "2025-01-01", "A data de fim da campanha inserida não confere"
         assert dados_db.status == "status teste", "O status da campanha inserida não confere"
 
-    # def test_inserir(self, test_db, campanha_exemplo):
-    #     #Arrange
-    #     criar_tabela()
-    #     #Act
-    #     id_campanha_inserida = inserir(campanha_exemplo)
-    #     #Assert
-    #     campanha_db = obter_por_id(id_campanha_inserida)
-    #     assert campanha_db is not None, "A Campanha inserida não deveria ser None"
-    #     assert campanha_db.cod_campanha == 1, "O ID da Campanha inserida deveria ser igual a 1"
-    #     assert campanha_db.titulo == "titulo teste", "O título da campanha inserida não confere"
-    #     assert campanha_db.descricao == "descricao teste", "A descrição da campanha inserida não confere"
-    #     assert campanha_db.data_inicio == "2025-01-01", "A data de início da campanha inserida não confere"
-    #     assert campanha_db.data_fim == "2025-01-01", "A data de fim da campanha inserida não confere"
-    #     assert campanha_db.status == "status teste", "O status da campanha inserida não confere"
-
     def test_update_existente(self, test_db, campanha_exemplo):
         #Arrange
         criar_tabela()

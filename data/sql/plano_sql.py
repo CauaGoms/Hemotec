@@ -4,8 +4,7 @@ cod_plano INTEGER PRIMARY KEY AUTOINCREMENT,
 qtd_licenca INTEGER NOT NULL,
 nome TEXT NOT NULL,
 valor REAL NOT NULL,
-validade INTEGER NOT NULL,
-FOREIGN KEY (cod_assinatura) REFERENCES assinatura(cod_assinatura)
+validade INTEGER NOT NULL
 )
 """
 
