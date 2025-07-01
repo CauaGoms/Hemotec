@@ -20,9 +20,9 @@ def verificar_senha(senha_normal: str, senha_hashed: str) -> bool:
 
 def autenticar_usuario(email: str, senha: str):
     # Busca usuário no banco de dados pelo email
-    usuario = usuario_repo.obter_usuario_por_email(email)
+    usuario = usuario_repo.obter_por_email(email)
     # Verifica se usuário existe e se a senha está correta
-    if not usuario or not verificar_senha(senha, usuario.senha_hash):
+    if not usuario or not verificar_senha(senha, usuario.senha):
         # Retorna None se autenticação falhar
         return None
     # Retorna o objeto usuário se autenticação for bem-sucedida

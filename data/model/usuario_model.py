@@ -1,12 +1,13 @@
 from dataclasses import dataclass
 from datetime import datetime
+from typing import Optional
 
 @dataclass
 class Usuario:
     cod_usuario: int
     nome: str
     email: str
-    senha: str
+    senha: Optional[str] = None
     cpf: str
     data_nascimento: datetime
     status: bool
