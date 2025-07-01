@@ -19,7 +19,7 @@ class TestUsuarioRepo:
             #Act
             id_tabela_inserida = usuario_repo.inserir(usuario_exemplo, cursor)
             conn.commit()
-            #Assert
+        #Assert
         dados_db = usuario_repo.obter_por_id(id_tabela_inserida)
         assert dados_db is not None, "O usuário inserido não deveria ser None"
         assert dados_db.cod_usuario == 1, "O ID do usuário inserido deveria ser igual a 1"
@@ -35,7 +35,6 @@ class TestUsuarioRepo:
         assert dados_db.cidade_usuario == 1, "A cidade do usuário inserido não confere"
         assert dados_db.cep_usuario == "cep_usuario teste", "O CEP do usuário inserido não confere"
         assert dados_db.telefone == "telefone teste", "O telefone do usuário inserido não confere"
-
 
     def test_update_existente(self, test_db, usuario_exemplo, cidade_exemplo):
         #Arrange
@@ -181,3 +180,66 @@ class TestUsuarioRepo:
         dados_db = usuario_repo.obter_por_id(999)
         #Assert
         assert dados_db is None, "A Cidade obtida deveria ser None para um ID inexistente"
+
+    def test_obter_usuario_por_email_existente(self, test_db, usuario_exemplo, cidade_exemplo):
+        # Arrange
+        with get_connection() as conn:
+            cursor = conn.cursor()
+            cidade_repo.criar_tabela()
+            cidade_repo.inserir(cidade_exemplo)
+            usuario_repo.criar_tabela()
+            id_usuario_inserido = usuario_repo.inserir(usuario_exemplo, cursor)
+            conn.commit()
+        # Act
+        dados_db = usuario_repo.obter_por_email(usuario_exemplo.email)
+        # Assert
+        assert dados_db is not None, "A Cidade obtida não deveria ser None"
+        assert dados_db.cod_usuario == id_usuario_inserido, "O ID da Cidade obtida deveria ser igual ao ID da cidade inserido"
+        assert dados_db.nome == "nome teste", "O nome da Cidade obtida deveria ser igual ao nome da cidade inserido"
+        assert dados_db.email == "email teste", "A sigla do estado obtida deveria ser igual a sigla do estado da cidade inserida"
+        assert dados_db.senha == "senha teste", "A senha do usuário obtida deveria ser igual a senha do usuário inserido"
+        assert dados_db.cpf == "cpf teste", "O CPF do usuário obtido deveria ser igual ao CPF do usuário inserido"
+        assert dados_db.data_nascimento.strftime('%Y-%m-%d') == "2025-01-01", "A data de nascimento do usuário obtida deveria ser igual a data de nascimento do usuário inserido"
+        assert dados_db.status == True, "O status do usuário obtido deveria ser igual ao status do usuário inserido"
+        assert dados_db.data_cadastro.strftime('%Y-%m-%d') == "2025-01-01", "A data de cadastro do usuário obtida deveria ser igual a data de cadastro do usuário inserido"
+        assert dados_db.rua_usuario == "rua_usuario teste", "A rua do usuário obtida deveria ser igual a rua do usuário inserido"
+        assert dados_db.bairro_usuario == "bairro_usuario teste", "O bairro do usuário obtida deveria ser igual ao bairro do usuário inserido"
+        assert dados_db.cidade_usuario == 1, "A cidade do usuário obtida deveria ser igual a cidade do usuário inserido"
+        assert dados_db.cep_usuario == "cep_usuario teste", "O CEP do usuário obtida deveria ser igual ao CEP do usuário inserido"
+        assert dados_db.telefone == "telefone teste", "O telefone do usuário obtida deveria ser igual ao telefone do usuário inserido"
+
+    def test_obter_usuario_por_email_inexistente(self, test_db, cidade_exemplo):
+        # Arrange
+        cidade_repo.criar_tabela()
+        cidade_repo.inserir(cidade_exemplo)
+        usuario_repo.criar_tabela()
+        # Act
+        usuario_db = usuario_repo.obter_por_email("inexistente@email.com")
+        # Assert
+        assert usuario_db is None, "O usuário buscado por email inexistente deveria retornar None"
+
+    def test_atualizar_senha(self, test_db, usuario_exemplo, cidade_exemplo):
+            # Arrange
+            with get_connection() as conn:
+                cursor = conn.cursor()
+                cidade_repo.criar_tabela()
+                cidade_repo.inserir(cidade_exemplo)
+                usuario_repo.criar_tabela()
+                id_usuario_inserido = usuario_repo.inserir(usuario_exemplo, cursor)
+                conn.commit()
+            # Act
+            resultado = usuario_repo.atualizar_senha(id_usuario_inserido, "nova_senha_hash")
+            # Assert
+            assert resultado == True, "A atualização da senha do usuário deveria retornar True"
+            usuario_db = usuario_repo.obter_por_id(id_usuario_inserido)
+            assert usuario_db.senha == "nova_senha_hash", "A senha do usuário atualizado não confere"
+    
+    def test_atualizar_senha_inexistente(self, test_db, cidade_exemplo):
+        # Arrange
+        cidade_repo.criar_tabela()
+        cidade_repo.inserir(cidade_exemplo)
+        usuario_repo.criar_tabela()
+        # Act
+        resultado = usuario_repo.atualizar_senha(999, "nova_senha_hash")
+        # Assert
+        assert resultado == False, "A atualização da senha de um usuário inexistente deveria retornar False"

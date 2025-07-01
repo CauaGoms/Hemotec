@@ -1,4 +1,5 @@
 from data.repo import gestor_repo, usuario_repo, instituicao_repo, cidade_repo, assinatura_repo
+from data.util.database import get_connection
 
 class TestGestorRepo:
     def test_criar_tabela_gestor(self, test_db):
@@ -10,24 +11,20 @@ class TestGestorRepo:
 
     def test_obter_por_id_existente(self, test_db, gestor_exemplo, usuario_exemplo, instituicao_exemplo, cidade_exemplo ,assinatura_exemplo):
         #Arrange
-        cidade_repo.criar_tabela()
-        cidade_repo.inserir(cidade_exemplo)
-
-        plano_repo = criar_tabela()
-        plano_repo.inserir(plano_exemplo)
-
-        assinatura_repo.criar_tabela()
-        assinatura_repo.inserir(assinatura_exemplo)
-
+        with get_connection() as conn:
+            cursor = conn.cursor()
+            cidade_repo.criar_tabela()
+            cidade_repo.inserir(cidade_exemplo)
+            usuario_repo.criar_tabela()
+            id_tabela_inserida = usuario_repo.inserir(usuario_exemplo, cursor)
+            conn.commit()
+        
         instituicao_repo.criar_tabela()
         instituicao_repo.inserir(instituicao_exemplo)
 
-        usuario_repo.criar_tabela()
-        usuario_repo.inserir(usuario_exemplo)
-
         gestor_repo.criar_tabela()
         id_tabela_inserida = gestor_repo.inserir(gestor_exemplo)
-
+        
         #Act
         dados_db = gestor_repo.obter_por_id(id_tabela_inserida)
         #Assert

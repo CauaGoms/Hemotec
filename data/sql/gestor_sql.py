@@ -14,7 +14,7 @@ VALUES (?, ?, ?)
 """
 
 OBTER_TODOS = """
-SELECT u.cod_gestor, i.cnpj, g.instituicao
+SELECT g.cod_gestor, i.cnpj, g.instituicao
 FROM gestor g,
 usuario u,
 instituicao i
@@ -34,7 +34,7 @@ WHERE cod_gestor = ?;
 """
 
 OBTER_POR_ID = """
-SELECT u.cod_gestor, i.cnpj, g.instituicao
+SELECT g.cod_gestor, i.cnpj, g.instituicao
 FROM gestor g,
 usuario u,
 instituicao i
