@@ -157,12 +157,22 @@ class TestUsuarioRepo:
         assert dados_db is not None, "A Cidade obtida não deveria ser None"
         assert dados_db.cod_usuario == id_tabela_inserida, "O ID da Cidade obtida deveria ser igual ao ID da cidade inserido"
         assert dados_db.nome == "nome teste", "O nome da Cidade obtida deveria ser igual ao nome da cidade inserido"
-        assert dados_db.sigla_estado == "sigla_estado teste", "A sigla do estado obtida deveria ser igual a sigla do estado da cidade inserida"
+        assert dados_db.email == "email teste", "A sigla do estado obtida deveria ser igual a sigla do estado da cidade inserida"
+        assert dados_db.senha == "senha teste", "A senha do usuário obtida deveria ser igual a senha do usuário inserido"
+        assert dados_db.cpf == "cpf teste", "O CPF do usuário obtido deveria ser igual ao CPF do usuário inserido"
+        assert dados_db.data_nascimento.strftime('%Y-%m-%d') == "2025-01-01", "A data de nascimento do usuário obtida deveria ser igual a data de nascimento do usuário inserido"
+        assert dados_db.status == True, "O status do usuário obtido deveria ser igual ao status do usuário inserido"
+        assert dados_db.data_cadastro.strftime('%Y-%m-%d') == "2025-01-01", "A data de cadastro do usuário obtida deveria ser igual a data de cadastro do usuário inserido"
+        assert dados_db.rua_usuario == "rua_usuario teste", "A rua do usuário obtida deveria ser igual a rua do usuário inserido"
+        assert dados_db.bairro_usuario == "bairro_usuario teste", "O bairro do usuário obtida deveria ser igual ao bairro do usuário inserido"
+        assert dados_db.cidade_usuario == 1, "A cidade do usuário obtida deveria ser igual a cidade do usuário inserido"
+        assert dados_db.cep_usuario == "cep_usuario teste", "O CEP do usuário obtida deveria ser igual ao CEP do usuário inserido"
+        assert dados_db.telefone == "telefone teste", "O telefone do usuário obtida deveria ser igual ao telefone do usuário inserido"
 
-    def test_obter_por_id_inexistente(self, test_db):
+    def test_obter_por_id_inexistente(self, test_db,):
         #Arrange
-        criar_tabela()
+        usuario_repo.criar_tabela()
         #Act
-        dados_db = obter_por_id(999)
+        dados_db = usuario_repo.obter_por_id(999)
         #Assert
         assert dados_db is None, "A Cidade obtida deveria ser None para um ID inexistente"
