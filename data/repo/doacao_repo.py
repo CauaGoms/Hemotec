@@ -22,7 +22,6 @@ def inserir(doacao: Doacao) -> Optional[int]:
         cursor = conn.cursor()
         cursor.execute(INSERIR, (
             doacao.cod_doador,
-            doacao.cod_exame,
             doacao.data_hora,
             doacao.quantidade,
             doacao.status)) 
@@ -38,7 +37,6 @@ def obter_todos() -> list[Doacao]:
             Doacao(
                 cod_doacao=row["cod_doacao"],
                 cod_doador=row["cod_doador"],
-                cod_exame=row["cod_exame"],
                 data_hora=datetime.strptime(row["data_hora"], '%Y-%m-%d %H:%M:%S'),
                 quantidade=row["quantidade"],
                 status=row["status"])  
@@ -54,7 +52,6 @@ def obter_por_id(cod_doacao: int) -> Optional[Doacao]:
             return Doacao(
                 cod_doacao=row["cod_doacao"],
                 cod_doador=row["cod_doador"],
-                cod_exame=row["cod_exame"],
                 data_hora=datetime.strptime(row["data_hora"], '%Y-%m-%d %H:%M:%S'),
                 quantidade=row["quantidade"],
                 status=row["status"]
@@ -68,7 +65,6 @@ def update(doacao: Doacao) -> bool:
             UPDATE,
             (
                 doacao.cod_doador,
-                doacao.cod_exame,
                 doacao.data_hora,
                 doacao.quantidade,
                 doacao.status,

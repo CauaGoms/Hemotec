@@ -2,30 +2,26 @@ CRIAR_TABELA = """
 CREATE TABLE IF NOT EXISTS licenca (
 cod_licenca INTEGER PRIMARY KEY AUTOINCREMENT,
 cod_assinatura INTEGER NOT NULL,
-cod_unidade INTEGER NOT NULL, 
 status INTEGER NOT NULL,
-FOREIGN KEY (cod_assinatura) REFERENCES assinatura(cod_assinatura),
-FOREIGN KEY (cod_unidade) REFERENCES unidade(cod_unidade)
+FOREIGN KEY (cod_assinatura) REFERENCES assinatura(cod_assinatura)
 )
 """
 
 INSERIR = """
-INSERT INTO licenca (cod_assinatura, cod_unidade, status)
-VALUES (?, ?, ?)
+INSERT INTO licenca (cod_assinatura, status)
+VALUES (?, ?)
 """ 
 
 OBTER_TODOS = """
-SELECT l.cod_licenca, a.cod_assinatura, u.cod_unidade, l.status
+SELECT l.cod_licenca, a.cod_assinatura, l.status
 FROM licenca l,
-assinatura a,
-unidade u
+assinatura a
 WHERE l.cod_assinatura = a.cod_assinatura
-AND l.cod_unidade = u.cod_unidade
 """ 
 
 UPDATE = """
 UPDATE licenca
-SET cod_assinatura = ?, cod_unidade = ?, status = ?
+SET cod_assinatura = ?, status = ?
 WHERE cod_licenca = ?;
 """
 
@@ -35,10 +31,9 @@ WHERE cod_licenca = ?;
 """
 
 OBTER_POR_ID = """
-SELECT l.cod_licenca, a.cod_assinatura, u.cod_unidade, l.status
+SELECT l.cod_licenca, a.cod_assinatura, l.status
 FROM licenca l,
-assinatura a,
-unidade u
+assinatura a
 WHERE l.cod_assinatura = a.cod_assinatura
 AND l.cod_unidade = u.cod_unidade
 AND l.cod_licenca = ?;

@@ -21,9 +21,7 @@ def inserir(unidade_coleta: Unidade_coleta) -> Optional[int]:
         cursor = conn.cursor()
         cursor.execute(INSERIR, (
             unidade_coleta.cod_unidade,
-            unidade_coleta.cod_adm,
             unidade_coleta.cod_licenca,
-            unidade_coleta.cod_estoque,
             unidade_coleta.nome,
             unidade_coleta.email,
             unidade_coleta.rua_unidade,
@@ -45,9 +43,7 @@ def obter_todos() -> list[Unidade_coleta]:
         unidade_coleta = [
             Unidade_coleta(
                 cod_unidade_coleta=row["cod_unidade_coleta"],
-                cod_adm=row["cod_adm"],
                 cod_licenca=row["cod_licenca"],
-                cod_estoque=row["cod_estoque"],
                 nome=row["nome"],
                 email=row["email"],
                 rua_unidade=row["rua_unidade"],
@@ -69,9 +65,7 @@ def obter_por_id(cod_unidade_coleta: int) -> Optional[Unidade_coleta]:
         if row:
             return Unidade_coleta(
                 cod_unidade_coleta=row["cod_unidade_coleta"],
-                cod_adm=row["cod_adm"],
                 cod_licenca=row["cod_licenca"],
-                cod_estoque=row["cod_estoque"],
                 nome=row["nome"],
                 email=row["email"],
                 rua_unidade=row["rua_unidade"],
@@ -100,9 +94,7 @@ def update(unidade_coleta: Unidade_coleta) -> bool:
         cursor.execute(
             UPDATE,
             (
-                unidade_coleta.cod_adm,
                 unidade_coleta.cod_licenca,
-                unidade_coleta.cod_estoque,
                 unidade_coleta.nome,
                 unidade_coleta.email,
                 unidade_coleta.rua_unidade,

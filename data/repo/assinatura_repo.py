@@ -23,7 +23,6 @@ def inserir(assinatura: Assinatura) -> Optional[int]:
         cursor.execute(INSERIR, (
             assinatura.cnpj,
             assinatura.cod_plano,
-            assinatura.cod_licenca,
             assinatura.data_inicio,
             assinatura.data_fim,
             assinatura.valor,
@@ -41,7 +40,6 @@ def obter_todos() -> list[Assinatura]:
                 cod_assinatura=row["cod_assinatura"],
                 cnpj=row["cnpj"],
                 cod_plano=row["cod_plano"],
-                cod_licenca=row["cod_licenca"],
                 data_inicio=datetime.strptime(row["data_inicio"], '%Y-%m-%d'),
                 data_fim=datetime.strptime(row["data_fim"], '%Y-%m-%d'),
                 valor=row["valor"],
@@ -60,7 +58,6 @@ def obter_por_id(cod_assinatuta: int) -> Optional[Assinatura]:
                 cod_assinatura=row["cod_assinatura"],
                 cnpj=row["cnpj"],
                 cod_plano=row["cod_plano"],
-                cod_licenca=row["cod_licenca"],
                 data_inicio=datetime.strptime(row["data_inicio"], '%Y-%m-%d'),
                 data_fim=datetime.strptime(row["data_fim"], '%Y-%m-%d'),
                 valor=row["valor"],
@@ -76,7 +73,6 @@ def update(assinatura: Assinatura) -> bool:
             (
                 assinatura.cnpj,
                 assinatura.cod_plano,
-                assinatura.cod_licenca,
                 assinatura.data_inicio,
                 assinatura.data_fim,
                 assinatura.valor,

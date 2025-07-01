@@ -21,8 +21,6 @@ def inserir(instituicao: Instituicao) -> Optional[int]:
         cursor = conn.cursor()
         cursor.execute(INSERIR, (
             instituicao.cnpj,
-            instituicao.cod_gestor,
-            instituicao.cod_assinatura,
             instituicao.nome,
             instituicao.email,
             instituicao.rua_instituicao,
@@ -41,8 +39,6 @@ def obter_todos() -> list[Instituicao]:
         instituicao = [
             Instituicao(
                 cnpj=row["cnpj"],
-                cod_gestor=row["cod_gestor"],
-                cod_assinatura=row["cod_assinatura"],
                 nome=row["nome"],
                 email=row["email"],
                 rua_instituicao=row["rua_instituicao"],
@@ -61,8 +57,6 @@ def obter_por_id(cod_instituicao: int) -> Optional[Instituicao]:
         if row:
             return Instituicao(
                 cnpj=row["cnpj"],
-                cod_gestor=row["cod_gestor"],
-                cod_assinatura=row["cod_assinatura"],
                 nome=row["nome"],
                 email=row["email"],
                 rua_instituicao=row["rua_instituicao"],
@@ -79,8 +73,6 @@ def update(instituicao: Instituicao) -> bool:
         cursor.execute(
             UPDATE,
             (
-                instituicao.cod_gestor,
-                instituicao.cod_assinatura,
                 instituicao.nome,
                 instituicao.email,
                 instituicao.rua_instituicao,
