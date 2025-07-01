@@ -20,7 +20,6 @@ def inserir(plano: Plano) -> Optional[int]:
     with get_connection() as conn:
         cursor = conn.cursor()
         cursor.execute(INSERIR, (
-            plano.cod_plano,
             plano.qtd_licenca,
             plano.nome,
             plano.valor,
