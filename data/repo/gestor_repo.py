@@ -35,7 +35,7 @@ def inserir(gestor: Gestor) -> Optional[int]:
             gestor.cidade_usuario,
             gestor.cep_usuario,
             gestor.telefone)
-        cod_gestor = usuario_repo.inserir(usuario)
+        cod_gestor = usuario_repo.inserir(usuario, cursor)
         cursor.execute(INSERIR, (
             cod_gestor, 
             gestor.cnpj, 
