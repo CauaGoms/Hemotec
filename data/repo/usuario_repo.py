@@ -4,7 +4,7 @@ from data.sql.usuario_sql import *
 from data.util.database import get_connection
 from datetime import datetime
 import os
-from sqlite3 import Connection, Cursor
+from sqlite3 import Connection
 
 def criar_tabela() -> bool:
     try:
@@ -102,75 +102,6 @@ def obter_por_email(email: str) -> Optional[Usuario]:
                 telefone=row["telefone"])
         
         return None
-    
-# def obter_todos() -> list[Usuario]:
-#     with get_connection() as conn:
-#         cursor = conn.cursor()
-#         cursor.execute(OBTER_TODOS)
-#         rows = cursor.fetchall()
-#         usuario = [
-#             Usuario(
-#                 cod_usuario=row["cod_usuario"],
-#                 nome=row["nome"],
-#                 email=row["email"],
-#                 senha=row["senha"],
-#                 cpf=row["cpf"],
-#                 data_nascimento=row["data_nascimento"],
-#                 status=row["status"],
-#                 data_cadastro=row["data_cadastro"],
-#                 rua_usuario=row["rua_usuario"],
-#                 bairro_usuario=row["bairro_usuario"],
-#                 cidade_usuario=row["cidade_usuario"],
-#                 cep_usuario=row["cep_usuario"],
-#                 telefone=row["telefone"])  
-#                 for row in rows]
-#         return usuario
-    
-# def obter_por_id(cod_usuario: int) -> Optional[Usuario]:
-#     with get_connection() as conn:
-#         cursor = conn.cursor()
-#         cursor.execute(OBTER_POR_ID, (cod_usuario,))
-#         row = cursor.fetchone()
-#         if row:
-#             return Usuario(
-#                 cod_usuario=row["cod_usuario"],
-#                 nome=row["nome"],
-#                 email=row["email"],
-#                 senha=row["senha"],
-#                 cpf=row["cpf"],
-#                 data_nascimento=row["data_nascimento"],
-#                 status=row["status"],
-#                 data_cadastro=row["data_cadastro"],
-#                 rua_usuario=row["rua_usuario"],
-#                 bairro_usuario=row["bairro_usuario"],
-#                 cod_cidade=row["cidade_usuario"],
-#                 cep_usuario=row["cep_usuario"],
-#                 telefone=row["telefone"]
-#             )
-#         return None
-    
-# def obter_por_email(email: str) -> Optional[Usuario]:
-#     with get_connection() as conn:
-#         cursor = conn.cursor()
-#         cursor.execute(OBTER_POR_EMAIL, (email,))
-#         row = cursor.fetchone()
-#         if row:
-#             return Usuario(
-#                 cod_usuario=row["cod_usuario"],  
-#                 nome=row["nome"],         
-#                 email=row["email"],
-#                 senha=row["senha"],
-#                 cpf=row["cpf"],
-#                 data_nascimento=row["data_nascimento"],
-#                 status=row["status"],
-#                 data_cadastro=row["data_cadastro"],
-#                 rua_usuario=row["rua_usuario"],
-#                 bairro_usuario=row["bairro_usuario"],
-#                 cidade_usuario=row["cidade_usuario"],
-#                 cep_usuario=row["cep_usuario"],
-#                 telefone=row["telefone"])
-        
-#         return None
     
 def update(usuario: Usuario) -> Optional[int]:
     with get_connection() as conn:

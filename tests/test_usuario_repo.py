@@ -132,7 +132,7 @@ class TestUsuarioRepo:
         cod_retornados = [u.cod_usuario for u in dados_db]
         assert cod_retornados == cod_esperados, "Os IDs dos usuários retornados deveriam ser de 1 a 10"     
 
-    def test_obter_todos_vazia(self, test_db, lista_cidades_exemplo, lista_usuarios_exemplo):
+    def test_obter_todos_vazia(self, test_db, lista_cidades_exemplo):
         #Arrange
         cidade_repo.criar_tabela()
         for cidade in lista_cidades_exemplo:
@@ -181,3 +181,8 @@ class TestUsuarioRepo:
         dados_db = usuario_repo.obter_por_id(999)
         #Assert
         assert dados_db is None, "A Cidade obtida deveria ser None para um ID inexistente"
+    
+    def test_obter_por_email_existente(self, test_db, cidade_exemplo, usuario_exemplo):
+        pass
+
+    def
