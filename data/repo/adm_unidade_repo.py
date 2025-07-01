@@ -38,7 +38,6 @@ def inserir(adm_unidade: Adm_unidade) -> Optional[int]:
         cursor.execute(INSERIR, (
             cod_adm_unidade,
             adm_unidade.cod_unidade, 
-            adm_unidade.cod_notificacao,
             adm_unidade.permissao_envio_campanha,
             adm_unidade.permissao_envio_notificacao))
         return cod_adm_unidade
@@ -65,7 +64,6 @@ def obter_todos() -> list[Adm_unidade]:
                 cep_usuario=row["cep_usuario"],
                 telefone=row["telefone"],
                 cod_unidade=row["cod_unidade"],
-                cod_notificacao=row["cod_notificacao"],
                 permissao_envio_campanha=row["permissao_envio_campanha"],
                 permissao_envio_notificacao=row["permissao_envio_notificacao"])  
                 for row in rows]
@@ -91,7 +89,6 @@ def obter_por_id(cod_adm: int) -> Optional[Adm_unidade]:
             cep_usuario=row["cep_usuario"],
             telefone=row["telefone"],
             cod_unidade=row["cod_unidade"],
-            cod_notificacao=row["cod_notificacao"],
             permissao_envio_campanha=row["permissao_envio_campanha"],
             permissao_envio_notificacao=row["permissao_envio_notificacao"])
         return adm_unidade
@@ -117,7 +114,6 @@ def update(adm_unidade: Adm_unidade) -> bool:
         cursor.execute(UPDATE, (
             adm_unidade.cod_adm,
             adm_unidade.cod_unidade,
-            adm_unidade.cod_notificacao,
             adm_unidade.permissao_envio_campanha,
             adm_unidade.permissao_envio_notificacao))
         return (cursor.rowcount > 0)

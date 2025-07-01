@@ -22,7 +22,6 @@ def inserir(licenca: Licenca) -> Optional[int]:
         cursor.execute(INSERIR, (
             licenca.cod_licenca,
             licenca.cod_assinatura,
-            licenca.cod_unidade,
             licenca.status))
         return cursor.lastrowid
     
@@ -36,7 +35,6 @@ def obter_todos() -> list[Licenca]:
             Licenca(
                 cod_licenca=row["cod_licenca"],
                 cod_assinatura=row["cod_assinatura"],
-                cod_unidade=row["cod_unidade"],
                 status=row["status"]) 
                 for row in rows]
         return licenca
@@ -50,7 +48,6 @@ def obter_por_id(cod_licenca: int) -> Optional[Licenca]:
             return Licenca(
                 cod_licenca=row["cod_licenca"],
                 cod_assinatura=row["cod_assinatura"],
-                cod_unidade=row["cod_unidade"],
                 status=row["status"]
                 ) 
         return None
@@ -62,7 +59,6 @@ def update(licenca: Licenca) -> bool:
             UPDATE,
             (
                 licenca.cod_assinatura,
-                licenca.cod_unidade,
                 licenca.status,
                 licenca.cod_licenca
             ),

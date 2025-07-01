@@ -21,7 +21,6 @@ def inserir(plano: Plano) -> Optional[int]:
         cursor = conn.cursor()
         cursor.execute(INSERIR, (
             plano.cod_plano,
-            plano.cod_assinatura,
             plano.qtd_licenca,
             plano.nome,
             plano.valor,
@@ -38,7 +37,6 @@ def obter_todos() -> list[Plano]:
         plano = [
             Plano(
                 cod_plano=row["cod_plano"],
-                cod_assinatura=row["cod_assinatura"],
                 qtd_licenca=row["qtd_licenca"],
                 nome=row["nome"],
                 valor=row["valor"],
@@ -54,7 +52,6 @@ def obter_por_id(cod_plano: int) -> Optional[Plano]:
         if row:
             return Plano(
                 cod_plano=row["cod_plano"],
-                cod_assinatura=row["cod_assinatura"],
                 qtd_licenca=row["qtd_licenca"],
                 nome=row["nome"],
                 valor=row["valor"],
@@ -68,7 +65,6 @@ def update(plano: Plano) -> bool:
         cursor.execute(
             UPDATE,
             (
-                plano.cod_assinatura,
                 plano.qtd_licenca,
                 plano.nome,
                 plano.valor,

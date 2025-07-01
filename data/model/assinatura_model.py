@@ -7,7 +7,6 @@ class Assinatura:
     cod_assinatura: int
     cnpj: str
     cod_plano: int
-    cod_licenca: int
     data_inicio: datetime
     data_fim: datetime
     valor: float

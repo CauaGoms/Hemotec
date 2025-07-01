@@ -38,8 +38,6 @@ def inserir(doador: Doador) -> Optional[int]:
         cod_doador = usuario_repo.inserir(usuario, cursor)
         cursor.execute(INSERIR, (
             cod_doador, 
-            doador.cod_doacao, 
-            doador.cod_agendamento,
             doador.tipo_sanguineo,
             doador.fator_rh,
             doador.elegivel,
@@ -71,8 +69,6 @@ def obter_todos() -> list[Doador]:
                 cidade_usuario=row["cidade_usuario"],
                 cep_usuario=row["cep_usuario"],
                 telefone=row["telefone"],
-                cod_doacao=row["cod_doacao"],
-                cod_agendamento=row["cod_agendamento"],
                 tipo_sanguineo=row["tipo_sanguineo"],
                 fator_rh=row["fator_rh"],
                 elegivel=row["elegivel"],
@@ -103,8 +99,6 @@ def obter_por_id(cod_doador: int) -> Optional[Doador]:
             cidade_usuario=row["cidade_usuario"],
             cep_usuario=row["cep_usuario"],
             telefone=row["telefone"],
-            cod_doacao=row["cod_doacao"],
-            cod_agendamento=row["cod_agendamento"],
             tipo_sanguineo=row["tipo_sanguineo"],
             fator_rh=row["fator_rh"],
             elegivel=row["elegivel"],
@@ -134,8 +128,6 @@ def update(doador: Doador) -> bool:
             doador.telefone)
         usuario_repo.update(usuario, cursor)
         cursor.execute(UPDATE, (
-            doador.cod_doacao, 
-            doador.cod_agendamento,
             doador.tipo_sanguineo,
             doador.fator_rh,
             doador.elegivel,

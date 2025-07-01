@@ -37,7 +37,6 @@ def inserir(colaborador: Colaborador) -> Optional[int]:
         cod_colaborador = usuario_repo.inserir(usuario, cursor)
         cursor.execute(INSERIR, (
             cod_colaborador,
-            colaborador.cod_agendamento,
             colaborador.funcao))
         return cod_colaborador
     
@@ -62,7 +61,6 @@ def obter_todos() -> list[Colaborador]:
                 cidade_usuario=row["cidade_usuario"],
                 cep_usuario=row["cep_usuario"],
                 telefone=row["telefone"],
-                cod_agendamento=row["cod_agendamento"],
                 funcao=row["funcao"])  
                 for row in rows]
         return colaborador
@@ -86,7 +84,6 @@ def obter_por_id(cod_colaborador: int) -> Optional[Colaborador]:
             cidade_usuario=row["cidade_usuario"],
             cep_usuario=row["cep_usuario"],
             telefone=row["telefone"],
-            cod_agendamento=row["cod_agendamento"],
             funcao=row["funcao"])
         return colaborador
     
@@ -109,7 +106,6 @@ def update(colaborador: Colaborador) -> bool:
             colaborador.telefone)
         usuario_repo.update(usuario, cursor)
         cursor.execute(UPDATE, (
-            colaborador.cod_agendamento,
             colaborador.funcao,
             colaborador.cod_colaborador))
         return (cursor.rowcount > 0)
