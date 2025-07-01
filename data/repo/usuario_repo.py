@@ -100,7 +100,6 @@ def obter_por_email(email: str) -> Optional[Usuario]:
                 cidade_usuario=row["cidade_usuario"],
                 cep_usuario=row["cep_usuario"],
                 telefone=row["telefone"])
-        
         return None
     
 def update(usuario: Usuario) -> Optional[int]:
@@ -127,18 +126,16 @@ def update(usuario: Usuario) -> Optional[int]:
 def atualizar_senha(cod_usuario: int, senha: str) -> bool:
     with get_connection() as conn:
         cursor = conn.cursor()
-        # Executa comando SQL para alterar a senha do usuário
         cursor.execute(ALTERAR_SENHA, (senha, cod_usuario))
     return (cursor.rowcount > 0)
 
 def delete(cod_usuario: int) -> bool:
     with get_connection() as conn:
         cursor = conn.cursor()
-        # Executa comando SQL para deletar o usuário pelo ID
         cursor.execute(DELETE, (cod_usuario,))
     return (cursor.rowcount > 0)
 
-def inserir_dados_iniciais(conexao: Connection) -> None:
+"""def inserir_dados_iniciais(conexao: Connection) -> None:
     # Verifica se já existem categorias na tabela
     lista = obter_todos()
     # Se já houver categorias, não faz nada
@@ -151,4 +148,4 @@ def inserir_dados_iniciais(conexao: Connection) -> None:
         # Lê conteúdo do arquivo SQL
         sql_inserts = arquivo.read()
         # Executa comandos SQL de inserção
-        conexao.execute(sql_inserts)
+        conexao.execute(sql_inserts)"""
