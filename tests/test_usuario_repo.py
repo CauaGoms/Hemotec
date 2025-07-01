@@ -39,38 +39,41 @@ class TestUsuarioRepo:
 
     def test_update_existente(self, test_db, usuario_exemplo, cidade_exemplo):
         #Arrange
-        cidade_repo.criar_tabela()
-        cidade_repo.inserir(cidade_exemplo)
-        usuario_repo.criar_tabela()
-        id_tabela_inserida = usuario_repo.inserir(usuario_exemplo)
-        tabela_inserida = usuario_repo.obter_por_id(id_tabela_inserida)
-        #Act
-        tabela_inserida.nome = "nome atualizada"
-        tabela_inserida.email = "email atualizada"
-        tabela_inserida.senha = "senha atualizada"
-        tabela_inserida.cpf = "cpf atualizado"
-        tabela_inserida.data_nascimento = "2000-01-01"
-        tabela_inserida.status = False
-        tabela_inserida.data_cadastro = "2000-01-01"
-        tabela_inserida.rua_usuario = "rua_usuario atualizada"
-        tabela_inserida.bairro_usuario = "bairro_usuario atualizado"
-        tabela_inserida.cep_usuario = "cep_usuario atualizado"
-        tabela_inserida.telefone = "telefone atualizado"
-        resultado = usuario_repo.update(tabela_inserida)
-        #Assert
-        assert resultado == True, "A atualização do usuário deveria retornar True"
-        dados_db = usuario_repo.obter_por_id(id_tabela_inserida)
-        assert dados_db.nome == "nome atualizada", "O nome da cidade atualizada não confere"
-        assert dados_db.email == "email atualizada", "A sigla do estado atualizada não confere"
-        assert dados_db.senha == "senha atualizada", "A senha do usuário atualizado não confere"
-        assert dados_db.cpf == "cpf atualizado", "O CPF do usuário atualizado não confere"
-        assert dados_db.data_nascimento.strftime('%Y-%m-%d') == "2000-01-01", "A data de nascimento do usuário atualizado não confere"
-        assert dados_db.status == False, "O status do usuário atualizado não confere"
-        assert dados_db.data_cadastro.strftime('%Y-%m-%d') == "2000-01-01", "A data de cadastro do usuário atualizado não confere"
-        assert dados_db.rua_usuario == "rua_usuario atualizada", "A rua do usuário atualizado não confere"
-        assert dados_db.bairro_usuario == "bairro_usuario atualizado", "O bairro do usuário atualizado não confere"
-        assert dados_db.cep_usuario == "cep_usuario atualizado", "O CEP do usuário atualizado não confere"
-        assert dados_db.telefone == "telefone atualizado", "O telefone do usuário atualizado não confere"
+        with get_connection() as conn:
+            cursor = conn.cursor()
+            cidade_repo.criar_tabela()
+            cidade_repo.inserir(cidade_exemplo)
+            usuario_repo.criar_tabela()
+            id_tabela_inserida = usuario_repo.inserir(usuario_exemplo, cursor)
+            tabela_inserida = usuario_repo.obter_por_id(id_tabela_inserida)
+            conn.commit()
+            #Act
+            tabela_inserida.nome = "nome atualizada"
+            tabela_inserida.email = "email atualizada"
+            tabela_inserida.senha = "senha atualizada"
+            tabela_inserida.cpf = "cpf atualizado"
+            tabela_inserida.data_nascimento = "2000-01-01"
+            tabela_inserida.status = False
+            tabela_inserida.data_cadastro = "2000-01-01"
+            tabela_inserida.rua_usuario = "rua_usuario atualizada"
+            tabela_inserida.bairro_usuario = "bairro_usuario atualizado"
+            tabela_inserida.cep_usuario = "cep_usuario atualizado"
+            tabela_inserida.telefone = "telefone atualizado"
+            resultado = usuario_repo.update(tabela_inserida)
+            #Assert
+            assert resultado == True, "A atualização do usuário deveria retornar True"
+            dados_db = usuario_repo.obter_por_id(id_tabela_inserida)
+            assert dados_db.nome == "nome atualizada", "O nome da cidade atualizada não confere"
+            assert dados_db.email == "email atualizada", "A sigla do estado atualizada não confere"
+            assert dados_db.senha == "senha atualizada", "A senha do usuário atualizado não confere"
+            assert dados_db.cpf == "cpf atualizado", "O CPF do usuário atualizado não confere"
+            assert dados_db.data_nascimento.strftime('%Y-%m-%d') == "2000-01-01", "A data de nascimento do usuário atualizado não confere"
+            assert dados_db.status == False, "O status do usuário atualizado não confere"
+            assert dados_db.data_cadastro.strftime('%Y-%m-%d') == "2000-01-01", "A data de cadastro do usuário atualizado não confere"
+            assert dados_db.rua_usuario == "rua_usuario atualizada", "A rua do usuário atualizado não confere"
+            assert dados_db.bairro_usuario == "bairro_usuario atualizado", "O bairro do usuário atualizado não confere"
+            assert dados_db.cep_usuario == "cep_usuario atualizado", "O CEP do usuário atualizado não confere"
+            assert dados_db.telefone == "telefone atualizado", "O telefone do usuário atualizado não confere"
 
     def test_update_inexistente(self, test_db, usuario_exemplo):
         #Arrange
@@ -145,7 +148,7 @@ class TestUsuarioRepo:
         #Assert
         assert dados_db is not None, "A Cidade obtida não deveria ser None"
         assert dados_db.cod_usuario == id_tabela_inserida, "O ID da Cidade obtida deveria ser igual ao ID da cidade inserido"
-        assert dados_db.nome == "nome_cidade teste", "O nome da Cidade obtida deveria ser igual ao nome da cidade inserido"
+        assert dados_db.nome == "nome teste", "O nome da Cidade obtida deveria ser igual ao nome da cidade inserido"
         assert dados_db.sigla_estado == "sigla_estado teste", "A sigla do estado obtida deveria ser igual a sigla do estado da cidade inserida"
 
     def test_obter_por_id_inexistente(self, test_db):
