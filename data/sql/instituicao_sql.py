@@ -19,7 +19,7 @@ VALUES (?, ?, ?, ?, ?, ?, ?, ?)
 """
 
 OBTER_TODOS = """
-SELECT i.cod_instituicao, i.cnpj, i.nome, i.email, i.rua_instituicao, i.bairro_instituicao, c.cidade_instituicao, i.cep_instituicao, i.telefone
+SELECT i.cod_instituicao, i.cnpj, i.nome, i.email, i.rua_instituicao, i.bairro_instituicao, i.cidade_instituicao, i.cep_instituicao, i.telefone
 FROM instituicao i,
 cidade c
 WHERE i.cidade_instituicao = c.cod_cidade
