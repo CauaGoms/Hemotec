@@ -19,7 +19,7 @@ class TestUsuarioRepo:
             #Act
             id_tabela_inserida = usuario_repo.inserir(usuario_exemplo, cursor)
             conn.commit()
-            #Assert
+        #Assert
         dados_db = usuario_repo.obter_por_id(id_tabela_inserida)
         assert dados_db is not None, "O usuário inserido não deveria ser None"
         assert dados_db.cod_usuario == 1, "O ID do usuário inserido deveria ser igual a 1"

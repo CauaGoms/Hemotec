@@ -100,22 +100,22 @@ def lista_usuarios_exemplo():
 def gestor_exemplo():
     from data.model.gestor_model import Gestor
     gestor = Gestor(
-        1,
-        0,
-        "nome teste",
-        "email teste",
-        "senha teste",
-        "cpf teste",
-        datetime(2025, 1, 1).date(),
-        True,
-        datetime(2025, 1, 1).date(),
-        "rua_usuario teste",
-        "bairro_usuario teste",
-        1, 
-        "cep_usuario teste",
-        "telefone teste",
-        "cnpj teste",
-        "instituicao teste"
+        cod_usuario=0,
+        nome="nome teste",
+        email="email teste",
+        senha="senha teste",
+        cpf="cpf teste",
+        data_nascimento=datetime(2025, 1, 1).date(),
+        status=True,
+        data_cadastro=datetime(2025, 1, 1).date(),
+        rua_usuario="rua_usuario teste",
+        bairro_usuario="bairro_usuario teste",
+        cidade_usuario=1,
+        cep_usuario="cep_usuario teste",
+        telefone="telefone teste",
+        cod_gestor=1,
+        cnpj="cnpj teste",
+        instituicao="instituicao teste"
     )
     return gestor
 
