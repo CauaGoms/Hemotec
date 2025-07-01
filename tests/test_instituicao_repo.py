@@ -1,4 +1,6 @@
 from data.repo import instituicao_repo, cidade_repo, gestor_repo, assinatura_repo, usuario_repo
+from data.util.database import get_connection
+
 
 class TestInstituicaoRepo:
     def test_criar_tabela_instituicao(self, test_db):
@@ -10,19 +12,22 @@ class TestInstituicaoRepo:
 
     def test_inserir(self, test_db, instituicao_exemplo, cidade_exemplo, gestor_exemplo, assinatura_exemplo, usuario_exemplo):
         #Arrange
-        cidade_repo.criar_tabela()
-        cidade_repo.inserir(cidade_exemplo)
+        with get_connection() as conn:
+            cursor = conn.cursor()
+            cidade_repo.criar_tabela()
+            cidade_repo.inserir(cidade_exemplo)
 
-        usuario_repo.criar_tabela()
-        usuario_repo.inserir(usuario_exemplo, None)
+            usuario_repo.criar_tabela()
+            usuario_repo.inserir(usuario_exemplo, cursor)
 
-        gestor_repo.criar_tabela()
-        gestor_repo.inserir(gestor_exemplo)
+            gestor_repo.criar_tabela()
+            gestor_repo.inserir(gestor_exemplo)
 
-        assinatura_repo.criar_tabela()
-        assinatura_repo.inserir(assinatura_exemplo)
+            assinatura_repo.criar_tabela()
+            assinatura_repo.inserir(assinatura_exemplo)
 
-        instituicao_repo.criar_tabela()
+            instituicao_repo.criar_tabela()
+            conn.commit()
         #Act
         id_tabela_inserida = instituicao_repo.inserir(instituicao_exemplo)
         #Assert
