@@ -7,7 +7,7 @@ class Usuario:
     cod_usuario: int
     nome: str
     email: str
-    senha: Optional[str] = None
+    senha: str # Optional[str] = None
     cpf: str
     data_nascimento: datetime
     status: bool

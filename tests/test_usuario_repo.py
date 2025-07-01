@@ -181,6 +181,3 @@ class TestUsuarioRepo:
         dados_db = usuario_repo.obter_por_id(999)
         #Assert
         assert dados_db is None, "A Cidade obtida deveria ser None para um ID inexistente"
-    
-    def test_obter_por_email_existente(self, test_db, cidade_exemplo, usuario_exemplo):
-        pass
