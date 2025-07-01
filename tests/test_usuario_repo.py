@@ -147,10 +147,13 @@ class TestUsuarioRepo:
 
     def test_obter_por_id_existente(self, test_db, cidade_exemplo, usuario_exemplo):
         #Arrange
-        cidade_repo.criar_tabela()
-        cidade_repo.inserir(cidade_exemplo)
-        usuario_repo.criar_tabela()
-        id_tabela_inserida = usuario_repo.inserir(usuario_exemplo)
+        with get_connection() as conn:
+            cursor = conn.cursor()
+            cidade_repo.criar_tabela()
+            cidade_repo.inserir(cidade_exemplo)
+            usuario_repo.criar_tabela()
+            id_tabela_inserida = usuario_repo.inserir(usuario_exemplo, cursor)
+            conn.commit()
         #Act
         dados_db = usuario_repo.obter_por_id(id_tabela_inserida)
         #Assert
@@ -169,8 +172,10 @@ class TestUsuarioRepo:
         assert dados_db.cep_usuario == "cep_usuario teste", "O CEP do usuário obtida deveria ser igual ao CEP do usuário inserido"
         assert dados_db.telefone == "telefone teste", "O telefone do usuário obtida deveria ser igual ao telefone do usuário inserido"
 
-    def test_obter_por_id_inexistente(self, test_db,):
+    def test_obter_por_id_inexistente(self, test_db, cidade_exemplo):
         #Arrange
+        cidade_repo.criar_tabela()
+        cidade_repo.inserir(cidade_exemplo)
         usuario_repo.criar_tabela()
         #Act
         dados_db = usuario_repo.obter_por_id(999)
