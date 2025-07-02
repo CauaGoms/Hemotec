@@ -17,18 +17,29 @@ def criar_tabela() -> bool:
         return False
     
 
-def inserir(notificacao: Notificacao) -> Optional[int]:
-    with get_connection() as conn:
-        cursor = conn.cursor()
+def inserir(notificacao: Notificacao, cursor=None) -> Optional[int]:
+    if cursor is not None:
         cursor.execute(INSERIR, (
-            notificacao.cod_notificacao,
             notificacao.cod_adm,
             notificacao.destino,
             notificacao.tipo,
             notificacao.mensagem,
             notificacao.status,
-            notificacao.data_envio))
+            notificacao.data_envio
+        ))
         return cursor.lastrowid
+    else:
+        with get_connection() as conn:
+            cursor = conn.cursor()
+            cursor.execute(INSERIR, (
+                notificacao.cod_adm,
+                notificacao.destino,
+                notificacao.tipo,
+                notificacao.mensagem,
+                notificacao.status,
+                notificacao.data_envio
+            ))
+            return cursor.lastrowid
     
 
 def obter_todos() -> list[Notificacao]:
@@ -54,6 +65,11 @@ def obter_por_id(cod_notificacao: int) -> Optional[Notificacao]:
         cursor.execute(OBTER_POR_ID, (cod_notificacao,))
         row = cursor.fetchone()
         if row:
+            data_envio_str = row["data_envio"]
+            try:
+                data_envio = datetime.strptime(data_envio_str, '%Y-%m-%d %H:%M:%S')
+            except ValueError:
+                data_envio = datetime.strptime(data_envio_str, '%Y-%m-%d')
             return Notificacao(
                 cod_notificacao=row["cod_notificacao"],
                 cod_adm=row["cod_adm"],
@@ -61,7 +77,7 @@ def obter_por_id(cod_notificacao: int) -> Optional[Notificacao]:
                 tipo=row["tipo"],
                 mensagem=row["mensagem"],
                 status=row["status"],
-                data_envio=datetime.strptime(row["data_envio"], '%Y-%m-%d')
+                data_envio=data_envio
                 ) 
         return None
     

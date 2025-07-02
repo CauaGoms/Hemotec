@@ -16,14 +16,21 @@ def criar_tabela() -> bool:
         return False
     
 
-def inserir(adm_campanha: Adm_campanha) -> Optional[int]:
-    with get_connection() as conn:
-        cursor = conn.cursor()
+def inserir(adm_campanha: Adm_campanha, cursor=None) -> Optional[int]:
+    if cursor is not None:
         cursor.execute(INSERIR, (
             adm_campanha.cod_adm, 
             adm_campanha.cod_campanha, 
             adm_campanha.papel))
         return cursor.lastrowid
+    else:
+        with get_connection() as conn:
+            cursor = conn.cursor()
+            cursor.execute(INSERIR, (
+                adm_campanha.cod_adm, 
+                adm_campanha.cod_campanha, 
+                adm_campanha.papel))
+            return cursor.lastrowid
     
 
 def obter_todos() -> list[Adm_campanha]:
