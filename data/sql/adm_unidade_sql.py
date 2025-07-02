@@ -15,7 +15,9 @@ VALUES (?, ?, ?, ?)
 """
 
 OBTER_TODOS = """
-SELECT usu.cod_adm, u.cod_unidade, adm.permissao_envio_campanha, adm.permissao_envio_notificacao
+SELECT usu.cod_usuario AS cod_adm, u.cod_unidade, adm.permissao_envio_campanha, adm.permissao_envio_notificacao,
+       usu.nome, usu.email, usu.senha, usu.cpf, usu.data_nascimento, usu.status, usu.data_cadastro,
+       usu.rua_usuario, usu.bairro_usuario, usu.cidade_usuario, usu.cep_usuario, usu.telefone
 FROM adm_unidade adm,
 unidade_coleta u,
 usuario usu

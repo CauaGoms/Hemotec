@@ -74,6 +74,7 @@ def obter_todos() -> list[Adm_unidade]:
         rows = cursor.fetchall()
         adm_unidade = [
             Adm_unidade(
+                cod_usuario=row["cod_adm"],
                 cod_adm=row["cod_adm"],
                 nome=row["nome"],
                 email=row["email"],

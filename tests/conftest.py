@@ -309,6 +309,7 @@ def lista_adm_unidades_exemplo():
     adm_unidades = []
     for i in range(1, 11):
         adm_unidade = Adm_unidade(
+            cod_usuario=i,
             cod_adm=i,
             cod_unidade=i,
             permissao_envio_campanha=True,
