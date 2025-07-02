@@ -454,7 +454,7 @@ def lista_notificacoes_exemplo():
 def colaborador_exemplo():
     from data.model.colaborador_model import Colaborador
     colaborador = Colaborador(
-        cod_colaborador=1,
+        cod_colaborador=0,
         funcao="funcao teste",
         nome="nome teste",
         email="email teste",
@@ -467,7 +467,8 @@ def colaborador_exemplo():
         bairro_usuario="bairro_usuario teste",
         cidade_usuario=1,
         cep_usuario="cep_usuario teste",
-        telefone="telefone teste"
+        telefone="telefone teste",
+        cod_usuario=1
     )
     return colaborador
 

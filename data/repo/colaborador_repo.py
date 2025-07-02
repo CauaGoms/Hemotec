@@ -6,6 +6,7 @@ from data.model.colaborador_model import Colaborador
 from data.sql.colaborador_sql import *
 from data.model.usuario_model import Usuario
 from data.util.database import get_connection
+from datetime import datetime
 
 def criar_tabela() -> bool:
     try:
@@ -53,9 +54,9 @@ def obter_todos() -> list[Colaborador]:
                 email=row["email"],
                 senha=row["senha"],
                 cpf=row["cpf"],
-                data_nascimento=row["data_nascimento"],
+                data_nascimento=datetime.strptime(row["data_nascimento"], "%Y-%m-%d"),
                 status=row["status"],
-                data_cadastro=row["data_cadastro"],
+                data_cadastro=datetime.strptime(row["data_cadastro"], "%Y-%m-%d"),
                 rua_usuario=row["rua_usuario"],
                 bairro_usuario=row["bairro_usuario"],
                 cidade_usuario=row["cidade_usuario"],
@@ -72,19 +73,20 @@ def obter_por_id(cod_colaborador: int) -> Optional[Colaborador]:
         row = cursor.fetchone()
         colaborador = Colaborador(
             cod_colaborador=row["cod_colaborador"],
+            funcao=row["funcao"],
+            cod_usuario=row["cod_usuario"],
             nome=row["nome"],
             email=row["email"],
             senha=row["senha"],
             cpf=row["cpf"],
-            data_nascimento=row["data_nascimento"],
+            data_nascimento=datetime.strptime(row["data_nascimento"], "%Y-%m-%d"),
             status=row["status"],
-            data_cadastro=row["data_cadastro"],
+            data_cadastro=datetime.strptime(row["data_cadastro"], "%Y-%m-%d"),
             rua_usuario=row["rua_usuario"],
             bairro_usuario=row["bairro_usuario"],
             cidade_usuario=row["cidade_usuario"],
             cep_usuario=row["cep_usuario"],
-            telefone=row["telefone"],
-            funcao=row["funcao"])
+            telefone=row["telefone"])
         return colaborador
     
 def update(colaborador: Colaborador) -> bool:
