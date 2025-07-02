@@ -21,7 +21,6 @@ def inserir(exame: Exame) -> Optional[int]:
     with get_connection() as conn:
         cursor = conn.cursor()
         cursor.execute(INSERIR, (
-            exame.cod_exame,
             exame.cod_doacao,
             exame.data_exame,
             exame.tipo_exame,
@@ -31,6 +30,12 @@ def inserir(exame: Exame) -> Optional[int]:
     
 
 def obter_todos() -> list[Exame]:
+    def parse_data_exame(data_exame_str):
+        try:
+            return datetime.strptime(data_exame_str, '%Y-%m-%d %H:%M:%S')
+        except ValueError:
+            return datetime.strptime(data_exame_str, '%Y-%m-%d')
+
     with get_connection() as conn:
         cursor = conn.cursor()
         cursor.execute(OBTER_TODOS)
@@ -39,7 +44,7 @@ def obter_todos() -> list[Exame]:
             Exame(
                 cod_exame=row["cod_exame"],
                 cod_doacao=row["cod_doacao"],
-                data_exame=datetime.strptime(row["data_exame"], '%Y-%m-%d'),
+                data_exame=parse_data_exame(row["data_exame"]),
                 tipo_exame=row["tipo_exame"],
                 resultado=row["resultado"],
                 arquivo=row["arquivo"]) 
@@ -47,6 +52,12 @@ def obter_todos() -> list[Exame]:
         return exame
     
 def obter_por_id(cod_exame: int) -> Optional[Exame]:
+    def parse_data_exame(data_exame_str):
+        try:
+            return datetime.strptime(data_exame_str, '%Y-%m-%d %H:%M:%S')
+        except ValueError:
+            return datetime.strptime(data_exame_str, '%Y-%m-%d')
+
     with get_connection() as conn:
         cursor = conn.cursor()
         cursor.execute(OBTER_POR_ID, (cod_exame,))
@@ -55,11 +66,11 @@ def obter_por_id(cod_exame: int) -> Optional[Exame]:
             return Exame(
                 cod_exame=row["cod_exame"],
                 cod_doacao=row["cod_doacao"],
-                data_exame=datetime.strptime(row["data_exame"], '%Y-%m-%d'),
+                data_exame=parse_data_exame(row["data_exame"]),
                 tipo_exame=row["tipo_exame"],
                 resultado=row["resultado"],
                 arquivo=row["arquivo"]
-                ) 
+            )
         return None
     
 def update(exame: Exame) -> bool:
