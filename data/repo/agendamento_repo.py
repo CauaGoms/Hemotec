@@ -70,9 +70,10 @@ def update(agendamento: Agendamento) -> bool:
         cursor.execute(
             UPDATE,
             (
-                agendamento.cod_colaborador,
-                agendamento.cod_doador,
                 agendamento.data_hora,
+                agendamento.status,
+                agendamento.observacoes,
+                agendamento.tipo_agendamento,
                 agendamento.cod_agendamento
             ),
         )

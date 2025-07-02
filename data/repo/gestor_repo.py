@@ -50,6 +50,7 @@ def obter_todos() -> list[Gestor]:
         gestor = [
             Gestor(
                 cod_gestor=row["cod_gestor"],
+                cod_usuario=row["cod_usuario"],
                 nome=row["nome"],
                 email=row["email"],
                 senha=row["senha"],
@@ -72,8 +73,13 @@ def obter_por_id(cod_gestor: int) -> Optional[Gestor]:
         cursor = conn.cursor()
         cursor.execute(OBTER_POR_ID, (cod_gestor,))
         row = cursor.fetchone()
+        if not row:
+            return None
         gestor = Gestor(
             cod_gestor=row["cod_gestor"],
+            cod_instituicao=row["cod_instituicao"],
+            instituicao=row["instituicao"],
+            cod_usuario=row["cod_usuario"],
             nome=row["nome"],
             email=row["email"],
             senha=row["senha"],
@@ -85,9 +91,8 @@ def obter_por_id(cod_gestor: int) -> Optional[Gestor]:
             bairro_usuario=row["bairro_usuario"],
             cidade_usuario=row["cidade_usuario"],
             cep_usuario=row["cep_usuario"],
-            telefone=row["telefone"],
-            cod_instituicao=row["cod_instituicao"],
-            instituicao=row["instituicao"])
+            telefone=row["telefone"]
+            )
         return gestor    
   
 def update(gestor: Gestor) -> bool:
@@ -107,7 +112,7 @@ def update(gestor: Gestor) -> bool:
             gestor.cidade_usuario,
             gestor.cep_usuario,
             gestor.telefone)
-        usuario_repo.update(usuario, cursor)
+        usuario_repo.update(usuario)
         cursor.execute(UPDATE, (
             gestor.cod_instituicao, 
             gestor.instituicao, 

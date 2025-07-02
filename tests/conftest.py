@@ -118,6 +118,9 @@ def lista_usuarios_exemplo():
 def gestor_exemplo():
     from data.model.gestor_model import Gestor
     gestor = Gestor(
+        cod_gestor=0,
+        cod_instituicao=1,
+        instituicao="instituicao teste",
         cod_usuario=1,
         nome="nome teste",
         email="email teste",
@@ -130,10 +133,7 @@ def gestor_exemplo():
         bairro_usuario="bairro_usuario teste",
         cidade_usuario=1,
         cep_usuario="cep_usuario teste",
-        telefone="telefone teste",
-        cod_gestor=0,
-        cod_instituicao=1,
-        instituicao="instituicao teste"
+        telefone="telefone teste"
     )
     return gestor
 
@@ -503,7 +503,7 @@ def lista_colaboradores_exemplo():
 def agendamento_exemplo():
     from data.model.agendamento_model import Agendamento
     agendamento = Agendamento(
-        cod_agendamento=1,
+        cod_agendamento=0,
         cod_colaborador=1,
         cod_doador=1,
         data_hora=datetime(2025, 1, 1, 1, 0, 0),

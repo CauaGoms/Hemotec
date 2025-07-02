@@ -27,9 +27,8 @@ FOREIGN KEY (cod_doador) REFERENCES doador(cod_doador)
 
 INSERIR = """
 INSERT INTO prontuario (
-cod_doador, data_criacao, data_atualizacao, diabetes, hipertensao,
-cardiopatia, cancer, nenhuma, outros, medicamentos, fumante, alcool, atividade, jejum, sono, bebida, sintomas_gripais, tatuagem, termos, alerta
-) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+cod_doador, data_criacao, data_atualizacao, diabetes, hipertensao, cardiopatia, cancer, nenhuma, outros, medicamentos, fumante, alcool, atividade, jejum, sono, bebida, sintomas_gripais, tatuagem, termos, alerta
+) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
 """
 
 OBTER_TODOS = """

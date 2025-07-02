@@ -28,7 +28,7 @@ AND a.cod_doador = d.cod_doador
 
 UPDATE = """
 UPDATE agendamento
-SET cod_colaborador = ?, cod_doador = ?, data_hora = ?, status = ?, observacoes = ?, tipo_agendamento = ?
+SET data_hora = ?, status = ?, observacoes = ?, tipo_agendamento = ?
 WHERE cod_agendamento = ?;
 """
 
