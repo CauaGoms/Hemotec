@@ -23,7 +23,7 @@ class TestAgendamentoRepo:
             conn.commit()
 
         doador_repo.criar_tabela()
-        doador_exemplo.cod_usuario = id_usuario
+        doador_exemplo.cod_doador = id_usuario
         id_doador = doador_repo.inserir(doador_exemplo)
 
         colaborador_repo.criar_tabela()
@@ -59,7 +59,7 @@ class TestAgendamentoRepo:
             conn.commit()
 
         doador_repo.criar_tabela()
-        doador_exemplo.cod_usuario = id_usuario
+        doador_exemplo.cod_doador = id_usuario
         id_doador = doador_repo.inserir(doador_exemplo)
 
         colaborador_repo.criar_tabela()
@@ -109,7 +109,7 @@ class TestAgendamentoRepo:
             conn.commit()
 
         doador_repo.criar_tabela()
-        doador_exemplo.cod_usuario = id_usuario
+        doador_exemplo.cod_doador = id_usuario
         id_doador = doador_repo.inserir(doador_exemplo)
 
         colaborador_repo.criar_tabela()
@@ -233,7 +233,7 @@ class TestAgendamentoRepo:
             conn.commit()
 
         doador_repo.criar_tabela()
-        doador_exemplo.cod_usuario = id_usuario
+        doador_exemplo.cod_doador = id_usuario
         id_doador = doador_repo.inserir(doador_exemplo)
 
         colaborador_repo.criar_tabela()
@@ -265,13 +265,17 @@ class TestAgendamentoRepo:
             cidade_repo.inserir(cidade_exemplo)
             
             usuario_repo.criar_tabela()
-            usuario_repo.inserir(usuario_exemplo, cursor)
+            id_usuario = usuario_repo.inserir(usuario_exemplo, cursor)
             conn.commit()
 
         doador_repo.criar_tabela()
+        doador_exemplo.cod_usuario = id_usuario
+        doador_exemplo.cod_doador = id_usuario  # Certifique-se de usar o mesmo ID
         doador_repo.inserir(doador_exemplo)
 
         colaborador_repo.criar_tabela()
+        colaborador_exemplo.cod_usuario = id_usuario
+        colaborador_exemplo.cod_colaborador = id_usuario
         colaborador_repo.inserir(colaborador_exemplo)
 
         agendamento_repo.criar_tabela()

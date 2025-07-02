@@ -92,8 +92,8 @@ class TestColaboradorRepo:
 
     def test_update_inexistente(self, test_db, colaborador_exemplo):
         #Arrange)
+        cidade_repo.criar_tabela()
         usuario_repo.criar_tabela()
-
         colaborador_repo.criar_tabela()
         colaborador_exemplo.cod_colaborador = 999  # ID inexistente
         #Act

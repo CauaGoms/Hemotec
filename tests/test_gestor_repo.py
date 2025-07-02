@@ -95,6 +95,7 @@ class TestGestorRepo:
 
     def test_update_inexistente(self, test_db, gestor_exemplo):
         #Arrange
+        cidade_repo.criar_tabela()
         usuario_repo.criar_tabela()
         instituicao_repo.criar_tabela()
         gestor_repo.criar_tabela()

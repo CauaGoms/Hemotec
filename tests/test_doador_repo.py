@@ -60,10 +60,11 @@ class TestDoadorRepo:
             cidade_repo.inserir(cidade_exemplo)
 
             usuario_repo.criar_tabela()
-            usuario_repo.inserir(usuario_exemplo, cursor)
+            id_usuario = usuario_repo.inserir(usuario_exemplo, cursor)
             conn.commit()
 
         doador_repo.criar_tabela()
+        doador_exemplo.cod_doador = id_usuario
         id_tabela_inserida = doador_repo.inserir(doador_exemplo)
         tabela_inserida = doador_repo.obter_por_id(id_tabela_inserida)          
         #Act

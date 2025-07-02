@@ -22,6 +22,8 @@ class TestProntuarioRepo:
             conn.commit()
 
         doador_repo.criar_tabela()
+        doador_exemplo.cod_usuario = id_usuario
+        doador_exemplo.cod_doador = id_usuario
         id_doador = doador_repo.inserir(doador_exemplo)
 
         prontuario_repo.criar_tabela()
@@ -65,11 +67,13 @@ class TestProntuarioRepo:
             conn.commit()
 
         doador_repo.criar_tabela()
+        doador_exemplo.cod_usuario = id_usuario
+        doador_exemplo.cod_doador = id_usuario
         id_doador = doador_repo.inserir(doador_exemplo)
 
         prontuario_repo.criar_tabela()
         prontuario_exemplo.cod_doador = id_doador
-        prontuario_exemplo.cd_prontuario = id_usuario
+        prontuario_exemplo.cod_prontuario = id_usuario
         id_tabela_inserida = prontuario_repo.inserir(prontuario_exemplo)
         tabela_inserida = prontuario_repo.obter_por_id(id_tabela_inserida)
         #Act
@@ -139,11 +143,13 @@ class TestProntuarioRepo:
             conn.commit()
 
         doador_repo.criar_tabela()
+        doador_exemplo.cod_usuario = id_usuario
+        doador_exemplo.cod_doador = id_usuario
         id_doador = doador_repo.inserir(doador_exemplo)
 
         prontuario_repo.criar_tabela()
         prontuario_exemplo.cod_doador = id_doador
-        prontuario_exemplo.cd_prontuario = id_usuario
+        prontuario_exemplo.cod_prontuario = id_usuario
 
         id_tabela_inserida = prontuario_repo.inserir(prontuario_exemplo)                   
         #Act
@@ -241,11 +247,13 @@ class TestProntuarioRepo:
             conn.commit()
 
         doador_repo.criar_tabela()
+        doador_exemplo.cod_usuario = id_usuario
+        doador_exemplo.cod_doador = id_usuario
         id_doador = doador_repo.inserir(doador_exemplo)
 
         prontuario_repo.criar_tabela()
         prontuario_exemplo.cod_doador = id_doador
-        prontuario_exemplo.cd_prontuario = id_usuario
+        prontuario_exemplo.cod_prontuario = id_usuario
 
         id_tabela_inserida = prontuario_repo.inserir(prontuario_exemplo) 
            
@@ -289,11 +297,13 @@ class TestProntuarioRepo:
             conn.commit()
 
         doador_repo.criar_tabela()
+        doador_exemplo.cod_usuario = id_usuario
+        doador_exemplo.cod_doador = id_usuario
         id_doador = doador_repo.inserir(doador_exemplo)
 
         prontuario_repo.criar_tabela()
         prontuario_exemplo.cod_doador = id_doador
-        prontuario_exemplo.cd_prontuario = id_usuario
+        prontuario_exemplo.cod_prontuario = id_usuario
         #Act
         dados_db = prontuario_repo.obter_por_id(999)
         #Assert

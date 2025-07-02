@@ -78,6 +78,7 @@ class TestUsuarioRepo:
 
     def test_update_inexistente(self, test_db, usuario_exemplo):
         #Arrange
+        cidade_repo.criar_tabela()
         usuario_repo.criar_tabela()
         usuario_exemplo.cod_usuario = 999  # ID inexistente
         #Act
