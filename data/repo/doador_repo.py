@@ -6,7 +6,7 @@ from data.model.doador_model import Doador
 from data.sql.doador_sql import *
 from data.model.usuario_model import Usuario
 from data.util.database import get_connection
-from datetime import date
+from datetime import date, datetime
 
 def criar_tabela() -> bool:
     try:
@@ -57,13 +57,14 @@ def obter_todos() -> list[Doador]:
         doador = [
             Doador(
                 cod_doador=row["cod_doador"],
+                cod_usuario=row["cod_doador"],
                 nome=row["nome"],
                 email=row["email"],
                 senha=row["senha"],
                 cpf=row["cpf"],
-                data_nascimento=row["data_nascimento"],
+                data_nascimento=datetime.strptime(row["data_nascimento"], "%Y-%m-%d").date() if isinstance(row["data_nascimento"], str) else row["data_nascimento"],
                 status=row["status"],
-                data_cadastro=row["data_cadastro"],
+                data_cadastro=datetime.strptime(row["data_cadastro"], "%Y-%m-%d").date() if isinstance(row["data_cadastro"], str) else row["data_cadastro"],
                 rua_usuario=row["rua_usuario"],
                 bairro_usuario=row["bairro_usuario"],
                 cidade_usuario=row["cidade_usuario"],
@@ -77,37 +78,40 @@ def obter_todos() -> list[Doador]:
                 profissao=row["profissao"],
                 contato_emergencia=row["contato_emergencia"],
                 telefone_emergencia=row["telefone_emergencia"])
-                for row in rows]
+            for row in rows]
         return doador
-    
+
 def obter_por_id(cod_doador: int) -> Optional[Doador]:
     with get_connection() as conn:
         cursor = conn.cursor()
         cursor.execute(OBTER_POR_ID, (cod_doador,))
         row = cursor.fetchone()
-        doador = Doador(
-            cod_doador=row["cod_doador"],
-            nome=row["nome"],
-            email=row["email"],
-            senha=row["senha"],
-            cpf=row["cpf"],
-            data_nascimento=row["data_nascimento"],
-            status=row["status"],
-            data_cadastro=row["data_cadastro"],
-            rua_usuario=row["rua_usuario"],
-            bairro_usuario=row["bairro_usuario"],
-            cidade_usuario=row["cidade_usuario"],
-            cep_usuario=row["cep_usuario"],
-            telefone=row["telefone"],
-            tipo_sanguineo=row["tipo_sanguineo"],
-            fator_rh=row["fator_rh"],
-            elegivel=row["elegivel"],
-            altura=row["altura"],
-            peso=row["peso"],
-            profissao=row["profissao"],
-            contato_emergencia=row["contato_emergencia"],
-            telefone_emergencia=row["telefone_emergencia"])
-        return doador
+        if row:
+            doador = Doador(
+                cod_doador=row["cod_doador"],
+                cod_usuario=row["cod_doador"],
+                nome=row["nome"],
+                email=row["email"],
+                senha=row["senha"],
+                cpf=row["cpf"],
+                data_nascimento=datetime.strptime(row["data_nascimento"], "%Y-%m-%d").date() if isinstance(row["data_nascimento"], str) else row["data_nascimento"],
+                status=row["status"],
+                data_cadastro=datetime.strptime(row["data_cadastro"], "%Y-%m-%d").date() if isinstance(row["data_cadastro"], str) else row["data_cadastro"],
+                rua_usuario=row["rua_usuario"],
+                bairro_usuario=row["bairro_usuario"],
+                cidade_usuario=row["cidade_usuario"],
+                cep_usuario=row["cep_usuario"],
+                telefone=row["telefone"],
+                tipo_sanguineo=row["tipo_sanguineo"],
+                fator_rh=row["fator_rh"],
+                elegivel=row["elegivel"],
+                altura=row["altura"],
+                peso=row["peso"],
+                profissao=row["profissao"],
+                contato_emergencia=row["contato_emergencia"],
+                telefone_emergencia=row["telefone_emergencia"])
+            return doador
+        return None
     
 def update(doador: Doador) -> bool:
     with get_connection() as conn:

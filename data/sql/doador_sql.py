@@ -19,7 +19,8 @@ VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);
 """
 
 OBTER_TODOS = """
-SELECT o.cod_doador, d.tipo_sanguineo, d.fator_rh, d.elegivel, d.altura, d.peso, d.profissao, d.contato_emergencia, d.telefone_emergencia
+SELECT o.cod_usuario AS cod_doador, o.nome, o.email, o.senha, o.cpf, o.data_nascimento, o.status, o.data_cadastro, o.rua_usuario, o.bairro_usuario, o.cidade_usuario, o.cep_usuario, o.telefone,
+       d.tipo_sanguineo, d.fator_rh, d.elegivel, d.altura, d.peso, d.profissao, d.contato_emergencia, d.telefone_emergencia
 FROM doador d,
 usuario o
 WHERE d.cod_doador = o.cod_usuario
@@ -37,7 +38,8 @@ WHERE cod_doador = ?;
 """
 
 OBTER_POR_ID = """
-SELECT o.cod_doador, d.tipo_sanguineo, d.fator_rh, d.elegivel, d.altura, d.peso, d.profissao, d.contato_emergencia, d.telefone_emergencia
+SELECT o.cod_usuario AS cod_doador, o.nome, o.email, o.senha, o.cpf, o.data_nascimento, o.status, o.data_cadastro, o.rua_usuario, o.bairro_usuario, o.cidade_usuario, o.cep_usuario, o.telefone,
+       d.tipo_sanguineo, d.fator_rh, d.elegivel, d.altura, d.peso, d.profissao, d.contato_emergencia, d.telefone_emergencia
 FROM doador d,
 usuario o
 WHERE d.cod_doador = o.cod_usuario

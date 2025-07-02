@@ -31,7 +31,7 @@ WHERE u.cidade_usuario = c.cod_cidade
 
 UPDATE = """
 UPDATE usuario
-SET nome = ?, email = ?, senha = ?, cpf = ?, data_nascimento = ?, status = ?, data_cadastro = ?, rua_usuario = ?, bairro_usuario = ?, cep_usuario = ?, telefone = ?
+SET nome = ?, email = ?, senha = ?, cpf = ?, data_nascimento = ?, status = ?, data_cadastro = ?, rua_usuario = ?, bairro_usuario = ?, cidade_usuario = ?, cep_usuario = ?, telefone = ?
 WHERE cod_usuario = ?;
 """
 

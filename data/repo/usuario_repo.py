@@ -102,9 +102,8 @@ def obter_por_email(email: str) -> Optional[Usuario]:
                 telefone=row["telefone"])
         return None
     
-def update(usuario: Usuario) -> Optional[int]:
-    with get_connection() as conn:
-        cursor = conn.cursor()
+def update(usuario: Usuario, cursor=None) -> bool:
+    if cursor is not None:
         cursor.execute(
             UPDATE,
             (
@@ -117,11 +116,35 @@ def update(usuario: Usuario) -> Optional[int]:
                 usuario.data_cadastro,
                 usuario.rua_usuario,
                 usuario.bairro_usuario,
+                usuario.cidade_usuario,
                 usuario.cep_usuario,
                 usuario.telefone,
                 usuario.cod_usuario
-            ))
-    return cursor.rowcount > 0
+            )
+        )
+        return cursor.rowcount > 0
+    else:
+        with get_connection() as conn:
+            cursor = conn.cursor()
+            cursor.execute(
+                UPDATE,
+                (
+                    usuario.nome,
+                    usuario.email,
+                    usuario.senha,
+                    usuario.cpf,
+                    usuario.data_nascimento,
+                    usuario.status,
+                    usuario.data_cadastro,
+                    usuario.rua_usuario,
+                    usuario.bairro_usuario,
+                    usuario.cidade_usuario,
+                    usuario.cep_usuario,
+                    usuario.telefone,
+                    usuario.cod_usuario
+                )
+            )
+            return cursor.rowcount > 0
 
 def atualizar_senha(cod_usuario: int, senha: str) -> bool:
     with get_connection() as conn:
