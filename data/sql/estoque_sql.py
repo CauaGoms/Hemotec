@@ -6,7 +6,7 @@ tipo_sanguineo TEXT NOT NULL,
 fator_rh TEXT NOT NULL,
 quantidade INTEGER NOT NULL,
 data_atualizacao TEXT NOT NULL,
-FOREIGN KEY (cod_unidade) REFERENCES unidade(cod_unidade)
+FOREIGN KEY (cod_unidade) REFERENCES unidade_coleta(cod_unidade)
 )
 """
 
@@ -18,7 +18,7 @@ VALUES (?, ?, ?, ?, ?)
 OBTER_TODOS = """
 SELECT e.cod_estoque, u.cod_unidade, e.tipo_sanguineo, e.fator_rh, e.quantidade, e.data_atualizacao
 FROM estoque e,
-unidade u
+unidade_coleta u
 WHERE e.cod_unidade = u.cod_unidade
 """ 
 
@@ -36,7 +36,7 @@ WHERE cod_estoque = ?;
 OBTER_POR_ID = """
 SELECT e.cod_estoque, u.cod_unidade, e.tipo_sanguineo, e.fator_rh, e.quantidade, e.data_atualizacao
 FROM estoque e,
-unidade u
+unidade_coleta u
 WHERE e.cod_unidade = u.cod_unidade
 AND e.cod_estoque = ?;
 """
