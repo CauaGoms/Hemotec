@@ -52,6 +52,7 @@ def obter_todos() -> list[Colaborador]:
                 cod_colaborador=row["cod_colaborador"],
                 nome=row["nome"],
                 email=row["email"],
+                cod_usuario=row["cod_usuario"],
                 senha=row["senha"],
                 cpf=row["cpf"],
                 data_nascimento=datetime.strptime(row["data_nascimento"], "%Y-%m-%d"),
@@ -71,6 +72,8 @@ def obter_por_id(cod_colaborador: int) -> Optional[Colaborador]:
         cursor = conn.cursor()
         cursor.execute(OBTER_POR_ID, (cod_colaborador,))
         row = cursor.fetchone()
+        if not row:
+            return None
         colaborador = Colaborador(
             cod_colaborador=row["cod_colaborador"],
             funcao=row["funcao"],
@@ -93,7 +96,7 @@ def update(colaborador: Colaborador) -> bool:
     with get_connection() as conn:
         cursor = conn.cursor()
         usuario = Usuario(
-            colaborador.cod_colaborador, 
+            colaborador.cod_usuario,
             colaborador.nome, 
             colaborador.email, 
             colaborador.senha,
@@ -106,7 +109,7 @@ def update(colaborador: Colaborador) -> bool:
             colaborador.cidade_usuario,
             colaborador.cep_usuario,
             colaborador.telefone)
-        usuario_repo.update(usuario, cursor)
+        usuario_repo.update(usuario)
         cursor.execute(UPDATE, (
             colaborador.funcao,
             colaborador.cod_colaborador))
@@ -116,8 +119,9 @@ def delete(cod_colaborador: int) -> bool:
     with get_connection() as conn:
         cursor = conn.cursor()
         cursor.execute(DELETE, (cod_colaborador,))
-        usuario_repo.delete(cod_colaborador, cursor)
-        return (cursor.rowcount > 0)
+        colaborador_removido = cursor.rowcount > 0
+    usuario_repo.delete(cod_colaborador)
+    return colaborador_removido
     
 def inserir_dados_iniciais(conexao: Connection) -> None:
     lista = obter_todos()

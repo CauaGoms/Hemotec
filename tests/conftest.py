@@ -118,7 +118,7 @@ def lista_usuarios_exemplo():
 def gestor_exemplo():
     from data.model.gestor_model import Gestor
     gestor = Gestor(
-        cod_usuario=0,
+        cod_usuario=1,
         nome="nome teste",
         email="email teste",
         senha="senha teste",
@@ -131,8 +131,8 @@ def gestor_exemplo():
         cidade_usuario=1,
         cep_usuario="cep_usuario teste",
         telefone="telefone teste",
-        cod_gestor=1,
-        cnpj="cnpj teste",
+        cod_gestor=0,
+        cod_instituicao=1,
         instituicao="instituicao teste"
     )
     return gestor
@@ -143,21 +143,22 @@ def lista_gestores_exemplo():
     gestores = []
     for i in range(1, 11):
         gestor = Gestor(
-            i,
-            f'nome {i:02d}',
-            f'email {i:02d}',
-            f'senha {i:02d}',
-            f'cpf {i:02d}',
-            datetime(2025, 1, i).date(),
-            True,
-            datetime(2025, 1, i).date(),
-            f'rua_gestor {i:02d}',
-            f'bairro_gestor {i:02d}',
-            i,  # Supondo que a cidade tenha o ID igual ao índice
-            f'cep_gestor {i:02d}',
-            f'telefone {i:02d}',
-            f'cnpj {i:02d}',
-            f'instituicao {i:02d}'
+            cod_usuario=i,
+            nome=f'nome {i:02d}',
+            email=f'email {i:02d}',
+            senha=f'senha {i:02d}',
+            cpf=f'cpf {i:02d}',
+            data_nascimento=datetime(2025, 1, i).date(),
+            status=True,
+            data_cadastro=datetime(2025, 1, i).date(),
+            rua_usuario=f'rua_usuario {i:02d}',
+            bairro_usuario='bairro_usuario {i:02d}',
+            cidade_usuario=i,  # Supondo que a cidade tenha o ID igual ao índice
+            cep_usuario=f'cep_usuario {i:02d}',
+            telefone=f'telefone {i:02d}',
+            cod_gestor=i,
+            cod_instituicao=i,
+            instituicao=f'instituicao {i:02d}'
         )
         gestores.append(gestor)
     return gestores
@@ -480,6 +481,7 @@ def lista_colaboradores_exemplo():
         colaborador = Colaborador(
             cod_colaborador=i,
             funcao=f'funcao {i:02d}',
+            cod_usuario=i,
             nome=f'nome {i:02d}',
             email=f'email {i:02d}',
             senha=f'senha {i:02d}',
@@ -531,7 +533,7 @@ def lista_agendamentos_exemplo():
 def doador_exemplo():
     from data.model.doador_model import Doador
     doador = Doador(
-        cod_doador=1,
+        cod_doador=0,
         tipo_sanguineo="tipo_sanguineo teste",
         fator_rh="fator_rh teste",
         elegivel="elegivel teste",
@@ -540,6 +542,7 @@ def doador_exemplo():
         profissao="profissao teste",
         contato_emergencia="contato_emergencia teste",
         telefone_emergencia="telefone_emergencia teste",
+        cod_usuario=1,
         nome="nome teste",
         email="email teste",
         senha="senha teste",
@@ -570,6 +573,7 @@ def lista_doadores_exemplo():
             profissao=f'profissao {i:02d}',
             contato_emergencia=f'contato_emergencia {i:02d}',
             telefone_emergencia=f'telefone_emergencia {i:02d}',
+            cod_usuario=i,
             nome=f'nome {i:02d}',
             email=f'email {i:02d}',
             senha=f'senha {i:02d}',
