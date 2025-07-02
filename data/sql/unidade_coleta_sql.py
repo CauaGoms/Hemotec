@@ -22,7 +22,7 @@ VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
 """
 
 OBTER_TODOS = """
-SELECT u.cod_unidade, l.cod_licenca, u.nome, u.email, u.rua_unidade, u.bairro_unidade, c.cod_cidade, u.cep_unidade, u.latitude, u.longitude, u.telefone
+SELECT u.cod_unidade, l.cod_licenca, u.nome, u.email, u.rua_unidade, u.bairro_unidade, u.cidade_unidade, u.cep_unidade, u.latitude, u.longitude, u.telefone
 FROM unidade_coleta u,
 licenca l,
 cidade c
@@ -42,7 +42,7 @@ WHERE cod_unidade = ?;
 """
 
 OBTER_POR_ID = """
-SELECT u.cod_unidade, l.cod_licenca, u.nome, u.email, u.rua_unidade, u.bairro_unidade, c.cod_cidade, u.cep_unidade, u.latitude, u.longitude, u.telefone
+SELECT u.cod_unidade, l.cod_licenca, u.nome, u.email, u.rua_unidade, u.bairro_unidade, u.cidade_unidade, u.cep_unidade, u.latitude, u.longitude, u.telefone
 FROM unidade_coleta u,
 licenca l,
 cidade c

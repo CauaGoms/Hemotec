@@ -35,6 +35,5 @@ SELECT l.cod_licenca, a.cod_assinatura, l.status
 FROM licenca l,
 assinatura a
 WHERE l.cod_assinatura = a.cod_assinatura
-AND l.cod_unidade = u.cod_unidade
 AND l.cod_licenca = ?;
 """

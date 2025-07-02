@@ -20,7 +20,6 @@ def inserir(licenca: Licenca) -> Optional[int]:
     with get_connection() as conn:
         cursor = conn.cursor()
         cursor.execute(INSERIR, (
-            licenca.cod_licenca,
             licenca.cod_assinatura,
             licenca.status))
         return cursor.lastrowid
@@ -60,7 +59,7 @@ def update(licenca: Licenca) -> bool:
             (
                 licenca.cod_assinatura,
                 licenca.status,
-                licenca.cod_licenca
+                licenca.cod_licenca,
             ),
         )
         return cursor.rowcount > 0

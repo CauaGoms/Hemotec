@@ -20,7 +20,6 @@ def inserir(unidade_coleta: Unidade_coleta) -> Optional[int]:
     with get_connection() as conn:
         cursor = conn.cursor()
         cursor.execute(INSERIR, (
-            unidade_coleta.cod_unidade,
             unidade_coleta.cod_licenca,
             unidade_coleta.nome,
             unidade_coleta.email,
@@ -42,7 +41,7 @@ def obter_todos() -> list[Unidade_coleta]:
         rows = cursor.fetchall()
         unidade_coleta = [
             Unidade_coleta(
-                cod_unidade_coleta=row["cod_unidade_coleta"],
+                cod_unidade=row["cod_unidade"],
                 cod_licenca=row["cod_licenca"],
                 nome=row["nome"],
                 email=row["email"],
@@ -64,7 +63,7 @@ def obter_por_id(cod_unidade_coleta: int) -> Optional[Unidade_coleta]:
         row = cursor.fetchone()
         if row:
             return Unidade_coleta(
-                cod_unidade_coleta=row["cod_unidade_coleta"],
+                cod_unidade=row["cod_unidade"],
                 cod_licenca=row["cod_licenca"],
                 nome=row["nome"],
                 email=row["email"],
