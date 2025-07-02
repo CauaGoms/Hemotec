@@ -21,7 +21,6 @@ def inserir(estoque: Estoque) -> Optional[int]:
     with get_connection() as conn:
         cursor = conn.cursor()
         cursor.execute(INSERIR, (
-            estoque.cod_estoque, 
             estoque.cod_unidade, 
             estoque.tipo_sanguineo, 
             estoque.fator_rh, 
@@ -35,6 +34,13 @@ def obter_todos() -> list[Estoque]:
         cursor = conn.cursor()
         cursor.execute(OBTER_TODOS)
         rows = cursor.fetchall()
+        estoque = []
+        for row in rows:
+            data_str = row["data_atualizacao"]
+            try:
+                data_atualizacao = datetime.strptime(data_str, '%Y-%m-%d %H:%M:%S')
+            except ValueError:
+                data_atualizacao = datetime.strptime(data_str, '%Y-%m-%d')
         estoque = [
             Estoque(
                 cod_estoque=row["cod_estoque"],
@@ -42,7 +48,7 @@ def obter_todos() -> list[Estoque]:
                 tipo_sanguineo=row["tipo_sanguineo"],
                 fator_rh=row["fator_rh"],
                 quantidade=row["quantidade"],
-                data_atualizacao=datetime.strptime(row["data_atualizacao"], '%Y-%m-%d'))
+                data_atualizacao=data_atualizacao)
                 for row in rows]
         return estoque
     
@@ -52,13 +58,18 @@ def obter_por_id(cod_estoque: int) -> Optional[Estoque]:
         cursor.execute(OBTER_POR_ID, (cod_estoque,))
         row = cursor.fetchone()
         if row:
+            data_str = row["data_atualizacao"]
+            try:
+                data_atualizacao = datetime.strptime(data_str, '%Y-%m-%d %H:%M:%S')
+            except ValueError:
+                data_atualizacao = datetime.strptime(data_str, '%Y-%m-%d')
             return Estoque(
                 cod_estoque=row["cod_estoque"],
                 cod_unidade=row["cod_unidade"],
                 tipo_sanguineo=row["tipo_sanguineo"],
                 fator_rh=row["fator_rh"],
                 quantidade=row["quantidade"],
-                data_atualizacao=datetime.strptime(row["data_atualizacao"], '%Y-%m-%d')
+                data_atualizacao=data_atualizacao
             )
         return None
     
