@@ -13,8 +13,8 @@ FOREIGN KEY (cod_plano) REFERENCES plano(cod_plano)
 """
 
 INSERIR = """
-INSERT INTO assinatura (data_inicio, data_fim, valor, qtd_licenca) 
-VALUES (?, ?, ?, ?)
+INSERT INTO assinatura (cod_instituicao, cod_plano, data_inicio, data_fim, valor, qtd_licenca) 
+VALUES (?, ?, ?, ?, ?, ?);
 """
 
 OBTER_TODOS = """

@@ -21,6 +21,8 @@ def inserir(assinatura: Assinatura) -> Optional[int]:
     with get_connection() as conn:
         cursor = conn.cursor()
         cursor.execute(INSERIR, (
+            assinatura.cod_instituicao,
+            assinatura.cod_plano,
             assinatura.data_inicio,
             assinatura.data_fim,
             assinatura.valor,
@@ -68,9 +70,7 @@ def update(assinatura: Assinatura) -> bool:
         cursor = conn.cursor()
         cursor.execute(
             UPDATE,
-            (
-                assinatura.cod_instituicao,
-                assinatura.cod_plano,
+            (                
                 assinatura.data_inicio,
                 assinatura.data_fim,
                 assinatura.valor,
