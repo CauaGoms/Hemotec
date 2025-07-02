@@ -8,45 +8,55 @@ from data.model.usuario_model import Usuario
 from data.util.database import get_connection
 from datetime import date, datetime
 
-def criar_tabela() -> bool:
+def criar_tabela(cursor=None) -> bool:
     try:
-        with get_connection() as conn:
-            cursor = conn.cursor()
+        if cursor is not None:
             cursor.execute(CRIAR_TABELA)
-            return True
+        else:
+            with get_connection() as conn:
+                cursor = conn.cursor()
+                cursor.execute(CRIAR_TABELA)
+        return True
     except Exception as e:
-        print(f"Erro ao criar tabela da categoria: {e}")
+        print(f"Erro ao criar tabela doador: {e}")
         return False
     
 
-def inserir(doador: Doador) -> Optional[int]:
-    with get_connection() as conn:
-        cursor = conn.cursor()
-        usuario = Usuario(0, 
-            doador.nome, 
-            doador.email, 
-            doador.senha,
-            doador.cpf,
-            doador.data_nascimento,
-            doador.status,
-            doador.data_cadastro,
-            doador.rua_usuario,
-            doador.bairro_usuario,
-            doador.cidade_usuario,
-            doador.cep_usuario,
-            doador.telefone)
-        cod_doador = usuario_repo.inserir(usuario, cursor)
-        cursor.execute(INSERIR, (
-            cod_doador, 
-            doador.tipo_sanguineo,
-            doador.fator_rh,
-            doador.elegivel,
-            doador.altura,
-            doador.peso,
-            doador.profissao,
-            doador.contato_emergencia,
-            doador.telefone_emergencia))
-        return cod_doador
+def inserir(doador: Doador, cursor=None) -> Optional[int]:
+    if cursor is not None:
+        cursor.execute(
+            INSERIR,
+            (
+                doador.cod_doador,
+                doador.tipo_sanguineo,
+                doador.fator_rh,
+                doador.elegivel,
+                doador.altura,
+                doador.peso,
+                doador.profissao,
+                doador.contato_emergencia,
+                doador.telefone_emergencia,
+            ),
+        )
+        return cursor.lastrowid
+    else:
+        with get_connection() as conn:
+            cursor = conn.cursor()
+            cursor.execute(
+                INSERIR,
+                (
+                    doador.cod_doador,
+                    doador.tipo_sanguineo,
+                    doador.fator_rh,
+                    doador.elegivel,
+                    doador.altura,
+                    doador.peso,
+                    doador.profissao,
+                    doador.contato_emergencia,
+                    doador.telefone_emergencia,
+                ),
+            )
+            return cursor.lastrowid
     
 
 def obter_todos() -> list[Doador]:
