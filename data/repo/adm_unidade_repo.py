@@ -144,12 +144,12 @@ def update(adm_unidade: Adm_unidade) -> bool:
             adm_unidade.cidade_usuario,
             adm_unidade.cep_usuario,
             adm_unidade.telefone)
-        usuario_repo.update(usuario, cursor)
+        usuario_repo.update(usuario)
         cursor.execute(UPDATE, (
-            adm_unidade.cod_adm,
             adm_unidade.cod_unidade,
             adm_unidade.permissao_envio_campanha,
-            adm_unidade.permissao_envio_notificacao))
+            adm_unidade.permissao_envio_notificacao,
+            adm_unidade.cod_adm))
         return (cursor.rowcount > 0)
 
 def delete(cod_adm: int) -> bool:

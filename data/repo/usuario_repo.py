@@ -129,11 +129,15 @@ def atualizar_senha(cod_usuario: int, senha: str) -> bool:
         cursor.execute(ALTERAR_SENHA, (senha, cod_usuario))
     return (cursor.rowcount > 0)
 
-def delete(cod_usuario: int) -> bool:
-    with get_connection() as conn:
-        cursor = conn.cursor()
+def delete(cod_usuario: int, cursor=None) -> bool:
+    if cursor is None:
+        with get_connection() as conn:
+            cursor = conn.cursor()
+            cursor.execute(DELETE, (cod_usuario,))
+            return cursor.rowcount > 0
+    else:
         cursor.execute(DELETE, (cod_usuario,))
-    return (cursor.rowcount > 0)
+        return cursor.rowcount > 0
 
 """def inserir_dados_iniciais(conexao: Connection) -> None:
     # Verifica se já existem categorias na tabela
