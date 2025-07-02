@@ -1,5 +1,4 @@
 from data.repo import instituicao_repo, cidade_repo
-from data.util.database import get_connection
 from data.model.instituicao_model import Instituicao
 
 
@@ -14,20 +13,22 @@ class TestInstituicaoRepo:
     def test_inserir(self, test_db, instituicao_exemplo, cidade_exemplo):
         #Arrange
         cidade_repo.criar_tabela()
-        cidade_repo.inserir(cidade_exemplo)
+        id_cidade = cidade_repo.inserir(cidade_exemplo)
+
         instituicao_repo.criar_tabela()
-         # Atribui o ID da cidade à instituição
+        
         #Act
         id_tabela_inserida = instituicao_repo.inserir(instituicao_exemplo)
         #Assert
         dados_db = instituicao_repo.obter_por_id(id_tabela_inserida)
         assert dados_db is not None, "A instituição inserida não deveria ser None"
+        assert dados_db.cod_instituicao == id_tabela_inserida, "O ID da instituição inserida não confere"
         assert dados_db.cnpj == "cnpj teste", "O ID do usuário inserido deveria ser igual a 1"
         assert dados_db.nome == "nome teste", "O nome do usuário inserida não confere"
         assert dados_db.email == "email teste", "O email do usuário inserido não confere"
         assert dados_db.rua_instituicao == "rua_instituicao teste", "A sigla do estado inserida não confere"
         assert dados_db.bairro_instituicao == "bairro_instituicao teste", "O CPF do usuário inserido não confere"
-        assert dados_db.cidade_instituicao == 1, "A cidade_instituição da instituição inserida não confere"
+        assert dados_db.cidade_instituicao == id_cidade, "A cidade_instituição da instituição inserida não confere"
         assert dados_db.cep_instituicao == "cep_instituicao teste", "A rua do usuário inserido não confere"
         assert dados_db.telefone == "telefone teste", "O telefone do usuário inserido não confere"
 

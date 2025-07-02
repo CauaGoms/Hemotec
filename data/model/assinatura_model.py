@@ -5,7 +5,7 @@ from datetime import datetime
 @dataclass
 class Assinatura:
     cod_assinatura: int
-    cnpj: str
+    cod_instituicao: int
     cod_plano: int
     data_inicio: datetime
     data_fim: datetime

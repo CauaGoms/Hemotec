@@ -201,7 +201,7 @@ def lista_instituicoes_exemplo():
 def assinatura_exemplo():
     from data.model.assinatura_model import Assinatura
     assinatura = Assinatura(
-        cod_assinatura=1,
+        cod_assinatura=0,
         cnpj="cnpj teste",
         cod_plano=1,
         data_inicio=datetime(2025, 1, 1).date(),
@@ -217,7 +217,7 @@ def lista_assinaturas_exemplo():
     assinaturas = []
     for i in range(1, 11):
         assinatura = Assinatura(
-            cod_assinatura=i,
+            cod_assinatura=0,
             cnpj=f'cnpj {i:02d}',
             cod_plano=i,
             data_inicio=datetime(2025, 1, i).date(),

@@ -21,8 +21,6 @@ def inserir(assinatura: Assinatura) -> Optional[int]:
     with get_connection() as conn:
         cursor = conn.cursor()
         cursor.execute(INSERIR, (
-            assinatura.cnpj,
-            assinatura.cod_plano,
             assinatura.data_inicio,
             assinatura.data_fim,
             assinatura.valor,
@@ -38,7 +36,7 @@ def obter_todos() -> list[Assinatura]:
         assinatura = [
             Assinatura(
                 cod_assinatura=row["cod_assinatura"],
-                cnpj=row["cnpj"],
+                cod_instituicao=row["cod_instituicao"],
                 cod_plano=row["cod_plano"],
                 data_inicio=datetime.strptime(row["data_inicio"], '%Y-%m-%d'),
                 data_fim=datetime.strptime(row["data_fim"], '%Y-%m-%d'),
@@ -48,15 +46,15 @@ def obter_todos() -> list[Assinatura]:
                 for row in rows]
         return assinatura
     
-def obter_por_id(cod_assinatuta: int) -> Optional[Assinatura]:
+def obter_por_id(cod_assinatura: int) -> Optional[Assinatura]:
     with get_connection() as conn:
         cursor = conn.cursor()
-        cursor.execute(OBTER_POR_ID, (cod_assinatuta,))
+        cursor.execute(OBTER_POR_ID, (cod_assinatura,))
         row = cursor.fetchone()
         if row:
             return Assinatura(
                 cod_assinatura=row["cod_assinatura"],
-                cnpj=row["cnpj"],
+                cod_instituicao=row["cod_instituicao"],
                 cod_plano=row["cod_plano"],
                 data_inicio=datetime.strptime(row["data_inicio"], '%Y-%m-%d'),
                 data_fim=datetime.strptime(row["data_fim"], '%Y-%m-%d'),
@@ -71,7 +69,7 @@ def update(assinatura: Assinatura) -> bool:
         cursor.execute(
             UPDATE,
             (
-                assinatura.cnpj,
+                assinatura.cod_instituicao,
                 assinatura.cod_plano,
                 assinatura.data_inicio,
                 assinatura.data_fim,
