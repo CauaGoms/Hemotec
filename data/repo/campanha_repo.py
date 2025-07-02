@@ -17,9 +17,8 @@ def criar_tabela() -> bool:
         return False
     
 
-def inserir(campanha: Campanha) -> Optional[int]:
-    with get_connection() as conn:
-        cursor = conn.cursor()
+def inserir(campanha: Campanha, cursor=None) -> Optional[int]:
+    if cursor is not None:
         cursor.execute(INSERIR, (
             campanha.titulo, 
             campanha.descricao, 
@@ -27,6 +26,16 @@ def inserir(campanha: Campanha) -> Optional[int]:
             campanha.data_fim,
             campanha.status))
         return cursor.lastrowid
+    else:
+        with get_connection() as conn:
+            cursor = conn.cursor()
+            cursor.execute(INSERIR, (
+                campanha.titulo, 
+                campanha.descricao, 
+                campanha.data_inicio, 
+                campanha.data_fim,
+                campanha.status))
+            return cursor.lastrowid
     
 
 def obter_todos() -> list[Campanha]:

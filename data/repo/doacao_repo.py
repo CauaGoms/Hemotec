@@ -6,26 +6,39 @@ from data.sql.doacao_sql import *
 from data.util.database import get_connection
 from datetime import datetime
 
-def criar_tabela() -> bool:
+def criar_tabela(cursor=None) -> bool:
     try:
-        with get_connection() as conn:
-            cursor = conn.cursor()
+        if cursor is not None:
             cursor.execute(CRIAR_TABELA)
-            return True
+        else:
+            with get_connection() as conn:
+                cursor = conn.cursor()
+                cursor.execute(CRIAR_TABELA)
+        return True
     except Exception as e:
-        print(f"Erro ao criar tabela da categoria: {e}")
+        print(f"Erro ao criar tabela doacao: {e}")
         return False
     
 
-def inserir(doacao: Doacao) -> Optional[int]:
-    with get_connection() as conn:
-        cursor = conn.cursor()
+def inserir(doacao: Doacao, cursor=None) -> Optional[int]:
+    if cursor is not None:
         cursor.execute(INSERIR, (
             doacao.cod_doador,
             doacao.data_hora,
             doacao.quantidade,
-            doacao.status)) 
+            doacao.status
+        ))
         return cursor.lastrowid
+    else:
+        with get_connection() as conn:
+            cursor = conn.cursor()
+            cursor.execute(INSERIR, (
+                doacao.cod_doador,
+                doacao.data_hora,
+                doacao.quantidade,
+                doacao.status
+            ))
+            return cursor.lastrowid
     
 
 def obter_todos() -> list[Doacao]:
