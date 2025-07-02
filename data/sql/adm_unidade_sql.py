@@ -5,19 +5,19 @@ cod_unidade INTEGER NOT NULL,
 permissao_envio_campanha BOOLEAN NOT NULL,
 permissao_envio_notificacao BOOLEAN NOT NULL,
 FOREIGN KEY (cod_adm) REFERENCES usuario(cod_usuario),
-FOREIGN KEY (cod_unidade) REFERENCES unidade(cod_unidade)
+FOREIGN KEY (cod_unidade) REFERENCES unidade_estoque(cod_unidade)
 )
 """
 
 INSERIR = """
 INSERT INTO adm_unidade (cod_adm, cod_unidade, permissao_envio_campanha, permissao_envio_notificacao) 
-VALUES (?, ?, ?, ?,)
+VALUES (?, ?, ?, ?)
 """
 
 OBTER_TODOS = """
 SELECT usu.cod_adm, u.cod_unidade, adm.permissao_envio_campanha, adm.permissao_envio_notificacao
 FROM adm_unidade adm,
-unidade u,
+unidade_estoque u,
 usuario usu
 WHERE adm.cod_adm = usu.cod_usuario
 AND adm.cod_unidade = u.cod_unidade
@@ -37,7 +37,7 @@ WHERE cod_adm = ?;
 OBTER_POR_ID = """
 SELECT usu.cod_adm, u.cod_unidade, adm.permissao_envio_campanha, adm.permissao_envio_notificacao
 FROM adm_unidade adm,
-unidade u,
+unidade_estoque u,
 usuario usu
 WHERE adm.cod_adm = usu.cod_usuario
 AND adm.cod_unidade = u.cod_unidade
