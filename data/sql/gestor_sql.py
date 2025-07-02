@@ -1,30 +1,30 @@
 CRIAR_TABELA = """
 CREATE TABLE IF NOT EXISTS gestor (
 cod_gestor INTEGER PRIMARY KEY,
-cnpj TEXT NOT NULL,
+cod_instituicao INTEGER NOT NULL,
 instituicao TEXT NOT NULL,
 FOREIGN KEY (cod_gestor) REFERENCES usuario(cod_usuario),
-FOREIGN KEY (cnpj) REFERENCES instituicao(cnpj)
+FOREIGN KEY (cod_instituicao) REFERENCES instituicao(cod_instituicao)
 )
 """
 
 INSERIR = """
-INSERT INTO gestor (cod_gestor, cnpj, instituicao) 
+INSERT INTO gestor (cod_gestor, cod_instituicao, instituicao) 
 VALUES (?, ?, ?)
 """
 
 OBTER_TODOS = """
-SELECT g.cod_gestor, i.cnpj, g.instituicao
+SELECT g.cod_gestor, g.cod_instituicao, g.instituicao
 FROM gestor g,
 usuario u,
 instituicao i
 WHERE g.cod_gestor = u.cod_usuario
-AND g.cnpj = i.cnpj
+AND g.cod_instituicao = i.instituicao
 """ 
 
 UPDATE = """
 UPDATE gestor
-SET cnpj = ?, instituicao = ?
+SET cod_instituicao = ?, instituicao = ?
 WHERE cod_gestor = ?;
 """
 
@@ -34,11 +34,11 @@ WHERE cod_gestor = ?;
 """
 
 OBTER_POR_ID = """
-SELECT g.cod_gestor, i.cnpj, g.instituicao
+SELECT g.cod_gestor, g.cod_instituicao, g.instituicao
 FROM gestor g,
 usuario u,
 instituicao i
 WHERE g.cod_gestor = u.cod_usuario
-AND g.cnpj = i.cnpj
+AND g.cod_instituicao = i.instituicao
 AND g.cod_gestor = ?;
 """

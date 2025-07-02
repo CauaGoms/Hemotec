@@ -38,7 +38,7 @@ def inserir(gestor: Gestor) -> Optional[int]:
         cod_gestor = usuario_repo.inserir(usuario, cursor)
         cursor.execute(INSERIR, (
             cod_gestor, 
-            gestor.cnpj, 
+            gestor.cod_instituicao, 
             gestor.instituicao))
         return cod_gestor
     
@@ -62,7 +62,7 @@ def obter_todos() -> list[Gestor]:
                 cidade_usuario=row["cidade_usuario"],
                 cep_usuario=row["cep_usuario"],
                 telefone=row["telefone"],
-                cnpj=row["cnpj"],
+                cod_instituicao=row["cod_instituicao"],
                 instituicao=row["instituicao"])  
                 for row in rows]
         return gestor
@@ -86,58 +86,10 @@ def obter_por_id(cod_gestor: int) -> Optional[Gestor]:
             cidade_usuario=row["cidade_usuario"],
             cep_usuario=row["cep_usuario"],
             telefone=row["telefone"],
-            cnpj=row["cnpj"],
+            cod_instituicao=row["cod_instituicao"],
             instituicao=row["instituicao"])
-        return gestor
-    
-# def obter_todos() -> list[Gestor]:
-#     with get_connection() as conn:
-#         cursor = conn.cursor()
-#         cursor.execute(OBTER_TODOS)
-#         rows = cursor.fetchall()
-#         gestor = [
-#             Gestor(
-#                 cod_gestor=row["cod_gestor"],
-#                 nome=row["nome"],
-#                 email=row["email"],
-#                 senha=row["senha"],
-#                 cpf=row["cpf"],
-#                 data_nascimento=row["data_nascimento"],
-#                 status=row["status"],
-#                 data_cadastro=row["data_cadastro"],
-#                 rua_usuario=row["rua_usuario"],
-#                 bairro_usuario=row["bairro_usuario"],
-#                 cidade_usuario=row["cidade_usuario"],
-#                 cep_usuario=row["cep_usuario"],
-#                 telefone=row["telefone"],
-#                 cnpj=row["cnpj"],
-#                 instituicao=row["instituicao"])  
-#                 for row in rows]
-#         return gestor
-    
-# def obter_por_id(cod_gestor: int) -> Optional[Gestor]:
-#     with get_connection() as conn:
-#         cursor = conn.cursor()
-#         cursor.execute(OBTER_POR_ID, (cod_gestor,))
-#         row = cursor.fetchone()
-#         gestor = Gestor(
-#             cod_gestor=row["cod_gestor"],
-#             nome=row["nome"],
-#             email=row["email"],
-#             senha=row["senha"],
-#             cpf=row["cpf"],
-#             data_nascimento=row["data_nascimento"],
-#             status=row["status"],
-#             data_cadastro=row["data_cadastro"],
-#             rua_usuario=row["rua_usuario"],
-#             bairro_usuario=row["bairro_usuario"],
-#             cidade_usuario=row["cidade_usuario"],
-#             cep_usuario=row["cep_usuario"],
-#             telefone=row["telefone"],
-#             cnpj=row["cnpj"],
-#             instituicao=row["instituicao"])
-#         return gestor
-    
+        return gestor    
+  
 def update(gestor: Gestor) -> bool:
     with get_connection() as conn:
         cursor = conn.cursor()
@@ -157,7 +109,7 @@ def update(gestor: Gestor) -> bool:
             gestor.telefone)
         usuario_repo.update(usuario, cursor)
         cursor.execute(UPDATE, (
-            gestor.cnpj, 
+            gestor.cod_instituicao, 
             gestor.instituicao, 
             gestor.cod_gestor))
         return (cursor.rowcount > 0)
