@@ -1,0 +1,5 @@
+{% if coordenada %}
+    const unidades = {{ coordenada | tojson | safe }};
+{% else %}
+    const unidades = null;
+{% endif %}

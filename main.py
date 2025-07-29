@@ -1,4 +1,4 @@
-from fastapi import FastAPI, Form
+from fastapi import FastAPI, Form, Request
 from fastapi.responses import RedirectResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
@@ -59,9 +59,12 @@ prontuario_repo.criar_tabela()
 email_usuario = ""
 
 @app.get("/")
-async def get_root():
+async def get_root(request: Request):
     coordenada = unidade_coleta_repo.obter_coordenada() or []
-    response = templates.TemplateResponse("boas_vindas_inicio.html", {"request": {}, "active_page": "inicio", "coordenada": coordenada})
+    response = templates.TemplateResponse(
+        "boas_vindas_inicio.html",
+        {"request": request, "active_page": "inicio", "coordenada": coordenada}
+    )
     return response
 
 @app.get("/sobre")
