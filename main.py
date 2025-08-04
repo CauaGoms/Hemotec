@@ -2,6 +2,7 @@ from fastapi import FastAPI, Form, Request
 from fastapi.responses import RedirectResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
+from starlette.middleware.sessions import SessionMiddleware
 import uvicorn
 from datetime import date
 
@@ -32,6 +33,7 @@ from data.repo import exame_repo
 from data.repo import prontuario_repo
 
 app = FastAPI()
+app.add_middleware(SessionMiddleware, secret_key="your-secret-key-here")
 app.mount("/static", StaticFiles(directory="static"), name="static")
 templates = Jinja2Templates(directory="templates")
 
@@ -56,7 +58,7 @@ exame_repo.criar_tabela()
 prontuario_repo.criar_tabela()
 
 
-email_usuario = ""
+# Remove the global email_usuario variable as we'll use sessions
 
 @app.get("/")
 async def get_root(request: Request):
@@ -89,11 +91,13 @@ async def get_root():
 
 @app.post("/login")
 async def post_login(
+    request: Request,
     email: str = Form(...),
     senha: str = Form(...)
 ):
     usuario = usuario_repo.obter_por_email(email)
     if usuario and usuario.senha == senha:
+        request.session["user_email"] = email
         return RedirectResponse("/doador", status_code=303)
     else:
         raise Exception("Usuário ou senha inválidos.")
@@ -127,9 +131,19 @@ async def post_cadastro(
     if usuario_repo.obter_por_email(email):
         raise Exception("Já existe uma conta cadastrada com esse e-mail.")
 
+    # Busca a cidade pelo nome ou cria uma nova se não existir
+    cidade = cidade_repo.obter_por_nome(cidade_usuario)
+    if not cidade:
+        # Se a cidade não existe, cria uma nova com sigla padrão
+        from data.model.cidade_model import Cidade
+        nova_cidade = Cidade(0, cidade_usuario, "SP")  # Usando SP como estado padrão
+        cidade_id = cidade_repo.inserir(nova_cidade)
+    else:
+        cidade_id = cidade.cod_cidade
+
     status = 1
     data_cadastro = date.today().isoformat()
-    usu = Usuario(0, nome, email, senha, cpf, data_nascimento, status, data_cadastro, rua_usuario, bairro_usuario, cidade_usuario, cep_usuario, telefone)
+    usu = Usuario(0, nome, email, senha, cpf, data_nascimento, status, data_cadastro, rua_usuario, bairro_usuario, cidade_id, cep_usuario, telefone)
     with get_connection() as conn:
         cursor = conn.cursor()
         usuario_id = usuario_repo.inserir(usu, cursor)
@@ -176,6 +190,7 @@ async def get_root():
 
 @app.post("/doador/novo_doador")
 async def post_novo_doador(
+    request: Request,
     altura: float = Form(...),
     peso: int = Form(...),
     tipo_sanguineo: str = Form(...),
@@ -200,8 +215,10 @@ async def post_novo_doador(
     termos: str = Form(False),
     alerta: str = Form(False)
 ):
-    # 1. Obtenha o identificador do usuário logado
-    email_usuario = email_usuario  
+    # 1. Obtenha o identificador do usuário logado a partir da sessão
+    email_usuario = request.session.get("user_email")
+    if not email_usuario:
+        raise Exception("Usuário não está logado.")
 
     # 2. Busque o usuário no banco
     usuario = usuario_repo.obter_por_email(email_usuario)
@@ -230,10 +247,10 @@ async def post_novo_doador(
 
     with get_connection() as conn:
         cursor = conn.cursor()
-        prontuario_id = usuario_repo.inserir(prontuario, cursor)
+        prontuario_id = prontuario_repo.inserir(prontuario, cursor)
         doador_id = doador_repo.inserir(doador, cursor)
         conn.commit()
-    if prontuario_id or doador_id is None:
+    if prontuario_id is None or doador_id is None:
         raise Exception("Erro ao cadastrar prontuario ou doador.")
     else:
         return RedirectResponse("/doador", status_code=303)
