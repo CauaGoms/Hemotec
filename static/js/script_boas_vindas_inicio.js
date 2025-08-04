@@ -1,53 +1,86 @@
-// Bloco de código seguro para inicializar o mapa e os marcadores
-document.addEventListener('DOMContentLoaded', function () {
+// Garante que o script só execute após o carregamento completo do HTML.
+document.addEventListener('DOMContentLoaded', async function () {
+  
+  console.log("🗺️ Iniciando a configuração do mapa...");
 
-  // 1. Inicializa a variável 'unidades' de forma segura
-  // O Jinja2 irá substituir esta seção pelo array de coordenadas ou por 'null'
-  // {% include "partials/coordenada_var.jinja" %}
-
-  // 2. Inicializa o mapa
+  // 1. INICIALIZAÇÃO DO MAPA
+  // Cria o mapa e define uma visão inicial.
   const mapa = L.map('mapa').setView([-20.839, -41.112], 12);
 
-  // 3. Adiciona a camada de fundo (tile layer) do OpenStreetMap
+  // Adiciona a camada visual do mapa (os "azulejos") do OpenStreetMap.
   L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    attribution: '© OpenStreetMap contributors'
-  }).addTo(mapa);
+    attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+  } ).addTo(mapa);
 
-  // 4. Define o ícone personalizado para as unidades de coleta
-  const iconeGota = L.icon({
-    iconUrl: '/static/img/gota.png', // IMPORTANTE: Verifique se este caminho está correto
-    iconSize: [40, 40],
-    iconAnchor: [20, 40],
-    popupAnchor: [0, -35]
-  });
+  // 2. BUSCA E EXIBIÇÃO DAS UNIDADES DE COLETA
+  // Este bloco 'try...catch' lida com a busca de dados da sua API.
+  try {
+    // Faz a chamada para a API que você criou no backend.
+    const response = await fetch('/api/unidades');
+    
+    // Se a resposta não for "OK" (ex: erro 500, 404), lança um erro.
+    if (!response.ok) {
+      throw new Error(`A resposta da API não foi bem-sucedida: ${response.statusText}`);
+    }
+    
+    // Converte a resposta da API para o formato JSON.
+    const unidades = await response.json();
+    console.log("✅ Sucesso: Dados das unidades recebidos da API:", unidades);
 
-  // 5. Adiciona os marcadores das unidades se a variável 'unidades' existir
-  if (unidades && unidades.length > 0) {
-    unidades.forEach(function (unidade) {
-      const nome = Object.keys(unidade)[0];
-      const coords = unidade[nome];
-      L.marker(coords, { icon: iconeGota }).addTo(mapa)
-        .bindPopup(`<strong>${nome}</strong>`);
+    // Define o ícone personalizado para as unidades.
+    const iconeGota = L.icon({
+      iconUrl: '/static/img/gota.png', // Verifique se o caminho está correto!
+      iconSize: [40, 40],
+      iconAnchor: [20, 40],
+      popupAnchor: [0, -35]
     });
-  } else {
-    console.warn("Nenhuma coordenada de unidade de coleta foi fornecida pelo backend.");
-  }
 
-  // 6. Gerencia a localização do usuário
+    // Itera sobre os dados recebidos para criar os marcadores.
+    if (unidades && unidades.length > 0) {
+      unidades.forEach(function (unidadeObjeto) {
+        // Extrai o nome e as coordenadas do formato {"Nome": [lat, lon]}
+        const nome = Object.keys(unidadeObjeto)[0];
+        const coords = unidadeObjeto[nome];
+
+        // Adiciona o marcador no mapa com o ícone e o pop-up.
+        if (nome && coords && coords.length === 2) {
+          L.marker(coords, { icon: iconeGota }).addTo(mapa)
+            .bindPopup(`<strong>${nome}</strong>`);
+        }
+      });
+    } else {
+      console.warn("ℹ️ Aviso: Nenhuma unidade de coleta foi retornada pela API.");
+    }
+
+  } catch (error) {
+    // Se qualquer parte da busca de dados falhar, exibe um erro claro.
+    console.error("❌ ERRO CRÍTICO: Falha ao buscar ou processar os dados das unidades.", error);
+    const erroDiv = document.getElementById('mapa');
+    if (erroDiv) {
+      erroDiv.innerHTML = '<div style="padding: 20px; text-align: center; color: red;"><strong>Erro:</strong> Não foi possível carregar os pontos de coleta.</div>';
+    }
+  }
+  
+  // 3. GERENCIAMENTO DA LOCALIZAÇÃO DO USUÁRIO
+  console.log("▶️ Solicitando localização do usuário...");
+
+  // Evento acionado se a localização for encontrada com sucesso.
   mapa.on('locationfound', function (e) {
-    console.log("Localização do usuário encontrada:", e.latlng);
-    // Usa o marcador padrão do Leaflet (azul) para a localização do usuário
+    console.log("✅ Sucesso: Localização do usuário encontrada!", e.latlng);
+    // Adiciona um marcador azul padrão para o usuário.
     L.marker(e.latlng).addTo(mapa)
       .bindPopup("<strong>Você está aqui</strong>").openPopup();
+    // Centraliza o mapa na localização do usuário com um zoom adequado.
+    mapa.setView(e.latlng, 14);
   });
 
-  mapa.on('locationerror', function (e) {
-    console.error("Erro ao obter localização:", e.message);
-    // Opcional: Informar o usuário de forma não intrusiva
-    // alert("Não foi possível obter sua localização. Verifique as permissões no seu navegador.");
+  // Evento acionado se houver um erro ao obter a localização.
+  mapa.on('locationerror', function(e) {
+      // Esta mensagem no console (F12) é a chave para diagnosticar problemas de permissão/segurança.
+      console.error("❌ ERRO: Não foi possível obter a localização do usuário. Motivo:", e.message);
   });
 
-  // Inicia o processo de geolocalização
-  mapa.locate({ setView: true, maxZoom: 14 });
+  // Inicia o processo para encontrar a localização do usuário.
+  mapa.locate({ setView: false, maxZoom: 16 });
 
 });
