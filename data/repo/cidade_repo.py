@@ -51,6 +51,19 @@ def obter_por_id(cod_cidade: int) -> Optional[Cidade]:
             )
         return None
     
+def obter_por_nome(nome_cidade: str) -> Optional[Cidade]:
+    with get_connection() as conn:
+        cursor = conn.cursor()
+        cursor.execute(OBTER_POR_NOME, (nome_cidade,))
+        row = cursor.fetchone()
+        if row:
+            return Cidade(
+                cod_cidade=row["cod_cidade"],
+                nome_cidade=row["nome_cidade"],
+                sigla_estado=row["sigla_estado"]
+            )
+        return None
+    
 def update(cidade: Cidade) -> bool:
     with get_connection() as conn:
         cursor = conn.cursor()
