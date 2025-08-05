@@ -1,8 +1,3 @@
-function agendarDoacao() {
-    alert('Redirecionando para o agendamento de doação...');
-    // Aqui você pode redirecionar para a página de agendamento
-    // window.location.href = 'agendamento.html';
-}
 
 function verCampanhas() {
     window.location.href = '/doador/campanha';
