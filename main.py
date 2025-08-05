@@ -63,7 +63,7 @@ prontuario_repo.criar_tabela()
 @app.get("/")
 async def get_root(request: Request):
     response = templates.TemplateResponse(
-        "boas_vindas_inicio.html", {"request": request, "active_page": "inicio"})
+        "publico/boas_vindas_inicio.html", {"request": request, "active_page": "inicio"})
     return response
 
 @app.get("/api/unidades")
@@ -77,22 +77,22 @@ async def get_api_unidades():
 
 @app.get("/sobre")
 async def get_root():
-    response = templates.TemplateResponse("boas_vindas_sobre.html", {"request": {}, "active_page": "sobre"})
+    response = templates.TemplateResponse("publico/boas_vindas_sobre.html", {"request": {}, "active_page": "sobre"})
     return response
 
 @app.get("/campanha")
 async def get_root():
-    response = templates.TemplateResponse("boas_vindas_campanha.html", {"request": {}, "active_page": "campanha"})
+    response = templates.TemplateResponse("publico/boas_vindas_campanha.html", {"request": {}, "active_page": "campanha"})
     return response
 
 @app.get("/contato")
 async def get_root():
-    response = templates.TemplateResponse("boas_vindas_contato.html", {"request": {}, "active_page": "contato"})
+    response = templates.TemplateResponse("publico/boas_vindas_contato.html", {"request": {}, "active_page": "contato"})
     return response
 
 @app.get("/login")
 async def get_root():
-    response = templates.TemplateResponse("login.html", {"request": {}})
+    response = templates.TemplateResponse("publico/login.html", {"request": {}})
     return response
 
 @app.post("/login")
@@ -110,12 +110,12 @@ async def post_login(
 
 @app.get("/recuperar_senha")
 async def get_root():
-    response = templates.TemplateResponse("esqueceu_senha.html", {"request": {}})
+    response = templates.TemplateResponse("publico/esqueceu_senha.html", {"request": {}})
     return response
 
 @app.get("/cadastro")
 async def get_root():
-    response = templates.TemplateResponse("cadastro.html", {"request": {}})
+    response = templates.TemplateResponse("publico/cadastro.html", {"request": {}})
     return response
 
 @app.post("/cadastro")
@@ -161,37 +161,37 @@ async def post_cadastro(
 
 @app.get("/doador")
 async def get_root():
-    response = templates.TemplateResponse("doador_inicio.html", {"request": {}, "active_page": "home"})
+    response = templates.TemplateResponse("doador/doador_inicio.html", {"request": {}, "active_page": "home"})
     return response
 
 @app.get("/doador/campanha")
 async def get_root():
-    response = templates.TemplateResponse("doador_campanha.html", {"request": {}, "active_page": "campanha"})
+    response = templates.TemplateResponse("doador/doador_campanha.html", {"request": {}, "active_page": "campanha"})
     return response
 
 @app.get("/doador/agendamento")
 async def get_root():
-    response = templates.TemplateResponse("doador_agendamento.html", {"request": {}, "active_page": "agendamento"})
+    response = templates.TemplateResponse("doador/doador_agendamento.html", {"request": {}, "active_page": "agendamento"})
     return response
 
 @app.get("/doador/notificacao")
 async def get_root():
-    response = templates.TemplateResponse("doador_notificacao.html", {"request": {}, "active_page": "notificacao"})
+    response = templates.TemplateResponse("doador/doador_notificacao.html", {"request": {}, "active_page": "notificacao"})
     return response
 
 @app.get("/doador/meu_perfil")
 async def get_root():
-    response = templates.TemplateResponse("doador_meu_perfil.html", {"request": {}, "active_page": "perfil"})
+    response = templates.TemplateResponse("doador/doador_meu_perfil.html", {"request": {}, "active_page": "perfil"})
     return response
 
 @app.get("/doador/configuracoes")
 async def get_root():
-    response = templates.TemplateResponse("doador_configuracoes.html", {"request": {}, "active_page": "perfil"})
+    response = templates.TemplateResponse("doador/doador_configuracoes.html", {"request": {}, "active_page": "perfil"})
     return response
 
 @app.get("/doador/novo_doador")
 async def get_root():
-    response = templates.TemplateResponse("primeira_doacao.html", {"request": {}})
+    response = templates.TemplateResponse("doador/primeira_doacao.html", {"request": {}})
     return response
 
 @app.post("/doador/novo_doador")
