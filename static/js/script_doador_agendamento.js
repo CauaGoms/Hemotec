@@ -262,68 +262,12 @@ function selectTime(time, element) {
 
 // Confirmar agendamento
 function confirmAppointment() {
-    if (!selectedLocation || !selectedDate || !selectedTime) {
-        alert("Por favor, selecione um hemocentro, data e horário antes de confirmar.");
-        return;
-    }
-
-    const locationName = locations[selectedLocation].name;
-    const dateOptions = { 
-        weekday: 'long', 
-        year: 'numeric', 
-        month: 'long', 
-        day: 'numeric' 
-    };
-    const formattedDate = selectedDate.toLocaleDateString('pt-BR', dateOptions);
-    const time = selectedTime;
-
-    const appointmentDetails = `
-Detalhes do Agendamento:
-━━━━━━━━━━━━━━━━━━━━━━
-🏥 Local: ${locationName}
-📅 Data: ${formattedDate}
-🕐 Horário: ${time}
-━━━━━━━━━━━━━━━━━━━━━━
-
-✅ Seu agendamento foi confirmado!
-📧 Você receberá um e-mail de confirmação em breve.
-📱 Lembre-se de chegar 15 minutos antes do horário agendado.
-    `;
-
-    // Aqui você pode adicionar a lógica para enviar os dados do agendamento para o servidor
-    // Exemplo: 
-    // const appointmentData = {
-    //     locationId: selectedLocation,
-    //     date: selectedDate.toISOString().split('T')[0],
-    //     time: selectedTime,
-    //     userId: getCurrentUserId() // função para obter ID do usuário logado
-    // };
-    // 
-    // fetch('/api/agendamentos', {
-    //     method: 'POST',
-    //     headers: {
-    //         'Content-Type': 'application/json',
-    //     },
-    //     body: JSON.stringify(appointmentData)
-    // })
-    // .then(response => response.json())
-    // .then(data => {
-    //     if (data.success) {
-    //         // Redirecionar para página de confirmação
-    //         window.location.href = `/agendamento/confirmacao/${data.agendamentoId}`;
-    //     } else {
-    //         alert('Erro ao confirmar agendamento: ' + data.message);
-    //     }
-    // })
-    // .catch(error => {
-    //     alert('Erro de conexão. Tente novamente.');
-    // });
-
-    // Para fins de demonstração, vamos apenas mostrar um alerta com os detalhes do agendamento
-    alert(appointmentDetails);
-
-    // Simular redirecionamento após confirmação
-    // window.location.href = "confirmacao-agendamento.html";
+    // Teste simples para verificar se a função está sendo chamada
+    console.log("Função confirmAppointment foi chamada");
+    alert("Redirecionando para página de confirmação...");
+    
+    // Por enquanto, vamos redirecionar diretamente para a página de confirmação
+    window.location.href = "/doador/confirmar";
 }
 
 // Inicializar a página

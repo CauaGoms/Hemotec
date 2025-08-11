@@ -137,9 +137,9 @@
                         </div>
                         
                         <div class="d-grid gap-2">
-                            <button id="confirmBtn" class="btn btn-primary" disabled onclick="confirmAppointment()">
+                            <button id="confirmBtn" class="btn btn-primary" onclick="confirmAppointment()">
                                 <i class="fas fa-calendar-check me-2"></i>Confirmar Agendamento
-                            </a>
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -216,7 +216,5 @@
 
 <!-- Custom JavaScript -->
 {% block custom_js %}
-<script src="/static/js/script_doador_agendamento.js">
-        
-    </script>
+<script src="/static/js/script_doador_agendamento.js"></script>
 {% endblock %}
