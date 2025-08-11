@@ -1,0 +1,123 @@
+{% extends "doador/doador_#base.html" %}
+
+{% block custom_css %}
+<link href="/static/css/historico_agendamento.css" rel="stylesheet">
+{% endblock %}
+
+{% block corpo_campanha %}
+<!-- Botão Voltar -->
+<a href="/doador/agendamento" class="back-arrow">
+    <i class="fas fa-arrow-left"></i>
+</a>
+
+<!-- Seção de Cabeçalho -->
+<section class="hero-section-historico">
+    <div class="container">
+        <div class="hero-content">
+            <h1 class="hero-title">Meus Agendamentos</h1>
+            <p class="hero-subtitle">Acompanhe seus próximos agendamentos e seu histórico de doações.</p>
+        </div>
+    </div>
+</section>
+
+<!-- Conteúdo Principal com Abas -->
+<div class="container mt-n5">
+    <div class="history-container">
+        <!-- Navegação das Abas -->
+        <ul class="nav nav-pills nav-fill mb-4" id="pills-tab" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="pills-proximos-tab" data-bs-toggle="pill" data-bs-target="#pills-proximos" type="button" role="tab" aria-controls="pills-proximos" aria-selected="true">
+                    <i class="fas fa-calendar-check me-2"></i>Próximos Agendamentos
+                </button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="pills-historico-tab" data-bs-toggle="pill" data-bs-target="#pills-historico" type="button" role="tab" aria-controls="pills-historico" aria-selected="false">
+                    <i class="fas fa-history me-2"></i>Histórico de Doações
+                </button>
+            </li>
+        </ul>
+
+        <!-- Conteúdo das Abas -->
+        <div class="tab-content" id="pills-tabContent">
+            <!-- Aba: Próximos Agendamentos -->
+            <div class="tab-pane fade show active" id="pills-proximos" role="tabpanel" aria-labelledby="pills-proximos-tab">
+                <!-- Exemplo de Card de Agendamento Futuro -->
+                <div class="appointment-card upcoming">
+                    <div class="card-header">
+                        <span class="status-badge upcoming-badge"><i class="fas fa-clock me-1"></i> Agendado</span>
+                        <strong class="date">Sexta-feira, 27 de Junho de 2025 - 10:30</strong>
+                    </div>
+                    <div class="card-body">
+                        <div class="location-info">
+                            <i class="fas fa-hospital-alt icon"></i>
+                            <div>
+                                <h5 class="location-name">Hemocentro Regional de Cachoeiro</h5>
+                                <p class="location-address">Rua Dr. Raulino de Oliveira, 345 - Centro</p>
+                            </div>
+                        </div>
+                        <div class="actions">
+                            <button class="btn btn-sm btn-outline-primary"><i class="fas fa-calendar-alt me-1"></i> Reagendar</button>
+                            <button class="btn btn-sm btn-outline-danger"><i class="fas fa-times-circle me-1"></i> Cancelar</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Mensagem para quando não houver agendamentos -->
+                <div class="text-center p-5 no-appointments-message" style="display: none;">
+                    <i class="fas fa-calendar-plus fa-3x text-muted mb-3"></i>
+                    <h4>Nenhum agendamento futuro</h4>
+                    <p>Que tal salvar vidas? Sua doação é muito importante.</p>
+                    <a href="/doador/agendamento" class="btn btn-primary">Agendar uma Doação</a>
+                </div>
+            </div>
+
+            <!-- Aba: Histórico de Doações -->
+            <div class="tab-pane fade" id="pills-historico" role="tabpanel" aria-labelledby="pills-historico-tab">
+                <!-- Exemplo de Card de Doação Concluída -->
+                <div class="appointment-card completed">
+                    <div class="card-header">
+                        <span class="status-badge completed-badge"><i class="fas fa-check-circle me-1"></i> Concluída</span>
+                        <strong class="date">Terça-feira, 15 de Abril de 2025 - 09:00</strong>
+                    </div>
+                    <div class="card-body">
+                        <div class="location-info">
+                            <i class="fas fa-hospital-alt icon"></i>
+                            <div>
+                                <h5 class="location-name">Hospital Santa Casa</h5>
+                                <p class="location-address">Av. Beira Rio, 1200 - Independência</p>
+                            </div>
+                        </div>
+                        <div class="actions">
+                            <button class="btn btn-sm btn-outline-secondary"><i class="fas fa-receipt me-1"></i> Ver Comprovante</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Exemplo de Card de Doação Cancelada -->
+                <div class="appointment-card canceled">
+                    <div class="card-header">
+                        <span class="status-badge canceled-badge"><i class="fas fa-times-circle me-1"></i> Cancelada</span>
+                        <strong class="date">Segunda-feira, 10 de Fevereiro de 2025 - 14:00</strong>
+                    </div>
+                    <div class="card-body">
+                        <div class="location-info">
+                            <i class="fas fa-hospital-alt icon"></i>
+                            <div>
+                                <h5 class="location-name">Unidade Móvel - Praça Jerônimo Monteiro</h5>
+                                <p class="location-address">Praça Jerônimo Monteiro - Centro</p>
+                            </div>
+                        </div>
+                        <div class="actions">
+                             <a href="/doador/agendamento" class="btn btn-sm btn-primary"><i class="fas fa-calendar-plus me-1"></i> Agendar Novamente</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block custom_js %}
+<script src="/static/js/script_doador_historico.js"></script>
+{% endblock %}

@@ -4,14 +4,14 @@
 {% endblock %}
 
 {% block corpo_campanha %}
-<!-- Back Arrow -->
-    <a href="dashboard.html" class="back-arrow">
-        <i class="fas fa-arrow-left"></i>
-    </a>
+<a href="dashboard.html" class="back-arrow">
+    <i class="fas fa-arrow-left"></i>
+</a>
 
-    <!-- Hero Section -->
-    <section class="hero-section">
-        <div class="container">
+<!-- Hero Section -->
+<section class="hero-section">
+    <div class="container">
+        <div class="hero-header">
             <div class="hero-content">
                 <h1 class="hero-title">
                     Agendar Doação
@@ -19,126 +19,211 @@
                 <p class="hero-subtitle">Escolha um hemocentro e horário para sua doação. Sua generosidade pode salvar até 4 vidas!</p>
             </div>
         </div>
-    </section>
+    </div>
+</section>
 
-    <div class="container">
-        <div class="booking-container fade-in">
-            <div class="row">
-                <div class="col-lg-5">
+<!-- Main Content -->
+<div class="container">
+    <div class="booking-wizard fade-in">
+        <!-- Progress Indicator Container -->
+        <div class="progress-container mb-5">
+            <!-- Progress Indicator -->
+            <div class="progress-indicator">
+                <div class="progress-step active" data-step="1">
+                    <div class="step-circle">
+                        <i class="fas fa-map-marker-alt"></i>
+                    </div>
+                    <span class="step-label">Local</span>
+                </div>
+                <div class="progress-line"></div>
+                <div class="progress-step" data-step="2">
+                    <div class="step-circle">
+                        <i class="fas fa-calendar-alt"></i>
+                    </div>
+                    <span class="step-label">Data</span>
+                </div>
+                <div class="progress-line"></div>
+                <div class="progress-step" data-step="3">
+                    <div class="step-circle">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <span class="step-label">Horário</span>
+                </div>
+                <div class="progress-line"></div>
+                <div class="progress-step" data-step="4">
+                    <div class="step-circle">
+                        <i class="fas fa-check"></i>
+                    </div>
+                    <span class="step-label">Confirmar</span>
+                </div>
+                
+                <!-- Botão de Histórico integrado -->
+                <div class="progress-history-btn">
+                    <a href="/doador/historico_agendamentos" 
+                       class="btn btn-outline-danger btn-history-progress"
+                       style="display: block; text-decoration: none;">
+                        <i class="fas fa-history me-2"></i>
+                        <span>Histórico</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- Sidebar com Hemocentros -->
+            <div class="col-lg-6">
+                <div class="selection-card">
                     <h3 class="section-title">
                         <i class="fas fa-map-marker-alt me-2"></i>
-                        Hemocentros Próximos
+                        Escolha o Hemocentro
                     </h3>
                     
-                    <div class="mb-4">
+                    <div class="search-box mb-4">
                         <div class="input-group">
                             <span class="input-group-text"><i class="fas fa-search"></i></span>
                             <input type="text" class="form-control" placeholder="Buscar hemocentro...">
-                            <button class="btn btn-outline-secondary" type="button">
+                            <button class="btn btn-outline-danger" type="button">
                                 <i class="fas fa-location-arrow"></i>
                             </button>
                         </div>
                     </div>
                     
                     <div class="location-list">
-                        <!-- Exemplo para location-card -->
                         <div class="location-card" onclick="selectLocation(1, this)">
-                            <h5>Hemocentro Regional de Cachoeiro</h5>
-                            <div class="distance"><i class="fas fa-map-marker-alt"></i> 1.2 km de distância</div>
-                            <div class="address">Rua Dr. Raulino de Oliveira, 345 - Centro</div>
-                            <div class="hours"><i class="far fa-clock"></i> Seg-Sex: 7h-18h | Sáb: 7h-12h</div>
-                            <div class="mt-2">
-                                <span class="badge"><i class="fas fa-parking"></i> Estacionamento</span>
-                                <span class="badge"><i class="fas fa-wheelchair"></i> Acessível</span>
+                            <div class="location-header">
+                                <h5>Hemocentro Regional de Cachoeiro</h5>
+                                <span class="distance-badge">1.2 km</span>
+                            </div>
+                            <div class="location-details">
+                                <div class="detail-item">
+                                    <i class="fas fa-map-marker-alt"></i>
+                                    Rua Dr. Raulino de Oliveira, 345 - Centro
+                                </div>
+                                <div class="detail-item">
+                                    <i class="far fa-clock"></i>
+                                    Seg-Sex: 7h-18h | Sáb: 7h-12h
+                                </div>
+                                <div class="amenities">
+                                    <span class="amenity-badge"><i class="fas fa-parking"></i> Estacionamento</span>
+                                    <span class="amenity-badge"><i class="fas fa-wheelchair"></i> Acessível</span>
+                                </div>
                             </div>
                         </div>
                         
                         <div class="location-card" onclick="selectLocation(2, this)">
-                            <h5>Hospital Santa Casa</h5>
-                            <div class="distance"><i class="fas fa-map-marker-alt"></i> 2.5 km de distância</div>
-                            <div class="address">Av. Beira Rio, 1200 - Independência</div>
-                            <div class="hours"><i class="far fa-clock"></i> Seg-Sex: 8h-17h</div>
-                            <div class="mt-2">
-                                <span class="badge"><i class="fas fa-parking"></i> Estacionamento</span>
+                            <div class="location-header">
+                                <h5>Hospital Santa Casa</h5>
+                                <span class="distance-badge">2.5 km</span>
+                            </div>
+                            <div class="location-details">
+                                <div class="detail-item">
+                                    <i class="fas fa-map-marker-alt"></i>
+                                    Av. Beira Rio, 1200 - Independência
+                                </div>
+                                <div class="detail-item">
+                                    <i class="far fa-clock"></i>
+                                    Seg-Sex: 8h-17h
+                                </div>
+                                <div class="amenities">
+                                    <span class="amenity-badge"><i class="fas fa-parking"></i> Estacionamento</span>
+                                </div>
                             </div>
                         </div>
                         
                         <div class="location-card" onclick="selectLocation(3, this)">
-                            <h5>Unidade Móvel - Praça Jerônimo Monteiro</h5>
-                            <div class="distance"><i class="fas fa-map-marker-alt"></i> 3.1 km de distância</div>
-                            <div class="address">Praça Jerônimo Monteiro - Centro</div>
-                            <div class="hours"><i class="far fa-clock"></i> Ter e Qui: 9h-15h</div>
-                            <div class="mt-2">
-                                <span class="badge"><i class="fas fa-bus"></i> Unidade Móvel</span>
+                            <div class="location-header">
+                                <h5>Unidade Móvel - Praça Jerônimo Monteiro</h5>
+                                <span class="distance-badge special">3.1 km</span>
+                            </div>
+                            <div class="location-details">
+                                <div class="detail-item">
+                                    <i class="fas fa-map-marker-alt"></i>
+                                    Praça Jerônimo Monteiro - Centro
+                                </div>
+                                <div class="detail-item">
+                                    <i class="far fa-clock"></i>
+                                    Ter e Qui: 9h-15h
+                                </div>
+                                <div class="amenities">
+                                    <span class="amenity-badge special"><i class="fas fa-bus"></i> Unidade Móvel</span>
+                                </div>
                             </div>
                         </div>
                     </div>
                     
-                    <div class="info-box">
+                    <div class="info-card">
                         <h6><i class="fas fa-info-circle me-2"></i>Informações Importantes</h6>
-                        <ul class="mb-0">
-                            <li>Chegue 15 minutos antes do horário agendado</li>
-                            <li>Traga documento oficial com foto</li>
-                            <li>Evite alimentos gordurosos antes da doação</li>
-                            <li>Beba bastante água no dia da doação</li>
+                        <ul class="info-list">
+                            <li><i class="fas fa-check-circle"></i> Chegue 15 min antes do horário</li>
+                            <li><i class="fas fa-check-circle"></i> Traga documento oficial com foto</li>
+                            <li><i class="fas fa-check-circle"></i> Evite alimentos gordurosos</li>
+                            <li><i class="fas fa-check-circle"></i> Beba bastante água no dia</li>
                         </ul>
                     </div>
                 </div>
-                
-                <div class="col-lg-7">
-                    <div id="locationDetails">
-                        <div class="text-center py-5">
-                            <i class="fas fa-map-marked-alt" style="font-size: 3rem; color: #ddd;"></i>
-                            <h4 class="mt-3">Selecione um hemocentro</h4>
-                            <p class="text-muted">Escolha um dos hemocentros disponíveis para ver os horários</p>
-                        </div>
+            </div>
+            
+            <!-- Main Content Area -->
+            <div class="col-lg-6">
+                <div class="main-content-card">
+                    <div id="emptyState" class="empty-state">
+                        <i class="fas fa-map-marked-alt"></i>
+                        <h4>Selecione um Hemocentro</h4>
+                        <p>Escolha um dos hemocentros disponíveis para continuar com seu agendamento</p>
                     </div>
                     
                     <div id="selectedLocation" style="display: none;">
-                        <h3 class="section-title">
-                            <i class="far fa-calendar-alt me-2"></i>
-                            Escolha a Data
-                        </h3>
-                        
-                        <div class="calendar-container mb-4">
-                            <div class="d-flex justify-content-between align-items-center mb-3">
-                                <button class="btn btn-outline-secondary btn-sm" onclick="changeMonth(-1)">
+                        <!-- Calendar Section -->
+                        <div class="calendar-section mb-4">
+                            <h3 class="section-title">
+                                <i class="far fa-calendar-alt me-2"></i>
+                                Escolha a Data
+                            </h3>
+                            
+                            <div class="calendar-controls">
+                                <button class="btn btn-sm btn-outline-danger" onclick="changeMonth(-1)">
                                     <i class="fas fa-chevron-left"></i>
                                 </button>
-                                <h5 id="currentMonth" class="mb-0">Junho 2025</h5>
-                                <button class="btn btn-outline-secondary btn-sm" onclick="changeMonth(1)">
+                                <h5 id="currentMonth" class="calendar-month">Agosto 2025</h5>
+                                <button class="btn btn-sm btn-outline-danger" onclick="changeMonth(1)">
                                     <i class="fas fa-chevron-right"></i>
                                 </button>
                             </div>
                             
-                            <div class="row text-center mb-2">
-                                <div class="col p-1"><small>Dom</small></div>
-                                <div class="col p-1"><small>Seg</small></div>
-                                <div class="col p-1"><small>Ter</small></div>
-                                <div class="col p-1"><small>Qua</small></div>
-                                <div class="col p-1"><small>Qui</small></div>
-                                <div class="col p-1"><small>Sex</small></div>
-                                <div class="col p-1"><small>Sáb</small></div>
+                            <div class="calendar-container">
+                                <div class="calendar-header">
+                                    <div class="calendar-day-name">Dom</div>
+                                    <div class="calendar-day-name">Seg</div>
+                                    <div class="calendar-day-name">Ter</div>
+                                    <div class="calendar-day-name">Qua</div>
+                                    <div class="calendar-day-name">Qui</div>
+                                    <div class="calendar-day-name">Sex</div>
+                                    <div class="calendar-day-name">Sáb</div>
+                                </div>
+                                
+                                <div id="calendarDays" class="calendar-body">
+                                    <!-- Dias serão preenchidos via JavaScript -->
+                                </div>
                             </div>
+                        </div>
+                        
+                        <!-- Time Section -->
+                        <div class="time-section mb-4">
+                            <h3 class="section-title">
+                                <i class="far fa-clock me-2"></i>
+                                Escolha o Horário
+                            </h3>
                             
-                            <div id="calendarDays" class="row">
-                                <!-- Dias serão preenchidos via JavaScript -->
+                            <div id="timeSlots" class="time-slots-container">
+                                <p class="empty-message">Selecione uma data para ver os horários disponíveis</p>
                             </div>
                         </div>
                         
-                        <h3 class="section-title">
-                            <i class="far fa-clock me-2"></i>
-                            Escolha o Horário
-                        </h3>
-                        
-                        <div id="timeSlots" class="mb-4">
-                            <!-- Horários serão preenchidos via JavaScript -->
-                            <p class="text-muted">Selecione uma data para ver os horários disponíveis</p>
-                        </div>
-                        
-                        <div class="d-grid gap-2">
-                            <button id="confirmBtn" class="btn btn-primary" onclick="confirmAppointment()">
-                                <i class="fas fa-calendar-check me-2"></i>Confirmar Agendamento
+                        <!-- Confirmation Button -->
+                        <div class="confirmation-section">
+                            <button id="confirmBtn" class="btn btn-confirm" onclick="confirmAppointment()">
+                                <i class="fas fa-calendar-check me-2"></i>
+                                Confirmar Agendamento
                             </button>
                         </div>
                     </div>
@@ -146,72 +231,64 @@
             </div>
         </div>
     </div>
+</div>
 
-    <!-- Floating Help Button -->
-    <div class="floating-action">
-        <button class="floating-btn" data-bs-toggle="modal" data-bs-target="#helpModal">
-            <i class="fas fa-question"></i>
-        </button>
-    </div>
-
-    <!-- Help Modal -->
-    <div class="modal fade" id="helpModal" tabindex="-1">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">
-                        <i class="fas fa-question-circle me-2"></i>Precisa de Ajuda?
-                    </h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                </div>
-                <div class="modal-body">
-                    <h6>Dúvidas Frequentes:</h6>
-                    <div class="accordion" id="faqAccordion">
-                        <div class="accordion-item">
-                            <h2 class="accordion-header">
-                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq1">
-                                    Posso reagendar minha doação?
-                                </button>
-                            </h2>
-                            <div id="faq1" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
-                                <div class="accordion-body">
-                                    Sim, você pode reagendar sua doação a qualquer momento através do seu painel de doador ou entrando em contato com o hemocentro.
-                                </div>
-                            </div>
+<!-- Help Modal -->
+<div class="modal fade" id="helpModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">
+                    <i class="fas fa-question-circle me-2"></i>Precisa de Ajuda?
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h6>Dúvidas Frequentes:</h6>
+                        <div class="faq-item">
+                            <strong>Posso reagendar minha doação?</strong>
+                            <p>Sim, você pode reagendar através do seu painel ou entrando em contato com o hemocentro.</p>
                         </div>
-                        <div class="accordion-item">
-                            <h2 class="accordion-header">
-                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq2">
-                                    O que devo levar no dia da doação?
-                                </button>
-                            </h2>
-                            <div id="faq2" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
-                                <div class="accordion-body">
-                                    Documento oficial com foto (RG, CNH ou passaporte), estar bem alimentado (evitar alimentos gordurosos) e ter dormido pelo menos 6 horas na noite anterior.
-                                </div>
-                            </div>
+                        <div class="faq-item">
+                            <strong>O que devo levar?</strong>
+                            <p>Documento oficial com foto, estar bem alimentado e ter dormido pelo menos 6 horas.</p>
                         </div>
-                        <div class="accordion-item">
-                            <h2 class="accordion-header">
-                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq3">
-                                    Quanto tempo demora o processo?
-                                </button>
-                            </h2>
-                            <div id="faq3" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
-                                <div class="accordion-body">
-                                    O processo completo leva cerca de 45 minutos, incluindo cadastro, triagem, coleta e lanche pós-doação.
-                                </div>
+                        <div class="faq-item">
+                            <strong>Quanto tempo demora?</strong>
+                            <p>O processo completo leva cerca de 45 minutos, incluindo triagem e lanche.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <h6>Contato:</h6>
+                        <div class="contact-info">
+                            <div class="contact-item">
+                                <i class="fas fa-phone"></i>
+                                <span>(28) 3333-4444</span>
+                            </div>
+                            <div class="contact-item">
+                                <i class="fas fa-envelope"></i>
+                                <span>pihemotec@gmail.com</span>
+                            </div>
+                            <div class="contact-item">
+                                <i class="fas fa-clock"></i>
+                                <span>Seg-Sex: 8h às 18h</span>
                             </div>
                         </div>
                     </div>
-                    <hr>
-                    <h6>Contato:</h6>
-                    <p><i class="fas fa-phone me-2"></i>(28) 3333-4444</p>
-                    <p><i class="fas fa-envelope me-2"></i>pihemotec@gmail.com</p>
                 </div>
             </div>
         </div>
     </div>
+</div>
+
+<!-- Floating Help Button -->
+<div class="floating-help">
+    <button class="floating-btn" data-bs-toggle="modal" data-bs-target="#helpModal">
+        <i class="fas fa-question"></i>
+    </button>
+</div>
 {% endblock %}
 
 <!-- Custom JavaScript -->

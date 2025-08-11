@@ -43,6 +43,16 @@ async def get_doador_confirmar(request: Request):
     response = templates.TemplateResponse("doador/doador_confirmar.html", {"request": request, "active_page": "agendamento"})
     return response
 
+@router.get("/doador/historico_agendamentos")
+async def get_doador_historico_agendamentos(request: Request):
+    try:
+        response = templates.TemplateResponse("doador/doador_historico_agendamento.html", {"request": request, "active_page": "agendamento"})
+        return response
+    except Exception as e:
+        print(f"Erro ao carregar histórico de agendamentos: {e}")
+        # Fallback para uma página simples se o template não for encontrado
+        return {"message": "Página de histórico de agendamentos", "error": str(e)}
+
 @router.get("/doador/notificacao")
 async def get_doador_notificacao(request: Request):
     response = templates.TemplateResponse("doador/doador_notificacao.html", {"request": request, "active_page": "notificacao"})

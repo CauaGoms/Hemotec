@@ -32,18 +32,32 @@ let selectedDate = null;
 let selectedTime = null;
 let currentDate = new Date(2025, 7, 1); // Agosto de 2025 (mês 7 = agosto)
 
+// Atualizar indicador de progresso
+function updateProgressStep(step) {
+    document.querySelectorAll('.progress-step').forEach((stepEl, index) => {
+        if (index + 1 <= step) {
+            stepEl.classList.add('active');
+        } else {
+            stepEl.classList.remove('active');
+        }
+    });
+}
+
 // Selecionar um hemocentro
 function selectLocation(locationId, element) {
     selectedLocation = locationId;
 
     // Atualizar a lista de hemocentros
     document.querySelectorAll('.location-card').forEach(card => {
-        card.style.borderLeft = '4px solid #ddd';
+        card.classList.remove('selected');
     });
-    element.style.borderLeft = '4px solid var(--hemotec-red)';
+    element.classList.add('selected');
 
-    // Mostrar detalhes do hemocentro selecionado
-    document.getElementById('locationDetails').style.display = 'none';
+    // Atualizar indicador de progresso
+    updateProgressStep(2);
+
+    // Mostrar seção de agendamento
+    document.getElementById('emptyState').style.display = 'none';
     document.getElementById('selectedLocation').style.display = 'block';
 
     // Atualizar o calendário
@@ -53,9 +67,10 @@ function selectLocation(locationId, element) {
     selectedDate = null;
     selectedTime = null;
     document.getElementById('confirmBtn').disabled = true;
-    document.getElementById('timeSlots').innerHTML = '<p class="text-muted">Selecione uma data para ver os horários disponíveis</p>';
+    document.getElementById('confirmBtn').classList.add('disabled');
+    document.getElementById('timeSlots').innerHTML = '<p class="empty-message">Selecione uma data para ver os horários disponíveis</p>';
 
-    // Scroll para a seção de agendamento
+    // Scroll suave para a seção de agendamento
     document.getElementById('selectedLocation').scrollIntoView({ behavior: 'smooth' });
 }
 
@@ -75,18 +90,14 @@ function updateCalendar() {
     
     // Gerar todas as semanas (6 semanas para cobrir todos os casos)
     for (let week = 0; week < 6; week++) {
-        calendarHTML += '<div class="row calendar-week g-1 mb-1">';
-        
         for (let dayOfWeek = 0; dayOfWeek < 7; dayOfWeek++) {
             const dayNumber = week * 7 + dayOfWeek - startingDay + 1;
             
             if (dayNumber <= 0 || dayNumber > daysInMonth) {
                 // Dias vazios (mês anterior ou próximo)
-                calendarHTML += '<div class="col"><div class="calendar-day-empty"></div></div>';
+                calendarHTML += '<div class="calendar-day-empty"></div>';
             } else {
                 const dayDate = new Date(currentDate.getFullYear(), currentDate.getMonth(), dayNumber);
-                const dayNames = ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sáb"];
-                const dayName = dayNames[dayDate.getDay()];
 
                 // Verificar disponibilidade baseada no hemocentro selecionado
                 let isAvailable = true;
@@ -133,21 +144,16 @@ function updateCalendar() {
                 const clickHandler = (isPast || !isAvailable) ? '' : `selectDay(${dayNumber}, this)`;
 
                 calendarHTML += `
-                    <div class="col">
-                        <div class="${dayClasses}" 
-                             onclick="${clickHandler}"
-                             title="${!isAvailable ? availabilityReason : 'Clique para selecionar'}"
-                             data-day="${dayNumber}">
-                            <div class="day-number">${dayNumber}</div>
-                            <div class="day-name">${dayName}</div>
-                            ${isToday ? '<div class="today-indicator">•</div>' : ''}
-                        </div>
+                    <div class="${dayClasses}" 
+                         onclick="${clickHandler}"
+                         title="${!isAvailable ? availabilityReason : 'Clique para selecionar'}"
+                         data-day="${dayNumber}">
+                        ${dayNumber}
+                        ${isToday ? '<div class="today-indicator">•</div>' : ''}
                     </div>
                 `;
             }
         }
-        
-        calendarHTML += '</div>';
         
         // Se chegamos ao final do mês e não precisamos de mais semanas, pare
         if (week * 7 + 7 - startingDay > daysInMonth) {
@@ -178,8 +184,10 @@ function changeMonth(direction) {
          selectedDate.getFullYear() !== currentDate.getFullYear())) {
         selectedDate = null;
         selectedTime = null;
+        updateProgressStep(2);
         document.getElementById('confirmBtn').disabled = true;
-        document.getElementById('timeSlots').innerHTML = '<p class="text-muted">Selecione uma data para ver os horários disponíveis</p>';
+        document.getElementById('confirmBtn').classList.add('disabled');
+        document.getElementById('timeSlots').innerHTML = '<p class="empty-message">Selecione uma data para ver os horários disponíveis</p>';
     }
 }
 
@@ -192,7 +200,12 @@ function selectDay(day, element) {
 
     selectedDate = new Date(currentDate.getFullYear(), currentDate.getMonth(), day);
     selectedTime = null;
+    
+    // Atualizar indicador de progresso
+    updateProgressStep(3);
+    
     document.getElementById('confirmBtn').disabled = true;
+    document.getElementById('confirmBtn').classList.add('disabled');
 
     // Remover seleção anterior
     document.querySelectorAll('.calendar-day').forEach(dayEl => {
@@ -203,7 +216,7 @@ function selectDay(day, element) {
     element.classList.add('selected');
 
     // Scroll suave para a seção de horários
-    const timeSlotsSection = document.querySelector('#timeSlots').parentElement;
+    const timeSlotsSection = document.querySelector('.time-section');
     if (timeSlotsSection) {
         timeSlotsSection.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     }
@@ -233,17 +246,15 @@ function generateTimeSlots() {
     // Adicionar alguns horários indisponíveis (simulação)
     const unavailableSlots = ["09:00", "14:00"];
 
-    timeSlotsHTML += '<div class="d-flex flex-wrap">';
     slots.forEach(slot => {
         const isUnavailable = unavailableSlots.includes(slot);
         timeSlotsHTML += `
-                    <div class="time-slot ${isUnavailable ? 'unavailable' : ''} ${selectedTime === slot ? 'selected' : ''}" 
-                         onclick="${isUnavailable ? '' : `selectTime('${slot}', this)`}">
-                        ${slot}
-                    </div>
-                `;
+            <div class="time-slot ${isUnavailable ? 'unavailable' : ''} ${selectedTime === slot ? 'selected' : ''}" 
+                 onclick="${isUnavailable ? '' : `selectTime('${slot}', this)`}">
+                ${slot}
+            </div>
+        `;
     });
-    timeSlotsHTML += '</div>';
 
     document.getElementById('timeSlots').innerHTML = timeSlotsHTML;
 }
@@ -251,7 +262,12 @@ function generateTimeSlots() {
 // Selecionar um horário
 function selectTime(time, element) {
     selectedTime = time;
+    
+    // Atualizar indicador de progresso
+    updateProgressStep(4);
+    
     document.getElementById('confirmBtn').disabled = false;
+    document.getElementById('confirmBtn').classList.remove('disabled');
 
     // Atualizar seleção nos horários
     document.querySelectorAll('.time-slot').forEach(slot => {
@@ -262,10 +278,6 @@ function selectTime(time, element) {
 
 // Confirmar agendamento
 function confirmAppointment() {
-    // Teste simples para verificar se a função está sendo chamada
-    console.log("Função confirmAppointment foi chamada");
-    alert("Redirecionando para página de confirmação...");
-    
     // Por enquanto, vamos redirecionar diretamente para a página de confirmação
     window.location.href = "/doador/confirmar";
 }
