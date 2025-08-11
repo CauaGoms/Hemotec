@@ -1,7 +1,7 @@
 // Garante que o script só execute após o carregamento completo do HTML.
 document.addEventListener('DOMContentLoaded', async function () {
   
-  console.log("🗺️ Iniciando a configuração do mapa...");
+  console.log("Iniciando a configuração do mapa...");
 
   // 1. INICIALIZAÇÃO DO MAPA
   // Cria o mapa e define uma visão inicial.
@@ -10,7 +10,10 @@ document.addEventListener('DOMContentLoaded', async function () {
   // Adiciona a camada visual do mapa (os "azulejos") do OpenStreetMap.
   L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-  } ).addTo(mapa);
+  }).addTo(mapa);
+
+  let iconeGota;
+  let iconeUsuario;
 
   // 2. BUSCA E EXIBIÇÃO DAS UNIDADES DE COLETA
   // Este bloco 'try...catch' lida com a busca de dados da sua API.
@@ -25,14 +28,21 @@ document.addEventListener('DOMContentLoaded', async function () {
     
     // Converte a resposta da API para o formato JSON.
     const unidades = await response.json();
-    console.log("✅ Sucesso: Dados das unidades recebidos da API:", unidades);
+    console.log("sucesso: Dados das unidades recebidos da API:", unidades);
 
     // Define o ícone personalizado para as unidades.
-    const iconeGota = L.icon({
+    iconeGota = L.icon({
       iconUrl: '/static/img/gota.png', // Verifique se o caminho está correto!
       iconSize: [40, 40],
       iconAnchor: [20, 40],
       popupAnchor: [0, -35]
+    });
+
+    iconeUsuario = L.icon({
+      iconUrl: '/static/img/gota.png', // Mesmo ícone da gota
+      iconSize: [50, 50], // Tamanho maior
+      iconAnchor: [25, 50], // Ajuste do âncora
+      popupAnchor: [0, -45]
     });
 
     // Itera sobre os dados recebidos para criar os marcadores.
@@ -49,35 +59,23 @@ document.addEventListener('DOMContentLoaded', async function () {
         }
       });
     } else {
-      console.warn("ℹ️ Aviso: Nenhuma unidade de coleta foi retornada pela API.");
+      console.warn("Aviso: Nenhuma unidade de coleta foi retornada pela API.");
     }
 
   } catch (error) {
     // Se qualquer parte da busca de dados falhar, exibe um erro claro.
-    console.error("❌ ERRO CRÍTICO: Falha ao buscar ou processar os dados das unidades.", error);
-    const erroDiv = document.getElementById('mapa');
-    if (erroDiv) {
-      erroDiv.innerHTML = '<div style="padding: 20px; text-align: center; color: red;"><strong>Erro:</strong> Não foi possível carregar os pontos de coleta.</div>';
-    }
+    console.error("ERRO CRÍTICO: Falha ao buscar ou processar os dados das unidades.", error);
   }
   
   // 3. GERENCIAMENTO DA LOCALIZAÇÃO DO USUÁRIO
-  console.log("▶️ Solicitando localização do usuário...");
+  console.log("Solicitando localização do usuário...");
 
   // Evento acionado se a localização for encontrada com sucesso.
   mapa.on('locationfound', function (e) {
-    console.log("✅ Sucesso: Localização do usuário encontrada!", e.latlng);
-    // Adiciona um marcador azul padrão para o usuário.
-    L.marker(e.latlng).addTo(mapa)
+    console.log("Sucesso: Localização do usuário encontrada!", e.latlng);
+    L.marker(e.latlng, { icon: iconeUsuario }).addTo(mapa)
       .bindPopup("<strong>Você está aqui</strong>").openPopup();
-    // Centraliza o mapa na localização do usuário com um zoom adequado.
     mapa.setView(e.latlng, 14);
-  });
-
-  // Evento acionado se houver um erro ao obter a localização.
-  mapa.on('locationerror', function(e) {
-      // Esta mensagem no console (F12) é a chave para diagnosticar problemas de permissão/segurança.
-      console.error("❌ ERRO: Não foi possível obter a localização do usuário. Motivo:", e.message);
   });
 
   // Inicia o processo para encontrar a localização do usuário.
