@@ -1,0 +1,102 @@
+/* Salve como /static/css/carteira_doador_horizontal.css */
+:root {
+    --hemotec-red: #C41515;
+    --hemotec-gray: #23282F;
+}
+
+/* Hero Section e Container Principal */
+.hero-section-carteira {
+    background: linear-gradient(135deg, var(--hemotec-gray), #495057);
+    color: white;
+    padding: 4rem 0;
+    text-align: center;
+    border-radius: 0 0 50px 50px;
+}
+.hero-title { font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 3rem; }
+.hero-subtitle { font-size: 1.2rem; font-weight: 300; }
+.wallet-container { display: flex; flex-direction: column; align-items: center; }
+
+/* A Carteirinha Horizontal */
+.donor-card-horizontal {
+    width: 550px;
+    height: 350px;
+    background-color: #ffffff;
+    border: 1px solid #dee2e6;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    font-family: 'Roboto', sans-serif;
+    color: var(--hemotec-gray);
+}
+
+/* Cabeçalho do Cartão */
+.donor-card-horizontal .card-header {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid var(--hemotec-red);
+}
+.card-logo { height: 40px; }
+.card-header h3 { font-size: 1.2rem; font-weight: 600; margin: 0; color: var(--hemotec-red); }
+
+/* Corpo do Cartão */
+.donor-card-horizontal .card-body {
+    display: flex;
+    flex-grow: 1;
+    padding: 15px 0;
+}
+.left-panel {
+    width: 35%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-right: 1px dashed #ced4da;
+    padding-right: 20px;
+}
+.qr-code { border: 1px solid #e9ecef; padding: 5px; border-radius: 8px; }
+.qr-code img { display: block; }
+.blood-type-display { text-align: center; margin-top: 10px; }
+.blood-type-display .label { font-size: 0.8rem; color: #6c757d; }
+.blood-type-display .blood-type { font-size: 2.5rem; font-weight: 700; color: var(--hemotec-red); line-height: 1; }
+
+.right-panel {
+    width: 65%;
+    padding-left: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.info-field { margin-bottom: 10px; }
+.info-field .label { font-size: 0.75rem; color: #6c757d; text-transform: uppercase; }
+.info-field .value { font-size: 1.1rem; font-weight: 500; margin: 0; }
+.info-grid { display: flex; gap: 20px; }
+
+/* Rodapé do Cartão */
+.donor-card-horizontal .card-footer {
+    border-top: 1px solid #e9ecef;
+    padding-top: 10px;
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.75rem;
+    color: #6c757d;
+}
+.card-footer p { margin: 0; }
+
+/* Área de Ação */
+.action-area { text-align: center; margin-top: 2.5rem; max-width: 450px; }
+.action-text { color: #6c757d; margin-bottom: 1.5rem; }
+.btn-download {
+    background-color: var(--hemotec-red);
+    color: white;
+    font-weight: 600;
+    font-size: 1.1rem;
+    padding: 12px 30px;
+    border-radius: 10px;
+    transition: all 0.3s ease;
+}
+.btn-download:hover { background-color: var(--hemotec-dark-red, #931010); transform: translateY(-3px); }
+.btn-download:disabled { background-color: #6c757d; cursor: not-allowed; }
