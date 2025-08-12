@@ -3,25 +3,19 @@ document.addEventListener("DOMContentLoaded", async function () {
 
   console.log("Iniciando a configuração do mapa...");
 
-  // 1. INICIALIZAÇÃO DO MAPA
-  // Cria o mapa e define uma visão inicial.
   const mapa = L.map("mapa").setView([-20.839, -41.112], 12);
 
-  // Adiciona a camada visual do mapa (os "azulejos") do OpenStreetMap.
   L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
     attribution: "© <a href=\"https://www.openstreetmap.org/copyright\">OpenStreetMap</a> contributors"
   }).addTo(mapa);
 
   let iconeGota, iconeUsuario;
-
-  // 2. BUSCA E EXIBIÇÃO DAS UNIDADES DE COLETA E CÁLCULO DE ROTA
   let unidades = [];
   let unidadesArray = [];
+
   try {
     const response = await fetch("/api/unidades");
-    if (!response.ok) {
-      throw new Error(`A resposta da API não foi bem-sucedida: ${response.statusText}`);
-    }
+    if (!response.ok) throw new Error(`A resposta da API não foi bem-sucedida: ${response.statusText}`);
     unidades = await response.json();
     console.log("sucesso: Dados das unidades recebidos da API:", unidades);
 
@@ -38,7 +32,6 @@ document.addEventListener("DOMContentLoaded", async function () {
       popupAnchor: [0, -45]
     });
 
-    // Adiciona marcadores das unidades
     if (unidades && unidades.length > 0) {
       unidades.forEach(function (unidadeObjeto) {
         const nome = Object.keys(unidadeObjeto)[0];
@@ -46,24 +39,19 @@ document.addEventListener("DOMContentLoaded", async function () {
         if (nome && coords && coords.length === 2) {
           const marker = L.marker(coords, { icon: iconeGota }).addTo(mapa)
             .bindPopup(`<strong>${nome}</strong>`);
-          unidadesArray.push({ nome, coords, marker }); // Armazena o marcador
+          unidadesArray.push({ nome, coords, marker });
         }
       });
-    } else {
-      console.warn("Aviso: Nenhuma unidade de coleta foi retornada pela API.");
     }
 
   } catch (error) {
     console.error("ERRO CRÍTICO: Falha ao buscar ou processar os dados das unidades.", error);
-    
-    // Fallback: usar dados simulados para desenvolvimento/teste
     unidades = [
       {"Hospital Evangélico":[-20.843485026484874,-41.113190979813844]},
       {"Santa Casa":[-20.85124724515817,-41.11350464599875]}
     ];
     console.log("Usando dados de unidades simulados devido a erro na API.");
-    
-    // Definir ícones para fallback
+
     iconeGota = L.icon({
       iconUrl: "https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-red.png",
       iconSize: [25, 41],
@@ -80,8 +68,7 @@ document.addEventListener("DOMContentLoaded", async function () {
       shadowUrl: "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-shadow.png",
       shadowSize: [41, 41]
     });
-    
-    // Adicionar marcadores para dados simulados
+
     unidades.forEach(function (unidadeObjeto) {
       const nome = Object.keys(unidadeObjeto)[0];
       const coords = unidadeObjeto[nome];
@@ -93,16 +80,86 @@ document.addEventListener("DOMContentLoaded", async function () {
     });
   }
 
-  // 3. GERENCIAMENTO DA LOCALIZAÇÃO DO USUÁRIO E CÁLCULO DE ROTA
-  console.log("Solicitando localização do usuário...");
-  
+  async function atualizarEstoque(codUnidade, nomeUnidade) {
+    try {
+      console.log(`Buscando estoque da unidade ${codUnidade} (${nomeUnidade})`);
+
+      const response = await fetch(`/api/estoque/${codUnidade}`);
+      if (!response.ok) throw new Error(`Erro ao buscar estoque: ${response.statusText}`);
+
+      const data = await response.json();
+      console.log("Dados do estoque recebidos:", data);
+
+      if (data.success && data.estoque) {
+        // 🆕 Atualiza o nome da unidade no título
+        const spanNomeUnidade = document.getElementById("nome-unidade-estoque");
+        if (spanNomeUnidade) {
+          spanNomeUnidade.textContent = `${nomeUnidade} (Unidade mais próxima)`;
+        }
+
+        const tiposSanguineos = ["O+", "A+", "B+", "AB+", "O-", "A-", "B-", "AB-"];
+        tiposSanguineos.forEach(tipo => {
+          const estoqueItem = data.estoque[tipo];
+          if (estoqueItem) {
+            atualizarItemEstoque(tipo, estoqueItem);
+          } else {
+            atualizarItemEstoque(tipo, { status: "Crítico", classe: "bg-danger", porcentagem: 0, quantidade: 0 });
+          }
+        });
+
+        atualizarMensagemAlerta(data.estoque);
+      }
+
+    } catch (error) {
+      console.error("Erro ao buscar estoque:", error);
+    }
+  }
+
+  function atualizarItemEstoque(tipo, dados) {
+    const elementos = document.querySelectorAll(".fw-bold");
+    let elementoTipo = null;
+    elementos.forEach(el => {
+      if (el.textContent.trim() === tipo) elementoTipo = el;
+    });
+    if (elementoTipo) {
+      const container = elementoTipo.closest(".mb-3");
+      if (container) {
+        const badge = container.querySelector(".badge");
+        if (badge) {
+          badge.textContent = dados.status;
+          badge.className = `badge ${dados.classe}`;
+        }
+        const progressBar = container.querySelector(".progress-bar");
+        if (progressBar) {
+          progressBar.style.width = `${dados.porcentagem}%`;
+          progressBar.className = `progress-bar ${dados.classe}`;
+          progressBar.setAttribute("aria-valuenow", dados.porcentagem);
+        }
+      }
+    }
+  }
+
+  function atualizarMensagemAlerta(estoque) {
+    const alertElement = document.querySelector(".alert.alert-danger");
+    if (alertElement) {
+      const tiposCriticos = [];
+      Object.keys(estoque).forEach(tipo => {
+        if (estoque[tipo].status === "Crítico") tiposCriticos.push(tipo);
+      });
+      if (tiposCriticos.length > 0) {
+        alertElement.innerHTML = `<small><i class="fas fa-heart me-1"></i>Sua doação pode salvar vidas! Tipos ${tiposCriticos.join(", ")} são urgentes.</small>`;
+      } else {
+        alertElement.innerHTML = `<small><i class="fas fa-heart me-1"></i>Obrigado por considerar a doação de sangue!</small>`;
+      }
+    }
+  }
+
   mapa.on("locationfound", function (e) {
     console.log("Sucesso: Localização do usuário encontrada!", e.latlng);
     const userMarker = L.marker(e.latlng, { icon: iconeUsuario }).addTo(mapa)
       .bindPopup("<strong>Você está aqui</strong>");
-    userMarker.openPopup(); // Abre o popup do usuário
+    userMarker.openPopup();
 
-    // Encontrar unidade mais próxima
     let unidadeProxima = null;
     let menorDistancia = Infinity;
     unidadesArray.forEach(unidade => {
@@ -114,7 +171,6 @@ document.addEventListener("DOMContentLoaded", async function () {
     });
 
     if (unidadeProxima) {
-      // Traçar rota
       L.Routing.control({
         waypoints: [
           L.latLng(e.latlng.lat, e.latlng.lng),
@@ -129,8 +185,7 @@ document.addEventListener("DOMContentLoaded", async function () {
         const route = ev.routes[0];
         const distanciaKm = (route.summary.totalDistance / 1000).toFixed(2);
         const tempoMin = Math.round(route.summary.totalTime / 60);
-        
-        // Exibe informações na tela
+
         let infoDiv = document.getElementById("info-rota");
         if (!infoDiv) {
           infoDiv = document.createElement("div");
@@ -144,21 +199,30 @@ document.addEventListener("DOMContentLoaded", async function () {
           <b>Tempo estimado:</b> ${tempoMin} min
         `;
 
-        // Foca o mapa na rota completa
         mapa.fitBounds(route.coordinates);
+        if (unidadeProxima.marker) unidadeProxima.marker.openPopup();
 
+        const codUnidade = obterCodigoUnidade(unidadeProxima.nome);
+        if (codUnidade) {
+          atualizarEstoque(codUnidade, unidadeProxima.nome);
+        }
       }).addTo(mapa);
     }
   });
 
-  // Evento acionado se houver erro ao obter a localização
+  function obterCodigoUnidade(nomeUnidade) {
+    const mapeamento = {
+      "Hospital Evangélico": 1,
+      "Santa Casa": 2
+    };
+    return mapeamento[nomeUnidade] || 1;
+  }
+
   mapa.on("locationerror", function (e) {
     console.error("Erro ao obter localização:", e.message);
     alert("Não foi possível obter sua localização. Verifique se você permitiu o acesso à localização no navegador.");
   });
 
-  // Inicia o processo para encontrar a localização do usuário.
   mapa.locate({ setView: false, maxZoom: 16 });
 
 });
-

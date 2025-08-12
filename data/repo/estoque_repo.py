@@ -73,6 +73,51 @@ def obter_por_id(cod_estoque: int) -> Optional[Estoque]:
             )
         return None
     
+def obter_por_unidade(cod_unidade: int) -> Optional[Estoque]:
+    """
+    Busca todos os registros de estoque de uma unidade específica
+    """
+    try:
+        with get_connection() as conn:
+            cursor = conn.cursor()
+            
+            # Query SQL para buscar estoque por unidade
+            sql = """
+                SELECT cod_estoque, cod_unidade, tipo_sanguineo, fator_rh, quantidade, data_atualizacao
+                FROM estoque 
+                WHERE cod_unidade = ?
+                ORDER BY tipo_sanguineo, fator_rh
+            """
+            
+            cursor.execute(sql, (cod_unidade,))
+            rows = cursor.fetchall()
+            
+            # Converte os resultados em objetos Estoque
+            estoque_lista = []
+            for row in rows:
+                data_str = row["data_atualizacao"]
+                data_atualizacao = None
+                if data_str:
+                    try:
+                        data_atualizacao = datetime.strptime(data_str, '%Y-%m-%d %H:%M:%S')
+                    except ValueError:
+                        data_atualizacao = datetime.strptime(data_str, '%Y-%m-%d')
+                estoque = Estoque(
+                    cod_estoque=row["cod_estoque"],
+                    cod_unidade=row["cod_unidade"],
+                    tipo_sanguineo=row["tipo_sanguineo"],
+                    fator_rh=row["fator_rh"],
+                    quantidade=row["quantidade"],
+                    data_atualizacao=data_atualizacao
+                )
+                estoque_lista.append(estoque)
+            
+            return estoque_lista
+            
+    except Exception as e:
+        print(f"Erro ao buscar estoque da unidade {cod_unidade}: {e}")
+        return []
+    
 def update(estoque: Estoque) -> bool:
     with get_connection() as conn:
         cursor = conn.cursor()
