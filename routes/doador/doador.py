@@ -148,3 +148,13 @@ async def post_novo_doador(
         raise Exception("Erro ao cadastrar prontuario ou doador.")
     else:
         return RedirectResponse("/doador", status_code=303)
+
+@router.get("/doador/doador_sair")
+async def doador_sair(request: Request):
+    response = templates.TemplateResponse("doador/doador_sair.html", {"request": request, "active_page": "perfil"})
+    return response
+
+@router.get("/doador/doador_estoque")
+async def doador_estoque(request: Request):
+    response = templates.TemplateResponse("doador/doador_estoque.html", {"request": request, "active_page": "estoque"})
+    return response
