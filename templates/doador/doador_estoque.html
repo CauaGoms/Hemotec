@@ -1,0 +1,139 @@
+{% extends "doador/doador_#base.html" %}
+
+{% block custom_css %}
+<link href="/static/css/estoque.css" rel="stylesheet">
+{% endblock %}
+
+{% block corpo_campanha %}
+<!-- Seção de Cabeçalho -->
+<section class="hero-section">
+    <div class="container">
+        <div class="hero-content">
+            <h1 class="hero-title">Estoque de Sangue</h1>
+            <p class="hero-subtitle">Selecione um hemocentro para visualizar os níveis de estoque.</p>
+        </div>
+    </div>
+</section>
+
+<!-- Conteúdo Principal -->
+<main class="container">
+    <!-- Seleção de Hemocentro -->
+    <section class="row mb-4">
+        <div class="col-lg-12 mb-4">
+            <div class="card p-4">
+                <h5 class="section-title">Selecione o Hemocentro</h5>
+                <form id="hemocentro-form">
+                    <div class="mb-3">
+                        <label for="hemocentro-select" class="form-label">Hemocentro</label>
+                        <select id="hemocentro-select" class="form-select">
+                            <option value="1">Hemocentro Regional de Cachoeiro</option>
+                            <option value="2">Hospital Santa Casa</option>
+                            <option value="3">Unidade Móvel - Praça Jerônimo Monteiro</option>
+                        </select>
+                    </div>
+                    <button type="button" class="btn btn-primary" onclick="fetchEstoque()">Ver Estoque</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Estoque de Sangue -->
+    <section class="row mb-4" id="estoque-section" style="display: none;">
+        <div class="col-lg-12 mb-4">
+            <div class="card p-4">
+                <h5 class="section-title">Estoque de Sangue - Situação Atual</h5>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <div class="d-flex justify-content-between">
+                                <span><strong>A+</strong></span>
+                                <span>17 unidades</span>
+                            </div>
+                            <div class="progress">
+                                <div class="progress-bar" role="progressbar" style="width: 70%;" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+                            <small class="text-success">Nível adequado</small>
+                        </div>
+                        <div class="mb-3">
+                            <div class="d-flex justify-content-between">
+                                <span><strong>A-</strong></span>
+                                <span>12 unidades</span>
+                            </div>
+                            <div class="progress">
+                                <div class="progress-bar" role="progressbar" style="width: 50%;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+                            <small class="text-warning">Nível moderado</small>
+                        </div>
+                        <div class="mb-3">
+                            <div class="d-flex justify-content-between">
+                                <span><strong>B+</strong></span>
+                                <span>12 unidades</span>
+                            </div>
+                            <div class="progress">
+                                <div class="progress-bar" role="progressbar" style="width: 50%;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+                            <small class="text-warning">Nível moderado</small>
+                        </div>
+                        <div class="mb-3">
+                            <div class="d-flex justify-content-between">
+                                <span><strong>B-</strong></span>
+                                <span>6 unidades</span>
+                            </div>
+                            <div class="progress">
+                                <div class="progress-bar bg-warning" role="progressbar" style="width: 25%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+                            <small class="text-danger">Nível baixo</small>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <div class="d-flex justify-content-between">
+                                <span><strong>AB+</strong></span>
+                                <span>7 unidades</span>
+                            </div>
+                            <div class="progress">
+                                <div class="progress-bar bg-warning" role="progressbar" style="width: 30%;" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+                            <small class="text-danger">Nível baixo</small>
+                        </div>
+                        <div class="mb-3">
+                            <div class="d-flex justify-content-between">
+                                <span><strong>AB-</strong></span>
+                                <span>3 unidades</span>
+                            </div>
+                            <div class="progress">
+                                <div class="progress-bar bg-danger" role="progressbar" style="width: 15%;" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+                            <small class="text-danger">Nível crítico</small>
+                        </div>
+                        <div class="mb-3">
+                            <div class="d-flex justify-content-between">
+                                <span><strong>O+</strong></span>
+                                <span>4 unidades</span>
+                            </div>
+                            <div class="progress">
+                                <div class="progress-bar bg-danger" role="progressbar" style="width: 20%;" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+                            <small class="text-danger">Nível crítico</small>
+                        </div>
+                        <div class="mb-3">
+                            <div class="d-flex justify-content-between">
+                                <span><strong>O-</strong></span>
+                                <span>13 unidades</span>
+                            </div>
+                            <div class="progress">
+                                <div class="progress-bar" role="progressbar" style="width: 65%;" aria-valuenow="65" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+                            <small class="text-success">Nível adequado</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+{% endblock %}
+
+{% block custom_js %}
+<script src="/static/js/script_doador_estoque.js"></script>
+{% endblock %}

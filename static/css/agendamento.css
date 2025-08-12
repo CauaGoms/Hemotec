@@ -157,32 +157,7 @@ body {
 }
 
 /* Botão de Histórico alinhado com a coluna direita */
-.progress-history-btn {
-    position: absolute;
-    left: calc(50% + 300px + 15px);
-    top: 50%;
-    transform: translateY(-50%);
-    z-index: 100;
-    pointer-events: auto;
-}
-
-.progress-history-btn a {
-    pointer-events: auto !important;
-    position: relative;
-    z-index: 101;
-}
-
-@media (max-width: 1199px) {
-    .progress-history-btn {
-        left: calc(50% + 240px + 15px);
-    }
-}
-
-@media (max-width: 991px) {
-    .progress-history-btn {
-        left: calc(50% + 180px + 15px);
-    }
-}
+/* Removido posicionamento absoluto do botão histórico */
 
 .btn-history-progress {
     border: 2px solid var(--hemotec-red);
@@ -889,9 +864,70 @@ body {
 }
 
 .footer {
-    background-color: var(--hemotec-gray);
+    background-color: #343a40;
     color: white;
-    padding: 50px 0 20px;
+    padding: 3rem 0 2rem;
+    margin-top: 4rem;
+}
+
+.footer-logo {
+    height: 60px;
+    margin-bottom: 1.5rem;
+}
+
+.footer-text {
+    color: rgba(255, 255, 255, 0.7);
+    margin-bottom: 1.5rem;
+}
+
+.footer-links h5 {
+    color: white;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+}
+
+.footer-links ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+.footer-links li {
+    margin-bottom: 0.8rem;
+}
+
+.footer-links a {
+    color: rgba(255, 255, 255, 0.7);
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.footer-links a:hover {
+    color: white;
+    text-decoration: none;
+}
+
+.social-icons {
+    margin-top: 1.5rem;
+}
+
+.social-icons a {
+    color: white;
+    font-size: 1.5rem;
+    margin-right: 1rem;
+    transition: all 0.3s ease;
+}
+
+.social-icons a:hover {
+    color: var(--hemotec-red);
+    transform: translateY(-3px);
+}
+
+.copyright {
+    text-align: center;
+    padding-top: 2rem;
+    margin-top: 2rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    color: rgba(255, 255, 255, 0.5);
 }
 
 .footer-logo {
@@ -1399,12 +1435,19 @@ body {
         font-size: 1rem;
     }
     
-    .btn-history-progress span {
-        display: none;
-    }
-    
     .btn-history-progress {
-        padding: 8px 16px;
-        font-size: 0.8rem;
+        border: 2px solid var(--hemotec-red);
+        background: white;
+        color: var(--hemotec-red);
+        padding: 18px 36px;
+        border-radius: 40px;
+        font-weight: 600;
+        font-size: 1.1rem;
+        transition: all 0.3s ease;
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        position: relative;
+        white-space: nowrap;
+        margin-left: 2rem;
     }
-}
