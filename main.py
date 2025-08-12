@@ -44,7 +44,7 @@ from routes.doador.doador_meu_perfil import router as doador_meu_perfil_router
 from routes.doador.doador_configuracoes import router as doador_configuracoes_router
 from routes.doador.doador_novo_doador import router as doador_novo_doador_router
 from routes.doador.doador_reagendamento import router as doador_reagendamento_router
-from routes.doador.doador_doador_sair import router as doador_sair_router
+from routes.doador.doador_sair import router as doador_sair_router
 from routes.doador.doador_estoque import router as doador_estoque_router
 
 app = FastAPI()
