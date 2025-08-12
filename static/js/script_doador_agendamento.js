@@ -30,7 +30,7 @@ const locations = {
 let selectedLocation = null;
 let selectedDate = null;
 let selectedTime = null;
-let currentDate = new Date(2025, 7, 1); // Agosto de 2025 (mês 7 = agosto)
+let currentDate = new Date(); // Inicializa com a data atual
 
 // Atualizar indicador de progresso
 function updateProgressStep(step) {
@@ -279,7 +279,7 @@ function selectTime(time, element) {
 // Confirmar agendamento
 function confirmAppointment() {
     // Por enquanto, vamos redirecionar diretamente para a página de confirmação
-    window.location.href = "/doador/confirmar";
+    window.location.href = "/doador/agendamento/confirmar";
 }
 
 // Inicializar a página

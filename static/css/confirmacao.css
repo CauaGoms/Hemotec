@@ -7,13 +7,13 @@
 
 /* Hero Section para Confirmação */
 .hero-section-confirmacao {
-    background: linear-gradient(135deg, rgba(196, 21, 21, 0.9), rgba(220, 65, 65, 0.8)), url('https://images.unsplash.com/photo-1579154204601-01588f351e67?auto=format&fit=crop' ) no-repeat center center;
+    background: linear-gradient(135deg, rgba(196, 21, 21, 0.9), rgba(220, 65, 65, 0.8)), url('https://images.unsplash.com/photo-1579154204601-01588f351e67?auto=format&fit=crop&w=1920&q=80') no-repeat center center;
     background-size: cover;
     color: white;
-    padding: 4rem 0;
+    padding: 6rem 0;
     text-align: center;
     border-radius: 0 0 50px 50px;
-    position: relative;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
 }
 
 .hero-section-confirmacao .hero-content {
@@ -23,14 +23,16 @@
 
 .hero-title {
     font-family: 'Montserrat', sans-serif;
-    font-weight: 700;
-    font-size: 3rem;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    font-weight: 800;
+    font-size: 3.5rem;
+    text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.4);
+    margin-bottom: 1rem;
 }
 
 .hero-subtitle {
-    font-size: 1.2rem;
-    font-weight: 300;
+    font-size: 1.5rem;
+    font-weight: 400;
+    margin-bottom: 2rem;
 }
 
 /* Animação do Ícone */
@@ -52,15 +54,18 @@
 
 .confirmation-container .card {
     border: none;
-    border-radius: 15px;
+    border-radius: 20px;
     overflow: hidden;
+    box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.1);
 }
 
 .confirmation-container .card-header {
-    background-color: var(--hemotec-red);
+    background-color: var(--hemotec-dark-red);
     color: white;
-    padding: 1.5rem;
+    padding: 2rem;
     border-bottom: none;
+    font-size: 1.8rem;
+    font-weight: 700;
 }
 
 .section-title {
@@ -69,34 +74,34 @@
 }
 
 .info-item {
-    background-color: #f8f9fa;
-    padding: 15px;
-    border-radius: 8px;
-    border-left: 4px solid var(--hemotec-red);
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 10px;
+    border-left: 5px solid var(--hemotec-red);
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.05);
     height: 100%;
 }
 
 .info-label {
-    display: block;
-    font-size: 1rem;
-    font-weight: 600;
+    font-size: 1.2rem;
+    font-weight: 700;
     color: var(--hemotec-gray);
     margin-bottom: 0.5rem;
 }
 
 .info-value {
-    font-size: 1.1rem;
-    font-weight: 500;
+    font-size: 1.3rem;
+    font-weight: 600;
     color: var(--hemotec-red);
-    margin-bottom: 0.25rem;
+    margin-bottom: 0.5rem;
 }
 
 .info-sub-value {
-    font-size: 0.9rem;
+    font-size: 1rem;
     color: #6c757d;
-    margin-bottom: 0;
 }
 
+/* Estilos de Alerta */
 .alert-info {
     background-color: #e9f5ff;
     border-color: #b8dfff;
@@ -108,19 +113,28 @@
     margin-bottom: 0;
 }
 
+/* Botões */
 .btn-primary {
     background-color: var(--hemotec-red);
     border-color: var(--hemotec-red);
+    font-size: 1.2rem;
+    padding: 0.75rem 1.5rem;
+    border-radius: 50px;
+    transition: background-color 0.3s ease;
 }
 
 .btn-primary:hover {
-    background-color: var(--hemotec-dark-red);
-    border-color: var(--hemotec-dark-red);
+    background-color: var(--hemotec-light-red);
+    border-color: var(--hemotec-light-red);
 }
 
 .btn-outline-secondary {
     color: var(--hemotec-gray);
     border-color: #6c757d;
+    font-size: 1.2rem;
+    padding: 0.75rem 1.5rem;
+    border-radius: 50px;
+    transition: background-color 0.3s ease;
 }
 
 .btn-outline-secondary:hover {
@@ -136,21 +150,15 @@
 }
 
 .social-share-icons .social-icon {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    color: white;
-    font-size: 1.2rem;
-    margin: 0 10px;
-    text-decoration: none;
-    transition: transform 0.3s ease;
+    width: 60px;
+    height: 60px;
+    font-size: 1.5rem;
+    margin: 0 15px;
+    transition: transform 0.4s ease;
 }
 
 .social-share-icons .social-icon:hover {
-    transform: translateY(-5px);
+    transform: translateY(-10px);
 }
 
 .social-icon.facebook { background-color: #3b5998; }

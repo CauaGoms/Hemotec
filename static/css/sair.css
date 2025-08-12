@@ -1,0 +1,125 @@
+/* Salve como /static/css/confirmar_saida.css */
+
+:root {
+    --hemotec-red: #C41515;
+    --hemotec-dark-red: #931010;
+    --hemotec-gray: #23282F;
+}
+
+/* Container principal da página para centralização */
+.logout-page-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: calc(100vh - 350px); /* Altura ajustada */
+    margin-top: 100px; /* Adicionada margem superior para garantir distância da navbar */
+    padding: 2rem 0;
+    background-color: #f8f9fa; /* Um fundo suave para a página */
+}
+
+/* Caixa de confirmação */
+.confirmation-box {
+    max-width: 550px;
+    width: 100%;
+    background-color: #ffffff;
+    border-radius: 20px;
+    padding: 3rem;
+    text-align: center;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+}
+
+.logout-icon-container {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto 1.5rem;
+    background-color: #fff0f0;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.logout-icon-container .fa-sign-out-alt {
+    font-size: 2.5rem;
+    color: var(--hemotec-red);
+}
+
+.confirmation-title {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    font-size: 2rem;
+    color: var(--hemotec-gray);
+    margin-bottom: 1rem;
+}
+
+.confirmation-text {
+    color: #6c757d;
+    font-size: 1.1rem;
+    margin-bottom: 2.5rem;
+}
+
+.confirmation-actions {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.confirmation-actions .btn {
+    padding: 12px 25px;
+    font-weight: 600;
+    border-radius: 10px;
+    border: 2px solid transparent;
+    transition: all 0.3s ease;
+}
+
+.btn-confirm-logout {
+    background-color: var(--hemotec-red);
+    color: white;
+}
+
+.btn-confirm-logout:hover {
+    background-color: var(--hemotec-dark-red);
+    transform: translateY(-3px);
+}
+
+.btn-cancel-logout {
+    background-color: #e9ecef;
+    color: var(--hemotec-gray);
+}
+
+.btn-cancel-logout:hover {
+    background-color: #dee2e6;
+    border-color: #ced4da;
+}
+
+/* Animação de entrada */
+.fade-in {
+    animation: fadeIn 0.6s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Responsividade */
+@media (max-width: 576px) {
+    .confirmation-box {
+        padding: 2rem 1.5rem;
+    }
+    .confirmation-title {
+        font-size: 1.5rem;
+    }
+    .confirmation-text {
+        font-size: 1rem;
+    }
+    .confirmation-actions {
+        flex-direction: column;
+    }
+}

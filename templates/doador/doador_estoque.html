@@ -1,0 +1,84 @@
+{% extends "doador/doador_#base.html" %}
+
+{% block custom_css %}
+<link href="/static/css/estoque.css" rel="stylesheet">
+{% endblock %}
+
+{% block corpo %}
+<!-- Seção de Cabeçalho -->
+<section class="hero-section-estoque">
+    <div class="container">
+        <div class="hero-content">
+            <h1 class="hero-title">Estoque de Sangue</h1>
+            <p class="hero-subtitle">Consulte os níveis de estoque dos hemocentros e veja onde sua doação é mais necessária.</p>
+        </div>
+    </div>
+</section>
+
+<!-- Conteúdo Principal -->
+<div class="container my-5">
+    <div class="stock-view-container">
+        <div class="row">
+            <!-- Coluna da Esquerda: Seleção de Hemocentro -->
+            <div class="col-lg-5 mb-4 mb-lg-0">
+                <div class="selection-panel">
+                    <h3 class="panel-title"><i class="fas fa-hospital-alt me-2"></i>Escolha o Hemocentro</h3>
+                    <div class="search-box mb-3">
+                        <input type="text" id="search-input" class="form-control" placeholder="Buscar por nome...">
+                    </div>
+                    <div class="location-list">
+                        <!-- Cards de Hemocentro (baseados em doador_agendamento.html) -->
+                        <div class="location-card" onclick="selectLocation(1, 'Hemocentro Regional de Cachoeiro', this)">
+                            <h5>Hemocentro Regional de Cachoeiro</h5>
+                            <p class="address">Rua Dr. Raulino de Oliveira, 345 - Centro</p>
+                        </div>
+                        <div class="location-card" onclick="selectLocation(2, 'Hospital Santa Casa', this)">
+                            <h5>Hospital Santa Casa</h5>
+                            <p class="address">Av. Beira Rio, 1200 - Independência</p>
+                        </div>
+                        <div class="location-card" onclick="selectLocation(3, 'Unidade Móvel - Praça Jerônimo Monteiro', this)">
+                            <h5>Unidade Móvel - Praça Jerônimo Monteiro</h5>
+                            <p class="address">Praça Jerônimo Monteiro - Centro</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Coluna da Direita: Visualização do Estoque -->
+            <div class="col-lg-7">
+                <div class="stock-display-panel">
+                    <!-- Estado Inicial -->
+                    <div id="emptyState" class="state-container">
+                        <i class="fas fa-mouse-pointer icon-state"></i>
+                        <h4>Selecione um Hemocentro</h4>
+                        <p>Escolha um local ao lado para ver os níveis do estoque.</p>
+                    </div>
+
+                    <!-- Estado de Carregamento -->
+                    <div id="loadingState" class="state-container" style="display: none;">
+                        <div class="spinner-border text-danger" role="status"></div>
+                        <p class="mt-3">Buscando informações...</p>
+                    </div>
+
+                    <!-- Painel de Estoque (baseado em boas_vindas_inicio.html) -->
+                    <div id="stockPanel" style="display: none;">
+                        <h4 id="stock-hemocentro-title" class="panel-title text-danger mb-3"></h4>
+                        <div id="stock-levels" class="row">
+                            <!-- Níveis de estoque serão preenchidos via JS -->
+                        </div>
+                        <div class="mt-3">
+                            <div id="alert-message" class="alert alert-danger mb-0" role="alert">
+                                <!-- Mensagem de alerta será preenchida via JS -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block custom_js %}
+<script src="/static/js/script_doador_estoque.js"></script>
+{% endblock %}

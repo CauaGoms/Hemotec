@@ -157,32 +157,7 @@ body {
 }
 
 /* Botão de Histórico alinhado com a coluna direita */
-.progress-history-btn {
-    position: absolute;
-    left: calc(50% + 300px + 15px);
-    top: 50%;
-    transform: translateY(-50%);
-    z-index: 100;
-    pointer-events: auto;
-}
-
-.progress-history-btn a {
-    pointer-events: auto !important;
-    position: relative;
-    z-index: 101;
-}
-
-@media (max-width: 1199px) {
-    .progress-history-btn {
-        left: calc(50% + 240px + 15px);
-    }
-}
-
-@media (max-width: 991px) {
-    .progress-history-btn {
-        left: calc(50% + 180px + 15px);
-    }
-}
+/* Removido posicionamento absoluto do botão histórico */
 
 .btn-history-progress {
     border: 2px solid var(--hemotec-red);
@@ -795,411 +770,6 @@ body {
     }
 }
 
-/* .hero-section {
-    background: linear-gradient(135deg, rgba(196, 21, 21, 0.9), rgba(220, 65, 65, 0.8)), url('https://images.unsplash.com/photo-1579154204601-01588f351e67?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80') no-repeat center center;
-    background-size: cover;
-    color: white;
-    padding: 100px 0;
-    margin-bottom: 50px;
-    position: relative;
-}
-
-.hero-title {
-    font-family: 'Montserrat', sans-serif;
-    font-weight: 700;
-    font-size: 2.5rem;
-    margin-bottom: 20px;
-}
-
-.hero-subtitle {
-    font-size: 1.2rem;
-    margin-bottom: 30px;
-    max-width: 600px;
-} */
-
-.btn-primary {
-    background-color: var(--hemotec-red);
-    border-color: var(--hemotec-red);
-    padding: 10px 25px;
-    font-weight: 500;
-}
-
-.btn-primary:hover {
-    background-color: var(--hemotec-dark-red);
-    border-color: var(--hemotec-dark-red);
-}
-
-.btn-outline-primary {
-    color: var(--hemotec-red);
-    border-color: var(--hemotec-red);
-}
-
-.btn-outline-primary:hover {
-    background-color: var(--hemotec-red);
-    color: white;
-}
-
-.section-title {
-    font-family: 'Montserrat', sans-serif;
-    font-weight: 600;
-    color: var(--hemotec-gray);
-    margin-bottom: 30px;
-    position: relative;
-    display: inline-block;
-}
-
-.section-title:after {
-    content: '';
-    position: absolute;
-    width: 50%;
-    height: 3px;
-    background-color: var(--hemotec-red);
-    bottom: -10px;
-    left: 0;
-}
-
-.card {
-    border: none;
-    border-radius: 10px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    margin-bottom: 20px;
-}
-
-.card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-}
-
-.card-img-top {
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
-    height: 180px;
-    object-fit: cover;
-}
-
-.card-title {
-    font-weight: 600;
-    color: var(--hemotec-gray);
-}
-
-.card-footer {
-    background-color: white;
-    border-top: none;
-}
-
-.footer {
-    background-color: var(--hemotec-gray);
-    color: white;
-    padding: 50px 0 20px;
-}
-
-.footer-logo {
-    height: 40px;
-    margin-bottom: 20px;
-}
-
-.footer-text {
-    opacity: 0.8;
-    margin-bottom: 20px;
-}
-
-.footer-links h5 {
-    font-family: 'Montserrat', sans-serif;
-    font-weight: 600;
-    margin-bottom: 20px;
-    color: white;
-}
-
-.footer-links ul {
-    list-style: none;
-    padding: 0;
-}
-
-.footer-links li {
-    margin-bottom: 10px;
-}
-
-.footer-links a {
-    color: rgba(255, 255, 255, 0.7);
-    text-decoration: none;
-    transition: color 0.3s ease;
-}
-
-.footer-links a:hover {
-    color: white;
-}
-
-.social-icons a {
-    display: inline-block;
-    width: 40px;
-    height: 40px;
-    background-color: rgba(255, 255, 255, 0.1);
-    color: white;
-    border-radius: 50%;
-    text-align: center;
-    line-height: 40px;
-    margin-right: 10px;
-    transition: background-color 0.3s ease;
-}
-
-.social-icons a:hover {
-    background-color: var(--hemotec-red);
-}
-
-.copyright {
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
-    padding-top: 20px;
-    margin-top: 30px;
-    text-align: center;
-    opacity: 0.7;
-    font-size: 0.9rem;
-}
-
-/* Estilos específicos para a página de agendamento */
-.back-arrow {
-    position: absolute;
-    top: 20px;
-    left: 20px;
-    color: white;
-    font-size: 1.5rem;
-    z-index: 10;
-}
-
-.booking-container {
-    background-color: white;
-    border-radius: 10px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-    padding: 30px;
-    margin-bottom: 50px;
-}
-
-.location-card {
-    border-left: 4px solid var(--hemotec-red);
-    padding-left: 15px;
-    margin-bottom: 20px;
-    transition: all 0.3s ease;
-}
-
-.location-card:hover {
-    transform: translateX(5px);
-}
-
-.location-card h5 {
-    color: var(--hemotec-red);
-    margin-bottom: 5px;
-}
-
-.location-card .distance {
-    color: var(--hemotec-gray);
-    font-size: 0.9rem;
-}
-
-.location-card .address {
-    color: #666;
-    font-size: 0.9rem;
-    margin-bottom: 5px;
-}
-
-.location-card .hours {
-    color: #666;
-    font-size: 0.9rem;
-}
-
-.location-card .badge {
-    background-color: var(--hemotec-light-red);
-    margin-right: 5px;
-}
-
-.time-slot {
-    display: inline-block;
-    padding: 8px 15px;
-    margin: 5px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
-
-.time-slot:hover {
-    border-color: var(--hemotec-red);
-    color: var(--hemotec-red);
-}
-
-.time-slot.selected {
-    background-color: var(--hemotec-red);
-    color: white;
-    border-color: var(--hemotec-red);
-}
-
-.time-slot.unavailable {
-    background-color: #f8f9fa;
-    color: #ccc;
-    cursor: not-allowed;
-    text-decoration: line-through;
-}
-
-/* Estilos do calendário */
-.calendar-container {
-    background: white;
-    border-radius: 12px;
-    padding: 20px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-    border: 1px solid #e9ecef;
-}
-
-.calendar-container .d-flex.justify-content-between {
-    background: #f8f9fa;
-    padding: 10px 15px;
-    border-radius: 8px;
-    margin-bottom: 15px;
-}
-
-.calendar-container .btn-outline-secondary {
-    border-color: var(--hemotec-red);
-    color: var(--hemotec-red);
-    padding: 8px 12px;
-    border-radius: 50%;
-    width: 40px;
-    height: 40px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.calendar-container .btn-outline-secondary:hover {
-    background-color: var(--hemotec-red);
-    border-color: var(--hemotec-red);
-    color: white;
-}
-
-.calendar-container #currentMonth {
-    color: var(--hemotec-gray);
-    font-weight: 600;
-    font-size: 1.1rem;
-}
-
-.calendar-week {
-    margin-bottom: 4px;
-}
-
-.calendar-day-empty {
-    height: 60px;
-    border-radius: 8px;
-}
-
-.calendar-day {
-    height: 60px;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    border: 2px solid transparent;
-    background: #f8f9fa;
-    margin: 1px;
-}
-
-.calendar-day:hover:not(.unavailable):not(.past) {
-    background-color: #e3f2fd;
-    border-color: var(--hemotec-light-red);
-    transform: translateY(-1px);
-    box-shadow: 0 2px 8px rgba(196, 21, 21, 0.15);
-}
-
-.calendar-day.available {
-    background-color: white;
-    border-color: #dee2e6;
-}
-
-.calendar-day.available:hover {
-    background-color: #fff5f5;
-    border-color: var(--hemotec-red);
-}
-
-.calendar-day.selected {
-    background-color: var(--hemotec-red);
-    color: white;
-    border-color: var(--hemotec-dark-red);
-    box-shadow: 0 4px 12px rgba(196, 21, 21, 0.3);
-    transform: translateY(-2px);
-}
-
-.calendar-day.unavailable {
-    background-color: #f8f9fa;
-    color: #6c757d;
-    cursor: not-allowed;
-    border-color: #e9ecef;
-}
-
-.calendar-day.past {
-    background-color: #f1f3f4;
-    color: #9e9e9e;
-    cursor: not-allowed;
-    opacity: 0.6;
-}
-
-.calendar-day.today {
-    border-color: var(--hemotec-red);
-    background-color: #fff8f8;
-    font-weight: 600;
-}
-
-.calendar-day.today:not(.selected) .day-number {
-    color: var(--hemotec-red);
-}
-
-.calendar-day .day-number {
-    font-size: 1.1rem;
-    font-weight: 600;
-    line-height: 1;
-    margin-bottom: 2px;
-}
-
-.calendar-day .day-name {
-    font-size: 0.7rem;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    opacity: 0.8;
-    line-height: 1;
-}
-
-.calendar-day .today-indicator {
-    position: absolute;
-    top: 4px;
-    right: 6px;
-    color: var(--hemotec-red);
-    font-size: 1.2rem;
-    line-height: 1;
-}
-
-.calendar-day.selected .today-indicator {
-    color: white;
-}
-
-/* Responsividade do calendário */
-@media (max-width: 768px) {
-    .calendar-day {
-        height: 50px;
-        margin: 0.5px;
-    }
-    
-    .calendar-day .day-number {
-        font-size: 1rem;
-    }
-    
-    .calendar-day .day-name {
-        font-size: 0.6rem;
-    }
-    
-    .calendar-container {
-        padding: 15px;
-    }
-}
-
 @media (max-width: 576px) {
     .calendar-day {
         height: 45px;
@@ -1399,12 +969,36 @@ body {
         font-size: 1rem;
     }
     
-    .btn-history-progress span {
-        display: none;
-    }
-    
     .btn-history-progress {
-        padding: 8px 16px;
-        font-size: 0.8rem;
+        border: 2px solid var(--hemotec-red);
+        background: white;
+        color: var(--hemotec-red);
+        padding: 18px 36px;
+        border-radius: 40px;
+        font-weight: 600;
+        font-size: 1.1rem;
+        transition: all 0.3s ease;
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        position: relative;
+        white-space: nowrap;
+        margin-left: 2rem;
     }
+}
+
+button.agendamento {
+    background: white;
+    color: var(--hemotec-red);
+    padding: 18px 36px;
+    border-radius: 40px;
+    font-weight: 600;
+    font-size: 1.1rem;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    position: relative;
+    white-space: nowrap;
+    margin-left: 2rem;
 }
