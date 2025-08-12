@@ -91,7 +91,7 @@ document.addEventListener("DOMContentLoaded", async function () {
       console.log("Dados do estoque recebidos:", data);
 
       if (data.success && data.estoque) {
-        // 🆕 Atualiza o nome da unidade no título
+        // Atualiza o nome da unidade no título
         const spanNomeUnidade = document.getElementById("nome-unidade-estoque");
         if (spanNomeUnidade) {
           spanNomeUnidade.textContent = `${nomeUnidade} (Unidade mais próxima)`;
