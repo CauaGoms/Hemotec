@@ -25,7 +25,7 @@ from data.repo import exame_repo
 from data.repo import prontuario_repo
 
 # Importando os routers públicos
-from routes.publico.public import router as public_router
+from routes.publico.api_public import router as public_router
 from routes.publico.login import router as login_router
 from routes.publico.login_cadastro import router as cadastro_router
 from routes.publico.login_esqueceu_senha import router as login_esqueceu_senha_router
