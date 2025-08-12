@@ -26,9 +26,9 @@
 <div class="container">
     <div class="booking-wizard fade-in">
         <!-- Progress Indicator Container -->
-        <div class="progress-container mb-5">
-            <!-- Progress Indicator -->
-            <div class="progress-indicator">
+        <div class="progress-container mb-5" style="display: flex; align-items: center; justify-content: center; gap: 2rem;">
+            <!-- Progress Indicator centralizada -->
+            <div class="progress-indicator" style="margin: 0 auto;">
                 <div class="progress-step active" data-step="1">
                     <div class="step-circle">
                         <i class="fas fa-map-marker-alt"></i>
@@ -57,15 +57,16 @@
                     <span class="step-label">Confirmar</span>
                 </div>
                 
-                <!-- Botão de Histórico integrado -->
-                <div class="progress-history-btn">
-                    <a href="/doador/historico_agendamentos" 
-                       class="btn btn-outline-danger btn-history-progress"
-                       style="display: block; text-decoration: none;">
-                        <i class="fas fa-history me-2"></i>
-                        <span>Histórico</span>
-                    </a>
-                </div>
+                <!-- Botão de Histórico alinhado horizontalmente -->
+            </div>
+            <div>
+                <a href="/doador/historico_agendamentos" 
+                   class="btn btn-outline-danger btn-history-progress"
+                   style="text-decoration: none;">
+                    <i class="fas fa-history me-2"></i>
+                    <span>Histórico</span>
+                </a>
+            </div>
             </div>
         </div>
 
@@ -165,6 +166,7 @@
             
             <!-- Main Content Area -->
             <div class="col-lg-6">
+                
                 <div class="main-content-card">
                     <div id="emptyState" class="empty-state">
                         <i class="fas fa-map-marked-alt"></i>

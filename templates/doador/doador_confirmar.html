@@ -6,9 +6,9 @@
 
 {% block corpo_campanha %}
 <!-- Seção de Cabeçalho -->
-<section class="hero-section-confirmacao">
+<section class="hero-section-confirmacao d-flex align-items-center">
     <div class="container">
-        <div class="hero-content">
+        <div class="hero-content text-center">
             <i class="fas fa-check-circle fa-4x text-white mb-3 animated-icon"></i>
             <h1 class="hero-title">Agendamento Confirmado!</h1>
             <p class="hero-subtitle">Obrigado por sua generosidade. Sua doação pode salvar vidas.</p>
@@ -17,7 +17,7 @@
 </section>
 
 <!-- Conteúdo Principal -->
-<div class="container mt-n5">
+<div class="container mt-5"> <!-- Adicionado espaço entre a seção de cabeçalho e o resumo do agendamento -->
     <div class="confirmation-container fade-in">
         <div class="row justify-content-center">
             <div class="col-lg-8">
@@ -50,9 +50,9 @@
                                 <li>Beba bastante água durante o dia.</li>
                             </ul>
                         </div>
+                        <!-- Botões de Navegação -->
                         <div class="d-flex justify-content-center flex-wrap mt-4">
-                            <button class="btn btn-primary m-2"><i class="fas fa-plus-circle me-2"></i>Adicionar ao Calendário</button>
-                            <a href="/doador/agendamento" class="btn btn-outline-secondary m-2"><i class="fas fa-calendar-alt me-2"></i>Ver Meus Agendamentos</a>
+                            <a href="/doador/historico_agendamentos" class="btn btn-outline-secondary m-2"><i class="fas fa-calendar-alt me-2"></i>Ver Meus Agendamentos</a>
                             <a href="/doador" class="btn btn-outline-secondary m-2"><i class="fas fa-home me-2"></i>Voltar para a Home</a>
                         </div>
                     </div>

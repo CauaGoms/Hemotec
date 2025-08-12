@@ -1,0 +1,30 @@
+{% extends "doador/doador_base.html" %}
+
+{% block custom_css %}
+<link href="/static/css/sair.html" rel="stylesheet">
+{% endblock %}
+
+{% block corpo_campanha %}
+<!-- O bloco principal da página será usado para centralizar o container de confirmação -->
+<div class="logout-page-container">
+    <div class="confirmation-box fade-in">
+        <div class="logout-icon-container">
+            <i class="fas fa-sign-out-alt"></i>
+        </div>
+        <h1 class="confirmation-title">Você tem certeza que deseja sair?</h1>
+        <p class="confirmation-text">
+            Sua sessão será encerrada. Para acessar sua conta novamente, você precisará fazer o login.
+        </p>
+        <div class="confirmation-actions">
+            <!-- O botão "Sim" redireciona para a página de login (efetivando o logout) -->
+            <a href="/login" class="btn btn-confirm-logout">Sim, Sair Agora</a>
+            <!-- O botão "Não" pode levar de volta à página inicial ou à página anterior -->
+            <a href="/doador" class="btn btn-cancel-logout">Não, Continuar Navegando</a>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block custom_js %}
+<!-- Nenhum JS customizado é estritamente necessário para esta página, mas podemos adicionar animações se quisermos -->
+{% endblock %}

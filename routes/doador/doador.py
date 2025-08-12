@@ -11,6 +11,10 @@ from data.util.database import get_connection
 from data.model.usuario_model import Usuario
 from data.model.cidade_model import Cidade
 from data.model.prontuario_model import Prontuario
+
+router = APIRouter()
+templates = Jinja2Templates(directory="templates")
+
 from data.model.doador_model import Doador
 
 from data.repo import cidade_repo
@@ -52,6 +56,11 @@ async def get_doador_historico_agendamentos(request: Request):
         print(f"Erro ao carregar histórico de agendamentos: {e}")
         # Fallback para uma página simples se o template não for encontrado
         return {"message": "Página de histórico de agendamentos", "error": str(e)}
+
+@router.get("/doador/reagendamento")
+async def get_doador_reagendamento(request: Request):
+    response = templates.TemplateResponse("doador/doador_reagendamento.html", {"request": request, "active_page": "agendamento"})
+    return response
 
 @router.get("/doador/notificacao")
 async def get_doador_notificacao(request: Request):
