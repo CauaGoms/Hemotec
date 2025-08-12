@@ -1,103 +1,84 @@
-// Salve como /static/js/estoque.js
-
+// Salve como /static/js/estoque_publico.js
 document.addEventListener('DOMContentLoaded', function () {
     const emptyState = document.getElementById('emptyState');
     const loadingState = document.getElementById('loadingState');
     const stockPanel = document.getElementById('stockPanel');
-    const stockLevelsGrid = document.getElementById('stock-levels');
+    const stockLevelsContainer = document.getElementById('stock-levels');
     const hemocentroTitle = document.getElementById('stock-hemocentro-title');
+    const alertMessage = document.getElementById('alert-message');
     const searchInput = document.getElementById('search-input');
     const locationCards = document.querySelectorAll('.location-card');
 
-    // Dados de estoque simulados para cada hemocentro
+    // Dados de estoque simulados (baseados em boas_vindas_inicio.html)
     const mockStockData = {
-        1: { // Hemocentro Regional
-            'A+': { level: 'Estável', percentage: 65 }, 'A-': { level: 'Alerta', percentage: 40 },
-            'B+': { level: 'Adequado', percentage: 80 }, 'B-': { level: 'Crítico', percentage: 20 },
-            'O+': { level: 'Alerta', percentage: 35 }, 'O-': { level: 'Crítico', percentage: 15 },
-            'AB+': { level: 'Adequado', percentage: 90 }, 'AB-': { level: 'Estável', percentage: 55 }
-        },
-        2: { // Hospital Santa Casa
-            'A+': { level: 'Adequado', percentage: 85 }, 'A-': { level: 'Estável', percentage: 60 },
-            'B+': { level: 'Estável', percentage: 70 }, 'B-': { level: 'Alerta', percentage: 45 },
-            'O+': { level: 'Estável', percentage: 50 }, 'O-': { level: 'Alerta', percentage: 30 },
-            'AB+': { level: 'Adequado', percentage: 100 }, 'AB-': { level: 'Estável', percentage: 75 }
-        },
-        3: { // Unidade Móvel
-            'A+': { level: 'Crítico', percentage: 25 }, 'A-': { level: 'Crítico', percentage: 10 },
-            'B+': { level: 'Alerta', percentage: 30 }, 'B-': { level: 'Estável', percentage: 50 },
-            'O+': { level: 'Alerta', percentage: 40 }, 'O-': { level: 'Estável', percentage: 60 },
-            'AB+': { level: 'Estável', percentage: 70 }, 'AB-': { level: 'Adequado', percentage: 80 }
-        }
+        1: { 'O+': 20, 'A+': 35, 'B+': 70, 'AB+': 30, 'O-': 45, 'A-': 65, 'B-': 25, 'AB-': 80 },
+        2: { 'O+': 80, 'A+': 75, 'B+': 60, 'AB+': 85, 'O-': 70, 'A-': 90, 'B-': 55, 'AB-': 95 },
+        3: { 'O+': 30, 'A+': 25, 'B+': 40, 'AB+': 50, 'O-': 20, 'A-': 35, 'B-': 45, 'AB-': 60 }
     };
 
-    const levelInfo = {
-        'Crítico': { color: 'var(--level-critical)', text: 'Crítico' },
-        'Alerta': { color: 'var(--level-alert)', text: 'Alerta' },
-        'Estável': { color: 'var(--level-stable)', text: 'Estável' },
-        'Adequado': { color: 'var(--level-adequate)', text: 'Adequado' }
-    };
+    function getStockStatus(percentage) {
+        if (percentage <= 25) return { text: 'Crítico', class: 'bg-danger' };
+        if (percentage <= 40) return { text: 'Baixo', class: 'bg-warning text-dark' };
+        if (percentage <= 60) return { text: 'Moderado', class: 'bg-info text-dark' };
+        return { text: 'Adequado', class: 'bg-success' };
+    }
 
-    // Função para exibir o estoque
     function displayStock(locationId, locationName) {
         const data = mockStockData[locationId];
         hemocentroTitle.textContent = `Estoque - ${locationName}`;
-        stockLevelsGrid.innerHTML = ''; // Limpa o grid anterior
+        stockLevelsContainer.innerHTML = '';
+        let urgentTypes = [];
 
-        for (const type in data) {
-            const info = data[type];
-            const color = levelInfo[info.level].color;
-            const levelText = levelInfo[info.level].text;
+        Object.keys(data).forEach(type => {
+            const percentage = data[type];
+            const status = getStockStatus(percentage);
+            if (status.text === 'Crítico' || status.text === 'Baixo') {
+                urgentTypes.push(type);
+            }
 
-            const cardHTML = `
-                <div class="blood-type-card">
-                    <div class="blood-type-label" style="color: ${color};">${type}</div>
-                    <div class="progress-bar-container">
-                        <div class="progress-bar-fill" style="width: ${info.percentage}%; background-color: ${color};"></div>
+            const stockItemHTML = `
+                <div class="col-md-6 stock-item mb-3">
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                        <span class="fw-bold">${type}</span>
+                        <span class="badge ${status.class}">${status.text}</span>
                     </div>
-                    <div class="level-text" style="color: ${color};">${levelText}</div>
+                    <div class="progress" style="height: 8px;">
+                        <div class="progress-bar ${status.class}" role="progressbar" style="width: ${percentage}%;" aria-valuenow="${percentage}" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
                 </div>
             `;
-            stockLevelsGrid.innerHTML += cardHTML;
+            stockLevelsContainer.innerHTML += stockItemHTML;
+        });
+
+        // Atualiza a mensagem de alerta
+        if (urgentTypes.length > 0) {
+            alertMessage.innerHTML = `<i class="fas fa-heart me-1"></i>Sua doação pode salvar vidas! Tipos <strong>${urgentTypes.join(', ')}</strong> são os mais necessários.`;
+        } else {
+            alertMessage.innerHTML = `<i class="fas fa-check-circle me-1"></i>Obrigado a todos os doadores! Nossos estoques estão estáveis.`;
+            alertMessage.classList.replace('alert-danger', 'alert-success');
         }
-        
-        // Atualiza a hora
-        document.getElementById('update-time').textContent = new Date().toLocaleString('pt-BR', {
-            dateStyle: 'short',
-            timeStyle: 'short'
-        }).replace(',', ' às');
     }
 
-    // Função chamada ao clicar em um hemocentro
     window.selectLocation = function(id, name, element) {
-        // UI states
         emptyState.style.display = 'none';
         stockPanel.style.display = 'none';
-        loadingState.style.display = 'flex';
+        loadingState.style.display = 'block';
 
-        // Remove a classe 'selected' de todos os cards
         locationCards.forEach(card => card.classList.remove('selected'));
-        // Adiciona a classe 'selected' ao card clicado
         element.classList.add('selected');
 
-        // Simula um delay de carregamento (ex: chamada de API)
         setTimeout(() => {
             displayStock(id, name);
             loadingState.style.display = 'none';
             stockPanel.style.display = 'block';
-        }, 800); // 0.8 segundos
+        }, 700);
     };
 
-    // Funcionalidade de busca
     searchInput.addEventListener('keyup', function() {
         const filter = searchInput.value.toLowerCase();
         locationCards.forEach(card => {
             const title = card.querySelector('h5').textContent.toLowerCase();
-            if (title.includes(filter)) {
-                card.style.display = '';
-            } else {
-                card.style.display = 'none';
-            }
+            card.style.display = title.includes(filter) ? '' : 'none';
         });
     });
 });

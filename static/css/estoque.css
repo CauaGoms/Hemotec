@@ -1,77 +1,59 @@
-/* Salve como /static/css/estoque.css */
-
+/* Salve como /static/css/estoque_publico.css */
 :root {
     --hemotec-red: #C41515;
     --hemotec-gray: #23282F;
-    --level-critical: #d9534f;
-    --level-alert: #f0ad4e;
-    --level-stable: #5bc0de;
-    --level-adequate: #5cb85c;
 }
 
 /* Hero Section */
 .hero-section-estoque {
-    background: linear-gradient(135deg, rgba(196, 21, 21, 0.9), rgba(220, 65, 65, 0.8)), url('https://images.unsplash.com/photo-1615461066159-fea0910e8314?auto=format&fit=crop' ) no-repeat center center;
-    background-size: cover;
+    background: linear-gradient(135deg, rgba(196, 21, 21, 0.9), rgba(220, 65, 65, 0.8));
     color: white;
     padding: 4rem 0;
     text-align: center;
-    border-radius: 0 0 50px 50px;
 }
-
 .hero-title { font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 3rem; }
 .hero-subtitle { font-size: 1.2rem; font-weight: 300; }
 
-/* Container Principal */
-.stock-view-container {
+/* Painéis de Seleção e Exibição */
+.selection-panel, .stock-display-panel {
     background-color: #ffffff;
     border-radius: 15px;
     padding: 2rem;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
-    position: relative;
-    z-index: 5;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.07);
+    height: 100%;
 }
+.panel-title { font-family: 'Montserrat', sans-serif; font-weight: 600; color: var(--hemotec-gray); }
+.text-danger { color: var(--hemotec-red) !important; }
 
-.section-title { font-family: 'Montserrat', sans-serif; font-weight: 600; color: var(--hemotec-gray); margin-bottom: 1.5rem; }
+/* Lista de Locais */
+.location-list { max-height: 450px; overflow-y: auto; }
+.location-card {
+    background-color: #f8f9fa;
+    border: 1px solid #e9ecef;
+    border-left: 4px solid #e9ecef;
+    border-radius: 8px;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+.location-card:hover { transform: translateY(-3px); box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
+.location-card.selected {
+    border-left-color: var(--hemotec-red);
+    background-color: #fff5f5;
+}
+.location-card h5 { color: var(--hemotec-red); margin-bottom: 0.25rem; font-weight: 600; }
+.location-card .address { font-size: 0.9rem; color: #6c757d; margin: 0; }
 
-/* Card de Seleção de Local (reutilizado e adaptado) */
-.selection-card { background-color: #f8f9fa; border-radius: 12px; padding: 2rem; }
-.location-list { max-height: 400px; overflow-y: auto; padding-right: 10px; }
-.location-card { background: white; border-radius: 8px; padding: 1rem; margin-bottom: 1rem; border-left: 4px solid transparent; cursor: pointer; transition: all 0.3s ease; }
-.location-card:hover { transform: translateX(5px); border-left-color: var(--hemotec-red); }
-.location-card.selected { border-left-color: var(--hemotec-red); background-color: #fff5f5; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
-.location-card h5 { color: var(--hemotec-red); margin-bottom: 0.25rem; }
-.location-card .address { font-size: 0.9rem; color: #6c757d; }
-
-/* Painel de Visualização de Estoque */
-.stock-display-panel { background-color: #ffffff; border-radius: 12px; padding: 2rem; min-height: 500px; display: flex; align-items: center; justify-content: center; }
-.empty-state, .loading-state { text-align: center; color: #6c757d; }
-.empty-state i, .loading-state .spinner-border { font-size: 3rem; margin-bottom: 1rem; color: #ced4da !important; }
-.loading-state p { margin-top: 1rem; font-weight: 500; color: var(--hemotec-gray); }
+/* Painel de Estoque */
+.stock-display-panel { display: flex; align-items: center; justify-content: center; }
+.state-container { text-align: center; color: #6c757d; }
+.icon-state { font-size: 3rem; color: #ced4da; margin-bottom: 1rem; }
 
 #stockPanel { width: 100%; animation: fadeIn 0.5s ease; }
-.stock-title { font-family: 'Montserrat', sans-serif; font-weight: 700; color: var(--hemotec-gray); text-align: center; margin-bottom: 0.5rem; }
-.last-updated { text-align: center; font-size: 0.9rem; color: #6c757d; margin-bottom: 2rem; }
-.last-updated i { animation: spin 2s linear infinite; }
-@keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-
-/* Grid de Níveis de Estoque */
-.stock-levels-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 1.5rem; margin-bottom: 2rem; }
-.blood-type-card { text-align: center; }
-.blood-type-label { font-size: 1.8rem; font-family: 'Montserrat', sans-serif; font-weight: 700; }
-.progress-bar-container { background-color: #e9ecef; border-radius: 8px; height: 12px; overflow: hidden; }
-.progress-bar-fill { height: 100%; border-radius: 8px; transition: width 0.5s ease-in-out; }
-.level-text { font-size: 0.85rem; font-weight: 500; margin-top: 0.5rem; }
-
-/* Legenda */
-.legend { display: flex; justify-content: center; flex-wrap: wrap; gap: 1.5rem; font-size: 0.9rem; margin-bottom: 2rem; }
-.legend-item { display: flex; align-items: center; }
-.legend-item .indicator { width: 15px; height: 15px; border-radius: 50%; margin-right: 8px; }
-
-/* Call to Action */
-.call-to-action { background-color: #f8f9fa; border-radius: 12px; padding: 1.5rem; text-align: center; }
-.call-to-action h4 { font-family: 'Montserrat', sans-serif; font-weight: 600; }
-.btn-primary-stock { background-color: var(--hemotec-red); color: white; font-weight: 600; padding: 10px 25px; border-radius: 8px; }
-.btn-primary-stock:hover { background-color: var(--hemotec-dark-red, #931010); }
-
 @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+/* Estilos do Estoque (adaptados de boas_vindas.css) */
+.stock-item .fw-bold { font-size: 1.1rem; }
+.progress { height: 8px; }
+.badge { font-size: 0.75rem; }
