@@ -43,6 +43,9 @@ from routes.doador.doador_notificacao import router as doador_notificacao_router
 from routes.doador.doador_meu_perfil import router as doador_meu_perfil_router
 from routes.doador.doador_configuracoes import router as doador_configuracoes_router
 from routes.doador.doador_novo_doador import router as doador_novo_doador_router
+from routes.doador.doador_reagendamento import router as doador_reagendamento_router
+from routes.doador.doador_doador_sair import router as doador_sair_router
+from routes.doador.doador_estoque import router as doador_estoque_router
 
 app = FastAPI()
 app.add_middleware(SessionMiddleware, secret_key="your-secret-key-here")
@@ -86,6 +89,9 @@ app.include_router(doador_notificacao_router)
 app.include_router(doador_meu_perfil_router)
 app.include_router(doador_configuracoes_router)
 app.include_router(doador_novo_doador_router)
+app.include_router(doador_reagendamento_router)
+app.include_router(doador_sair_router)
+app.include_router(doador_estoque_router)
 
 if __name__ == "__main__":
     uvicorn.run(app="main:app", host="127.0.0.1", port=8000, reload=True)
