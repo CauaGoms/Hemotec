@@ -53,7 +53,7 @@ document.addEventListener('DOMContentLoaded', function() {
     window.confirmReschedule = function() {
         const novaInfo = newAppointmentEl.textContent;
         alert(`Agendamento alterado com sucesso para: ${novaInfo}`);
-        window.location.href = '/doador/historico_agendamentos';
+        window.location.href = '/doador/agendamento/historico_agendamentos';
     };
 
     inicializarPagina();
