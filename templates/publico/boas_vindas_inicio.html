@@ -86,7 +86,7 @@
     </div>
 </section>
 
-<!-- Stats Section -->
+<!-- Stats Section
 <section class="container">
     <div class="text-center mb-5">
         <h2 class="section-title">Nosso Impacto</h2>
@@ -95,33 +95,33 @@
         <div class="col-md-3">
             <div class="stats-item">
                 <div class="stats-icon"><i class="fas fa-user-friends"></i></div>
-                <div class="stats-number">15.000+</div>
+                <div class="stats-number">0</div>
                 <div class="stats-text">Doadores Cadastrados</div>
             </div>
         </div>
         <div class="col-md-3">
             <div class="stats-item">
                 <div class="stats-icon"><i class="fas fa-tint"></i></div>
-                <div class="stats-number">8.500+</div>
+                <div class="stats-number">0</div>
                 <div class="stats-text">Doações Realizadas</div>
             </div>
         </div>
         <div class="col-md-3">
             <div class="stats-item">
                 <div class="stats-icon"><i class="fas fa-heartbeat"></i></div>
-                <div class="stats-number">34.000+</div>
+                <div class="stats-number">0</div>
                 <div class="stats-text">Vidas Impactadas</div>
             </div>
         </div>
         <div class="col-md-3">
             <div class="stats-item">
                 <div class="stats-icon"><i class="fas fa-hospital"></i></div>
-                <div class="stats-number">25+</div>
+                <div class="stats-number">0</div>
                 <div class="stats-text">Hemocentros Parceiros</div>
             </div>
         </div>
     </div>
-</section>
+</section> -->
 
 <!-- Informações e Estoque Section -->
 <section class="container my-5">
@@ -136,8 +136,8 @@
                             <div class="d-flex align-items-start">
                                 <i class="fas fa-clock text-danger me-3 mt-1"></i>
                                 <div>
-                                    <h6 class="mb-1">Horário de Funcionamento</h6>
-                                    <p class="text-muted mb-0">Segunda a Sexta: 7h às 18h<br>Sábados: 7h às 12h</p>
+                                    <h6 class="mb-1">Atenção</h6>
+                                    <p class="text-muted mb-0">Durma pelo menos 6 horas<br>na noite anterior à doação.</p>
                                 </div>
                             </div>
                         </div>
@@ -176,7 +176,11 @@
         <div class="col-lg-12 mb-4">
             <div class="card border-0 shadow-sm">
                 <div class="card-body p-4 d-flex flex-column">
-                    <h4 class="card-title text-danger mb-3"><i class="fas fa-exclamation-triangle me-2"></i>Estoque Atual</h4>
+                    <!-- 🆕 span para inserir nome da unidade -->
+                    <h4 class="card-title text-danger mb-3">
+                        <i class="fas fa-exclamation-triangle me-2"></i>
+                        Estoque Atual - <span id="nome-unidade-estoque">Carregando...</span>
+                    </h4>
                     <div class="row">
                         <!-- Coluna Esquerda Estoque -->
                         <div class="col-md-6">

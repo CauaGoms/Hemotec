@@ -25,7 +25,7 @@ from data.repo import exame_repo
 from data.repo import prontuario_repo
 
 # Importando os routers públicos
-from routes.publico.public import router as public_router
+from routes.publico.api_public import router as public_router
 from routes.publico.login import router as login_router
 from routes.publico.login_cadastro import router as cadastro_router
 from routes.publico.login_esqueceu_senha import router as login_esqueceu_senha_router
@@ -44,7 +44,7 @@ from routes.doador.doador_meu_perfil import router as doador_meu_perfil_router
 from routes.doador.doador_configuracoes import router as doador_configuracoes_router
 from routes.doador.doador_novo_doador import router as doador_novo_doador_router
 from routes.doador.doador_reagendamento import router as doador_reagendamento_router
-from routes.doador.doador_doador_sair import router as doador_sair_router
+from routes.doador.doador_sair import router as doador_sair_router
 from routes.doador.doador_estoque import router as doador_estoque_router
 from routes.doador.doador_carteira import router as doador_carteira_router
 
