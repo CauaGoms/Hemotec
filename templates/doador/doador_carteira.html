@@ -1,0 +1,79 @@
+{% extends "doador/doador_#base.html" %}
+
+{% block custom_css %}
+<link href="/static/css/carteira.css" rel="stylesheet">
+{% endblock %}
+
+{% block corpo_campanha %}
+<!-- Seção de Cabeçalho -->
+<section class="hero-section-carteira">
+    <div class="container">
+        <div class="hero-content">
+            <h1 class="hero-title">Minha Carteira de Doador</h1>
+            <p class="hero-subtitle">Sua identidade de herói. Visualize e baixe sua carteirinha oficial Hemotec.</p>
+        </div>
+    </div>
+</section>
+
+<!-- Conteúdo Principal -->
+<div class="container my-5">
+    <div class="wallet-container">
+        <!-- A Carteirinha Horizontal (Elemento para ser convertido em PDF) -->
+        <div id="donor-card" class="donor-card-horizontal">
+            <div class="card-header">
+                <img src="/static/img/logo_vermelha.svg" alt="Hemotec Logo" class="card-logo">
+                <h3>Carteira do Doador de Sangue</h3>
+            </div>
+            <div class="card-body">
+                <div class="left-panel">
+                    <div class="qr-code">
+                        <img src="https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=DOADOR_ID_123456789" alt="QR Code">
+                    </div>
+                    <div class="blood-type-display">
+                        <span class="label">Tipo Sanguíneo</span>
+                        <span class="blood-type">O+</span>
+                    </div>
+                </div>
+                <div class="right-panel">
+                    <div class="info-field">
+                        <span class="label">Nome Completo</span>
+                        <p class="value">João da Silva</p>
+                    </div>
+                    <div class="info-grid">
+                        <div class="info-field">
+                            <span class="label">Nascimento</span>
+                            <p class="value">15/08/1990</p>
+                        </div>
+                        <div class="info-field">
+                            <span class="label">RG</span>
+                            <p class="value">12.345.678-9</p>
+                        </div>
+                    </div>
+                    <div class="info-field">
+                        <span class="label">Última Doação</span>
+                        <p class="value">15/04/2025</p>
+                    </div>
+                </div>
+            </div>
+            <div class="card-footer">
+                <p>ID Doador: 123456789</p>
+                <p class="validity">Válido em todo o território nacional</p>
+            </div>
+        </div>
+
+        <!-- Área de Ação -->
+        <div class="action-area">
+            <p class="action-text">Este é um documento de identificação do doador. Clique abaixo para gerar o PDF.</p>
+            <button id="download-btn" class="btn btn-download">
+                <i class="fas fa-download me-2"></i>Baixar Carteirinha (PDF )
+            </button>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block custom_js %}
+<!-- Biblioteca html2pdf.js para gerar o PDF -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="/static/js/script_doador_carteira.js"></script>
+{% endblock %}

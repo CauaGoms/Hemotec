@@ -46,6 +46,7 @@ from routes.doador.doador_novo_doador import router as doador_novo_doador_router
 from routes.doador.doador_reagendamento import router as doador_reagendamento_router
 from routes.doador.doador_doador_sair import router as doador_sair_router
 from routes.doador.doador_estoque import router as doador_estoque_router
+from routes.doador.doador_carteira import router as doador_carteira_router
 
 app = FastAPI()
 app.add_middleware(SessionMiddleware, secret_key="your-secret-key-here")
@@ -92,6 +93,7 @@ app.include_router(doador_novo_doador_router)
 app.include_router(doador_reagendamento_router)
 app.include_router(doador_sair_router)
 app.include_router(doador_estoque_router)
+app.include_router(doador_carteira_router)
 
 if __name__ == "__main__":
     uvicorn.run(app="main:app", host="127.0.0.1", port=8000, reload=True)
