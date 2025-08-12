@@ -3,7 +3,13 @@
 {% block custom_css %}
 <link href="/static/css/boas_vindas.css" rel="stylesheet">
 <!-- Leaflet.js CSS -->
-<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin=""/>
+<!-- Leaflet Routing Machine CSS -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.css" />
+<style>
+    #mapa { height: 500px; width: 100%; border-radius: 8px; }
+    .info-box { background-color: white; padding: 10px; border-radius: 5px; margin-top: 10px; box-shadow: 0 2px 5px rgba(0,0,0,0.2); }
+</style>
 {% endblock %}
 
 
@@ -131,8 +137,7 @@
                                 <i class="fas fa-clock text-danger me-3 mt-1"></i>
                                 <div>
                                     <h6 class="mb-1">Horário de Funcionamento</h6>
-                                    <p class="text-muted mb-0">Segunda a Sexta: 7h às 18h  
-Sábados: 7h às 12h</p>
+                                    <p class="text-muted mb-0">Segunda a Sexta: 7h às 18h<br>Sábados: 7h às 12h</p>
                                 </div>
                             </div>
                         </div>
@@ -141,8 +146,7 @@ Sábados: 7h às 12h</p>
                                 <i class="fas fa-user-check text-danger me-3 mt-1"></i>
                                 <div>
                                     <h6 class="mb-1">Requisitos Básicos</h6>
-                                    <p class="text-muted mb-0">Idade: 16 a 69 anos  
-Peso mínimo: 50kg</p>
+                                    <p class="text-muted mb-0">Idade: 16 a 69 anos<br>Peso mínimo: 50kg</p>
                                 </div>
                             </div>
                         </div>
@@ -151,8 +155,7 @@ Peso mínimo: 50kg</p>
                                 <i class="fas fa-calendar-alt text-danger me-3 mt-1"></i>
                                 <div>
                                     <h6 class="mb-1">Intervalo entre Doações</h6>
-                                    <p class="text-muted mb-0">Homens: 60 dias  
-Mulheres: 90 dias</p>
+                                    <p class="text-muted mb-0">Homens: 60 dias<br>Mulheres: 90 dias</p>
                                 </div>
                             </div>
                         </div>
@@ -161,8 +164,7 @@ Mulheres: 90 dias</p>
                                 <i class="fas fa-id-card text-danger me-3 mt-1"></i>
                                 <div>
                                     <h6 class="mb-1">Documentos Necessários</h6>
-                                    <p class="text-muted mb-0">RG, CPF ou CNH  
-Em boas condições</p>
+                                    <p class="text-muted mb-0">RG, CPF ou CNH<br>Em boas condições</p>
                                 </div>
                             </div>
                         </div>
@@ -241,6 +243,7 @@ Em boas condições</p>
     </div>
     <div class="map-container fade-in">
         <div id="mapa" style="height: 500px; width: 100%; border-radius: 8px;"></div>
+        <div id="info-rota" class="info-box"></div>
     </div>
 </section>
 {% endblock %}
@@ -249,8 +252,10 @@ Em boas condições</p>
 <!-- Bloco de JavaScript Customizado -->
 {% block custom_js %}
 <!-- Leaflet.js Script -->
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
+<!-- Leaflet Routing Machine Script -->
+<script src="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.js"></script>
 
-<script src="/static/js/script_boas_vindas_inicio.js">
-</script>
+<script src="/static/js/script_boas_vindas_inicio.js"></script>
 {% endblock %}
+
