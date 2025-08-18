@@ -34,19 +34,19 @@ from routes.publico.campanha import router as campanha_router
 from routes.publico.contato import router as contato_router
 
 # Importando os routers do doador
-from routes.doador.doador import router as doador_router
-from routes.doador.doador_campanha import router as doador_campanha_router
-from routes.doador.doador_agendamento import router as doador_agendamento_router
+from routes.doador_temporário.doador import router as doador_router
+from routes.doador_temporário.doador_campanhas import router as doador_campanha_router
+from routes.doador_temporário.doador_agendamentos import router as doador_agendamento_router
 from routes.doador.doador_agendamento_confirmar import router as doador_agendamento_confirmar_router
 from routes.doador.doador_agendamento_historico_agendamentos import router as doador_agendamento_historico_router
-from routes.doador.doador_notificacao import router as doador_notificacao_router
+from routes.doador_temporário.doador_notificacoes import router as doador_notificacao_router
 from routes.doador.doador_meu_perfil import router as doador_meu_perfil_router
-from routes.doador.doador_configuracoes import router as doador_configuracoes_router
+from routes.doador_temporário.doador_configuracoes import router as doador_configuracoes_router
 from routes.doador.doador_novo_doador import router as doador_novo_doador_router
 from routes.doador.doador_reagendamento import router as doador_reagendamento_router
 from routes.doador.doador_sair import router as doador_sair_router
 from routes.doador.doador_estoque import router as doador_estoque_router
-from routes.doador.doador_carteira import router as doador_carteira_router
+from routes.doador_temporário.doador_carteira import router as doador_carteira_router
 
 # Importando os routers do administrador de unidade de coleta
 from routes.adm_unidade.administrador import router as administrador_router
