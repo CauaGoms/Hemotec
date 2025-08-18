@@ -73,6 +73,7 @@ doacao_repo.criar_tabela()
 exame_repo.criar_tabela()
 prontuario_repo.criar_tabela()
 
+#routers públicos
 app.include_router(public_router)
 app.include_router(login_router)
 app.include_router(cadastro_router)
@@ -81,6 +82,7 @@ app.include_router(sobre_router)
 app.include_router(campanha_router)
 app.include_router(contato_router)
 
+#routers do doador
 app.include_router(doador_router)
 app.include_router(doador_campanha_router)
 app.include_router(doador_agendamento_router)
@@ -94,6 +96,19 @@ app.include_router(doador_reagendamento_router)
 app.include_router(doador_sair_router)
 app.include_router(doador_estoque_router)
 app.include_router(doador_carteira_router)
+
+
+#routers do colaborador
+
+
+##routers do adm_unidade
+
+
+#routers do gestor
+
+
+#routers do usuario
+
 
 if __name__ == "__main__":
     uvicorn.run(app="main:app", host="127.0.0.1", port=8000, reload=True)
