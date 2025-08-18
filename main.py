@@ -48,6 +48,39 @@ from routes.doador.doador_sair import router as doador_sair_router
 from routes.doador.doador_estoque import router as doador_estoque_router
 from routes.doador.doador_carteira import router as doador_carteira_router
 
+# Importando os routers do administrador de unidade de coleta
+from routes.adm_unidade.administrador import router as administrador_router
+from routes.adm_unidade.administrador_relatorios import router as administrador_relatorios_router
+from routes.adm_unidade.administrador_relatorios_por_tipo_sanguineo import router as administrador_relatorios_por_tipo_sanguineo_router
+from routes.adm_unidade.administrador_relatorios_por_periodo import router as administrador_relatorios_por_periodo_router
+from routes.adm_unidade.administrador_notificacao import router as administrador_notificacao_router
+from routes.adm_unidade.administrador_colaboradores import router as administrador_colaboradores_router
+from routes.adm_unidade.administrador_colaboradores_excluir import router as administrador_colaboradores_excluir_router
+from routes.adm_unidade.administrador_colaboradores_detalhes import router as administrador_colaboradores_detalhes_router
+from routes.adm_unidade.administrador_colaboradores_alterar import router as administrador_colaboradores_alterar_router
+from routes.adm_unidade.administrador_colaboradores_adicionar import router as administrador_colaboradores_adicionar_router
+from routes.adm_unidade.administrador_campanha import router as administrador_campanha_router
+from routes.adm_unidade.administrador_campanha_excluir import router as administrador_campanha_excluir_router
+from routes.adm_unidade.administrador_campanha_detalhes import router as administrador_campanha_detalhes_router
+from routes.adm_unidade.administrador_campanha_alterar import router as administrador_campanha_alterar_router
+from routes.adm_unidade.administrador_campanha_adicionar import router as administrador_campanha_adicionar_router
+
+# Importando os routers do gestor
+from routes.gestor.gestor import router as gestor_router
+from routes.gestor.gestor_relatorio import router as gestor_relatorio_router
+from routes.gestor.gestor_relatorio_colaborador import router as gestor_relatorio_colaborador_router
+from routes.gestor.gestor_relatorio_doador import router as gestor_relatorio_doador_router
+from routes.gestor.gestor_administrador import router as gestor_administrador_router
+from routes.gestor.gestor_administrador_adicionar import router as gestor_administrador_adicionar_router
+from routes.gestor.gestor_administrador_alterar import router as gestor_administrador_alterar_router
+from routes.gestor.gestor_administrador_detalhe import router as gestor_administrador_detalhe_router
+from routes.gestor.gestor_administrador_excluir import router as gestor_administrador_excluir_router
+from routes.gestor.gestor_centro_coleta import router as gestor_centro_coleta_router
+from routes.gestor.gestor_centro_coleta_adicionar import router as gestor_centro_coleta_adicionar_router
+from routes.gestor.gestor_centro_coleta_alterar import router as gestor_centro_coleta_alterar_router
+from routes.gestor.gestor_centro_coleta_excluir import router as gestor_centro_coleta_excluir_router
+from routes.gestor.gestor_centro_coleta_detalhe import router as gestor_centro_coleta_detalhe_router
+
 app = FastAPI()
 app.add_middleware(SessionMiddleware, secret_key="your-secret-key-here")
 app.mount("/static", StaticFiles(directory="static"), name="static")
@@ -101,10 +134,38 @@ app.include_router(doador_carteira_router)
 #routers do colaborador
 
 
-##routers do adm_unidade
-
+#routers do adm_unidade
+app.include_router(administrador_router)
+app.include_router(administrador_relatorios_router)
+app.include_router(administrador_relatorios_por_tipo_sanguineo_router)
+app.include_router(administrador_relatorios_por_periodo_router)
+app.include_router(administrador_notificacao_router)
+app.include_router(administrador_colaboradores_router)
+app.include_router(administrador_colaboradores_excluir_router)
+app.include_router(administrador_colaboradores_detalhes_router)
+app.include_router(administrador_colaboradores_alterar_router)
+app.include_router(administrador_colaboradores_adicionar_router)
+app.include_router(administrador_campanha_router)
+app.include_router(administrador_campanha_excluir_router)
+app.include_router(administrador_campanha_detalhes_router)
+app.include_router(administrador_campanha_alterar_router)
+app.include_router(administrador_campanha_adicionar_router)
 
 #routers do gestor
+app.include_router(gestor_router)
+app.include_router(gestor_relatorio_router)
+app.include_router(gestor_relatorio_colaborador_router)
+app.include_router(gestor_relatorio_doador_router)
+app.include_router(gestor_administrador_router)
+app.include_router(gestor_administrador_adicionar_router)
+app.include_router(gestor_administrador_alterar_router)
+app.include_router(gestor_administrador_detalhe_router)
+app.include_router(gestor_administrador_excluir_router)
+app.include_router(gestor_centro_coleta_router)
+app.include_router(gestor_centro_coleta_adicionar_router)
+app.include_router(gestor_centro_coleta_alterar_router)
+app.include_router(gestor_centro_coleta_excluir_router)
+app.include_router(gestor_centro_coleta_detalhe_router)
 
 
 #routers do usuario
