@@ -153,16 +153,3 @@
         margin-top: 1rem;
     }
 }
-
-h1 {
-    display: block !important;
-    color: #111 !important;
-    font-size: 3rem !important;
-    font-weight: 900 !important;
-    text-align: center;
-    margin-top: 3rem;
-    margin-bottom: 2rem;
-    letter-spacing: 1px;
-    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-    padding-top: 5rem;
-}
