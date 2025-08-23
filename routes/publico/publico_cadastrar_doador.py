@@ -11,12 +11,12 @@ from data.util.database import get_connection
 router = APIRouter()
 templates = Jinja2Templates(directory="templates")
 
-@router.get("/login/cadastro")
+@router.get("/cadastrar_doador")
 async def get_cadastro(request: Request):
-    response = templates.TemplateResponse("publico/cadastro.html", {"request": request})
+    response = templates.TemplateResponse("publico/publico_cadastrar_doador.html", {"request": request})
     return response
 
-@router.post("/login/cadastro")
+@router.post("/cadastrar_doador")
 async def post_cadastro(
     request: Request,
     nome: str = Form(...),
@@ -55,4 +55,4 @@ async def post_cadastro(
     if usuario_id is None:
         raise Exception("Erro ao cadastrar usuário.")
     else:
-        return RedirectResponse("/doador/novo_doador", status_code=303)
+        return RedirectResponse("/doador/dados_cadastrais", status_code=303)

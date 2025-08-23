@@ -19,12 +19,6 @@ def calcular_nivel_estoque(quantidade: int) -> Dict[str, Any]:
 router = APIRouter()
 templates = Jinja2Templates(directory="templates")
 
-@router.get("/")
-async def get_home(request: Request):
-    response = templates.TemplateResponse(
-        "publico/boas_vindas_inicio.html", {"request": request, "active_page": "inicio"})
-    return response
-
 @router.get("/api/unidades")
 async def get_api_unidades():
     """
