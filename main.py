@@ -45,19 +45,20 @@ from routes.publico.publico_confirmar_redefinicao_senha import router as publico
 
 
 # Importando os routers do doador
-# from routes.doador_temporário.doador import router as doador_router
-# from routes.doador_temporário.doador_campanhas import router as doador_campanha_router
-# from routes.doador_temporário.doador_agendamentos import router as doador_agendamento_router
-# from routes.doador.doador_agendamento_confirmar import router as doador_agendamento_confirmar_router
-# from routes.doador.doador_agendamento_historico_agendamentos import router as doador_agendamento_historico_router
-# from routes.doador_temporário.doador_notificacoes import router as doador_notificacao_router
-# from routes.doador.doador_meu_perfil import router as doador_meu_perfil_router
-# from routes.doador_temporário.doador_configuracoes import router as doador_configuracoes_router
-# from routes.doador.doador_novo_doador import router as doador_novo_doador_router
-# from routes.doador.doador_reagendamento import router as doador_reagendamento_router
-# from routes.doador.doador_sair import router as doador_sair_router
-# from routes.doador.doador_estoque import router as doador_estoque_router
-# from routes.doador_temporário.doador_carteira import router as doador_carteira_router
+from routes.doador.doador import router as doador_router
+from routes.doador.doador_notificacoes import router as doador_notificacao_router
+from routes.doador.doador_doacoes import router as doador_doacoes_router
+from routes.doador.doador_doacoes_detalhes import router as doador_doacoes_detalhes_router
+from routes.doador.doador_dados_cadastrais import router as doador_dados_cadastrais_router
+from routes.doador.doador_configuracoes import router as doador_configuracoes_router
+from routes.doador.doador_carteira import router as doador_carteira_router
+from routes.doador.doador_campanhas import router as doador_campanha_router
+from routes.doador.doador_campanhas_detalhes import router as doador_campanha_detalhes_router
+from routes.doador.doador_agendamentos import router as doador_agendamento_router
+from routes.doador.doador_agendamentos_excluir import router as doador_agendamento_excluir_router
+from routes.doador.doador_agendamentos_alterar import router as doador_agendamento_alterar_router
+from routes.doador.doador_agendamentos_adicionar import router as doador_agendamento_adicionar_router
+from routes.doador.doador_agendamentos_adicionar_confirmacao import router as doador_agendamento_adicionar_confirmacao_router
 
 # Importando os routers do colaborador
 from routes.colaborador.colaborador import router as colaborador_router
@@ -161,20 +162,20 @@ app.include_router(publico_criar_nova_senha_router)
 app.include_router(publico_confirmar_redefinicao_senha_router)
 
 #routers do doador
-# app.include_router(doador_router)
-# app.include_router(doador_campanha_router)
-# app.include_router(doador_agendamento_router)
-# app.include_router(doador_agendamento_confirmar_router)
-# app.include_router(doador_agendamento_historico_router)
-# app.include_router(doador_notificacao_router)
-# app.include_router(doador_meu_perfil_router)
-# app.include_router(doador_configuracoes_router)
-# app.include_router(doador_novo_doador_router)
-# app.include_router(doador_reagendamento_router)
-# app.include_router(doador_sair_router)
-# app.include_router(doador_estoque_router)
-# app.include_router(doador_carteira_router)
-
+app.include_router(doador_router)
+app.include_router(doador_notificacao_router)
+app.include_router(doador_doacoes_router)
+app.include_router(doador_doacoes_detalhes_router)
+app.include_router(doador_dados_cadastrais_router)
+app.include_router(doador_configuracoes_router)
+app.include_router(doador_carteira_router)
+app.include_router(doador_campanha_router)
+app.include_router(doador_campanha_detalhes_router)
+app.include_router(doador_agendamento_router)
+app.include_router(doador_agendamento_excluir_router)
+app.include_router(doador_agendamento_alterar_router)
+app.include_router(doador_agendamento_adicionar_router)
+app.include_router(doador_agendamento_adicionar_confirmacao_router)
 
 #routers do colaborador
 app.include_router(colaborador_router)
