@@ -121,8 +121,6 @@ from routes.usuario.usuario_sair import router as usuario_sair_router
 from routes.rotas_teste.doador_agendamento_historico_agendamentos import router as doador_agendamento_historico_agendamentos_teste_router
 from routes.rotas_teste.doador_estoque import router as doador_estoque_teste_router
 from routes.rotas_teste.doador_novo_doador import router as doador_novo_doador_teste_router
-from routes.rotas_teste.doador_reagendamento import router as doador_reagendamento_teste_router
-from routes.rotas_teste.doador_sair import router as doador_sair_teste_router
 
 app = FastAPI()
 app.add_middleware(SessionMiddleware, secret_key="your-secret-key-here")
@@ -245,8 +243,6 @@ app.include_router(usuario_sair_router)
 app.include_router(doador_agendamento_historico_agendamentos_teste_router)
 app.include_router(doador_estoque_teste_router)
 app.include_router(doador_novo_doador_teste_router)
-app.include_router(doador_reagendamento_teste_router)
-app.include_router(doador_sair_teste_router)
 
 if __name__ == "__main__":
     uvicorn.run(app="main:app", host="127.0.0.1", port=8000, reload=True)
