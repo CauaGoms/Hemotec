@@ -38,17 +38,14 @@
                         <li class="nav-item">
                             <a class="nav-link {% if active_page == 'home' %}active{% endif %}" href="/doador">Home</a>
                         </li>
-                        <!-- <li class="nav-item">
-                            <a class="nav-link" href="#">Doadores</a>
-                        </li> -->
                         <li class="nav-item">
                             <a class="nav-link {% if active_page == 'campanha' %}active{% endif %}" href="/doador/campanha">Campanhas</a>
                         </li>
-                        <!-- <li class="nav-item">
-                            <a class="nav-link" href="#">Relatórios</a>
-                        </li> -->
                         <li class="nav-item">
                             <a class="nav-link {% if active_page == 'agendamento' %}active{% endif %}" href="/doador/agendamento">Agendamentos</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {% if active_page == 'doacoes' %}active{% endif %}" href="/doador/doacoes">Doações</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link {% if active_page == 'notificacao' %}active{% endif %}" href="/doador/notificacao">Notificações</a>
@@ -105,8 +102,6 @@
         {% block conteudo %}
         {% endblock %}
 
-        {% block conteudo %}
-        {% endblock %}
 
         <!-- Footer -->
         <footer class="footer">
@@ -139,6 +134,9 @@
                                 </li>
                                 <li>
                                     <a href="/doador/agendamento">Agendamentos</a>
+                                </li>
+                                <li>
+                                    <a href="/doador/doacoes">Doações</a>
                                 </li>
                                 <li>
                                     <a href="/doador/campanha">Campanhas</a>
