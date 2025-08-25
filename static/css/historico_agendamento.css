@@ -1,3 +1,62 @@
+/* Botões personalizados para doações */
+/* Botões de doações compactos */
+.btn-comprovante {
+    background: #e9f5ff;
+    color: #0d6efd;
+    border-radius: 10px;
+    font-weight: 600;
+    border: none;
+    padding: 0.32rem 0.7rem;
+    font-size: 0.95rem;
+    margin-right: 0.3rem;
+    transition: all 0.2s;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+}
+.btn-comprovante:hover {
+    background: #0d6efd;
+    color: #fff;
+    transform: translateY(-2px) scale(1.04);
+}
+.btn-status {
+    background: #fff3cd;
+    color: #fd7e14;
+    border-radius: 10px;
+    font-weight: 600;
+    border: none;
+    padding: 0.32rem 0.7rem;
+    font-size: 0.95rem;
+    margin-right: 0.3rem;
+    transition: all 0.2s;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+}
+.btn-status:hover {
+    background: #fd7e14;
+    color: #fff;
+    transform: translateY(-2px) scale(1.04);
+}
+.btn-detalhes {
+    background: #f8d7da;
+    color: #dc3545;
+    border-radius: 10px;
+    font-weight: 600;
+    border: none;
+    padding: 0.32rem 0.7rem;
+    font-size: 0.95rem;
+    margin-right: 0.3rem;
+    transition: all 0.2s;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+}
+.btn-detalhes:hover {
+    background: #dc3545;
+    color: #fff;
+    transform: translateY(-2px) scale(1.04);
+}
 /* Botão Novo Agendamento */
 /* Botão Novo Agendamento totalmente vermelho e mais arredondado */
 .btn-novo-agendamento {
@@ -28,12 +87,13 @@
     border-radius: 10px;
     font-weight: 600;
     border: none;
-    padding: 0.5rem 1.2rem;
-    margin-right: 0.5rem;
+    padding: 0.32rem 0.7rem;
+    font-size: 0.95rem;
+    margin-right: 0.3rem;
     transition: all 0.2s;
     display: inline-flex;
     align-items: center;
-    gap: 0.4rem;
+    gap: 0.3rem;
 }
 .btn-reagendar:hover {
     background: #0d6efd;
