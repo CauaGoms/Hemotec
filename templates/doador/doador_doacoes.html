@@ -1,13 +1,172 @@
 {% extends "doador/doador_#base.html" %}
+
 {% block custom_css %}
-<!-- <link href="/static/css/" rel="stylesheet"> -->
+<link href="/static/css/historico_agendamento.css" rel="stylesheet">
 {% endblock %}
 
 {% block conteudo %}
-<h1>doador_doacoes</h1>
+<!-- Botão Voltar -->
+<a href="/doador/agendamento" class="back-arrow">
+    <i class="fas fa-arrow-left"></i>
+</a>
+
+<!-- Seção de Cabeçalho -->
+<section class="hero-section-historico">
+    <div class="container">
+        <div class="hero-content">
+            <h1 class="hero-title">Histórico de Doações</h1>
+            <p class="hero-subtitle">Acompanhe o status e o histórico de suas doações.</p>
+        </div>
+    </div>
+</section>
+
+<!-- Conteúdo Principal -->
+<div class="container mt-n5">
+    <div class="history-container">
+        <!-- Filtros de Status -->
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h3 class="mb-0">Histórico de Doações</h3>
+            <div class="dropdown">
+                <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="statusFilter" data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="fas fa-filter me-2"></i>Filtrar por Status
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="statusFilter">
+                    <li><a class="dropdown-item" href="#" data-status="all">Todos</a></li>
+                    <li><a class="dropdown-item" href="#" data-status="completed">Concluída</a></li>
+                    <li><a class="dropdown-item" href="#" data-status="pending">Aguardando Exame</a></li>
+                    <li><a class="dropdown-item" href="#" data-status="refused">Recusada</a></li>
+                    <li><a class="dropdown-item" href="#" data-status="canceled">Cancelada</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Lista de Doações -->
+        <div id="doacoes-list">
+            <!-- Exemplo de Card de Doação Concluída -->
+            <div class="appointment-card completed" data-status="completed">
+                <div class="card-header">
+                    <span class="status-badge completed-badge"><i class="fas fa-check-circle me-1"></i> Concluída</span>
+                    <strong class="date">Terça-feira, 15 de Abril de 2025 - 09:00</strong>
+                </div>
+                <div class="card-body">
+                    <div class="location-info">
+                        <i class="fas fa-hospital-alt icon"></i>
+                        <div>
+                            <h5 class="location-name">Hospital Santa Casa</h5>
+                            <p class="location-address">Av. Beira Rio, 1200 - Independência</p>
+                            <small class="text-muted">Tipo sanguíneo coletado: O+</small>
+                        </div>
+                    </div>
+                    <div class="actions">
+                        <button class="btn btn-comprovante" data-id="1">
+                            <i class="fas fa-receipt me-1"></i> Ver Comprovante
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Exemplo de Card de Doação Aguardando Exame -->
+            <div class="appointment-card pending" data-status="pending">
+                <div class="card-header">
+                    <span class="status-badge pending-badge"><i class="fas fa-hourglass-half me-1"></i> Aguardando Exame</span>
+                    <strong class="date">Segunda-feira, 20 de Maio de 2025 - 08:30</strong>
+                </div>
+                <div class="card-body">
+                    <div class="location-info">
+                        <i class="fas fa-hospital-alt icon"></i>
+                        <div>
+                            <h5 class="location-name">Hemocentro Regional de Cachoeiro</h5>
+                            <p class="location-address">Rua Dr. Raulino de Oliveira, 345 - Centro</p>
+                            <small class="text-muted">Aguardando resultados dos exames laboratoriais</small>
+                        </div>
+                    </div>
+                    <div class="actions">
+                        <button class="btn btn-status" data-id="2">
+                            <i class="fas fa-info-circle me-1"></i> Acompanhar Status
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Exemplo de Card de Doação Recusada -->
+            <div class="appointment-card refused" data-status="refused">
+                <div class="card-header">
+                    <span class="status-badge refused-badge"><i class="fas fa-exclamation-triangle me-1"></i> Recusada</span>
+                    <strong class="date">Sexta-feira, 8 de Março de 2025 - 15:45</strong>
+                </div>
+                <div class="card-body">
+                    <div class="location-info">
+                        <i class="fas fa-hospital-alt icon"></i>
+                        <div>
+                            <h5 class="location-name">Unidade Móvel - Shopping Center</h5>
+                            <p class="location-address">Av. Coronel Borges, 101 - Aquidaban</p>
+                            <small class="text-muted">Motivo: Hemoglobina baixa detectada no teste</small>
+                        </div>
+                    </div>
+                    <div class="actions">
+                        <button class="btn btn-detalhes" data-id="3">
+                            <i class="fas fa-eye me-1"></i> Ver Detalhes
+                        </button>
+                        <a href="/doador/agendamento" class="btn btn-reagendar">
+                            <i class="fas fa-calendar-plus me-1"></i> Tentar Novamente
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Exemplo de Card de Doação Cancelada -->
+            <div class="appointment-card canceled" data-status="canceled">
+                <div class="card-header">
+                    <span class="status-badge canceled-badge"><i class="fas fa-times-circle me-1"></i> Cancelada</span>
+                    <strong class="date">Segunda-feira, 10 de Fevereiro de 2025 - 14:00</strong>
+                </div>
+                <div class="card-body">
+                    <div class="location-info">
+                        <i class="fas fa-hospital-alt icon"></i>
+                        <div>
+                            <h5 class="location-name">Unidade Móvel - Praça Jerônimo Monteiro</h5>
+                            <p class="location-address">Praça Jerônimo Monteiro - Centro</p>
+                            <small class="text-muted">Cancelada pelo doador</small>
+                        </div>
+                    </div>
+                    <div class="actions">
+                         <a href="/doador/agendamento" class="btn btn-reagendar">
+                             <i class="fas fa-calendar-plus me-1"></i> Agendar Novamente
+                         </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mensagem para quando não houver doações -->
+        <div class="text-center p-5 no-donations-message" style="display: none;">
+            <i class="fas fa-heart fa-3x text-muted mb-3"></i>
+            <h4>Nenhuma doação encontrada</h4>
+            <p>Você ainda não realizou nenhuma doação ou não há doações com o filtro selecionado.</p>
+            <a href="/doador/agendamento" class="btn btn-primary">Fazer Primeira Doação</a>
+        </div>
+    </div>
+</div>
+
+<!-- Modal de Detalhes da Doação -->
+<div class="modal fade" id="detailsModal" tabindex="-1" aria-labelledby="detailsModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="detailsModalLabel">Detalhes da Doação</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" id="modalDetailsContent">
+                <!-- Conteúdo será preenchido dinamicamente -->
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}
 
-<!-- Custom JavaScript -->
 {% block custom_js %}
-<!-- <script src="/static/js/"></script> -->
+<script src="/static/js/doador/doador_doacoes.js"></script>
 {% endblock %}
