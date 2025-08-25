@@ -11,12 +11,12 @@ from data.util.database import get_connection
 router = APIRouter()
 templates = Jinja2Templates(directory="templates")
 
-@router.get("/doador/novo_doador")
+@router.get("/telas_teste/doador/novo_doador")
 async def get_novo_doador(request: Request):
-    response = templates.TemplateResponse("doador/primeira_doacao.html", {"request": request})
+    response = templates.TemplateResponse("telas_teste/doador_primeira_doacao.html", {"request": request})
     return response
 
-@router.post("/doador/novo_doador")
+@router.post("/telas_teste/doador/novo_doador")
 async def post_novo_doador(
     request: Request,
     altura: float = Form(...),
