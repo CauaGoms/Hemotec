@@ -6,15 +6,88 @@
 
 /* Hero Section e Container Principal */
 .hero-section-carteira {
-    background: linear-gradient(135deg, var(--hemotec-gray), #495057);
+    background: linear-gradient( #343a40 100%);
     color: white;
-    padding: 4rem 0;
+    min-height: 350px;
     text-align: center;
     border-radius: 0 0 50px 50px;
+    box-shadow: 0 8px 32px rgba(196,21,21,0.15);
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    display: block;
 }
-.hero-title { font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 3rem; }
-.hero-subtitle { font-size: 1.2rem; font-weight: 300; }
+.hero-header-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 2.5rem;
+    max-width: 900px;
+    margin: 0 auto;
+    width: 100%;
+    min-height: 350px;
+}
+.hero-logo-wrap {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255,255,255,0.08);
+    border-radius: 50%;
+    padding: 1.2rem;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+}
+.hero-logo {
+    height: 70px;
+    width: auto;
+    filter: drop-shadow(0 2px 8px rgba(196,21,21,0.15));
+}
+.hero-content {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.hero-title {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 800;
+    font-size: 3.2rem;
+    letter-spacing: 1px;
+    margin-bottom: 0.7rem;
+    color: #fff;
+    text-shadow: 0 2px 8px rgba(44,44,44,0.12);
+}
+.hero-subtitle {
+    font-size: 1.25rem;
+    font-weight: 400;
+    color: #ffffff;
+    text-shadow: 0 1px 4px rgba(44,44,44,0.10);
+    margin-bottom: 0;
+}
 .wallet-container { display: flex; flex-direction: column; align-items: center; }
+
+@media (max-width: 700px) {
+    .hero-section-carteira {
+        height: auto;
+        padding: 2.5rem 0 2rem 0;
+        display: block;
+    }
+    .hero-header-container {
+        flex-direction: column;
+        gap: 1.2rem;
+        width: 100%;
+    }
+    .hero-content {
+        text-align: center;
+    }
+    .hero-title {
+        font-size: 2.1rem;
+    }
+    .hero-logo {
+        height: 50px;
+    }
+}
 
 /* A Carteirinha Horizontal */
 .donor-card-horizontal {
