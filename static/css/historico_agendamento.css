@@ -1,11 +1,94 @@
+/* Botão Novo Agendamento */
+/* Botão Novo Agendamento totalmente vermelho e mais arredondado */
+.btn-novo-agendamento {
+    background: var(--hemotec-red);
+    color: #fff;
+    font-weight: 700;
+    font-size: 1.15rem;
+    padding: 0.8rem 2.2rem;
+    border-radius: 30px;
+    box-shadow: 0 4px 18px rgba(196,21,21,0.12);
+    border: none;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+.btn-novo-agendamento:hover {
+    background: #a80f0f;
+    color: #fff;
+    transform: translateY(-2px) scale(1.04);
+    box-shadow: 0 8px 24px rgba(196,21,21,0.18);
+}
+
+/* Botões de ação nos cards */
+.btn-reagendar {
+    background: #e9f5ff;
+    color: #0d6efd;
+    border-radius: 10px;
+    font-weight: 600;
+    border: none;
+    padding: 0.5rem 1.2rem;
+    margin-right: 0.5rem;
+    transition: all 0.2s;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+.btn-reagendar:hover {
+    background: #0d6efd;
+    color: #fff;
+    transform: translateY(-2px) scale(1.04);
+}
+.btn-excluir {
+    background: #f8d7da;
+    color: #dc3545;
+    border-radius: 10px;
+    font-weight: 600;
+    border: none;
+    padding: 0.5rem 1.2rem;
+    transition: all 0.2s;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+.btn-excluir:hover {
+    background: #dc3545;
+    color: #fff;
+    transform: translateY(-2px) scale(1.04);
+}
+
+/* Responsividade dos botões */
+@media (max-width: 768px) {
+    .btn-novo-agendamento {
+        width: 100%;
+        justify-content: center;
+        font-size: 1rem;
+        padding: 0.7rem 1rem;
+    }
+    .agendamento-header {
+        flex-direction: column;
+        gap: 1rem;
+        align-items: stretch;
+    }
+    .btn-reagendar, .btn-excluir {
+        width: 100%;
+        justify-content: center;
+        margin-bottom: 0.5rem;
+    }
+}
 :root {
     --hemotec-red: #C41515;
     --hemotec-gray: #23282F;
     --status-completed: #198754; /* Verde */
     --status-canceled: #6c757d;  /* Cinza */
+    --status-pending: #fd7e14;   /* Laranja */
+    --status-refused: #dc3545;   /* Vermelho */
     --status-upcoming-bg: #e9f5ff;
     --status-completed-bg: #e8f5e9;
     --status-canceled-bg: #f8f9fa;
+    --status-pending-bg: #fff3cd;
+    --status-refused-bg: #f8d7da;
 }
 
 /* Botão Voltar */
@@ -228,10 +311,22 @@
     color: var(--status-canceled);
 }
 
+.pending-badge {
+    background-color: var(--status-pending-bg);
+    color: var(--status-pending);
+}
+
+.refused-badge {
+    background-color: var(--status-refused-bg);
+    color: var(--status-refused);
+}
+
 /* Cores da Borda Esquerda por Status */
 .appointment-card.upcoming { border-left: 5px solid #0d6efd; }
 .appointment-card.completed { border-left: 5px solid var(--status-completed); }
 .appointment-card.canceled { border-left: 5px solid var(--status-canceled); }
+.appointment-card.pending { border-left: 5px solid var(--status-pending); }
+.appointment-card.refused { border-left: 5px solid var(--status-refused); }
 
 /* Responsividade */
 @media (max-width: 768px) {
