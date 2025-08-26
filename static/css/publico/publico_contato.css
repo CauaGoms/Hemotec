@@ -1,0 +1,466 @@
+:root {
+    --hemotec-red: #e02020;
+    --hemotec-dark-red: #c01010;
+    --hemotec-light-red: #ff4040;
+    --hemotec-bg-light: #f8f9fa;
+    --hemotec-text-dark: #333333;
+    --hemotec-accent: #0066cc;
+    --hemotec-success: #28a745;
+    --hemotec-warning: #ffc107;
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    min-height: 100vh;
+}
+
+.hero-section {
+    background: linear-gradient(rgba(224, 32, 32, 0.9), rgba(192, 16, 16, 0.9)), url('https://images.unsplash.com/photo-1615461066841-6116e61058f4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80');
+    background-size: cover;
+    background-position: center;
+    color: white;
+    padding: 6rem 0 4rem;
+    margin-bottom: 4rem;
+    border-radius: 0 0 50px 50px;
+    position: relative;
+    overflow: hidden;
+    height: 350px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.hero-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(45deg, rgba(224, 32, 32, 0.1) 0%, rgba(192, 16, 16, 0.3) 100%);
+    animation: pulse 4s ease-in-out infinite;
+}
+
+@keyframes pulse {
+
+    0%,
+    100% {
+        opacity: 0.8;
+    }
+
+    50% {
+        opacity: 1;
+    }
+}
+
+.hero-content {
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: center;
+    position: relative;
+    z-index: 2;
+}
+
+.hero-title {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    font-size: 3.5rem;
+    margin-bottom: 1.5rem;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    animation: fadeInUp 1s ease-out;
+}
+
+.hero-subtitle {
+    font-size: 1.3rem;
+    margin-bottom: 2rem;
+    font-weight: 300;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+    animation: fadeInUp 1s ease-out 0.3s both;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.section-title {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+    color: var(--hemotec-red);
+    margin-bottom: 3rem;
+    position: relative;
+    display: inline-block;
+}
+
+.section-title::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 3px;
+    background: linear-gradient(90deg, var(--hemotec-red), var(--hemotec-light-red));
+    border-radius: 2px;
+}
+
+.contact-card {
+    background: white;
+    border-radius: 20px;
+    padding: 2.5rem;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+    transition: all 0.4s ease;
+    border: none;
+    position: relative;
+    overflow: hidden;
+}
+
+.contact-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--hemotec-red), var(--hemotec-light-red));
+}
+
+.contact-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+}
+
+.contact-icon {
+    width: 80px;
+    height: 80px;
+    background: linear-gradient(135deg, var(--hemotec-red), var(--hemotec-light-red));
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1.5rem;
+    color: white;
+    font-size: 2rem;
+    transition: all 0.3s ease;
+}
+
+.contact-card:hover .contact-icon {
+    transform: scale(1.1);
+    box-shadow: 0 10px 25px rgba(224, 32, 32, 0.3);
+}
+
+.contact-title {
+    color: var(--hemotec-red);
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+.contact-info {
+    text-align: center;
+    color: #666;
+    line-height: 1.8;
+}
+
+.contact-info a {
+    color: var(--hemotec-red);
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.contact-info a:hover {
+    color: var(--hemotec-dark-red);
+    text-decoration: underline;
+}
+
+.form-container {
+    background: white;
+    border-radius: 20px;
+    padding: 3rem;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+    position: relative;
+    overflow: hidden;
+}
+
+.form-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--hemotec-red), var(--hemotec-light-red));
+}
+
+.form-group {
+    margin-bottom: 2rem;
+}
+
+.form-label {
+    font-weight: 600;
+    color: var(--hemotec-text-dark);
+    margin-bottom: 0.5rem;
+}
+
+.form-control,
+.form-select {
+    border: 2px solid #e9ecef;
+    border-radius: 15px;
+    padding: 1rem 1.5rem;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    background: #f8f9fa;
+}
+
+.form-control:focus,
+.form-select:focus {
+    border-color: var(--hemotec-red);
+    box-shadow: 0 0 0 0.2rem rgba(224, 32, 32, 0.25);
+    background: white;
+}
+
+.btn-submit {
+    background: linear-gradient(135deg, var(--hemotec-red), var(--hemotec-dark-red));
+    border: none;
+    color: white;
+    padding: 1rem 3rem;
+    border-radius: 25px;
+    font-weight: 600;
+    font-size: 1.1rem;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-submit::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.5s;
+}
+
+.btn-submit:hover::before {
+    left: 100%;
+}
+
+.btn-submit:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px rgba(224, 32, 32, 0.3);
+}
+
+.faq-section {
+    background: white;
+    border-radius: 20px;
+    padding: 3rem;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+    position: relative;
+    overflow: hidden;
+}
+
+.faq-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--hemotec-red), var(--hemotec-light-red));
+}
+
+.accordion-button {
+    background: #f8f9fa;
+    border: none;
+    border-radius: 15px !important;
+    padding: 1.5rem;
+    font-weight: 600;
+    color: var(--hemotec-text-dark);
+    box-shadow: none;
+}
+
+.accordion-button:not(.collapsed) {
+    background: var(--hemotec-red);
+    color: white;
+}
+
+.accordion-button:focus {
+    box-shadow: 0 0 0 0.25rem rgba(224, 32, 32, 0.25);
+}
+
+.accordion-body {
+    padding: 1.5rem;
+    background: #f8f9fa;
+    border-radius: 0 0 15px 15px;
+}
+
+.floating-elements {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    overflow: hidden;
+}
+
+.floating-element {
+    position: absolute;
+    opacity: 0.1;
+    animation: float 6s ease-in-out infinite;
+}
+
+.floating-element:nth-child(1) {
+    top: 20%;
+    left: 10%;
+    animation-delay: 0s;
+}
+
+.floating-element:nth-child(2) {
+    top: 60%;
+    right: 10%;
+    animation-delay: 2s;
+}
+
+.floating-element:nth-child(3) {
+    bottom: 20%;
+    left: 20%;
+    animation-delay: 4s;
+}
+
+@keyframes float {
+
+    0%,
+    100% {
+        transform: translateY(0px);
+    }
+
+    50% {
+        transform: translateY(-20px);
+    }
+}
+
+.social-links {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 2rem;
+}
+
+.social-link {
+    width: 50px;
+    height: 50px;
+    background: linear-gradient(135deg, var(--hemotec-red), var(--hemotec-light-red));
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    font-size: 1.2rem;
+}
+
+.social-link:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px rgba(224, 32, 32, 0.3);
+    color: white;
+}
+
+.emergency-banner {
+    background: linear-gradient(135deg, #dc3545, #c82333);
+    color: white;
+    padding: 1.5rem;
+    border-radius: 15px;
+    margin-bottom: 2rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.emergency-banner::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+    animation: shine 3s infinite;
+}
+
+@keyframes shine {
+    0% {
+        left: -100%;
+    }
+
+    100% {
+        left: 100%;
+    }
+}
+
+.emergency-title {
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    font-size: 1.2rem;
+}
+
+.emergency-phone {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-top: 0.5rem;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .hero-title {
+        font-size: 2.5rem;
+    }
+
+    .contact-card,
+    .form-container,
+    .faq-section {
+        padding: 2rem;
+    }
+
+    .social-links {
+        gap: 0.5rem;
+    }
+
+    .social-link {
+        width: 45px;
+        height: 45px;
+        font-size: 1rem;
+    }
+}
+
+.fade-in {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.6s ease;
+}
+
+.fade-in.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.success-message {
+    background: var(--hemotec-success);
+    color: white;
+    padding: 1rem;
+    border-radius: 10px;
+    margin-top: 1rem;
+    display: none;
+}
