@@ -1,0 +1,269 @@
+:root {
+    --hemotec-red: #e02020;
+    --hemotec-text-dark: #222;
+}
+
+.profile-header {
+    background: linear-gradient(135deg, rgba(224, 32, 32, 0.9), rgba(192, 16, 16, 0.9));
+    color: white;
+    padding: 2rem 0;
+    border-radius: 15px;
+    margin-bottom: 2rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.profile-header::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: url('https://images.unsplash.com/photo-1579154204601-01588f351e67?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80') no-repeat center center;
+    background-size: cover;
+    opacity: 0.2;
+    z-index: 0;
+}
+
+.profile-header-content {
+    position: relative;
+    z-index: 1;
+}
+
+.profile-avatar {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    border: 4px solid white;
+    object-fit: cover;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.profile-name {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    margin-top: 1rem;
+    margin-bottom: 0.5rem;
+}
+
+.profile-role {
+    font-weight: 500;
+    opacity: 0.9;
+    margin-bottom: 1.5rem;
+}
+
+.profile-stats {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+}
+
+.profile-stat {
+    text-align: center;
+}
+
+.profile-stat-number {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 0.25rem;
+}
+
+.profile-stat-label {
+    font-size: 0.9rem;
+    opacity: 0.8;
+}
+
+.profile-tabs {
+    margin-bottom: 2rem;
+}
+
+.profile-tabs .nav-link {
+    color: var(--hemotec-text-dark);
+    font-weight: 500;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    margin-right: 0.5rem;
+    border-radius: 50px;
+}
+
+.profile-tabs .nav-link.active,
+.profile-tabs .nav-link.active:focus,
+.profile-tabs .nav-link.active:visited {
+    background-color: var(--hemotec-red);
+    color: #fff !important; /* Garante que o texto fique branco */
+}
+
+.profile-tabs .nav-link:hover:not(.active) {
+    background-color: rgba(224, 32, 32, 0.1);
+}
+
+.profile-card {
+    border: none;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+    margin-bottom: 2rem;
+    transition: all 0.3s ease;
+}
+
+.profile-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.12);
+}
+
+.profile-card-header {
+    background-color: var(--hemotec-red);
+    color: white;
+    padding: 1rem 1.5rem;
+    border-radius: 15px 15px 0 0 !important;
+    font-weight: 600;
+}
+
+.profile-card-body {
+    padding: 1.5rem;
+}
+
+.profile-info-item {
+    display: flex;
+    margin-bottom: 1rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #eee;
+}
+
+.profile-info-item:last-child {
+    margin-bottom: 0;
+    padding-bottom: 0;
+    border-bottom: none;
+}
+
+.profile-info-icon {
+    width: 40px;
+    height: 40px;
+    background-color: rgba(224, 32, 32, 0.1);
+    color: var(--hemotec-red);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 1rem;
+    flex-shrink: 0;
+}
+
+.profile-info-content {
+    flex-grow: 1;
+}
+
+.profile-info-label {
+    font-size: 0.85rem;
+    color: #666;
+    margin-bottom: 0.25rem;
+}
+
+.profile-info-value {
+    font-weight: 500;
+}
+
+.edit-btn {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background-color: white;
+    color: var(--hemotec-red);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+.edit-btn:hover {
+    background-color: var(--hemotec-red);
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.badge-hemotec {
+    background-color: var(--hemotec-red);
+}
+
+.donation-history-item {
+    display: flex;
+    margin-bottom: 1rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #eee;
+}
+
+.donation-history-item:last-child {
+    margin-bottom: 0;
+    padding-bottom: 0;
+    border-bottom: none;
+}
+
+.donation-date {
+    width: 80px;
+    text-align: center;
+    margin-right: 1.5rem;
+}
+
+.donation-day {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: var(--hemotec-red);
+    line-height: 1;
+}
+
+.donation-month {
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    color: #666;
+}
+
+.donation-details {
+    flex-grow: 1;
+}
+
+.donation-location {
+    font-weight: 500;
+    margin-bottom: 0.25rem;
+}
+
+.donation-type {
+    font-size: 0.85rem;
+    color: #666;
+}
+
+.donation-status {
+    align-self: center;
+}
+
+@media (max-width: 768px) {
+    .profile-stats {
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .donation-history-item {
+        flex-direction: column;
+    }
+
+    .donation-date {
+        margin-right: 0;
+        margin-bottom: 1rem;
+        display: flex;
+        align-items: center;
+        width: auto;
+    }
+
+    .donation-day {
+        margin-right: 0.5rem;
+    }
+
+    .donation-status {
+        margin-top: 1rem;
+        align-self: flex-start;
+    }
+}
