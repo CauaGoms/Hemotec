@@ -1,4 +1,4 @@
-{% extends "doador/doador_#base.html" %}
+{% extends "doador/doador__base.html" %}
 
 {% block custom_css %}
 <link href="/static/css/carteira.css" rel="stylesheet">
@@ -65,7 +65,7 @@
         <div class="action-area">
             <p class="action-text">Este é um documento de identificação do doador. Clique abaixo para gerar o PDF.</p>
             <button id="download-btn" class="btn btn-download">
-                <i class="fas fa-download me-2"></i>Baixar Carteirinha (PDF )
+                <i class="fas fa-download me-2"></i>Baixar Carteirinha (PDF)
             </button>
         </div>
     </div>
@@ -73,7 +73,6 @@
 {% endblock %}
 
 {% block custom_js %}
-<!-- Biblioteca html2pdf.js para gerar o PDF -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<!-- Script customizado -->
 <script src="/static/js/doador/doador_carteira.js"></script>
 {% endblock %}
