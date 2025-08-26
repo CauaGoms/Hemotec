@@ -7,7 +7,6 @@
 <a href="dashboard.html" class="back-arrow">
     <i class="fas fa-arrow-left"></i>
 </a>
-
 <!-- Hero Section -->
 <section class="hero-section">
     <div class="container">
@@ -21,7 +20,6 @@
         </div>
     </div>
 </section>
-
 <!-- Main Content -->
 <div class="container">
     <div class="booking-wizard fade-in">
@@ -56,192 +54,193 @@
                     </div>
                     <span class="step-label">Confirmar</span>
                 </div>
-                
                 <!-- Botão de Histórico alinhado horizontalmente -->
             </div>
             <div>
-                <a href="/doador/agendamento/historico_agendamentos" 
-                   class="btn btn-outline-danger btn-history-progress"
-                   style="text-decoration: none;">
+                <a href="/doador/agendamento/historico_agendamentos" class="btn btn-outline-danger btn-history-progress" style="text-decoration: none;">
                     <i class="fas fa-history me-2"></i>
                     <span>Histórico</span>
                 </a>
             </div>
-            </div>
         </div>
-
-        <div class="row">
-            <!-- Sidebar com Hemocentros -->
-            <div class="col-lg-6">
-                <div class="selection-card">
-                    <h3 class="section-title">
-                        <i class="fas fa-map-marker-alt me-2"></i>
-                        Escolha o Hemocentro
-                    </h3>
-                    
-                    <div class="search-box mb-4">
-                        <div class="input-group">
-                            <span class="input-group-text"><i class="fas fa-search"></i></span>
-                            <input type="text" class="form-control" placeholder="Buscar hemocentro...">
-                            <button class="btn btn-outline-danger" type="button">
-                                <i class="fas fa-location-arrow"></i>
-                            </button>
-                        </div>
-                    </div>
-                    
-                    <div class="location-list">
-                        <div class="location-card" onclick="selectLocation(1, this)">
-                            <div class="location-header">
-                                <h5>Hemocentro Regional de Cachoeiro</h5>
-                                <span class="distance-badge">1.2 km</span>
-                            </div>
-                            <div class="location-details">
-                                <div class="detail-item">
-                                    <i class="fas fa-map-marker-alt"></i>
-                                    Rua Dr. Raulino de Oliveira, 345 - Centro
-                                </div>
-                                <div class="detail-item">
-                                    <i class="far fa-clock"></i>
-                                    Seg-Sex: 7h-18h | Sáb: 7h-12h
-                                </div>
-                                <div class="amenities">
-                                    <span class="amenity-badge"><i class="fas fa-parking"></i> Estacionamento</span>
-                                    <span class="amenity-badge"><i class="fas fa-wheelchair"></i> Acessível</span>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="location-card" onclick="selectLocation(2, this)">
-                            <div class="location-header">
-                                <h5>Hospital Santa Casa</h5>
-                                <span class="distance-badge">2.5 km</span>
-                            </div>
-                            <div class="location-details">
-                                <div class="detail-item">
-                                    <i class="fas fa-map-marker-alt"></i>
-                                    Av. Beira Rio, 1200 - Independência
-                                </div>
-                                <div class="detail-item">
-                                    <i class="far fa-clock"></i>
-                                    Seg-Sex: 8h-17h
-                                </div>
-                                <div class="amenities">
-                                    <span class="amenity-badge"><i class="fas fa-parking"></i> Estacionamento</span>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="location-card" onclick="selectLocation(3, this)">
-                            <div class="location-header">
-                                <h5>Unidade Móvel - Praça Jerônimo Monteiro</h5>
-                                <span class="distance-badge special">3.1 km</span>
-                            </div>
-                            <div class="location-details">
-                                <div class="detail-item">
-                                    <i class="fas fa-map-marker-alt"></i>
-                                    Praça Jerônimo Monteiro - Centro
-                                </div>
-                                <div class="detail-item">
-                                    <i class="far fa-clock"></i>
-                                    Ter e Qui: 9h-15h
-                                </div>
-                                <div class="amenities">
-                                    <span class="amenity-badge special"><i class="fas fa-bus"></i> Unidade Móvel</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="info-card">
-                        <h6><i class="fas fa-info-circle me-2"></i>Informações Importantes</h6>
-                        <ul class="info-list">
-                            <li><i class="fas fa-check-circle"></i> Chegue 15 min antes do horário</li>
-                            <li><i class="fas fa-check-circle"></i> Traga documento oficial com foto</li>
-                            <li><i class="fas fa-check-circle"></i> Evite alimentos gordurosos</li>
-                            <li><i class="fas fa-check-circle"></i> Beba bastante água no dia</li>
-                        </ul>
+    </div>
+    <div class="row">
+        <!-- Sidebar com Hemocentros -->
+        <div class="col-lg-6">
+            <div class="selection-card">
+                <h3 class="section-title">
+                    <i class="fas fa-map-marker-alt me-2"></i>
+                    Escolha o Hemocentro
+                </h3>
+                <div class="search-box mb-4">
+                    <div class="input-group">
+                        <span class="input-group-text">
+                            <i class="fas fa-search"></i>
+                        </span>
+                        <input type="text" class="form-control" placeholder="Buscar hemocentro...">
+                        <button class="btn btn-outline-danger" type="button">
+                            <i class="fas fa-location-arrow"></i>
+                        </button>
                     </div>
                 </div>
-            </div>
-            
-            <!-- Main Content Area -->
-            <div class="col-lg-6">
-                
-                <div class="main-content-card">
-                    <div id="emptyState" class="empty-state">
-                        <i class="fas fa-map-marked-alt"></i>
-                        <h4>Selecione um Hemocentro</h4>
-                        <p>Escolha um dos hemocentros disponíveis para continuar com seu agendamento</p>
+                <div class="location-list">
+                    <div class="location-card" onclick="selectLocation(1, this)">
+                        <div class="location-header">
+                            <h5>Hemocentro Regional de Cachoeiro</h5>
+                            <span class="distance-badge">1.2 km</span>
+                        </div>
+                        <div class="location-details">
+                            <div class="detail-item">
+                                <i class="fas fa-map-marker-alt"></i>
+                                Rua Dr. Raulino de Oliveira, 345 - Centro
+                            </div>
+                            <div class="detail-item">
+                                <i class="far fa-clock"></i>
+                                Seg-Sex: 7h-18h | Sáb: 7h-12h
+                            </div>
+                            <div class="amenities">
+                                <span class="amenity-badge">
+                                    <i class="fas fa-parking"></i> Estacionamento
+                                </span>
+                                <span class="amenity-badge">
+                                    <i class="fas fa-wheelchair"></i> Acessível
+                                </span>
+                            </div>
+                        </div>
                     </div>
-                    
-                    <div id="selectedLocation" style="display: none;">
-                        <!-- Calendar Section -->
-                        <div class="calendar-section mb-4">
-                            <h3 class="section-title">
-                                <i class="far fa-calendar-alt me-2"></i>
-                                Escolha a Data
-                            </h3>
-                            
-                            <div class="calendar-controls">
-                                <button class="btn btn-sm btn-outline-danger" onclick="changeMonth(-1)">
-                                    <i class="fas fa-chevron-left"></i>
-                                </button>
-                                <h5 id="currentMonth" class="calendar-month">Agosto 2025</h5>
-                                <button class="btn btn-sm btn-outline-danger" onclick="changeMonth(1)">
-                                    <i class="fas fa-chevron-right"></i>
-                                </button>
+                    <div class="location-card" onclick="selectLocation(2, this)">
+                        <div class="location-header">
+                            <h5>Hospital Santa Casa</h5>
+                            <span class="distance-badge">2.5 km</span>
+                        </div>
+                        <div class="location-details">
+                            <div class="detail-item">
+                                <i class="fas fa-map-marker-alt"></i>
+                                Av. Beira Rio, 1200 - Independência
                             </div>
-                            
-                            <div class="calendar-container">
-                                <div class="calendar-header">
-                                    <div class="calendar-day-name">Dom</div>
-                                    <div class="calendar-day-name">Seg</div>
-                                    <div class="calendar-day-name">Ter</div>
-                                    <div class="calendar-day-name">Qua</div>
-                                    <div class="calendar-day-name">Qui</div>
-                                    <div class="calendar-day-name">Sex</div>
-                                    <div class="calendar-day-name">Sáb</div>
-                                </div>
-                                
-                                <div id="calendarDays" class="calendar-body">
-                                    <!-- Dias serão preenchidos via JavaScript -->
-                                </div>
+                            <div class="detail-item">
+                                <i class="far fa-clock"></i>
+                                Seg-Sex: 8h-17h
+                            </div>
+                            <div class="amenities">
+                                <span class="amenity-badge">
+                                    <i class="fas fa-parking"></i> Estacionamento
+                                </span>
                             </div>
                         </div>
-                        
-                        <!-- Time Section -->
-                        <div class="time-section mb-4">
-                            <h3 class="section-title">
-                                <i class="far fa-clock me-2"></i>
-                                Escolha o Horário
-                            </h3>
-                            
-                            <div id="timeSlots" class="time-slots-container">
-                                <p class="empty-message">Selecione uma data para ver os horários disponíveis</p>
+                    </div>
+                    <div class="location-card" onclick="selectLocation(3, this)">
+                        <div class="location-header">
+                            <h5>Unidade Móvel - Praça Jerônimo Monteiro</h5>
+                            <span class="distance-badge special">3.1 km</span>
+                        </div>
+                        <div class="location-details">
+                            <div class="detail-item">
+                                <i class="fas fa-map-marker-alt"></i>
+                                Praça Jerônimo Monteiro - Centro
+                            </div>
+                            <div class="detail-item">
+                                <i class="far fa-clock"></i>
+                                Ter e Qui: 9h-15h
+                            </div>
+                            <div class="amenities">
+                                <span class="amenity-badge special">
+                                    <i class="fas fa-bus"></i> Unidade Móvel
+                                </span>
                             </div>
                         </div>
-                        
-                        <!-- Confirmation Button -->
-                        <div class="confirmation-section">
-                            <button id="confirmBtn" class="btn btn-confirm" onclick="confirmAppointment()">
-                                <i class="fas fa-calendar-check me-2"></i>
-                                Confirmar Agendamento
+                    </div>
+                </div>
+                <div class="info-card">
+                    <h6>
+                        <i class="fas fa-info-circle me-2"></i>Informações Importantes
+                    </h6>
+                    <ul class="info-list">
+                        <li>
+                            <i class="fas fa-check-circle"></i> Chegue 15 min antes do horário
+                        </li>
+                        <li>
+                            <i class="fas fa-check-circle"></i> Traga documento oficial com foto
+                        </li>
+                        <li>
+                            <i class="fas fa-check-circle"></i> Evite alimentos gordurosos
+                        </li>
+                        <li>
+                            <i class="fas fa-check-circle"></i> Beba bastante água no dia
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!-- Main Content Area -->
+        <div class="col-lg-6">
+            <div class="main-content-card">
+                <div id="emptyState" class="empty-state">
+                    <i class="fas fa-map-marked-alt"></i>
+                    <h4>Selecione um Hemocentro</h4>
+                    <p>Escolha um dos hemocentros disponíveis para continuar com seu agendamento</p>
+                </div>
+                <div id="selectedLocation" style="display: none;">
+                    <!-- Calendar Section -->
+                    <div class="calendar-section mb-4">
+                        <h3 class="section-title">
+                            <i class="far fa-calendar-alt me-2"></i>
+                            Escolha a Data
+                        </h3>
+                        <div class="calendar-controls">
+                            <button class="btn btn-sm btn-outline-danger" onclick="changeMonth(-1)">
+                                <i class="fas fa-chevron-left"></i>
+                            </button>
+                            <h5 id="currentMonth" class="calendar-month">Agosto 2025</h5>
+                            <button class="btn btn-sm btn-outline-danger" onclick="changeMonth(1)">
+                                <i class="fas fa-chevron-right"></i>
                             </button>
                         </div>
+                        <div class="calendar-container">
+                            <div class="calendar-header">
+                                <div class="calendar-day-name">Dom</div>
+                                <div class="calendar-day-name">Seg</div>
+                                <div class="calendar-day-name">Ter</div>
+                                <div class="calendar-day-name">Qua</div>
+                                <div class="calendar-day-name">Qui</div>
+                                <div class="calendar-day-name">Sex</div>
+                                <div class="calendar-day-name">Sáb</div>
+                            </div>
+                            <div id="calendarDays" class="calendar-body">
+                                <!-- Dias serão preenchidos via JavaScript --></div>
+                        </div>
+                    </div>
+                    <!-- Time Section -->
+                    <div class="time-section mb-4">
+                        <h3 class="section-title">
+                            <i class="far fa-clock me-2"></i>
+                            Escolha o Horário
+                        </h3>
+                        <div id="timeSlots" class="time-slots-container">
+                            <p class="empty-message">Selecione uma data para ver os horários disponíveis</p>
+                        </div>
+                    </div>
+                    <!-- Confirmation Button -->
+                    <div class="confirmation-section">
+                        <button id="confirmBtn" class="btn btn-confirm" onclick="confirmAppointment()">
+                            <i class="fas fa-calendar-check me-2"></i>
+                            Confirmar Agendamento
+                        </button>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-
+</div>
 <!-- Help Modal -->
 <div class="modal fade" id="helpModal" tabindex="-1">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">
-                    <i class="fas fa-question-circle me-2"></i>Precisa de Ajuda?
+                    <i class="fas fa-question-circle me-2"></i>
+                    Precisa de Ajuda?
                 </h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
@@ -284,7 +283,6 @@
         </div>
     </div>
 </div>
-
 <!-- Floating Help Button -->
 <div class="floating-help">
     <button class="floating-btn" data-bs-toggle="modal" data-bs-target="#helpModal">
@@ -292,7 +290,6 @@
     </button>
 </div>
 {% endblock %}
-
 <!-- Custom JavaScript -->
 {% block custom_js %}
 <script src="/static/js/doador/doador_agendamento.js"></script>

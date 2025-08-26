@@ -4,6 +4,11 @@ document.addEventListener('DOMContentLoaded', function () {
     const downloadButton = document.getElementById('download-btn');
     const donorCardElement = document.getElementById('donor-card');
 
+    // Função para mostrar alerta ao usuário
+    function showAlert(message) {
+        alert(message);
+    }
+
     // Verifica se os elementos existem na página antes de adicionar o evento
     if (downloadButton && donorCardElement) {
         downloadButton.addEventListener('click', function () {
@@ -11,28 +16,29 @@ document.addEventListener('DOMContentLoaded', function () {
             downloadButton.disabled = true;
             downloadButton.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Gerando PDF...';
 
-            const cardWidth = 600; // mesmo valor do CSS
-            const cardHeight = 350; // mesmo valor do CSS
-            // Define as opções para a geração do PDF
+            // Configuração para gerar PDF em folha A4 horizontal (landscape)
             const opt = {
-                margin:       0,
-                filename:     'carteira-doador-hemotec.pdf',
-                image:        { type: 'jpeg', quality: 1.0 },
-                html2canvas:  { scale: 2, logging: true, useCORS: true }, // Aumenta a escala para máxima qualidade
-                jsPDF: { unit: 'px', format: [cardWidth, cardHeight] }
+                margin: 10,
+                filename: 'carteira-doador-hemotec.pdf',
+                image: { type: 'jpeg', quality: 1.0 },
+                html2canvas: { scale: 2, logging: true, useCORS: true },
+                jsPDF: { unit: 'mm', format: [297, 210], orientation: 'landscape' }
             };
 
             // Usa a biblioteca html2pdf para criar e baixar o PDF
             html2pdf().from(donorCardElement).set(opt).save().then(() => {
-                // Após o download (ou falha), restaura o botão
+                // Após o download, restaura o botão
                 downloadButton.disabled = false;
                 downloadButton.innerHTML = '<i class="fas fa-download me-2"></i>Baixar Carteirinha (PDF)';
             }).catch((error) => {
                 console.error("Erro ao gerar o PDF:", error);
-                // Restaura o botão mesmo em caso de erro
+                showAlert("Erro ao gerar o PDF. Verifique sua conexão ou tente novamente. Se o problema persistir, entre em contato com o suporte.");
                 downloadButton.disabled = false;
                 downloadButton.innerHTML = '<i class="fas fa-exclamation-circle me-2"></i>Tente Novamente';
             });
         });
+    } else {
+        // Se os elementos não existirem, mostra alerta
+        showAlert("Não foi possível encontrar a carteirinha ou o botão de download na página.");
     }
 });
