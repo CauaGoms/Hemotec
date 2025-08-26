@@ -1,0 +1,1162 @@
+:root {
+    --hemotec-red: #C41515;
+    --hemotec-gray: #23282F;
+}
+
+/* Hero Section para Reagendamento */
+.hero-section-reagendamento {
+    background: linear-gradient(135deg, rgba(196, 21, 21, 0.9), rgba(220, 65, 65, 0.8)), url('https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop') no-repeat center center;
+    background-size: cover;
+    color: white;
+    min-height: 350px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    border-radius: 0 0 50px 50px;
+}
+
+.hero-title {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    font-size: 3rem;
+}
+
+.hero-subtitle {
+    font-size: 1.2rem;
+    font-weight: 300;
+}
+
+/* Container Principal */
+.reschedule-container {
+    background-color: #ffffff;
+    border-radius: 15px;
+    padding: 2rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    position: relative;
+    z-index: 5;
+}
+
+.section-title {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+    color: var(--hemotec-gray);
+    margin-bottom: 1.5rem;
+}
+
+/* Card Fixo do Local */
+.location-card-fixed {
+    background-color: #f8f9fa;
+    border-radius: 12px;
+    padding: 1.5rem;
+    border: 1px solid #e9ecef;
+}
+
+.location-card-fixed h5 {
+    font-family: 'Montserrat', sans-serif;
+    color: var(--hemotec-red);
+    font-weight: 600;
+    margin-bottom: 0.75rem;
+}
+
+.location-card-fixed .address,
+.location-card-fixed .hours {
+    color: #6c757d;
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+}
+
+.location-card-fixed .address i,
+.location-card-fixed .hours i {
+    margin-right: 8px;
+    color: var(--hemotec-red);
+}
+
+/* Card de Resumo */
+.summary-card {
+    background-color: #fff;
+    border-radius: 12px;
+    padding: 1.5rem;
+    border: 2px dashed var(--hemotec-red);
+}
+
+.summary-title {
+    font-size: 1.2rem;
+    font-weight: 600;
+    text-align: center;
+    margin-bottom: 1rem;
+    color: var(--hemotec-gray);
+}
+
+.summary-item {
+    margin-bottom: 0.5rem;
+}
+
+.summary-label {
+    display: block;
+    font-size: 0.9rem;
+    color: #6c757d;
+    font-weight: 500;
+}
+
+.summary-value {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin: 0;
+}
+
+.summary-value.current {
+    color: var(--hemotec-gray);
+    text-decoration: line-through;
+}
+
+.summary-value.new {
+    color: var(--hemotec-red);
+}
+
+/* Painel de Seleção (Calendário e Horários) */
+.selection-panel {
+    background-color: #f8f9fa;
+    border-radius: 12px;
+    padding: 2rem;
+    height: 100%;
+}
+
+/* Reutiliza estilos de agendamento.css para calendário e horários */
+/* (Certifique-se de que agendamento.css está carregado) */
+
+.btn-primary {
+    background-color: var(--hemotec-red);
+    border-color: var(--hemotec-red);
+}
+
+/* Responsividade */
+@media (max-width: 991px) {
+    .selection-panel {
+        margin-top: 2rem;
+    }
+}
+
+:root {
+    --hemotec-red: #e02020;
+    --hemotec-dark-red: #c01010;
+    --hemotec-light-red: #ff4040;
+    --hemotec-bg-light: #f8f9fa;
+    --hemotec-text-dark: #333333;
+    --hemotec-accent: #0066cc;
+    --hemotec-success: #28a745;
+    --hemotec-warning: #ffc107;
+    --shadow-light: 0 2px 10px rgba(0, 0, 0, 0.08);
+    --shadow-medium: 0 4px 20px rgba(0, 0, 0, 0.12);
+    --shadow-heavy: 0 8px 30px rgba(0, 0, 0, 0.15);
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    min-height: 100vh;
+}
+
+/* Hero Section */
+.hero-section {
+    background: linear-gradient(135deg, rgba(224, 32, 32, 0.9), rgba(192, 16, 16, 0.8)),
+        url('https://images.unsplash.com/photo-1615461066841-6116e61058f4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80');
+    background-size: cover;
+    background-position: center;
+    color: white;
+    padding: 5rem 0 3rem;
+    margin-bottom: 4rem;
+    border-radius: 0 0 50px 50px;
+    position: relative;
+    overflow: hidden;
+    height: 350px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.hero-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(45deg, rgba(224, 32, 32, 0.1) 0%, rgba(192, 16, 16, 0.3) 100%);
+    animation: pulse 4s ease-in-out infinite;
+}
+
+@keyframes pulse {
+
+    0%,
+    100% {
+        opacity: 0.8;
+    }
+
+    50% {
+        opacity: 1;
+    }
+}
+
+.floating-elements {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    z-index: 1;
+}
+
+.floating-element {
+    position: absolute;
+    color: rgba(255, 255, 255, 0.1);
+    animation: float 6s ease-in-out infinite;
+}
+
+.floating-element:nth-child(1) {
+    top: 15%;
+    left: 10%;
+    animation-delay: 0s;
+}
+
+.floating-element:nth-child(2) {
+    top: 70%;
+    right: 15%;
+    animation-delay: 2s;
+}
+
+.floating-element:nth-child(3) {
+    top: 40%;
+    right: 10%;
+    animation-delay: 4s;
+}
+
+@keyframes float {
+
+    0%,
+    100% {
+        transform: translateY(0px) rotate(0deg);
+    }
+
+    50% {
+        transform: translateY(-20px) rotate(10deg);
+    }
+}
+
+.hero-content {
+    max-width: 900px;
+    margin: 0 auto;
+    text-align: center;
+    position: relative;
+    z-index: 2;
+}
+
+.hero-title {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    font-size: 3.5rem;
+    margin-bottom: 1.5rem;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    animation: fadeInUp 1s ease-out;
+}
+
+.hero-subtitle {
+    font-size: 1.3rem;
+    margin-bottom: 2rem;
+    font-weight: 300;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+    animation: fadeInUp 1s ease-out 0.3s both;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Progress Container */
+.progress-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    position: relative;
+    margin-bottom: 3rem;
+}
+
+/* Progress Indicator */
+.progress-indicator {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    margin: 0 auto;
+    max-width: 600px;
+    flex: 1;
+}
+
+.progress-step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    z-index: 2;
+}
+
+/* Botão de Histórico alinhado com a coluna direita */
+/* Removido posicionamento absoluto do botão histórico */
+
+.btn-history-progress {
+    border: 2px solid var(--hemotec-red);
+    background: white;
+    color: var(--hemotec-red);
+    padding: 18px 36px;
+    border-radius: 40px;
+    font-weight: 600;
+    font-size: 1.1rem;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    position: relative;
+    white-space: nowrap;
+    box-shadow: 0 5px 25px rgba(224, 32, 32, 0.15);
+    min-width: 180px;
+    justify-content: center;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    z-index: 10;
+}
+
+.btn-history-progress:hover {
+    background: var(--hemotec-red);
+    color: white;
+    transform: translateY(-5px);
+    box-shadow: 0 10px 35px rgba(224, 32, 32, 0.3);
+    text-decoration: none;
+}
+
+.btn-history-progress:focus {
+    outline: 2px solid var(--hemotec-red);
+    outline-offset: 2px;
+}
+
+.btn-history-progress i {
+    font-size: 1.2rem;
+    margin-right: 10px;
+    transition: transform 0.3s ease;
+}
+
+.btn-history-progress:hover i {
+    transform: rotate(15deg);
+}
+
+.step-circle {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: #e9ecef;
+    border: 3px solid #dee2e6;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #6c757d;
+    font-size: 1.2rem;
+    transition: all 0.3s ease;
+    margin-bottom: 0.5rem;
+}
+
+.progress-step.active .step-circle {
+    background: var(--hemotec-red);
+    border-color: var(--hemotec-red);
+    color: white;
+    transform: scale(1.1);
+    box-shadow: var(--shadow-medium);
+}
+
+.step-label {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: #6c757d;
+    transition: color 0.3s ease;
+}
+
+.progress-step.active .step-label {
+    color: var(--hemotec-red);
+    font-weight: 600;
+}
+
+.progress-line {
+    flex: 1;
+    height: 3px;
+    background: #dee2e6;
+    position: relative;
+    top: -30px;
+    margin: 0 1rem;
+}
+
+/* Main Cards */
+.booking-wizard {
+    margin-bottom: 4rem;
+}
+
+.selection-card,
+.main-content-card {
+    background: white;
+    border-radius: 20px;
+    padding: 2rem;
+    box-shadow: var(--shadow-light);
+    border: 1px solid rgba(224, 32, 32, 0.08);
+    transition: all 0.3s ease;
+    min-height: 420px;
+    height: fit-content;
+}
+
+.selection-card:hover,
+.main-content-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-medium);
+}
+
+.section-title {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+    color: var(--hemotec-red);
+    margin-bottom: 2rem;
+    font-size: 1.4rem;
+}
+
+/* Search Box */
+.search-box .input-group-text {
+    background: var(--hemotec-bg-light);
+    border: 1px solid #dee2e6;
+    color: var(--hemotec-red);
+}
+
+.search-box .form-control {
+    border: 1px solid #dee2e6;
+    padding: 0.75rem 1rem;
+}
+
+.search-box .form-control:focus {
+    border-color: var(--hemotec-red);
+    box-shadow: 0 0 0 0.2rem rgba(224, 32, 32, 0.15);
+}
+
+.search-box .btn-outline-danger {
+    border-color: var(--hemotec-red);
+    color: var(--hemotec-red);
+}
+
+/* Location Cards */
+.location-card {
+    background: white;
+    border: 2px solid #f8f9fa;
+    border-radius: 15px;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.location-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(224, 32, 32, 0.05), transparent);
+    transition: left 0.5s ease;
+}
+
+.location-card:hover::before {
+    left: 100%;
+}
+
+.location-card:hover {
+    border-color: var(--hemotec-red);
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-medium);
+}
+
+.location-card.selected {
+    border-color: var(--hemotec-red);
+    background: linear-gradient(135deg, rgba(224, 32, 32, 0.03), rgba(224, 32, 32, 0.01));
+    box-shadow: var(--shadow-medium);
+}
+
+.location-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 1rem;
+}
+
+.location-header h5 {
+    margin: 0;
+    color: var(--hemotec-text-dark);
+    font-weight: 600;
+    flex: 1;
+}
+
+.distance-badge {
+    background: linear-gradient(135deg, var(--hemotec-red), var(--hemotec-dark-red));
+    color: white;
+    padding: 0.3rem 0.8rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    margin-left: 1rem;
+}
+
+.distance-badge.special {
+    background: linear-gradient(135deg, var(--hemotec-accent), #0056b3);
+}
+
+.location-details {
+    margin-bottom: 1rem;
+}
+
+.detail-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 0.5rem;
+    color: #6c757d;
+    font-size: 0.9rem;
+}
+
+.detail-item i {
+    width: 16px;
+    margin-right: 0.5rem;
+    color: var(--hemotec-red);
+}
+
+.amenities {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.amenity-badge {
+    background: var(--hemotec-bg-light);
+    color: var(--hemotec-red);
+    padding: 0.2rem 0.6rem;
+    border-radius: 12px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    border: 1px solid rgba(224, 32, 32, 0.1);
+}
+
+.amenity-badge.special {
+    background: rgba(0, 102, 204, 0.1);
+    color: var(--hemotec-accent);
+    border-color: rgba(0, 102, 204, 0.2);
+}
+
+/* Info Card */
+.info-card {
+    background: linear-gradient(135deg, var(--hemotec-bg-light), #e3f2fd);
+    border-radius: 15px;
+    padding: 1.5rem;
+    border-left: 4px solid var(--hemotec-red);
+}
+
+.info-card h6 {
+    color: var(--hemotec-red);
+    font-weight: 600;
+    margin-bottom: 1rem;
+}
+
+.info-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.info-list li {
+    display: flex;
+    align-items: center;
+    margin-bottom: 0.5rem;
+    font-size: 0.9rem;
+    color: var(--hemotec-text-dark);
+}
+
+.info-list i {
+    color: var(--hemotec-success);
+    margin-right: 0.5rem;
+    font-size: 0.8rem;
+}
+
+/* Empty State */
+.empty-state {
+    text-align: center;
+    padding: 4rem 2rem;
+    color: #6c757d;
+}
+
+.empty-state i {
+    font-size: 4rem;
+    color: #dee2e6;
+    margin-bottom: 1.5rem;
+}
+
+.empty-state h4 {
+    color: var(--hemotec-text-dark);
+    margin-bottom: 1rem;
+}
+
+/* Calendar */
+.calendar-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+.calendar-month {
+    margin: 0;
+    color: var(--hemotec-red);
+    font-weight: 600;
+}
+
+.calendar-container {
+    background: white;
+    border-radius: 15px;
+    padding: 1.5rem;
+    box-shadow: var(--shadow-light);
+    border: 1px solid rgba(224, 32, 32, 0.08);
+}
+
+.calendar-header {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.calendar-day-name {
+    text-align: center;
+    font-weight: 600;
+    color: var(--hemotec-red);
+    padding: 0.5rem;
+    font-size: 0.9rem;
+}
+
+.calendar-body {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 0.5rem;
+}
+
+.calendar-day {
+    aspect-ratio: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.calendar-day.available {
+    background: #f8f9fa;
+    color: var(--hemotec-text-dark);
+    border: 1px solid #e9ecef;
+}
+
+.calendar-day.available:hover {
+    background: var(--hemotec-red);
+    color: white;
+    transform: scale(1.05);
+    box-shadow: var(--shadow-light);
+}
+
+.calendar-day.selected {
+    background: var(--hemotec-red) !important;
+    color: white !important;
+    box-shadow: var(--shadow-medium);
+    transform: scale(1.05);
+}
+
+.calendar-day.unavailable {
+    background: #f8f9fa;
+    color: #dee2e6;
+    cursor: not-allowed;
+}
+
+.calendar-day.past {
+    background: #f8f9fa;
+    color: #adb5bd;
+    cursor: not-allowed;
+}
+
+.calendar-day.today {
+    border: 2px solid var(--hemotec-red);
+}
+
+/* Time Slots */
+.time-slots-container {
+    background: white;
+    border-radius: 15px;
+    padding: 1.5rem;
+    box-shadow: var(--shadow-light);
+    border: 1px solid rgba(224, 32, 32, 0.08);
+}
+
+.time-slot {
+    display: inline-block;
+    padding: 0.8rem 1.5rem;
+    margin: 0.5rem;
+    background: #f8f9fa;
+    border: 2px solid #e9ecef;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: 500;
+    color: var(--hemotec-text-dark);
+}
+
+.time-slot:hover {
+    background: var(--hemotec-red);
+    border-color: var(--hemotec-red);
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-light);
+}
+
+.time-slot.selected {
+    background: var(--hemotec-red);
+    border-color: var(--hemotec-red);
+    color: white;
+    box-shadow: var(--shadow-medium);
+}
+
+.time-slot.unavailable {
+    background: #f8f9fa;
+    border-color: #dee2e6;
+    color: #adb5bd;
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+.empty-message {
+    text-align: center;
+    color: #6c757d;
+    font-style: italic;
+    padding: 2rem;
+}
+
+/* Confirmation Button */
+.confirmation-section {
+    text-align: center;
+    margin-top: 2rem;
+}
+
+.btn-confirm {
+    background: linear-gradient(135deg, var(--hemotec-red), var(--hemotec-dark-red));
+    border: none;
+    color: white;
+    padding: 1rem 3rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+    border-radius: 50px;
+    transition: all 0.3s ease;
+    box-shadow: var(--shadow-light);
+}
+
+.btn-confirm:hover {
+    background: linear-gradient(135deg, var(--hemotec-dark-red), #a00d0d);
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-heavy);
+    color: white;
+}
+
+.btn-confirm:disabled {
+    background: #6c757d;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+/* Floating Help Button */
+.floating-help {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    z-index: 1000;
+}
+
+.floating-btn {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--hemotec-red), var(--hemotec-dark-red));
+    border: none;
+    color: white;
+    font-size: 1.5rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: var(--shadow-medium);
+}
+
+.floating-btn:hover {
+    transform: translateY(-3px) scale(1.1);
+    box-shadow: var(--shadow-heavy);
+}
+
+/* Modal Styles */
+.modal-content {
+    border-radius: 20px;
+    border: none;
+    box-shadow: var(--shadow-heavy);
+}
+
+.modal-header {
+    background: linear-gradient(135deg, var(--hemotec-red), var(--hemotec-dark-red));
+    color: white;
+    border-radius: 20px 20px 0 0;
+    border-bottom: none;
+}
+
+.modal-title {
+    font-weight: 600;
+}
+
+.faq-item {
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #e9ecef;
+}
+
+.faq-item:last-child {
+    border-bottom: none;
+}
+
+.contact-info {
+    background: var(--hemotec-bg-light);
+    border-radius: 10px;
+    padding: 1.5rem;
+}
+
+.contact-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.contact-item i {
+    color: var(--hemotec-red);
+    margin-right: 0.5rem;
+    width: 20px;
+}
+
+/* Animations */
+.fade-in {
+    opacity: 0;
+    transform: translateY(30px);
+    animation: fadeInUp 0.8s ease-out forwards;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .hero-title {
+        font-size: 2.5rem;
+    }
+
+    .hero-subtitle {
+        font-size: 1.1rem;
+    }
+
+    .stat-number {
+        font-size: 2rem;
+    }
+
+    .progress-indicator {
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .progress-line {
+        display: none;
+    }
+
+    .selection-card,
+    .main-content-card {
+        padding: 1.5rem;
+    }
+
+    .step-circle {
+        width: 50px;
+        height: 50px;
+        font-size: 1rem;
+    }
+
+    .calendar-container {
+        padding: 1rem;
+    }
+
+    .time-slot {
+        padding: 0.6rem 1.2rem;
+        margin: 0.3rem;
+        font-size: 0.9rem;
+    }
+
+    .floating-help {
+        bottom: 20px;
+        right: 20px;
+    }
+
+    .floating-btn {
+        width: 50px;
+        height: 50px;
+        font-size: 1.2rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .calendar-day {
+        height: 45px;
+    }
+
+    .calendar-day .day-number {
+        font-size: 0.9rem;
+    }
+
+    .calendar-day .day-name {
+        display: none;
+        /* Ocultar nome do dia em telas muito pequenas */
+    }
+}
+
+.info-box {
+    background-color: #f8f9fa;
+    border-left: 4px solid var(--hemotec-red);
+    padding: 15px;
+    margin: 20px 0;
+    border-radius: 0 5px 5px 0;
+}
+
+.info-box h6 {
+    color: var(--hemotec-red);
+    margin-bottom: 10px;
+}
+
+.floating-action {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    z-index: 100;
+}
+
+.floating-btn {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background-color: var(--hemotec-red);
+    color: white;
+    border: none;
+    font-size: 1.5rem;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+}
+
+.floating-btn:hover {
+    background-color: var(--hemotec-dark-red);
+    transform: translateY(-3px);
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .hero-title {
+        font-size: 2rem;
+    }
+
+    .hero-subtitle {
+        font-size: 1rem;
+    }
+}
+
+/* Animações */
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.05);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+.animated-icon {
+    animation: pulse 2s infinite;
+}
+
+.fade-in {
+    opacity: 0;
+    transition: opacity 0.5s ease;
+}
+
+.fade-in.visible {
+    opacity: 1;
+}
+
+.slide-in {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.5s ease;
+}
+
+.slide-in.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Container para alinhar o título na seção hero */
+.hero-header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 2;
+}
+
+/* Ajustes para o conteúdo do hero */
+.hero-content {
+    text-align: center;
+    flex: 1;
+    animation: fadeInUp 1s ease-out;
+}
+
+.hero-content .hero-title {
+    font-size: 3.5rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    line-height: 1.2;
+    animation: fadeInUp 1s ease-out;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.hero-content .hero-subtitle {
+    font-size: 1.2rem;
+    opacity: 0.95;
+    margin-bottom: 0;
+    line-height: 1.5;
+    animation: fadeInUp 1s ease-out 0.2s both;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+/* --- Media Query para Responsividade --- */
+@media (max-width: 768px) {
+    .hero-header {
+        flex-direction: column;
+        text-align: center;
+        gap: 1.5rem;
+        justify-content: center;
+    }
+
+    .hero-content {
+        text-align: center;
+        padding-right: 0;
+        margin-bottom: 0;
+    }
+
+    .hero-content .hero-title {
+        font-size: 2.5rem;
+        margin-bottom: 0.8rem;
+    }
+
+    .hero-content .hero-subtitle {
+        font-size: 1.1rem;
+        margin-bottom: 1rem;
+    }
+
+    /* Ajustar layout completo para mobile */
+    .progress-container {
+        flex-direction: column;
+        gap: 2rem;
+        margin-bottom: 2rem;
+    }
+
+    .progress-history-btn {
+        position: static;
+        transform: none;
+        display: flex;
+        justify-content: center;
+        width: 100%;
+        right: auto;
+    }
+
+    .progress-indicator {
+        max-width: 100%;
+    }
+
+    .btn-history-progress {
+        padding: 16px 32px;
+        font-size: 1rem;
+        min-width: 200px;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero-content .hero-title {
+        font-size: 2rem;
+    }
+
+    .hero-content .hero-subtitle {
+        font-size: 1rem;
+    }
+
+    .btn-history-progress {
+        border: 2px solid var(--hemotec-red);
+        background: white;
+        color: var(--hemotec-red);
+        padding: 18px 36px;
+        border-radius: 40px;
+        font-weight: 600;
+        font-size: 1.1rem;
+        transition: all 0.3s ease;
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        position: relative;
+        white-space: nowrap;
+        margin-left: 2rem;
+    }
+}
+
+button.agendamento {
+    background: white;
+    color: var(--hemotec-red);
+    padding: 18px 36px;
+    border-radius: 40px;
+    font-weight: 600;
+    font-size: 1.1rem;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    position: relative;
+    white-space: nowrap;
+    margin-left: 2rem;
+}
