@@ -181,7 +181,7 @@
 
 /* Seção Hero Específica para Histórico */
 .hero-section-historico {
-    background: linear-gradient(135deg, rgba(35, 40, 47, 0.8), rgba(80, 80, 90, 0.7)), url('https://images.unsplash.com/photo-1524178232363-1fb2b075b655?auto=format&fit=crop' ) no-repeat center center;
+    background: linear-gradient(135deg, rgba(35, 40, 47, 0.8), rgba(80, 80, 90, 0.7)), url('https://images.unsplash.com/photo-1524178232363-1fb2b075b655?auto=format&fit=crop') no-repeat center center;
     background-size: cover;
     color: white;
     padding: 6rem 0 5rem;

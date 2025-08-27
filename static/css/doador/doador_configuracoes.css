@@ -17,13 +17,16 @@ body {
 }
 
 .hero-section {
-    background: linear-gradient(rgba(224, 32, 32, 0.9), rgba(192, 16, 16, 0.9)), url('https://images.unsplash.com/photo-1615461066841-6116e61058f4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80');
+    background: linear-gradient(135deg, rgba(35, 40, 47, 0.8), rgba(80, 80, 90, 0.7)), url('https://images.unsplash.com/photo-1524178232363-1fb2b075b655?auto=format&fit=crop') no-repeat center center;
     background-size: cover;
-    background-position: center;
     color: white;
-    padding: 6rem 0 4rem;
-    margin-bottom: 4rem;
+    padding: 6rem 0 5rem;
+    text-align: center;
     border-radius: 0 0 50px 50px;
+    min-height: 400px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     position: relative;
     overflow: hidden;
 }
