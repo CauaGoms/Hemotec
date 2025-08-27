@@ -1,0 +1,1196 @@
+:root {
+    --hemotec-red: #e02020;
+    --hemotec-dark-red: #c01010;
+    --hemotec-light-red: #ff4040;
+    --hemotec-bg-light: #f8f9fa;
+    --hemotec-text-dark: #333333;
+    --hemotec-accent: #0066cc;
+    --hemotec-success: #28a745;
+    --hemotec-warning: #ffc107;
+    --hemotec-info: #17a2b8;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    line-height: 1.6;
+    color: var(--hemotec-text-dark);
+    overflow-x: hidden;
+}
+
+/* Navbar Styles */
+.navbar {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+}
+
+.navbar.scrolled {
+    background: rgba(255, 255, 255, 0.98);
+    box-shadow: 0 2px 30px rgba(0, 0, 0, 0.15);
+}
+
+.navbar-brand {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    font-size: 1.5rem;
+    color: var(--hemotec-red) !important;
+}
+
+.nav-link {
+    font-weight: 500;
+    color: var(--hemotec-text-dark) !important;
+    transition: color 0.3s ease;
+    position: relative;
+}
+
+.nav-link:hover {
+    color: var(--hemotec-red) !important;
+}
+
+.nav-link::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: -5px;
+    left: 50%;
+    background-color: var(--hemotec-red);
+    transition: all 0.3s ease;
+    transform: translateX(-50%);
+}
+
+.nav-link:hover::after {
+    width: 100%;
+}
+
+/* Hero Section */
+.hero-section {
+    background: linear-gradient(135deg, var(--hemotec-red) 0%, var(--hemotec-dark-red) 100%);
+    padding: 120px 0 80px;
+    color: white;
+    position: relative;
+    overflow: hidden;
+}
+
+.hero-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="50" cy="50" r="1" fill="white" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+    opacity: 0.3;
+}
+
+.hero-content {
+    position: relative;
+    z-index: 2;
+}
+
+.hero-title {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    font-size: 3.5rem;
+    margin-bottom: 1.5rem;
+    line-height: 1.2;
+}
+
+.hero-subtitle {
+    font-size: 1.3rem;
+    margin-bottom: 2.5rem;
+    opacity: 0.9;
+    line-height: 1.6;
+}
+
+.hero-buttons {
+    margin-bottom: 3rem;
+}
+
+.btn-cta {
+    background: linear-gradient(45deg, var(--hemotec-red), var(--hemotec-light-red));
+    border: none;
+    padding: 1rem 2.5rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+    border-radius: 50px;
+    margin-right: 1rem;
+    margin-bottom: 1rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 8px 25px rgba(224, 32, 32, 0.3);
+}
+
+.btn-cta:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 35px rgba(224, 32, 32, 0.4);
+}
+
+.btn-demo {
+    border: 2px solid rgba(255, 255, 255, 0.8);
+    color: white;
+    padding: 1rem 2.5rem;
+    font-size: 1.1rem;
+    font-weight: 500;
+    border-radius: 50px;
+    margin-bottom: 1rem;
+    transition: all 0.3s ease;
+}
+
+.btn-demo:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: white;
+    color: white;
+    transform: translateY(-2px);
+}
+
+.hero-stats {
+    display: flex;
+    gap: 2rem;
+    flex-wrap: wrap;
+}
+
+.stat-item {
+    text-align: center;
+}
+
+.stat-number {
+    display: block;
+    font-size: 2rem;
+    font-weight: 700;
+    color: white;
+}
+
+.stat-label {
+    font-size: 0.9rem;
+    opacity: 0.8;
+}
+
+.hero-image {
+    position: relative;
+    z-index: 2;
+}
+
+.dashboard-preview {
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+    transform: perspective(1000px) rotateY(-5deg) rotateX(5deg);
+    transition: transform 0.3s ease;
+}
+
+.dashboard-preview:hover {
+    transform: perspective(1000px) rotateY(0deg) rotateX(0deg);
+}
+
+.dashboard-header {
+    background: linear-gradient(135deg, var(--hemotec-red), var(--hemotec-dark-red));
+    padding: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.dashboard-dots {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.dashboard-dots span {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.3);
+}
+
+.dashboard-title {
+    color: white;
+    font-weight: 600;
+}
+
+.dashboard-content {
+    padding: 2rem;
+}
+
+.dashboard-card {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+    background: #f8f9fa;
+    border-radius: 10px;
+    margin-bottom: 1rem;
+}
+
+.dashboard-card i {
+    font-size: 1.5rem;
+}
+
+.dashboard-card h6 {
+    margin: 0;
+    font-size: 0.9rem;
+    color: #666;
+}
+
+.dashboard-card span {
+    font-weight: 600;
+    font-size: 1.1rem;
+}
+
+/* Recursos Section */
+.recursos-section {
+    padding: 100px 0;
+    background: white;
+}
+
+.section-title {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    font-size: 2.5rem;
+    color: var(--hemotec-text-dark);
+    margin-bottom: 1rem;
+    position: relative;
+}
+
+.section-subtitle {
+    font-size: 1.2rem;
+    color: #666;
+    margin-bottom: 3rem;
+}
+
+.feature-card {
+    background: white;
+    padding: 2.5rem 2rem;
+    border-radius: 20px;
+    text-align: center;
+    transition: all 0.3s ease;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    height: 100%;
+    opacity: 0;
+    transform: translateY(30px);
+}
+
+.feature-card.animate-in {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.feature-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
+}
+
+.feature-icon {
+    width: 80px;
+    height: 80px;
+    background: linear-gradient(45deg, var(--hemotec-red), var(--hemotec-light-red));
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1.5rem;
+    color: white;
+    font-size: 1.8rem;
+}
+
+.feature-card h5 {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    color: var(--hemotec-text-dark);
+}
+
+.feature-card p {
+    color: #666;
+    line-height: 1.6;
+}
+
+/* Benefícios Section */
+.beneficios-section {
+    padding: 100px 0;
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+}
+
+.beneficios-content {
+    padding-right: 2rem;
+}
+
+.beneficio-item {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 2.5rem;
+    opacity: 0;
+    transform: translateX(-30px);
+    transition: all 0.6s ease;
+}
+
+.beneficio-item.animate-in {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.beneficio-icon {
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(45deg, var(--hemotec-red), var(--hemotec-light-red));
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 1.3rem;
+    margin-right: 1.5rem;
+    flex-shrink: 0;
+}
+
+.beneficio-text h5 {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: var(--hemotec-text-dark);
+}
+
+.beneficio-text p {
+    color: #666;
+    margin: 0;
+    line-height: 1.6;
+}
+
+.beneficios-image {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.stats-card {
+    background: white;
+    padding: 3rem 2rem;
+    border-radius: 25px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    max-width: 400px;
+}
+
+.stats-card h4 {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    margin-bottom: 2rem;
+    color: var(--hemotec-text-dark);
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+}
+
+.stat-box {
+    text-align: center;
+}
+
+.stat-value {
+    display: block;
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--hemotec-red);
+    margin-bottom: 0.5rem;
+}
+
+.stat-desc {
+    font-size: 0.9rem;
+    color: #666;
+}
+
+/* Depoimentos Section */
+.depoimentos-section {
+    padding: 100px 0;
+    background: white;
+}
+
+.depoimento-card {
+    background: white;
+    padding: 2.5rem;
+    border-radius: 20px;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+    height: 100%;
+    transition: all 0.3s ease;
+    opacity: 0;
+    transform: translateY(30px);
+}
+
+.depoimento-card.animate-in {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.depoimento-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
+}
+
+.depoimento-stars {
+    color: #ffc107;
+    margin-bottom: 1.5rem;
+    font-size: 1.1rem;
+}
+
+.depoimento-card p {
+    font-style: italic;
+    color: #666;
+    margin-bottom: 2rem;
+    line-height: 1.7;
+}
+
+.depoimento-autor {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.autor-avatar {
+    width: 50px;
+    height: 50px;
+    background: linear-gradient(45deg, var(--hemotec-red), var(--hemotec-light-red));
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 1.2rem;
+}
+
+.autor-info h6 {
+    margin: 0;
+    font-weight: 600;
+    color: var(--hemotec-text-dark);
+}
+
+.autor-info span {
+    font-size: 0.9rem;
+    color: #666;
+}
+
+/* CTA Section */
+.cta-section {
+    background: linear-gradient(135deg, var(--hemotec-red) 0%, var(--hemotec-dark-red) 100%);
+    padding: 100px 0;
+    color: white;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.cta-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="dots" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="10" cy="10" r="1" fill="white" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23dots)"/></svg>');
+}
+
+.cta-content {
+    position: relative;
+    z-index: 2;
+}
+
+.cta-content h2 {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    font-size: 3rem;
+    margin-bottom: 1.5rem;
+}
+
+.cta-content p {
+    font-size: 1.3rem;
+    margin-bottom: 3rem;
+    opacity: 0.9;
+}
+
+.cta-buttons {
+    margin-bottom: 2rem;
+}
+
+.btn-cta-large {
+    background: white;
+    color: var(--hemotec-red);
+    border: none;
+    padding: 1.2rem 3rem;
+    font-size: 1.2rem;
+    font-weight: 600;
+    border-radius: 50px;
+    margin-right: 1rem;
+    margin-bottom: 1rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.btn-cta-large:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+    color: var(--hemotec-red);
+}
+
+.btn-contact {
+    border: 2px solid rgba(255, 255, 255, 0.8);
+    color: white;
+    padding: 1.2rem 3rem;
+    font-size: 1.2rem;
+    font-weight: 500;
+    border-radius: 50px;
+    margin-bottom: 1rem;
+    transition: all 0.3s ease;
+}
+
+.btn-contact:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: white;
+    color: white;
+    transform: translateY(-2px);
+}
+
+.cta-guarantee {
+    font-size: 1rem;
+    opacity: 0.8;
+}
+
+/* Footer */
+.footer {
+    background: #2c3e50;
+    color: white;
+    padding: 60px 0 20px;
+}
+
+.footer-brand {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+}
+
+.footer-text {
+    color: #bdc3c7;
+    margin-bottom: 2rem;
+    line-height: 1.6;
+}
+
+.social-icons {
+    display: flex;
+    gap: 1rem;
+}
+
+.social-icons a {
+    width: 40px;
+    height: 40px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    transition: all 0.3s ease;
+}
+
+.social-icons a:hover {
+    background: var(--hemotec-red);
+    transform: translateY(-2px);
+}
+
+.footer-links h5 {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+    color: white;
+}
+
+.footer-links ul {
+    list-style: none;
+    padding: 0;
+}
+
+.footer-links ul li {
+    margin-bottom: 0.8rem;
+}
+
+.footer-links ul li a {
+    color: #bdc3c7;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.footer-links ul li a:hover {
+    color: white;
+}
+
+.copyright {
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    margin-top: 3rem;
+    padding-top: 2rem;
+    text-align: center;
+    color: #bdc3c7;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .hero-title {
+        font-size: 2.5rem;
+    }
+    
+    .hero-subtitle {
+        font-size: 1.1rem;
+    }
+    
+    .hero-stats {
+        justify-content: center;
+        gap: 1rem;
+    }
+    
+    .section-title {
+        font-size: 2rem;
+    }
+    
+    .cta-content h2 {
+        font-size: 2rem;
+    }
+    
+    .cta-content p {
+        font-size: 1.1rem;
+    }
+    
+    .beneficios-content {
+        padding-right: 0;
+        margin-bottom: 3rem;
+    }
+    
+    .dashboard-preview {
+        transform: none;
+        margin-top: 3rem;
+    }
+    
+    .btn-cta,
+    .btn-demo,
+    .btn-cta-large,
+    .btn-contact {
+        display: block;
+        width: 100%;
+        margin-right: 0;
+        margin-bottom: 1rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .hero-section {
+        padding: 100px 0 60px;
+    }
+    
+    .feature-card,
+    .depoimento-card {
+        padding: 2rem 1.5rem;
+    }
+    
+    .stats-card {
+        padding: 2rem 1.5rem;
+    }
+    
+    .stats-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+}
+
+
+
+/* Styles from publico_inicio.css for Navbar and Footer */
+
+.navbar {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+}
+
+.navbar.scrolled {
+    background: rgba(255, 255, 255, 0.98);
+    box-shadow: 0 2px 30px rgba(0, 0, 0, 0.15);
+}
+
+.navbar-brand {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    font-size: 1.5rem;
+    color: var(--hemotec-red) !important;
+}
+
+.nav-link {
+    font-weight: 500;
+    color: var(--hemotec-text-dark) !important;
+    transition: color 0.3s ease;
+    position: relative;
+}
+
+.nav-link:hover {
+    color: var(--hemotec-red) !important;
+}
+
+.nav-link::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: -5px;
+    left: 50%;
+    background-color: var(--hemotec-red);
+    transition: all 0.3s ease;
+    transform: translateX(-50%);
+}
+
+.nav-link:hover::after {
+    width: 100%;
+}
+
+.footer {
+    background: #2c3e50;
+    color: white;
+    padding: 60px 0 20px;
+}
+
+.footer-brand {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+}
+
+.footer-text {
+    color: #bdc3c7;
+    margin-bottom: 2rem;
+    line-height: 1.6;
+}
+
+.social-icons {
+    display: flex;
+    gap: 1rem;
+}
+
+.social-icons a {
+    width: 40px;
+    height: 40px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    transition: all 0.3s ease;
+}
+
+.social-icons a:hover {
+    background: var(--hemotec-red);
+    transform: translateY(-2px);
+}
+
+.footer-links h5 {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+    color: white;
+}
+
+.footer-links ul {
+    list-style: none;
+    padding: 0;
+}
+
+.footer-links ul li {
+    margin-bottom: 0.8rem;
+}
+
+.footer-links ul li a {
+    color: #bdc3c7;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.footer-links ul li a:hover {
+    color: white;
+}
+
+.copyright {
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    margin-top: 3rem;
+    padding-top: 2rem;
+    text-align: center;
+    color: #bdc3c7;
+}
+
+@media (max-width: 768px) {
+    .hero-title {
+        font-size: 2.5rem;
+    }
+    
+    .hero-subtitle {
+        font-size: 1.1rem;
+    }
+    
+    .hero-stats {
+        justify-content: center;
+        gap: 1rem;
+    }
+    
+    .section-title {
+        font-size: 2rem;
+    }
+    
+    .cta-content h2 {
+        font-size: 2rem;
+    }
+    
+    .cta-content p {
+        font-size: 1.1rem;
+    }
+    
+    .beneficios-content {
+        padding-right: 0;
+        margin-bottom: 3rem;
+    }
+    
+    .dashboard-preview {
+        transform: none;
+        margin-top: 3rem;
+    }
+    
+    .btn-cta,
+    .btn-demo,
+    .btn-cta-large,
+    .btn-contact {
+        display: block;
+        width: 100%;
+        margin-right: 0;
+        margin-bottom: 1rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .hero-section {
+        padding: 100px 0 60px;
+    }
+    
+    .feature-card,
+    .depoimento-card {
+        padding: 2rem 1.5rem;
+    }
+    
+    .stats-card {
+        padding: 2rem 1.5rem;
+    }
+    
+    .stats-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+}
+
+
+
+/* Como Funciona Section */
+.como-funciona-section {
+    padding: 100px 0;
+    background: #f8f9fa;
+}
+
+.step-card {
+    background: white;
+    padding: 2.5rem;
+    border-radius: 20px;
+    text-align: center;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s ease;
+    height: 100%;
+}
+
+.step-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.12);
+}
+
+.step-number {
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(45deg, var(--hemotec-red), var(--hemotec-light-red));
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    font-weight: 700;
+    margin: 0 auto 1.5rem;
+    box-shadow: 0 5px 15px rgba(224, 32, 32, 0.3);
+}
+
+.step-card h3 {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    color: var(--hemotec-text-dark);
+}
+
+.step-card p {
+    color: #666;
+    line-height: 1.6;
+}
+
+/* Planos Section */
+.planos-section {
+    padding: 100px 0;
+    background: white;
+}
+
+.plan-card {
+    background: white;
+    padding: 2.5rem;
+    border-radius: 20px;
+    text-align: center;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.plan-card.featured {
+    border: 3px solid var(--hemotec-red);
+    transform: translateY(-10px);
+    box-shadow: 0 25px 60px rgba(224, 32, 32, 0.2);
+}
+
+.plan-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
+}
+
+.plan-card.featured:hover {
+    transform: translateY(-15px);
+    box-shadow: 0 30px 70px rgba(224, 32, 32, 0.3);
+}
+
+.plan-header {
+    margin-bottom: 2rem;
+}
+
+.plan-header h3 {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    font-size: 2rem;
+    color: var(--hemotec-text-dark);
+    margin-bottom: 0.5rem;
+}
+
+.plan-header p {
+    color: #666;
+    font-size: 1rem;
+}
+
+.plan-features {
+    list-style: none;
+    padding: 0;
+    margin-bottom: 2rem;
+    flex-grow: 1;
+}
+
+.plan-features li {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+    color: #555;
+    font-size: 1rem;
+}
+
+.plan-features li i {
+    margin-right: 0.75rem;
+    color: var(--hemotec-success);
+    font-size: 1.1rem;
+}
+
+.plan-features li .fa-times-circle {
+    color: var(--hemotec-red);
+}
+
+.plan-card .btn-block {
+    width: 100%;
+    padding: 0.8rem 1.5rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+    border-radius: 50px;
+    background: linear-gradient(45deg, var(--hemotec-red), var(--hemotec-light-red));
+    border: none;
+    color: white;
+    transition: all 0.3s ease;
+    box-shadow: 0 5px 15px rgba(224, 32, 32, 0.2);
+}
+
+.plan-card .btn-block:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(224, 32, 32, 0.3);
+}
+
+/* FAQ Section */
+.faq-section {
+    padding: 100px 0;
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+}
+
+.accordion-item {
+    margin-bottom: 1rem;
+    border: none;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+}
+
+.accordion-button {
+    background: white;
+    color: var(--hemotec-text-dark);
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+    font-size: 1.1rem;
+    padding: 1.5rem 2rem;
+    border-radius: 15px;
+    transition: all 0.3s ease;
+}
+
+.accordion-button:not(.collapsed) {
+    background: var(--hemotec-red);
+    color: white;
+    box-shadow: none;
+}
+
+.accordion-button:not(.collapsed)::after {
+    filter: brightness(0) invert(1);
+}
+
+.accordion-body {
+    padding: 1.5rem 2rem;
+    background: white;
+    color: #666;
+    line-height: 1.7;
+    border-top: 1px solid #eee;
+}
+
+.accordion-button:focus {
+    box-shadow: none;
+    border-color: transparent;
+}
+
+/* Responsive adjustments */
+@media (max-width: 991.98px) {
+    .hero-title {
+        font-size: 2.8rem;
+    }
+    .hero-subtitle {
+        font-size: 1.1rem;
+    }
+    .hero-image {
+        margin-top: 3rem;
+    }
+    .beneficios-content {
+        padding-right: 0;
+        margin-bottom: 3rem;
+    }
+}
+
+@media (max-width: 767.98px) {
+    .hero-section {
+        padding: 100px 0 60px;
+    }
+    .hero-title {
+        font-size: 2.2rem;
+    }
+    .hero-subtitle {
+        font-size: 1rem;
+    }
+    .hero-buttons {
+        flex-direction: column;
+        align-items: center;
+    }
+    .btn-cta, .btn-demo {
+        width: 100%;
+        margin-right: 0;
+        margin-bottom: 1rem;
+    }
+    .hero-stats {
+        justify-content: center;
+    }
+    .section-title {
+        font-size: 2rem;
+    }
+    .section-subtitle {
+        font-size: 1rem;
+    }
+    .dashboard-preview {
+        transform: none;
+    }
+    .plan-card.featured {
+        transform: none;
+    }
+}
+
+@media (max-width: 575.98px) {
+    .hero-section {
+        padding: 80px 0 40px;
+    }
+    .hero-title {
+        font-size: 1.8rem;
+    }
+    .hero-subtitle {
+        font-size: 0.9rem;
+    }
+    .stat-number {
+        font-size: 1.5rem;
+    }
+    .stat-label {
+        font-size: 0.8rem;
+    }
+    .dashboard-content {
+        padding: 1rem;
+    }
+    .dashboard-card {
+        flex-direction: column;
+        text-align: center;
+    }
+    .dashboard-card i {
+        margin-bottom: 0.5rem;
+    }
+    .feature-card, .step-card, .plan-card, .depoimento-card {
+        padding: 1.5rem;
+    }
+    .accordion-button {
+        font-size: 1rem;
+        padding: 1rem 1.5rem;
+    }
+    .accordion-body {
+        padding: 1rem 1.5rem;
+    }
+    .cta-title {
+        font-size: 1.8rem;
+    }
+    .cta-subtitle {
+        font-size: 0.9rem;
+    }
+    .cta-info span {
+        font-size: 0.8rem;
+    }
+}
+

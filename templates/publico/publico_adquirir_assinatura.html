@@ -1,14 +1,471 @@
 {% extends "publico/publico__base.html" %}
+
 {% block custom_css %}
-<!-- <link href="/static/css/" rel="stylesheet"> -->
+<link rel="stylesheet" href="/static/css/publico/publico_adquirir_assinatura.css">
 {% endblock %}
 
-{% block conteudo %}
-<h1>Adquirir Assinatura</h1>
+{% block corpo %}
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6">
+                    <div class="hero-content">
+                        <h1 class="hero-title">Transforme a Gestão do seu Hemocentro</h1>
+                        <p class="hero-subtitle">O Hemotec é a solução completa para modernizar e otimizar todos os processos do seu hemocentro. Controle de estoque, gestão de doadores, relatórios avançados e muito mais.</p>
+                        <div class="hero-buttons">
+                            <a href="cadastro.html" class="btn btn-primary btn-cta">
+                                <i class="fas fa-rocket me-2"></i>Começar Agora
+                            </a>
+                            <a href="#recursos" class="btn btn-outline-primary btn-demo">
+                                <i class="fas fa-play me-2"></i>Ver Demonstração
+                            </a>
+                        </div>
+                        <div class="hero-stats">
+                            <div class="stat-item">
+                                <span class="stat-number">500+</span>
+                                <span class="stat-label">Hemocentros</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-number">98%</span>
+                                <span class="stat-label">Satisfação</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-number">24/7</span>
+                                <span class="stat-label">Suporte</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="hero-image">
+                        <div class="dashboard-preview">
+                            <div class="dashboard-header">
+                                <div class="dashboard-dots">
+                                    <span></span><span></span><span></span>
+                                </div>
+                                <span class="dashboard-title">Hemotec Dashboard</span>
+                            </div>
+                            <div class="dashboard-content">
+                                <div class="dashboard-card">
+                                    <i class="fas fa-tint text-danger"></i>
+                                    <div>
+                                        <h6>Estoque Total</h6>
+                                        <span class="text-success">1,247 bolsas</span>
+                                    </div>
+                                </div>
+                                <div class="dashboard-card">
+                                    <i class="fas fa-users text-primary"></i>
+                                    <div>
+                                        <h6>Doadores Ativos</h6>
+                                        <span class="text-info">3,892</span>
+                                    </div>
+                                </div>
+                                <div class="dashboard-card">
+                                    <i class="fas fa-chart-line text-warning"></i>
+                                    <div>
+                                        <h6>Doações Hoje</h6>
+                                        <span class="text-warning">47</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Como Funciona Section -->
+    <section id="como-funciona" class="como-funciona-section">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="section-title">Como o Hemotec Funciona</h2>
+                <p class="section-subtitle">Descubra a simplicidade e o poder da nossa plataforma em 3 passos</p>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="step-card">
+                        <div class="step-number">1</div>
+                        <h3>Integração Simplificada</h3>
+                        <p>Nossa equipe especializada garante uma transição suave e rápida, importando seus dados existentes e configurando o sistema para suas necessidades.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="step-card">
+                        <div class="step-number">2</div>
+                        <h3>Gestão Intuitiva</h3>
+                        <p>Com uma interface amigável, você e sua equipe gerenciam doadores, estoque e campanhas com poucos cliques, economizando tempo e recursos.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="step-card">
+                        <div class="step-number">3</div>
+                        <h3>Resultados Otimizados</h3>
+                        <p>Acompanhe métricas em tempo real, identifique gargalos e tome decisões estratégicas para aumentar a eficiência e o impacto do seu hemocentro.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Recursos Section -->
+    <section id="recursos" class="recursos-section">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="section-title">Recursos Poderosos</h2>
+                <p class="section-subtitle">Tudo que você precisa para uma gestão eficiente e moderna</p>
+            </div>
+            <div class="row">
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-warehouse"></i>
+                        </div>
+                        <h5>Controle de Estoque</h5>
+                        <p>Monitore em tempo real o estoque de sangue por tipo sanguíneo, com alertas automáticos para níveis críticos.</p>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-user-friends"></i>
+                        </div>
+                        <h5>Gestão de Doadores</h5>
+                        <p>Cadastro completo, histórico de doações, agendamentos e comunicação automatizada com doadores.</p>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-chart-bar"></i>
+                        </div>
+                        <h5>Relatórios Avançados</h5>
+                        <p>Dashboards interativos e relatórios detalhados para tomada de decisões estratégicas.</p>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-mobile-alt"></i>
+                        </div>
+                        <h5>App Mobile</h5>
+                        <p>Aplicativo para doadores agendarem doações e acompanharem seu histórico de contribuições.</p>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                        <h5>Segurança Total</h5>
+                        <p>Criptografia de ponta, backup automático e conformidade com LGPD e normas de saúde.</p>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-headset"></i>
+                        </div>
+                        <h5>Suporte 24/7</h5>
+                        <p>Equipe especializada disponível 24 horas por dia para garantir o funcionamento perfeito.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Benefícios Section -->
+    <section id="beneficios" class="beneficios-section">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6">
+                    <div class="beneficios-content">
+                        <h2 class="section-title">Por que escolher o Hemotec?</h2>
+                        <div class="beneficio-item">
+                            <div class="beneficio-icon">
+                                <i class="fas fa-clock"></i>
+                            </div>
+                            <div class="beneficio-text">
+                                <h5>Economia de Tempo</h5>
+                                <p>Automatize processos manuais e reduza em até 70% o tempo gasto em tarefas administrativas.</p>
+                            </div>
+                        </div>
+                        <div class="beneficio-item">
+                            <div class="beneficio-icon">
+                                <i class="fas fa-dollar-sign"></i>
+                            </div>
+                            <div class="beneficio-text">
+                                <h5>Redução de Custos</h5>
+                                <p>Otimize recursos, evite desperdícios e reduza custos operacionais significativamente.</p>
+                            </div>
+                        </div>
+                        <div class="beneficio-item">
+                            <div class="beneficio-icon">
+                                <i class="fas fa-heart"></i>
+                            </div>
+                            <div class="beneficio-text">
+                                <h5>Mais Vidas Salvas</h5>
+                                <p>Gestão eficiente resulta em mais doações e melhor distribuição de sangue para quem precisa.</p>
+                            </div>
+                        </div>
+                        <div class="beneficio-item">
+                            <div class="beneficio-icon">
+                                <i class="fas fa-certificate"></i>
+                            </div>
+                            <div class="beneficio-text">
+                                <h5>Conformidade Garantida</h5>
+                                <p>Sistema desenvolvido seguindo todas as normas da ANVISA e regulamentações de saúde.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="beneficios-image">
+                        <div class="stats-card">
+                            <h4>Resultados Comprovados</h4>
+                            <div class="stats-grid">
+                                <div class="stat-box">
+                                    <span class="stat-value">85%</span>
+                                    <span class="stat-desc">Aumento na eficiência</span>
+                                </div>
+                                <div class="stat-box">
+                                    <span class="stat-value">60%</span>
+                                    <span class="stat-desc">Redução de custos</span>
+                                </div>
+                                <div class="stat-box">
+                                    <span class="stat-value">40%</span>
+                                    <span class="stat-desc">Mais doações</span>
+                                </div>
+                                <div class="stat-box">
+                                    <span class="stat-value">99.9%</span>
+                                    <span class="stat-desc">Uptime garantido</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Planos e Recursos (sem valores) -->
+    <section id="planos" class="planos-section">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="section-title">Planos Flexíveis para sua Necessidade</h2>
+                <p class="section-subtitle">Escolha o plano que melhor se adapta ao tamanho e às demandas do seu hemocentro</p>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="plan-card">
+                        <div class="plan-header">
+                            <h3>Básico</h3>
+                            <p>Ideal para hemocentros de pequeno porte</p>
+                        </div>
+                        <ul class="plan-features">
+                            <li><i class="fas fa-check-circle"></i> Gestão de Doadores Essencial</li>
+                            <li><i class="fas fa-check-circle"></i> Controle de Estoque Básico</li>
+                            <li><i class="fas fa-check-circle"></i> Relatórios Padrão</li>
+                            <li><i class="fas fa-check-circle"></i> Suporte por E-mail</li>
+                            <li><i class="fas fa-times-circle text-danger"></i> App Mobile (Opcional)</li>
+                        </ul>
+                        <a href="cadastro.html" class="btn btn-primary btn-block">Saiba Mais</a>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="plan-card featured">
+                        <div class="plan-header">
+                            <h3>Avançado</h3>
+                            <p>Perfeito para hemocentros em crescimento</p>
+                        </div>
+                        <ul class="plan-features">
+                            <li><i class="fas fa-check-circle"></i> Todos os recursos do Básico</li>
+                            <li><i class="fas fa-check-circle"></i> Gestão de Campanhas</li>
+                            <li><i class="fas fa-check-circle"></i> Relatórios Personalizados</li>
+                            <li><i class="fas fa-check-circle"></i> Integração com App Mobile</li>
+                            <li><i class="fas fa-check-circle"></i> Suporte Prioritário</li>
+                        </ul>
+                        <a href="cadastro.html" class="btn btn-primary btn-block">Saiba Mais</a>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="plan-card">
+                        <div class="plan-header">
+                            <h3>Enterprise</h3>
+                            <p>Solução completa para grandes instituições</p>
+                        </div>
+                        <ul class="plan-features">
+                            <li><i class="fas fa-check-circle"></i> Todos os recursos do Avançado</li>
+                            <li><i class="fas fa-check-circle"></i> Módulos Customizáveis</li>
+                            <li><i class="fas fa-check-circle"></i> Consultoria Estratégica</li>
+                            <li><i class="fas fa-check-circle"></i> Suporte Dedicado 24/7</li>
+                            <li><i class="fas fa-check-circle"></i> Treinamento On-site</li>
+                        </ul>
+                        <a href="cadastro.html" class="btn btn-primary btn-block">Saiba Mais</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Depoimentos Section -->
+    <section id="depoimentos" class="depoimentos-section">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="section-title">O que nossos clientes dizem</h2>
+                <p class="section-subtitle">Depoimentos reais de gestores que transformaram seus hemocentros</p>
+            </div>
+            <div class="row">
+                <div class="col-lg-4 mb-4">
+                    <div class="depoimento-card">
+                        <div class="depoimento-stars">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <p>"O Hemotec revolucionou nossa gestão. Conseguimos aumentar as doações em 45% no primeiro ano e reduzir significativamente os custos operacionais."</p>
+                        <div class="depoimento-autor">
+                            <div class="autor-avatar">
+                                <i class="fas fa-user-md"></i>
+                            </div>
+                            <div class="autor-info">
+                                <h6>Dr. Maria Silva</h6>
+                                <span>Diretora - Hemocentro Regional SP</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 mb-4">
+                    <div class="depoimento-card">
+                        <div class="depoimento-stars">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <p>"A implementação foi surpreendentemente rápida e o suporte é excepcional. Nossa equipe se adaptou facilmente e os resultados apareceram imediatamente."</p>
+                        <div class="depoimento-autor">
+                            <div class="autor-avatar">
+                                <i class="fas fa-user-tie"></i>
+                            </div>
+                            <div class="autor-info">
+                                <h6>João Santos</h6>
+                                <span>Gestor - Hemocentro MG</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 mb-4">
+                    <div class="depoimento-card">
+                        <div class="depoimento-stars">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                        </div>
+                        <p>"Finalmente temos controle total sobre nosso estoque e doadores. Os relatórios nos ajudam a tomar decisões mais assertivas diariamente."</p>
+                        <div class="depoimento-autor">
+                            <div class="autor-avatar">
+                                <i class="fas fa-user-nurse"></i>
+                            </div>
+                            <div class="autor-info">
+                                <h6>Ana Costa</h6>
+                                <span>Coordenadora - Hemocentro RJ</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section id="faq" class="faq-section">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="section-title">Perguntas Frequentes</h2>
+                <p class="section-subtitle">Tire suas dúvidas sobre o Hemotec e como ele pode ajudar seu hemocentro</p>
+            </div>
+            <div class="accordion" id="faqAccordion">
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="headingOne">
+                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                            O Hemotec é compatível com meu sistema atual?
+                        </button>
+                    </h2>
+                    <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#faqAccordion">
+                        <div class="accordion-body">
+                            Sim, o Hemotec foi desenvolvido para ser flexível e pode ser integrado com diversos sistemas existentes. Nossa equipe técnica fará uma análise e auxiliará em todo o processo de migração e integração de dados.
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="headingTwo">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                            Qual o nível de segurança dos dados no Hemotec?
+                        </button>
+                    </h2>
+                    <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#faqAccordion">
+                        <div class="accordion-body">
+                            Priorizamos a segurança dos seus dados. Utilizamos criptografia de ponta, backups diários e seguimos rigorosamente as normas da LGPD e as regulamentações de saúde para garantir a proteção e a privacidade de todas as informações.
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="headingThree">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                            Como funciona o suporte técnico?
+                        </button>
+                    </h2>
+                    <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#faqAccordion">
+                        <div class="accordion-body">
+                            Oferecemos suporte técnico 24 horas por dia, 7 dias por semana, por meio de diversos canais: telefone, e-mail e chat online. Nossa equipe está sempre pronta para auxiliar e garantir o funcionamento ininterrupto do sistema.
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="headingFour">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                            Posso personalizar o sistema para as necessidades do meu hemocentro?
+                        </button>
+                    </h2>
+                    <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour" data-bs-parent="#faqAccordion">
+                        <div class="accordion-body">
+                            Sim, o Hemotec é altamente personalizável. Entendemos que cada hemocentro possui particularidades, e por isso oferecemos módulos customizáveis e consultoria para adaptar a plataforma às suas demandas específicas.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="container">
+            <div class="cta-content">
+                <h2 class="cta-title">Pronto para transformar seu hemocentro?</h2>
+                <p class="cta-subtitle">Junte-se a centenas de gestores que já escolheram o Hemotec para modernizar suas operações</p>
+                <a href="cadastro.html" class="btn btn-light btn-cta-final">
+                    <i class="fas fa-rocket me-2"></i>Solicitar Demonstração Gratuita
+                </a>
+                <div class="cta-info">
+                    <span><i class="fas fa-check-circle me-2"></i>30 dias de garantia</span>
+                    <span><i class="fas fa-times-circle me-2"></i>Sem compromisso</span>
+                    <span><i class="fas fa-headset me-2"></i>Suporte incluído</span>
+                </div>
+            </div>
+        </div>
+    </section>
 {% endblock %}
 
 <!-- Custom JavaScript -->
 {% block custom_js %}
-<!-- <script src="/static/js/">  
-</script> -->
+<script src="/static/js/publico/publico_adquirir_assinatura.js">
+</script>
 {% endblock %}
+
