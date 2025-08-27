@@ -31,12 +31,7 @@
                 <div class="nav-tabs-container">
                     <ul class="nav nav-tabs settings-tabs" id="settingsTabs" role="tablist">
                         <li class="nav-item" role="presentation">
-                            <button class="nav-link active" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab">
-                                <i class="fas fa-user me-2"></i>Perfil
-                            </button>
-                        </li>
-                        <li class="nav-item" role="presentation">
-                            <button class="nav-link" id="notifications-tab" data-bs-toggle="tab" data-bs-target="#notifications" type="button" role="tab">
+                            <button class="nav-link active" id="notifications-tab" data-bs-toggle="tab" data-bs-target="#notifications" type="button" role="tab">
                                 <i class="fas fa-bell me-2"></i>Notificações
                             </button>
                         </li>
@@ -50,11 +45,6 @@
                                 <i class="fas fa-sliders-h me-2"></i>Preferências
                             </button>
                         </li>
-                        <li class="nav-item" role="presentation">
-                            <button class="nav-link" id="security-tab" data-bs-toggle="tab" data-bs-target="#security" type="button" role="tab">
-                                <i class="fas fa-lock me-2"></i>Segurança
-                            </button>
-                        </li>
                     </ul>
                 </div>
             </div>
@@ -64,106 +54,8 @@
     <!-- Conteúdo das Configurações -->
     <div class="settings-content fade-in">
         <div class="tab-content" id="settingsTabContent">
-            
-            <!-- Aba Perfil -->
-            <div class="tab-pane fade show active" id="profile" role="tabpanel">
-                <div class="settings-section">
-                    <div class="section-header">
-                        <h3><i class="fas fa-user me-2"></i>Informações do Perfil</h3>
-                        <p>Atualize suas informações pessoais e dados de contato</p>
-                    </div>
-                    
-                    <div class="row">
-                        <div class="col-md-4 mb-4">
-                            <div class="profile-photo-section">
-                                <div class="current-photo">
-                                    <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&q=80" alt="Foto do Perfil" id="profileImage">
-                                    <div class="photo-overlay">
-                                        <i class="fas fa-camera"></i>
-                                    </div>
-                                </div>
-                                <button class="btn btn-outline-primary btn-sm mt-3" onclick="changeProfilePhoto( )">
-                                    <i class="fas fa-upload me-2"></i>Alterar Foto
-                                </button>
-                            </div>
-                        </div>
-                        
-                        <div class="col-md-8">
-                            <form id="profileForm">
-                                <div class="row">
-                                    <div class="col-md-6 mb-3">
-                                        <label class="form-label">Nome Completo</label>
-                                        <input type="text" class="form-control" value="João Silva Santos" id="fullName">
-                                    </div>
-                                    <div class="col-md-6 mb-3">
-                                        <label class="form-label">Email</label>
-                                        <input type="email" class="form-control" value="joao.silva@email.com" id="email">
-                                    </div>
-                                </div>
-                                
-                                <div class="row">
-                                    <div class="col-md-6 mb-3">
-                                        <label class="form-label">Telefone</label>
-                                        <input type="tel" class="form-control" value="(11) 99999-9999" id="phone">
-                                    </div>
-                                    <div class="col-md-6 mb-3">
-                                        <label class="form-label">Data de Nascimento</label>
-                                        <input type="date" class="form-control" value="1990-05-15" id="birthDate">
-                                    </div>
-                                </div>
-                                
-                                <div class="row">
-                                    <div class="col-md-6 mb-3">
-                                        <label class="form-label">Tipo Sanguíneo</label>
-                                        <select class="form-select" id="bloodType">
-                                            <option value="A+">A+</option>
-                                            <option value="A-">A-</option>
-                                            <option value="B+">B+</option>
-                                            <option value="B-">B-</option>
-                                            <option value="AB+">AB+</option>
-                                            <option value="AB-">AB-</option>
-                                            <option value="O+" selected>O+</option>
-                                            <option value="O-">O-</option>
-                                        </select>
-                                    </div>
-                                    <div class="col-md-6 mb-3">
-                                        <label class="form-label">Peso (kg)</label>
-                                        <input type="number" class="form-control" value="75" id="weight">
-                                    </div>
-                                </div>
-                                
-                                <div class="mb-3">
-                                    <label class="form-label">Endereço</label>
-                                    <input type="text" class="form-control" value="Rua das Flores, 123 - Centro" id="address">
-                                </div>
-                                
-                                <div class="row">
-                                    <div class="col-md-6 mb-3">
-                                        <label class="form-label">Cidade</label>
-                                        <input type="text" class="form-control" value="São Paulo" id="city">
-                                    </div>
-                                    <div class="col-md-6 mb-3">
-                                        <label class="form-label">CEP</label>
-                                        <input type="text" class="form-control" value="01234-567" id="zipCode">
-                                    </div>
-                                </div>
-                                
-                                <div class="form-actions">
-                                    <button type="submit" class="btn btn-primary">
-                                        <i class="fas fa-save me-2"></i>Salvar Alterações
-                                    </button>
-                                    <button type="button" class="btn btn-outline-secondary" onclick="resetProfileForm()">
-                                        <i class="fas fa-undo me-2"></i>Cancelar
-                                    </button>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
             <!-- Aba Notificações -->
-            <div class="tab-pane fade" id="notifications" role="tabpanel">
+            <div class="tab-pane fade show active" id="notifications" role="tabpanel">
                 <div class="settings-section">
                     <div class="section-header">
                         <h3><i class="fas fa-bell me-2"></i>Preferências de Notificação</h3>
@@ -449,139 +341,6 @@
                     </div>
                 </div>
             </div>
-
-            <!-- Aba Segurança -->
-            <div class="tab-pane fade" id="security" role="tabpanel">
-                <div class="settings-section">
-                    <div class="section-header">
-                        <h3><i class="fas fa-lock me-2"></i>Segurança da Conta</h3>
-                        <p>Gerencie suas credenciais e atividades de segurança</p>
-                    </div>
-                    
-                    <div class="security-settings">
-                        <div class="security-group">
-                            <h5>Alterar Senha</h5>
-                            <div class="setting-item">
-                                <div class="setting-info">
-                                    <strong>Senha Atual</strong>
-                                    <p>Insira sua senha atual para confirmar</p>
-                                </div>
-                                <div class="setting-control">
-                                    <input type="password" class="form-control" id="currentPassword">
-                                </div>
-                            </div>
-                            
-                            <div class="setting-item">
-                                <div class="setting-info">
-                                    <strong>Nova Senha</strong>
-                                    <p>Mínimo de 8 caracteres, com letras, números e símbolos</p>
-                                </div>
-                                <div class="setting-control">
-                                    <input type="password" class="form-control" id="newPassword">
-                                </div>
-                            </div>
-                            
-                            <div class="setting-item">
-                                <div class="setting-info">
-                                    <strong>Confirmar Nova Senha</strong>
-                                    <p>Repita sua nova senha</p>
-                                </div>
-                                <div class="setting-control">
-                                    <input type="password" class="form-control" id="confirmNewPassword">
-                                </div>
-                            </div>
-                            
-                            <div class="form-actions">
-                                <button class="btn btn-primary" onclick="changePassword()">
-                                    <i class="fas fa-key me-2"></i>Alterar Senha
-                                </button>
-                            </div>
-                        </div>
-                        
-                        <div class="security-group">
-                            <h5>Autenticação de Dois Fatores (2FA)</h5>
-                            <div class="setting-item">
-                                <div class="setting-info">
-                                    <strong>Status do 2FA</strong>
-                                    <p>Adicione uma camada extra de segurança à sua conta</p>
-                                </div>
-                                <div class="setting-control">
-                                    <div class="form-check form-switch">
-                                        <input class="form-check-input" type="checkbox" id="twoFactorAuth">
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <div class="form-actions">
-                                <button class="btn btn-outline-primary" onclick="setupTwoFactorAuth()">
-                                    <i class="fas fa-qrcode me-2"></i>Configurar 2FA
-                                </button>
-                            </div>
-                        </div>
-                        
-                        <div class="security-group">
-                            <h5>Sessões Ativas</h5>
-                            <p>Gerencie os dispositivos onde sua conta está logada</p>
-                            <div class="active-sessions">
-                                <div class="session-item">
-                                    <div class="session-info">
-                                        <strong><i class="fas fa-desktop me-2"></i>Desktop (Windows)</strong>
-                                        <p>Local: São Paulo, Brasil</p>
-                                        <p>Último Acesso: 19 de Junho de 2025, 10:30</p>
-                                    </div>
-                                    <div class="session-actions">
-                                        <button class="btn btn-outline-danger btn-sm" onclick="logoutSession('desktop')">
-                                            <i class="fas fa-sign-out-alt me-2"></i>Sair
-                                        </button>
-                                    </div>
-                                </div>
-                                
-                                <div class="session-item">
-                                    <div class="session-info">
-                                        <strong><i class="fas fa-mobile-alt me-2"></i>Mobile (Android)</strong>
-                                        <p>Local: Rio de Janeiro, Brasil</p>
-                                        <p>Último Acesso: 19 de Junho de 2025, 09:15</p>
-                                    </div>
-                                    <div class="session-actions">
-                                        <button class="btn btn-outline-danger btn-sm" onclick="logoutSession('mobile')">
-                                            <i class="fas fa-sign-out-alt me-2"></i>Sair
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <div class="form-actions">
-                                <button class="btn btn-danger" onclick="logoutAllSessions()">
-                                    <i class="fas fa-power-off me-2"></i>Sair de Todas as Sessões
-                                </button>
-                            </div>
-                        </div>
-                        
-                        <div class="security-group">
-                            <h5>Histórico de Segurança</h5>
-                            <p>Visualize atividades recentes relacionadas à segurança da sua conta</p>
-                            <div class="security-log">
-                                <div class="log-item">
-                                    <strong>Login bem-sucedido</strong>
-                                    <p>Dispositivo: Desktop (Windows) - IP: 192.168.1.100</p>
-                                    <small>19 de Junho de 2025, 10:30</small>
-                                </div>
-                                <div class="log-item">
-                                    <strong>Tentativa de login falha</strong>
-                                    <p>Dispositivo: Desconhecido - IP: 203.0.113.45</p>
-                                    <small>18 de Junho de 2025, 23:45</small>
-                                </div>
-                                <div class="log-item">
-                                    <strong>Senha alterada</strong>
-                                    <p>Dispositivo: Desktop (Windows)</p>
-                                    <small>15 de Junho de 2025, 14:00</small>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
         </div>
     </div>
 </div>

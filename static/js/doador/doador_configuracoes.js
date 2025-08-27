@@ -45,7 +45,7 @@ document.addEventListener("DOMContentLoaded", function () {
     floatingSaveBtn.addEventListener("click", function () {
         // Aqui você pode adicionar a lógica para salvar todas as configurações
         // Por exemplo, coletar dados de todos os formulários e enviar via AJAX
-        showToast("Configurações salvas com sucesso!", "success");
+        showToast("Configurações salvas com sucesso! (Funcionalidade em desenvolvimento)", "info");
         markAsSaved();
     });
 

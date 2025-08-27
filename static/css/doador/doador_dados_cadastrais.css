@@ -240,6 +240,25 @@
     align-self: center;
 }
 
+.eligibility-card {
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    border: 2px solid #e9ecef;
+    border-radius: 15px;
+    padding: 1.5rem;
+    margin-bottom: 1rem;
+    transition: all 0.3s ease;
+}
+
+.eligibility-card.valid {
+    border-color: var(--hemotec-success);
+    background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%);
+}
+
+.eligibility-card.invalid {
+    border-color: var(--hemotec-danger);
+    background: linear-gradient(135deg, #f8d7da 0%, #f5c6cb 100%);
+}
+
 @media (max-width: 768px) {
     .profile-stats {
         flex-direction: column;

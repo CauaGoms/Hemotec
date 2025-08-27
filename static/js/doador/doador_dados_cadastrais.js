@@ -26,6 +26,50 @@ function confirmAccountDeletion() {
     }
 }
 
+function checkEligibility() {
+    // Verificar idade (assumindo que já foi validada no cadastro inicial)
+    const ageCard = document.getElementById('eligibility-age');
+    ageCard.classList.add('valid');
+    ageCard.querySelector('.fa-check-circle').style.display = 'block';
+
+    // Verificar peso
+    const pesoInput = document.getElementById('peso');
+    pesoInput.addEventListener('input', function () {
+        const weightCard = document.getElementById('eligibility-weight');
+        const peso = parseFloat(this.value);
+
+        if (peso >= 50) {
+            weightCard.classList.remove('invalid');
+            weightCard.classList.add('valid');
+            weightCard.querySelector('.fa-check-circle').style.display = 'block';
+            weightCard.querySelector('.fa-times-circle').style.display = 'none';
+        } else {
+            weightCard.classList.remove('valid');
+            weightCard.classList.add('invalid');
+            weightCard.querySelector('.fa-check-circle').style.display = 'none';
+            weightCard.querySelector('.fa-times-circle').style.display = 'block';
+        }
+    });
+}
+
+// Inicializar data mínima para agendamento
+document.addEventListener('DOMContentLoaded', function () {
+    const today = new Date();
+    const tomorrow = new Date(today);
+    tomorrow.setDate(tomorrow.getDate() + 1);
+
+    const dateInput = document.getElementById('dataDoacao');
+    dateInput.min = tomorrow.toISOString().split('T')[0];
+
+    // Máximo 30 dias no futuro
+    const maxDate = new Date(today);
+    maxDate.setDate(maxDate.getDate() + 30);
+    dateInput.max = maxDate.toISOString().split('T')[0];
+
+    // Verificar elegibilidade inicial
+    checkEligibility();
+});
+
 // Ativar tooltips
 var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
 var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
