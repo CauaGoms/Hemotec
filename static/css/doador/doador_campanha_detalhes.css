@@ -47,7 +47,7 @@ body {
 
 /* Hero Section da Campanha */
 .campaign-hero {
-    background: linear-gradient(135deg, rgba(224, 32, 32, 0.9), rgba(192, 16, 16, 0.8)), url('https://images.unsplash.com/photo-1615461066841-6116e61058f4?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80');
+    background: linear-gradient(135deg, rgba(35, 40, 47, 0.8), rgba(80, 80, 90, 0.7)), url('https://images.unsplash.com/photo-1524178232363-1fb2b075b655?auto=format&fit=crop') no-repeat center center;
     background-size: cover;
     background-position: center;
     color: white;
@@ -66,7 +66,7 @@ body {
     left: 0;
     right: 0;
     bottom: 0;
-    background: linear-gradient(45deg, rgba(224, 32, 32, 0.1) 0%, rgba(192, 16, 16, 0.3) 100%);
+    background: linear-gradient(45deg, rgba(35, 40, 47, 0.1) 0%, rgba(80, 80, 90, 0.3) 100%);
     animation: pulse 4s ease-in-out infinite;
 }
 
@@ -690,6 +690,50 @@ body {
     }
 }
 
+/* Reconhecimentos */
+.recognition-item {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    padding: 1.5rem;
+    background: #f8f9fa;
+    border-radius: 12px;
+    margin-bottom: 1rem;
+    transition: all 0.3s ease;
+}
+
+.recognition-item:hover {
+    background: white;
+    transform: translateY(-3px);
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+}
+
+.recognition-icon {
+    background: linear-gradient(135deg, var(--hemotec-red), var(--hemotec-light-red));
+    color: white;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    flex-shrink: 0;
+}
+
+.recognition-content h5 {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+    color: var(--hemotec-text-dark);
+    margin-bottom: 0.5rem;
+}
+
+.recognition-content p {
+    color: var(--hemotec-gray);
+    margin: 0;
+    line-height: 1.5;
+}
+
 /* Responsividade */
 @media (max-width: 768px) {
     .campaign-title {
@@ -741,6 +785,12 @@ body {
     .share-options {
         grid-template-columns: 1fr;
     }
+    
+    .recognition-item {
+        flex-direction: column;
+        text-align: center;
+        gap: 1rem;
+    }
 }
 
 @media (max-width: 480px) {
@@ -763,4 +813,11 @@ body {
     .sidebar-card {
         padding: 1.5rem;
     }
+    
+    .recognition-icon {
+        width: 50px;
+        height: 50px;
+        font-size: 1.2rem;
+    }
 }
+
