@@ -1,0 +1,513 @@
+:root {
+    --hemotec-red: #C41515;
+    --hemotec-gray: #23282F;
+    --hemotec-light-red: #ff4040;
+    --hemotec-dark-red: #a80f0f;
+    --warning-color: #ffc107;
+    --danger-color: #dc3545;
+    --success-color: #198754;
+    --info-color: #0dcaf0;
+}
+
+/* Botão Voltar */
+.back-arrow {
+    position: fixed;
+    top: 100px;
+    left: 20px;
+    background: rgba(255, 255, 255, 0.9);
+    color: var(--hemotec-red);
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    font-size: 1.2rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+}
+
+.back-arrow:hover {
+    background: var(--hemotec-red);
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+    text-decoration: none;
+}
+
+/* Seção Hero Específica para Exclusão */
+.hero-section-excluir {
+background: linear-gradient(135deg, rgba(35, 40, 47, 0.8), rgba(80, 80, 90, 0.7)), url('https://images.unsplash.com/photo-1524178232363-1fb2b075b655?auto=format&fit=crop') no-repeat center center;
+    background-size: cover;
+    color: white;
+    padding: 6rem 0 5rem;
+    text-align: center;
+    border-radius: 0 0 50px 50px;
+    min-height: 400px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.hero-content {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 0 2rem;
+}
+
+.hero-title {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    font-size: 3.5rem;
+    margin-bottom: 1.5rem;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.hero-subtitle {
+    font-size: 1.3rem;
+    font-weight: 300;
+    opacity: 0.95;
+    line-height: 1.6;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+/* Container Principal */
+.exclusao-container {
+    background-color: white;
+    border-radius: 15px;
+    padding: 2rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    position: relative;
+    z-index: 5;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+/* Card de Confirmação */
+.confirmation-card {
+    background: white;
+    border-radius: 15px;
+    padding: 2rem;
+    margin-bottom: 2rem;
+    border: 2px solid #f8d7da;
+    box-shadow: 0 5px 20px rgba(220, 53, 69, 0.1);
+}
+
+.confirmation-card .card-header {
+    text-align: center;
+    margin-bottom: 2rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 2px solid #f8f9fa;
+}
+
+.warning-icon {
+    background: linear-gradient(135deg, #ffc107, #fd7e14);
+    color: white;
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1.5rem;
+    font-size: 2rem;
+    box-shadow: 0 4px 15px rgba(255, 193, 7, 0.3);
+}
+
+.card-title {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    color: var(--hemotec-gray);
+    margin-bottom: 0.5rem;
+    font-size: 1.8rem;
+}
+
+.card-subtitle {
+    color: #6c757d;
+    font-size: 1.1rem;
+    margin-bottom: 0;
+}
+
+/* Detalhes do Agendamento */
+.appointment-details {
+    margin: 2rem 0;
+}
+
+.detail-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 1.5rem;
+    padding: 1.5rem;
+    margin-bottom: 1rem;
+    background: #f8f9fa;
+    border-radius: 12px;
+    border-left: 4px solid var(--hemotec-red);
+    transition: all 0.3s ease;
+}
+
+.detail-item:hover {
+    background: #e9ecef;
+    transform: translateX(5px);
+}
+
+.detail-icon {
+    background: var(--hemotec-red);
+    color: white;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    flex-shrink: 0;
+}
+
+.detail-content h5 {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+    color: var(--hemotec-gray);
+    margin-bottom: 0.5rem;
+    font-size: 1.1rem;
+}
+
+.detail-content p {
+    color: var(--hemotec-gray);
+    margin-bottom: 0.25rem;
+    font-weight: 500;
+    font-size: 1rem;
+}
+
+.detail-content .address {
+    color: #6c757d;
+    font-size: 0.9rem;
+}
+
+/* Mensagem de Aviso */
+.warning-message {
+    background: linear-gradient(135deg, #fff3cd, #ffeaa7);
+    border: 1px solid #ffc107;
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin: 2rem 0;
+}
+
+.warning-content {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+}
+
+.warning-content i {
+    color: #856404;
+    font-size: 1.5rem;
+    margin-top: 0.2rem;
+}
+
+.warning-content h6 {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+    color: #856404;
+    margin-bottom: 0.5rem;
+}
+
+.warning-content p {
+    color: #856404;
+    margin-bottom: 0;
+    line-height: 1.5;
+}
+
+/* Seção de Motivo */
+.reason-section {
+    margin: 2rem 0;
+    padding: 1.5rem;
+    background: #f8f9fa;
+    border-radius: 12px;
+}
+
+.reason-section h6 {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+    color: var(--hemotec-gray);
+    margin-bottom: 1rem;
+}
+
+.reason-options {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.form-check {
+    background: white;
+    padding: 1rem;
+    border-radius: 8px;
+    border: 2px solid #e9ecef;
+    transition: all 0.3s ease;
+}
+
+.form-check:hover {
+    border-color: var(--hemotec-red);
+    background: #fff5f5;
+}
+
+.form-check-input:checked {
+    background-color: var(--hemotec-red);
+    border-color: var(--hemotec-red);
+}
+
+.form-check-input:focus {
+    border-color: var(--hemotec-red);
+    box-shadow: 0 0 0 0.25rem rgba(196, 21, 21, 0.25);
+}
+
+.form-check-label {
+    font-weight: 500;
+    color: var(--hemotec-gray);
+    cursor: pointer;
+}
+
+.outros-motivo {
+    margin-top: 1rem;
+}
+
+.outros-motivo .form-control {
+    border: 2px solid #e9ecef;
+    border-radius: 8px;
+    padding: 0.75rem;
+    transition: all 0.3s ease;
+}
+
+.outros-motivo .form-control:focus {
+    border-color: var(--hemotec-red);
+    box-shadow: 0 0 0 0.25rem rgba(196, 21, 21, 0.25);
+}
+
+/* Botões de Ação */
+.action-buttons {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    margin-top: 2rem;
+    padding-top: 2rem;
+    border-top: 2px solid #f8f9fa;
+}
+
+.btn-cancelar {
+    background: #6c757d;
+    color: white;
+    font-weight: 600;
+    padding: 0.8rem 2rem;
+    border-radius: 25px;
+    border: none;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+}
+
+.btn-cancelar:hover {
+    background: #5a6268;
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(108, 117, 125, 0.3);
+    text-decoration: none;
+}
+
+.btn-excluir-confirmar {
+    background: var(--danger-color);
+    color: white;
+    font-weight: 600;
+    padding: 0.8rem 2rem;
+    border-radius: 25px;
+    border: none;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+}
+
+.btn-excluir-confirmar:hover {
+    background: #bb2d3b;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(220, 53, 69, 0.3);
+}
+
+/* Card de Sugestão */
+.suggestion-card {
+    background: linear-gradient(135deg, #e9f5ff, #cce7ff);
+    border: 2px solid #0dcaf0;
+    border-radius: 15px;
+    padding: 2rem;
+    margin-top: 2rem;
+}
+
+.suggestion-content {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+}
+
+.suggestion-icon {
+    background: var(--info-color);
+    color: white;
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    flex-shrink: 0;
+}
+
+.suggestion-text {
+    flex: 1;
+}
+
+.suggestion-text h5 {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+    color: var(--hemotec-gray);
+    margin-bottom: 0.5rem;
+}
+
+.suggestion-text p {
+    color: #6c757d;
+    margin-bottom: 0;
+    line-height: 1.5;
+}
+
+.btn-reagendar-sugestao {
+    background: var(--success-color);
+    color: white;
+    font-weight: 600;
+    padding: 0.8rem 1.5rem;
+    border-radius: 25px;
+    border: none;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    white-space: nowrap;
+}
+
+.btn-reagendar-sugestao:hover {
+    background: #157347;
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(25, 135, 84, 0.3);
+    text-decoration: none;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .hero-section-excluir {
+        padding: 4rem 0 3rem;
+        min-height: 300px;
+    }
+    
+    .hero-title {
+        font-size: 2.5rem;
+        margin-bottom: 1rem;
+    }
+    
+    .hero-subtitle {
+        font-size: 1.1rem;
+    }
+    
+    .hero-content {
+        padding: 0 1rem;
+    }
+
+    .exclusao-container {
+        padding: 1.5rem;
+        margin: 0 1rem;
+    }
+
+    .confirmation-card {
+        padding: 1.5rem;
+    }
+
+    .detail-item {
+        flex-direction: column;
+        text-align: center;
+        gap: 1rem;
+    }
+
+    .reason-options {
+        grid-template-columns: 1fr;
+    }
+
+    .action-buttons {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .suggestion-content {
+        flex-direction: column;
+        text-align: center;
+        gap: 1.5rem;
+    }
+
+    .btn-reagendar-sugestao {
+        align-self: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero-title {
+        font-size: 2rem;
+    }
+    
+    .hero-subtitle {
+        font-size: 1rem;
+    }
+
+    .exclusao-container {
+        margin: 0 0.5rem;
+        padding: 1rem;
+    }
+
+    .confirmation-card {
+        padding: 1rem;
+    }
+
+    .warning-icon,
+    .suggestion-icon {
+        width: 60px;
+        height: 60px;
+        font-size: 1.5rem;
+    }
+
+    .card-title {
+        font-size: 1.5rem;
+    }
+}
+
+/* Animações */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.confirmation-card,
+.suggestion-card {
+    animation: fadeInUp 0.6s ease-out;
+}
+
+.detail-item {
+    animation: fadeInUp 0.6s ease-out;
+}
+
+.detail-item:nth-child(1) { animation-delay: 0.1s; }
+.detail-item:nth-child(2) { animation-delay: 0.2s; }
+.detail-item:nth-child(3) { animation-delay: 0.3s; }

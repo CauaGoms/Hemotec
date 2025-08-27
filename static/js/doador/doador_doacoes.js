@@ -1,7 +1,7 @@
 // JavaScript específico para a página de histórico de doações
 document.addEventListener('DOMContentLoaded', function() {
     // Função para filtrar doações por status
-    const filtroItems = document.querySelectorAll('[data-status]');
+    const filtroItems = document.querySelectorAll('.dropdown-item[data-status]');
     filtroItems.forEach(item => {
         item.addEventListener('click', function(e) {
             e.preventDefault();

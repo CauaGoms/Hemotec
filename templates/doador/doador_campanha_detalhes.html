@@ -1,13 +1,432 @@
 {% extends "doador/doador__base.html" %}
+
 {% block custom_css %}
-<!-- <link href="/static/css/" rel="stylesheet"> -->
+<link href="/static/css/doador/doador_campanha_detalhes.css" rel="stylesheet">
 {% endblock %}
 
 {% block conteudo %}
-<h1>doador_campanha_detalhes</h1>
+<!-- Botão Voltar -->
+<a href="/doador/campanha" class="back-arrow">
+    <i class="fas fa-arrow-left"></i>
+</a>
+
+<!-- Hero Section da Campanha -->
+<section class="campaign-hero" id="campaignHero">
+    <div class="hero-overlay"></div>
+    <div class="container">
+        <div class="hero-content">
+            <div class="campaign-badge" id="campaignBadge">
+                <i class="fas fa-bullhorn me-2"></i>
+                <span id="campaignStatus">Campanha Ativa</span>
+            </div>
+            <h1 class="campaign-title" id="campaignTitle">Junho Vermelho 2025</h1>
+            <p class="campaign-subtitle" id="campaignSubtitle">Mês Nacional do Doador de Sangue - Participe da maior campanha de doação do ano!</p>
+            
+            <!-- Estatísticas Rápidas -->
+            <div class="quick-stats">
+                <div class="stat-item">
+                    <div class="stat-number" id="currentDonations">1.847</div>
+                    <div class="stat-label">Doações Realizadas</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" id="targetDonations">2.500</div>
+                    <div class="stat-label">Meta de Doações</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" id="progressPercentage">74%</div>
+                    <div class="stat-label">Meta Alcançada</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" id="daysRemaining">15</div>
+                    <div class="stat-label">Dias Restantes</div>
+                </div>
+            </div>
+
+            <!-- Botão de Participação -->
+            <div class="hero-actions">
+                <a href="/doador/agendamento/adicionar" class="btn btn-participate" id="participateBtn">
+                    <i class="fas fa-heart me-2"></i>
+                    Participar da Campanha
+                </a>
+                <button class="btn btn-share" id="shareBtn">
+                    <i class="fas fa-share-alt me-2"></i>
+                    Compartilhar
+                </button>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Barra de Progresso -->
+<section class="progress-section">
+    <div class="container">
+        <div class="progress-container">
+            <div class="progress-bar-wrapper">
+                <div class="progress-bar" id="mainProgressBar">
+                    <div class="progress-fill" id="progressFill" style="width: 74%"></div>
+                </div>
+                <div class="progress-labels">
+                    <span>0</span>
+                    <span id="progressTarget">2.500 doações</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Conteúdo Principal -->
+<div class="container mt-5">
+    <div class="row">
+        <!-- Coluna Principal -->
+        <div class="col-lg-8">
+            <!-- Sobre a Campanha -->
+            <section class="content-section">
+                <h2 class="section-title">
+                    <i class="fas fa-info-circle me-2"></i>
+                    Sobre a Campanha
+                </h2>
+                <div class="content-card">
+                    <div id="campaignDescription">
+                        <p>O Junho Vermelho é uma campanha nacional que visa conscientizar a população sobre a importância da doação de sangue. Durante todo o mês de junho, mobilizamos doadores de todo o país para atingir nossa meta de 2.500 doações.</p>
+                        
+                        <p>Esta campanha é especialmente importante porque coincide com o período de inverno, quando tradicionalmente há uma queda nas doações de sangue. Seu apoio é fundamental para mantermos os estoques dos hemocentros em níveis adequados.</p>
+                        
+                        <h4>Objetivos da Campanha:</h4>
+                        <ul>
+                            <li>Aumentar o estoque de sangue em 30% durante o mês de junho</li>
+                            <li>Conscientizar sobre a importância da doação regular</li>
+                            <li>Recrutar novos doadores de primeira viagem</li>
+                            <li>Fortalecer a cultura de solidariedade na comunidade</li>
+                        </ul>
+                        
+                        <h4>Quem pode participar:</h4>
+                        <ul>
+                            <li>Pessoas entre 16 e 69 anos (menores de 18 anos com autorização dos pais)</li>
+                            <li>Peso mínimo de 50kg</li>
+                            <li>Estar em boas condições de saúde</li>
+                            <li>Ter dormido pelo menos 6 horas na noite anterior</li>
+                            <li>Estar alimentado (evitar alimentos gordurosos)</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Cronograma -->
+            <section class="content-section">
+                <h2 class="section-title">
+                    <i class="fas fa-calendar-alt me-2"></i>
+                    Cronograma de Atividades
+                </h2>
+                <div class="content-card">
+                    <div class="timeline" id="campaignTimeline">
+                        <div class="timeline-item completed">
+                            <div class="timeline-marker"></div>
+                            <div class="timeline-content">
+                                <h5>Lançamento da Campanha</h5>
+                                <p class="timeline-date">1º de Junho, 2025</p>
+                                <p>Início oficial da campanha com evento de lançamento e divulgação nas mídias sociais.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="timeline-item completed">
+                            <div class="timeline-marker"></div>
+                            <div class="timeline-content">
+                                <h5>Semana de Mobilização</h5>
+                                <p class="timeline-date">5 a 11 de Junho, 2025</p>
+                                <p>Ações de conscientização em empresas, universidades e espaços públicos.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="timeline-item active">
+                            <div class="timeline-marker"></div>
+                            <div class="timeline-content">
+                                <h5>Maratona de Doações</h5>
+                                <p class="timeline-date">15 a 22 de Junho, 2025</p>
+                                <p>Semana intensiva com postos móveis e horários estendidos nos hemocentros.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="timeline-item">
+                            <div class="timeline-marker"></div>
+                            <div class="timeline-content">
+                                <h5>Evento de Encerramento</h5>
+                                <p class="timeline-date">30 de Junho, 2025</p>
+                                <p>Celebração dos resultados alcançados e reconhecimento dos participantes.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Locais de Doação -->
+            <section class="content-section">
+                <h2 class="section-title">
+                    <i class="fas fa-map-marker-alt me-2"></i>
+                    Locais de Doação
+                </h2>
+                <div class="content-card">
+                    <div class="locations-grid" id="donationLocations">
+                        <div class="location-card">
+                            <div class="location-header">
+                                <h5>Hemocentro Regional de Cachoeiro</h5>
+                                <span class="location-status status-open">Aberto</span>
+                            </div>
+                            <div class="location-details">
+                                <p><i class="fas fa-map-marker-alt me-2"></i>Rua Dr. Raulino de Oliveira, 345 - Centro</p>
+                                <p><i class="fas fa-clock me-2"></i>Segunda a Sexta: 7h às 17h | Sábado: 7h às 12h</p>
+                                <p><i class="fas fa-phone me-2"></i>(28) 3521-1234</p>
+                            </div>
+                            <div class="location-actions">
+                                <button class="btn btn-sm btn-outline-primary">
+                                    <i class="fas fa-route me-1"></i>Como Chegar
+                                </button>
+                                <button class="btn btn-sm btn-primary">
+                                    <i class="fas fa-calendar me-1"></i>Agendar
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="location-card">
+                            <div class="location-header">
+                                <h5>Hospital Santa Casa</h5>
+                                <span class="location-status status-open">Aberto</span>
+                            </div>
+                            <div class="location-details">
+                                <p><i class="fas fa-map-marker-alt me-2"></i>Av. Beira Rio, 1200 - Independência</p>
+                                <p><i class="fas fa-clock me-2"></i>Segunda a Sexta: 8h às 16h</p>
+                                <p><i class="fas fa-phone me-2"></i>(28) 3522-5678</p>
+                            </div>
+                            <div class="location-actions">
+                                <button class="btn btn-sm btn-outline-primary">
+                                    <i class="fas fa-route me-1"></i>Como Chegar
+                                </button>
+                                <button class="btn btn-sm btn-primary">
+                                    <i class="fas fa-calendar me-1"></i>Agendar
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="location-card">
+                            <div class="location-header">
+                                <h5>Posto Móvel - Shopping Center</h5>
+                                <span class="location-status status-temporary">Temporário</span>
+                            </div>
+                            <div class="location-details">
+                                <p><i class="fas fa-map-marker-alt me-2"></i>Shopping Cachoeiro - Praça de Alimentação</p>
+                                <p><i class="fas fa-clock me-2"></i>15 a 22 de Junho: 10h às 20h</p>
+                                <p><i class="fas fa-phone me-2"></i>(28) 99999-0000</p>
+                            </div>
+                            <div class="location-actions">
+                                <button class="btn btn-sm btn-outline-primary">
+                                    <i class="fas fa-route me-1"></i>Como Chegar
+                                </button>
+                                <button class="btn btn-sm btn-primary">
+                                    <i class="fas fa-calendar me-1"></i>Agendar
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Depoimentos -->
+            <section class="content-section">
+                <h2 class="section-title">
+                    <i class="fas fa-quote-left me-2"></i>
+                    Depoimentos
+                </h2>
+                <div class="content-card">
+                    <div class="testimonials-carousel" id="testimonialsCarousel">
+                        <div class="testimonial-item active">
+                            <div class="testimonial-content">
+                                <p>"Participar do Junho Vermelho foi uma experiência incrível. Saber que minha doação pode salvar até 4 vidas me motiva a continuar doando regularmente."</p>
+                                <div class="testimonial-author">
+                                    <img src="https://images.unsplash.com/photo-1494790108755-2616b612b786?w=60&h=60&fit=crop&crop=face" alt="Maria Silva" class="author-photo">
+                                    <div class="author-info">
+                                        <h6>Maria Silva</h6>
+                                        <span>Doadora há 3 anos</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="testimonial-item">
+                            <div class="testimonial-content">
+                                <p>"Foi minha primeira doação e a equipe me deixou super tranquilo. O processo foi rápido e me senti muito bem em poder ajudar outras pessoas."</p>
+                                <div class="testimonial-author">
+                                    <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=60&h=60&fit=crop&crop=face" alt="João Santos" class="author-photo">
+                                    <div class="author-info">
+                                        <h6>João Santos</h6>
+                                        <span>Primeiro doador</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="testimonial-item">
+                            <div class="testimonial-content">
+                                <p>"A campanha Junho Vermelho me inspirou a voltar a doar. Há anos não doava e redescobri a importância deste ato de solidariedade."</p>
+                                <div class="testimonial-author">
+                                    <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=60&h=60&fit=crop&crop=face" alt="Ana Costa" class="author-photo">
+                                    <div class="author-info">
+                                        <h6>Ana Costa</h6>
+                                        <span>Doadora recorrente</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="testimonial-controls">
+                        <button class="testimonial-btn" data-slide="0"></button>
+                        <button class="testimonial-btn active" data-slide="1"></button>
+                        <button class="testimonial-btn" data-slide="2"></button>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- Sidebar -->
+        <div class="col-lg-4">
+            <!-- Card de Ação Rápida -->
+            <div class="sidebar-card">
+                <h4>Participe Agora!</h4>
+                <p>Agende sua doação e faça parte desta campanha que salva vidas.</p>
+                <a href="/doador/agendamento/adicionar" class="btn btn-primary btn-block mb-3">
+                    <i class="fas fa-calendar-plus me-2"></i>
+                    Agendar Doação
+                </a>
+                <a href="/doador/campanha" class="btn btn-outline-secondary btn-block">
+                    <i class="fas fa-arrow-left me-2"></i>
+                    Voltar às Campanhas
+                </a>
+            </div>
+
+            <!-- Estatísticas Detalhadas -->
+            <div class="sidebar-card">
+                <h4>Estatísticas da Campanha</h4>
+                <div class="stats-list">
+                    <div class="stat-row">
+                        <span class="stat-label">Total de Participantes:</span>
+                        <span class="stat-value" id="totalParticipants">1.847</span>
+                    </div>
+                    <div class="stat-row">
+                        <span class="stat-label">Novos Doadores:</span>
+                        <span class="stat-value" id="newDonors">423</span>
+                    </div>
+                    <div class="stat-row">
+                        <span class="stat-label">Doadores Recorrentes:</span>
+                        <span class="stat-value" id="recurringDonors">1.424</span>
+                    </div>
+                    <div class="stat-row">
+                        <span class="stat-label">Vidas Impactadas:</span>
+                        <span class="stat-value" id="livesImpacted">7.388</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Campanhas Relacionadas -->
+            <div class="sidebar-card">
+                <h4>Outras Campanhas</h4>
+                <div class="related-campaigns">
+                    <div class="related-campaign-item">
+                        <img src="https://images.unsplash.com/photo-1559757148-5c350d0d3c56?w=80&h=60&fit=crop" alt="Campanha" class="related-image">
+                        <div class="related-content">
+                            <h6>Doação Coletiva Empresarial</h6>
+                            <span class="related-status">Ativa</span>
+                        </div>
+                    </div>
+                    
+                    <div class="related-campaign-item">
+                        <img src="https://images.unsplash.com/photo-1576091160399-112ba8d25d1f?w=80&h=60&fit=crop" alt="Campanha" class="related-image">
+                        <div class="related-content">
+                            <h6>Volta às Aulas Solidária</h6>
+                            <span class="related-status">Próxima</span>
+                        </div>
+                    </div>
+                    
+                    <div class="related-campaign-item">
+                        <img src="https://images.unsplash.com/photo-1582750433449-648ed127bb54?w=80&h=60&fit=crop" alt="Campanha" class="related-image">
+                        <div class="related-content">
+                            <h6>Maratona de Doação</h6>
+                            <span class="related-status">Ativa</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Compartilhamento -->
+            <div class="sidebar-card">
+                <h4>Compartilhe</h4>
+                <p>Ajude a divulgar esta campanha para seus amigos e familiares.</p>
+                <div class="share-buttons">
+                    <button class="share-btn facebook" data-platform="facebook">
+                        <i class="fab fa-facebook-f"></i>
+                    </button>
+                    <button class="share-btn twitter" data-platform="twitter">
+                        <i class="fab fa-twitter"></i>
+                    </button>
+                    <button class="share-btn whatsapp" data-platform="whatsapp">
+                        <i class="fab fa-whatsapp"></i>
+                    </button>
+                    <button class="share-btn linkedin" data-platform="linkedin">
+                        <i class="fab fa-linkedin-in"></i>
+                    </button>
+                    <button class="share-btn copy" data-platform="copy">
+                        <i class="fas fa-link"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal de Compartilhamento -->
+<div class="modal fade" id="shareModal" tabindex="-1" aria-labelledby="shareModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="shareModalLabel">
+                    <i class="fas fa-share-alt me-2"></i>
+                    Compartilhar Campanha
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>Compartilhe esta campanha e ajude a salvar mais vidas!</p>
+                <div class="share-options">
+                    <button class="share-option" data-platform="facebook">
+                        <i class="fab fa-facebook-f"></i>
+                        <span>Facebook</span>
+                    </button>
+                    <button class="share-option" data-platform="twitter">
+                        <i class="fab fa-twitter"></i>
+                        <span>Twitter</span>
+                    </button>
+                    <button class="share-option" data-platform="whatsapp">
+                        <i class="fab fa-whatsapp"></i>
+                        <span>WhatsApp</span>
+                    </button>
+                    <button class="share-option" data-platform="linkedin">
+                        <i class="fab fa-linkedin-in"></i>
+                        <span>LinkedIn</span>
+                    </button>
+                </div>
+                <div class="copy-link-section">
+                    <label for="shareLink">Link da campanha:</label>
+                    <div class="input-group">
+                        <input type="text" class="form-control" id="shareLink" readonly>
+                        <button class="btn btn-outline-secondary" type="button" id="copyLinkBtn">
+                            <i class="fas fa-copy"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}
 
-<!-- Custom JavaScript -->
 {% block custom_js %}
-<!-- <script src="/static/js/"></script> -->
+<script src="/static/js/doador/doador_campanha_detalhes.js"></script>
 {% endblock %}

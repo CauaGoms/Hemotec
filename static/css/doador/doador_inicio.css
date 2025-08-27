@@ -14,13 +14,16 @@ body {
 }
 
 .hero-section {
-    background: linear-gradient(rgba(224, 32, 32, 0.9), rgba(192, 16, 16, 0.9)), url('https://images.unsplash.com/photo-1615461066841-6116e61058f4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80');
+    background: linear-gradient(135deg, rgba(35, 40, 47, 0.8), rgba(80, 80, 90, 0.7)), url('https://images.unsplash.com/photo-1524178232363-1fb2b075b655?auto=format&fit=crop') no-repeat center center;
     background-size: cover;
-    background-position: center;
     color: white;
-    padding: 4rem 0;
-    margin-bottom: 3rem;
-    border-radius: 0 0 20px 20px;
+    padding: 6rem 0 5rem;
+    text-align: center;
+    border-radius: 0 0 50px 50px;
+    min-height: 400px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .hero-content {
@@ -32,16 +35,17 @@ body {
 .hero-title {
     font-family: 'Montserrat', sans-serif;
     font-weight: 700;
-    font-size: 2.5rem;
-    margin-bottom: 1rem;
-    text-shadow: 2px 2px 4px rgba(255, 255, 255, 0.5);
+    font-size: 3.5rem;
+    margin-bottom: 1.5rem;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
 }
 
 .hero-subtitle {
-    font-size: 1.2rem;
-    margin-bottom: 2rem;
+    font-size: 1.3rem;
     font-weight: 300;
-    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+    opacity: 0.95;
+    line-height: 1.6;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
 }
 
 .btn-schedule {
@@ -273,12 +277,18 @@ main {
 
 /* Responsividade para dispositivos móveis */
 @media (max-width: 768px) {
-    .hero-title {
-        font-size: 2rem;
+    .hero-section {
+        padding: 4rem 0 3rem;
+        min-height: 300px;
     }
-
+    
+    .hero-title {
+        font-size: 2.5rem;
+        margin-bottom: 1rem;
+    }
+    
     .hero-subtitle {
-        font-size: 1rem;
+        font-size: 1.1rem;
     }
 
     .stats-item .number {
@@ -290,5 +300,15 @@ main {
         display: block;
         margin: 0.5rem 0;
         width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero-title {
+        font-size: 2rem;
+    }
+    
+    .hero-subtitle {
+        font-size: 1rem;
     }
 }
