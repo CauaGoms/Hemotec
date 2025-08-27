@@ -37,7 +37,6 @@ body {
     left: 0;
     right: 0;
     bottom: 0;
-    background: linear-gradient(45deg, rgba(224, 32, 32, 0.1) 0%, rgba(192, 16, 16, 0.3) 100%);
     animation: pulse 4s ease-in-out infinite;
 }
 
@@ -108,7 +107,6 @@ body {
     transform: translateX(-50%);
     width: 60px;
     height: 3px;
-    background: linear-gradient(90deg, var(--hemotec-red), var(--hemotec-light-red));
     border-radius: 2px;
 }
 
