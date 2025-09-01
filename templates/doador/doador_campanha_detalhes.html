@@ -2,299 +2,163 @@
 
 {% block custom_css %}
 <link href="/static/css/doador/doador_campanha_detalhes.css" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 {% endblock %}
 
 {% block conteudo %}
-<!-- Botão Voltar -->
-<a href="/doador/campanha" class="back-arrow">
-    <i class="fas fa-arrow-left"></i>
-</a>
-
-<!-- Hero Section da Campanha -->
-<section class="campaign-hero" style="background-image: linear-gradient(135deg, rgba(224, 32, 32, 0.9), rgba(192, 16, 16, 0.8)), url('{% block hero_image %}{% endblock %}');">
-    <div class="hero-overlay"></div>
-    <div class="container">
-        <div class="hero-content">
-            <div class="campaign-badge">
-                <i class="fas fa-bullhorn me-2"></i>
-                <span>{{ campanha.status | default('Campanha Ativa') }}</span>
-            </div>
-            <h1 class="campaign-title">{{ campanha.titulo | default('Título da Campanha') }}</h1>
-            <p class="campaign-subtitle">{{ campanha.subtitulo | default('Subtítulo da campanha') }}</p>
-            
-            <!-- Estatísticas Rápidas -->
-            <div class="quick-stats">
-                <div class="stat-item">
-                    <div class="stat-number">{{ campanha.doacoes_atuais | default(0) }}</div>
-                    <div class="stat-label">Doações Realizadas</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-number">{{ campanha.meta_doacoes | default(0) }}</div>
-                    <div class="stat-label">Meta de Doações</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-number">{{ campanha.percentual_progresso | default(0) }}%</div>
-                    <div class="stat-label">Meta Alcançada</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-number">{{ campanha.dias_restantes | default(0) }}</div>
-                    <div class="stat-label">Dias Restantes</div>
-                </div>
-            </div>
-
-            <!-- Botão de Participação -->
-            <div class="hero-actions">
-                <a href="/doador/agendamento/adicionar" class="btn btn-participate">
-                    <i class="fas fa-heart me-2"></i>
-                    Participar da Campanha
-                </a>
-                <button class="btn btn-share" id="shareBtn">
-                    <i class="fas fa-share-alt me-2"></i>
-                    Compartilhar
-                </button>
-            </div>
+<div class="campaign-container">
+    <div class="campaign-card">
+        <!-- Header da Campanha -->
+        <div class="campaign-header">
+            <h1 class="campaign-title">{{ campanha.titulo }}</h1>
         </div>
-    </div>
-</section>
+        
+        <!-- Corpo da Campanha -->
+        <div class="campaign-body">
+            <!-- Descrição -->
+            <div class="campaign-section">
+                <h3 class="section-title">Descrição</h3>
+                <p class="campaign-description">{{ campanha.descricao }}</p>
+            </div>
 
-<!-- Barra de Progresso -->
-<section class="progress-section">
-    <div class="container">
-        <div class="progress-container">
-            <div class="progress-bar-wrapper">
-                <div class="progress-bar">
-                    <div class="progress-fill" data-progress="{{ campanha.percentual_progresso | default(0) }}"></div>
+            <!-- Informações Básicas -->
+            <div class="campaign-info-grid">
+                <div class="info-item">
+                    <span class="info-label">Data de Início</span>
+                    <span class="info-value">{{ campanha.data_inicio }}</span>
                 </div>
-                <div class="progress-labels">
-                    <span>0</span>
-                    <span>{{ campanha.meta_doacoes | default(0) }} doações</span>
+                <div class="info-item">
+                    <span class="info-label">Data de Fim</span>
+                    <span class="info-value">{{ campanha.data_fim }}</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Status</span>
+                    <span class="info-value status-active">{{ campanha.status }}</span>
                 </div>
             </div>
-        </div>
-    </div>
-</section>
-
-<!-- Conteúdo Principal -->
-<div class="container mt-5">
-    <div class="row">
-        <!-- Coluna Principal -->
-        <div class="col-lg-8">
-            <!-- Sobre a Campanha -->
-            <section class="content-section">
-                <h2 class="section-title">
-                    <i class="fas fa-info-circle me-2"></i>
-                    Sobre a Campanha
-                </h2>
-                <div class="content-card">
-                    <div class="campaign-description">
-                        {{ campanha.descricao | safe | default('<p>Descrição da campanha será inserida aqui.</p>') }}
-                    </div>
-                </div>
-            </section>
 
             <!-- Cronograma -->
             {% if campanha.cronograma %}
-            <section class="content-section">
-                <h2 class="section-title">
-                    <i class="fas fa-calendar-alt me-2"></i>
+            <div class="campaign-section">
+                <h3 class="section-title">
+                    <i class="fas fa-calendar-alt"></i>
                     Cronograma de Atividades
-                </h2>
-                <div class="content-card">
-                    <div class="timeline">
-                        {% for evento in campanha.cronograma %}
-                        <div class="timeline-item {{ evento.status | default('') }}">
-                            <div class="timeline-marker"></div>
-                            <div class="timeline-content">
-                                <h5>{{ evento.titulo }}</h5>
-                                <p class="timeline-date">{{ evento.data }}</p>
-                                <p>{{ evento.descricao }}</p>
-                            </div>
-                        </div>
-                        {% endfor %}
-                    </div>
-                </div>
-            </section>
-            {% endif %}
-
-            <!-- Locais de Doação -->
-            {% if campanha.locais %}
-            <section class="content-section">
-                <h2 class="section-title">
-                    <i class="fas fa-map-marker-alt me-2"></i>
-                    Locais de Doação
-                </h2>
-                <div class="content-card">
-                    <div class="locations-grid">
-                        {% for local in campanha.locais %}
-                        <div class="location-card">
-                            <div class="location-header">
-                                <h5>{{ local.nome }}</h5>
-                                <span class="location-status status-{{ local.status | default('open') }}">
-                                    {{ local.status_texto | default('Aberto') }}
-                                </span>
-                            </div>
-                            <div class="location-details">
-                                <p><i class="fas fa-map-marker-alt me-2"></i>{{ local.endereco }}</p>
-                                <p><i class="fas fa-clock me-2"></i>{{ local.horarios }}</p>
-                                <p><i class="fas fa-phone me-2"></i>{{ local.telefone }}</p>
-                            </div>
-                            <div class="location-actions">
-                                <button class="btn btn-sm btn-outline-primary">
-                                    <i class="fas fa-route me-1"></i>Como Chegar
-                                </button>
-                                <button class="btn btn-sm btn-primary">
-                                    <i class="fas fa-calendar me-1"></i>Agendar
-                                </button>
-                            </div>
-                        </div>
-                        {% endfor %}
-                    </div>
-                </div>
-            </section>
-            {% endif %}
-
-            <!-- Depoimentos -->
-            {% if campanha.depoimentos %}
-            <section class="content-section">
-                <h2 class="section-title">
-                    <i class="fas fa-quote-left me-2"></i>
-                    Depoimentos
-                </h2>
-                <div class="content-card">
-                    <div class="testimonials-carousel">
-                        {% for depoimento in campanha.depoimentos %}
-                        <div class="testimonial-item {% if loop.first %}active{% endif %}">
-                            <div class="testimonial-content">
-                                <p>"{{ depoimento.texto }}"</p>
-                                <div class="testimonial-author">
-                                    <img src="{{ depoimento.foto | default('https://images.unsplash.com/photo-1494790108755-2616b612b786?w=60&h=60&fit=crop&crop=face') }}" 
-                                         alt="{{ depoimento.nome }}" class="author-photo">
-                                    <div class="author-info">
-                                        <h6>{{ depoimento.nome }}</h6>
-                                        <span>{{ depoimento.tipo | default('Doador') }}</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        {% endfor %}
-                    </div>
-                    
-                    {% if campanha.depoimentos|length > 1 %}
-                    <div class="testimonial-controls">
-                        {% for depoimento in campanha.depoimentos %}
-                        <button class="testimonial-btn {% if loop.first %}active{% endif %}" data-slide="{{ loop.index0 }}"></button>
-                        {% endfor %}
-                    </div>
-                    {% endif %}
-                </div>
-            </section>
-            {% endif %}
-
-            <!-- Seção Personalizada -->
-            {% if campanha.secao_personalizada %}
-            <section class="content-section">
-                <h2 class="section-title">
-                    <i class="fas fa-{{ campanha.secao_personalizada.icone | default('star') }} me-2"></i>
-                    {{ campanha.secao_personalizada.titulo }}
-                </h2>
-                <div class="content-card">
-                    {{ campanha.secao_personalizada.conteudo | safe }}
-                </div>
-            </section>
-            {% endif %}
-        </div>
-
-        <!-- Sidebar -->
-        <div class="col-lg-4">
-            <!-- Card de Ação Rápida -->
-            <div class="sidebar-card">
-                <h4>Participe Agora!</h4>
-                <p>Agende sua doação e faça parte desta campanha que salva vidas.</p>
-                <a href="/doador/agendamento/adicionar" class="btn btn-primary btn-block mb-3">
-                    <i class="fas fa-calendar-plus me-2"></i>
-                    Agendar Doação
-                </a>
-                <a href="/doador/campanha" class="btn btn-outline-secondary btn-block">
-                    <i class="fas fa-arrow-left me-2"></i>
-                    Voltar às Campanhas
-                </a>
-            </div>
-
-            <!-- Estatísticas Detalhadas -->
-            <div class="sidebar-card">
-                <h4>Estatísticas da Campanha</h4>
-                <div class="stats-list">
-                    <div class="stat-row">
-                        <span class="stat-label">Total de Participantes:</span>
-                        <span class="stat-value">{{ campanha.doacoes_atuais | default(0) }}</span>
-                    </div>
-                    <div class="stat-row">
-                        <span class="stat-label">Novos Doadores:</span>
-                        <span class="stat-value">{{ campanha.novos_doadores | default(0) }}</span>
-                    </div>
-                    <div class="stat-row">
-                        <span class="stat-label">Doadores Recorrentes:</span>
-                        <span class="stat-value">{{ campanha.doadores_recorrentes | default(0) }}</span>
-                    </div>
-                    <div class="stat-row">
-                        <span class="stat-label">Vidas Impactadas:</span>
-                        <span class="stat-value">{{ campanha.vidas_impactadas | default(0) }}</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Campanhas Relacionadas -->
-            {% if campanhas_relacionadas %}
-            <div class="sidebar-card">
-                <h4>Outras Campanhas</h4>
-                <div class="related-campaigns">
-                    {% for campanha_rel in campanhas_relacionadas %}
-                    <div class="related-campaign-item">
-                        <img src="{{ campanha_rel.imagem | default('https://images.unsplash.com/photo-1559757148-5c350d0d3c56?w=80&h=60&fit=crop') }}" 
-                             alt="{{ campanha_rel.titulo }}" class="related-image">
-                        <div class="related-content">
-                            <h6>{{ campanha_rel.titulo }}</h6>
-                            <span class="related-status">{{ campanha_rel.status | default('Ativa') }}</span>
+                </h3>
+                <div class="timeline-container">
+                    {% for evento in campanha.cronograma %}
+                    <div class="timeline-item">
+                        <div class="timeline-marker"></div>
+                        <div class="timeline-content">
+                            <h4 class="timeline-title">{{ evento.titulo }}</h4>
+                            <p class="timeline-date">{{ evento.data }}</p>
+                            <p class="timeline-description">{{ evento.descricao }}</p>
                         </div>
                     </div>
                     {% endfor %}
                 </div>
             </div>
-            {% else %}
-            <div class="sidebar-card">
-                <h4>Outras Campanhas</h4>
-                <div class="related-campaigns">
-                    <div class="related-campaign-item">
-                        <img src="https://images.unsplash.com/photo-1559757148-5c350d0d3c56?w=80&h=60&fit=crop" alt="Campanha" class="related-image">
-                        <div class="related-content">
-                            <h6>Doação Coletiva Empresarial</h6>
-                            <span class="related-status">Ativa</span>
+            {% endif %}
+
+            <!-- Locais de Doação -->
+            {% if campanha.locais %}
+            <div class="campaign-section">
+                <h3 class="section-title">
+                    <i class="fas fa-map-marker-alt"></i>
+                    Locais de Doação
+                </h3>
+                <div class="locations-grid">
+                    {% for local in campanha.locais %}
+                    <div class="location-card">
+                        <div class="location-header">
+                            <h4 class="location-name">{{ local.nome }}</h4>
+                            <span class="location-status">{{ local.status_texto | default('Aberto' ) }}</span>
+                        </div>
+                        <div class="location-details">
+                            <div class="location-detail">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <span>{{ local.endereco }}</span>
+                            </div>
+                            <div class="location-detail">
+                                <i class="fas fa-clock"></i>
+                                <span>{{ local.horarios }}</span>
+                            </div>
+                            <div class="location-detail">
+                                <i class="fas fa-phone"></i>
+                                <span>{{ local.telefone }}</span>
+                            </div>
+                        </div>
+                        <div class="location-actions">
+                            <button class="btn btn-outline">
+                                <i class="fas fa-route"></i>
+                                Como Chegar
+                            </button>
+                            <button class="btn btn-primary">
+                                <i class="fas fa-calendar"></i>
+                                Agendar
+                            </button>
                         </div>
                     </div>
-                    
-                    <div class="related-campaign-item">
-                        <img src="https://images.unsplash.com/photo-1576091160399-112ba8d25d1f?w=80&h=60&fit=crop" alt="Campanha" class="related-image">
-                        <div class="related-content">
-                            <h6>Volta às Aulas Solidária</h6>
-                            <span class="related-status">Próxima</span>
-                        </div>
-                    </div>
-                    
-                    <div class="related-campaign-item">
-                        <img src="https://images.unsplash.com/photo-1582750433449-648ed127bb54?w=80&h=60&fit=crop" alt="Campanha" class="related-image">
-                        <div class="related-content">
-                            <h6>Maratona de Doação</h6>
-                            <span class="related-status">Ativa</span>
-                        </div>
-                    </div>
+                    {% endfor %}
                 </div>
             </div>
             {% endif %}
 
+            <!-- Depoimentos -->
+            {% if campanha.depoimentos %}
+            <div class="campaign-section">
+                <h3 class="section-title">
+                    <i class="fas fa-quote-left"></i>
+                    Depoimentos
+                </h3>
+                <div class="testimonials-container">
+                    {% for depoimento in campanha.depoimentos %}
+                    <div class="testimonial-card">
+                        <div class="testimonial-content">
+                            <p class="testimonial-text">"{{ depoimento.texto }}"</p>
+                            <div class="testimonial-author">
+                                <img src="{{ depoimento.foto | default('https://images.unsplash.com/photo-1494790108755-2616b612b786?w=60&h=60&fit=crop&crop=face' ) }}" 
+                                     alt="{{ depoimento.nome }}" 
+                                     class="author-avatar">
+                                <div class="author-info">
+                                    <h5 class="author-name">{{ depoimento.nome }}</h5>
+                                    <span class="author-type">{{ depoimento.tipo | default('Doador') }}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+
+            <!-- Seção Personalizada -->
+            {% if campanha.secao_personalizada %}
+            <div class="campaign-section">
+                <h3 class="section-title">
+                    <i class="fas fa-{{ campanha.secao_personalizada.icone | default('star') }}"></i>
+                    {{ campanha.secao_personalizada.titulo }}
+                </h3>
+                <div class="custom-content">
+                    {{ campanha.secao_personalizada.conteudo | safe }}
+                </div>
+            </div>
+            {% endif %}
+
+            <!-- Ações Principais -->
+            <div class="campaign-actions">
+                <a href="/doador/agendamento/adicionar" class="btn btn-primary btn-large">
+                    <i class="fas fa-calendar-plus"></i>
+                    Agendar Doação
+                </a>
+                <a href="/doador/campanha" class="btn btn-outline btn-large">
+                    <i class="fas fa-arrow-left"></i>
+                    Voltar às Campanhas
+                </a>
+            </div>
+
             <!-- Compartilhamento -->
-            <div class="sidebar-card">
-                <h4>Compartilhe</h4>
-                <p>Ajude a divulgar esta campanha para seus amigos e familiares.</p>
+            <div class="share-section">
+                <p class="share-text">Compartilhe esta campanha</p>
                 <div class="share-buttons">
                     <button class="share-btn facebook" data-platform="facebook">
                         <i class="fab fa-facebook-f"></i>
@@ -305,67 +169,31 @@
                     <button class="share-btn whatsapp" data-platform="whatsapp">
                         <i class="fab fa-whatsapp"></i>
                     </button>
-                    <button class="share-btn linkedin" data-platform="linkedin">
-                        <i class="fab fa-linkedin-in"></i>
-                    </button>
-                    <button class="share-btn copy" data-platform="copy">
+                    <button class="share-btn link" data-platform="link">
                         <i class="fas fa-link"></i>
                     </button>
                 </div>
             </div>
 
-            <!-- Sidebar Personalizada -->
-            {% if campanha.sidebar_personalizada %}
-            <div class="sidebar-card">
-                <h4>{{ campanha.sidebar_personalizada.titulo }}</h4>
-                {{ campanha.sidebar_personalizada.conteudo | safe }}
+            <!-- Campanhas Relacionadas -->
+            {% if campanhas_relacionadas %}
+            <div class="campaign-section">
+                <h3 class="section-title">Outras Campanhas</h3>
+                <div class="related-campaigns">
+                    {% for campanha_rel in campanhas_relacionadas %}
+                    <div class="related-campaign">
+                        <img src="{{ campanha_rel.imagem | default('https://images.unsplash.com/photo-1559757148-5c350d0d3c56?w=60&h=45&fit=crop' ) }}" 
+                             alt="{{ campanha_rel.titulo }}" 
+                             class="related-image">
+                        <div class="related-info">
+                            <h5 class="related-title">{{ campanha_rel.titulo }}</h5>
+                            <span class="related-status">{{ campanha_rel.status | default('Ativa') }}</span>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
             </div>
             {% endif %}
-        </div>
-    </div>
-</div>
-
-<!-- Modal de Compartilhamento -->
-<div class="modal fade" id="shareModal" tabindex="-1" aria-labelledby="shareModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="shareModalLabel">
-                    <i class="fas fa-share-alt me-2"></i>
-                    Compartilhar Campanha
-                </h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <p>Compartilhe esta campanha e ajude a salvar mais vidas!</p>
-                <div class="share-options">
-                    <button class="share-option" data-platform="facebook">
-                        <i class="fab fa-facebook-f"></i>
-                        <span>Facebook</span>
-                    </button>
-                    <button class="share-option" data-platform="twitter">
-                        <i class="fab fa-twitter"></i>
-                        <span>Twitter</span>
-                    </button>
-                    <button class="share-option" data-platform="whatsapp">
-                        <i class="fab fa-whatsapp"></i>
-                        <span>WhatsApp</span>
-                    </button>
-                    <button class="share-option" data-platform="linkedin">
-                        <i class="fab fa-linkedin-in"></i>
-                        <span>LinkedIn</span>
-                    </button>
-                </div>
-                <div class="copy-link-section">
-                    <label for="shareLink">Link da campanha:</label>
-                    <div class="input-group">
-                        <input type="text" class="form-control" id="shareLink" readonly>
-                        <button class="btn btn-outline-secondary" type="button" id="copyLinkBtn">
-                            <i class="fas fa-copy"></i>
-                        </button>
-                    </div>
-                </div>
-            </div>
         </div>
     </div>
 </div>
@@ -374,4 +202,3 @@
 {% block custom_js %}
 <script src="/static/js/doador/doador_campanha_detalhes.js"></script>
 {% endblock %}
-
