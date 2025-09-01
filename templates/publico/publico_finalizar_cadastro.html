@@ -1,10 +1,227 @@
 {% extends "publico/publico__base.html" %}
 {% block custom_css %}
-<!-- <link href="/static/css/" rel="stylesheet"> -->
+<link href="/static/css/publico/publico_finalizar_cadastro.css" rel="stylesheet">
 {% endblock %}
 
-{% block conteudo %}
-<h1>Finalizar Cadastro</h1>
+{% block corpo %}
+<body>
+    <!-- Back Arrow -->
+    <a href="publico_visualizar_planos.html" class="back-arrow">
+        <i class="fas fa-arrow-left"></i>
+    </a>
+
+    <div class="register-container">
+        <div class="register-header">
+            <a href="publico_inicio.html">
+                <img src="/static/img/logo_vermelha.svg" alt="Hemotec Logo" class="logo-register">
+            </a>
+            <h2 class="register-title">Finalizar Cadastro de Gestor</h2>
+            <p class="register-subtitle">Complete suas informações para ativar sua conta</p>
+        </div>
+
+        <div class="progress-container">
+            <div class="progress-bar">
+                <div class="progress-step active">
+                    <div class="step-number">1</div>
+                    <span>Dados Pessoais</span>
+                </div>
+                <div class="progress-step active">
+                    <div class="step-number">2</div>
+                    <span>Instituição</span>
+                </div>
+                <div class="progress-step">
+                    <div class="step-number">3</div>
+                    <span>Finalização</span>
+                </div>
+            </div>
+        </div>
+
+        <form class="cadastro-form" id="finalizarCadastroForm">
+            <!-- Seção 1: Dados Pessoais -->
+            <div class="form-section active" id="section1">
+                <div class="section-header">
+                    <div class="section-icon">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <h3>Informações Pessoais</h3>
+                    <p>Dados básicos do gestor responsável</p>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="nome">
+                                <i class="fas fa-user"></i>
+                                Nome Completo
+                            </label>
+                            <input type="text" id="nome" name="nome" class="form-control" required>
+                            <div class="invalid-feedback"></div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="cpf">
+                                <i class="fas fa-id-card"></i>
+                                CPF
+                            </label>
+                            <input type="text" id="cpf" name="cpf" class="form-control" required>
+                            <div class="invalid-feedback"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="email_pessoal">
+                                <i class="fas fa-envelope"></i>
+                                Email Pessoal
+                            </label>
+                            <input type="email" id="email_pessoal" name="email_pessoal" class="form-control" required>
+                            <div class="invalid-feedback"></div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="telefone">
+                                <i class="fas fa-phone"></i>
+                                Telefone
+                            </label>
+                            <input type="tel" id="telefone" name="telefone" class="form-control">
+                            <div class="invalid-feedback"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-navigation">
+                    <button type="button" class="btn-next" onclick="nextSection()">
+                        Próximo
+                        <i class="fas fa-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Seção 2: Dados da Instituição -->
+            <div class="form-section" id="section2">
+                <div class="section-header">
+                    <div class="section-icon">
+                        <i class="fas fa-building"></i>
+                    </div>
+                    <h3>Informações da Instituição</h3>
+                    <p>Dados da organização vinculada</p>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="razao_social">
+                                <i class="fas fa-building"></i>
+                                Razão Social
+                            </label>
+                            <input type="text" id="razao_social" name="razao_social" class="form-control" required>
+                            <div class="invalid-feedback"></div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="cnpj">
+                                <i class="fas fa-file-alt"></i>
+                                CNPJ
+                            </label>
+                            <input type="text" id="cnpj" name="cnpj" class="form-control" required>
+                            <div class="invalid-feedback"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="email_institucional">
+                        <i class="fas fa-envelope-open"></i>
+                        Email Institucional
+                    </label>
+                    <input type="email" id="email_institucional" name="email_institucional" class="form-control" required>
+                    <div class="invalid-feedback"></div>
+                </div>
+
+                <div class="form-group">
+                    <label for="endereco">
+                        <i class="fas fa-map-marker-alt"></i>
+                        Endereço da Instituição
+                    </label>
+                    <input type="text" id="endereco" name="endereco" class="form-control" placeholder="Rua, número, bairro, cidade - UF" required>
+                    <div class="invalid-feedback"></div>
+                </div>
+
+                <div class="form-navigation">
+                    <button type="button" class="btn-prev" onclick="prevSection()">
+                        <i class="fas fa-arrow-left"></i>
+                        Anterior
+                    </button>
+                    <button type="button" class="btn-next" onclick="nextSection()">
+                        Próximo
+                        <i class="fas fa-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Seção 3: Finalização -->
+            <div class="form-section" id="section3">
+                <div class="section-header">
+                    <div class="section-icon">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <h3>Finalização do Cadastro</h3>
+                    <p>Revise suas informações e confirme o cadastro</p>
+                </div>
+
+                <div class="summary-card">
+                    <h4>Resumo das Informações</h4>
+                    <div class="summary-content" id="summaryContent">
+                        <!-- Conteúdo será preenchido via JavaScript -->
+                    </div>
+                </div>
+
+                <div class="terms-section">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="termos" required>
+                        <label class="form-check-label" for="termos">
+                            Aceito os <a href="#" target="_blank">Termos de Uso</a> e a <a href="#" target="_blank">Política de Privacidade</a>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="form-navigation">
+                    <button type="button" class="btn-prev" onclick="prevSection()">
+                        <i class="fas fa-arrow-left"></i>
+                        Anterior
+                    </button>
+                    <button type="submit" class="btn-submit">
+                        <i class="fas fa-check"></i>
+                        Finalizar Cadastro
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <!-- Success Modal -->
+    <div class="modal fade" id="successModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-body text-center">
+                    <div class="success-icon">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <h4>Cadastro Realizado com Sucesso!</h4>
+                    <p>Seu cadastro foi finalizado. Em breve você receberá um email com as instruções para ativar sua conta.</p>
+                    <button type="button" class="btn-success" data-bs-dismiss="modal">
+                        Continuar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
 {% endblock %}
 
 <!-- Custom JavaScript -->

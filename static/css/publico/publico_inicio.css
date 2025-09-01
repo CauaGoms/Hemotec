@@ -1,3 +1,45 @@
+/* Botões padronizados: login e adquirir assinatura */
+.btn-login, .btn-assinatura {
+    padding: 0.8rem 2.5rem;
+    font-size: 1.1rem;
+    font-weight: 500;
+    border-radius: 50px;
+    width: 237px;
+    height: 60px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Login padrão */
+.btn-login {
+    background-color: var(--hemotec-red);
+    border-color: var(--hemotec-red);
+    color: white;
+}
+.btn-login:hover, .btn-login:focus {
+    background-color: var(--hemotec-dark-red);
+    border-color: var(--hemotec-dark-red);
+    color: white;
+    transform: translateY(-3px);
+    box-shadow: 0 6px 8px rgba(0,0,0,0.18);
+}
+
+/* Adquirir assinatura padrão */
+.btn-assinatura {
+    background-color: white;
+    color: var(--hemotec-red);
+    border: 2px solid var(--hemotec-bg-light);
+}
+.btn-assinatura:hover, .btn-assinatura:focus {
+    background-color: #f0f0f0;
+    color: var(--hemotec-red);
+    border-color: #e0e0e0;
+    transform: translateY(-3px);
+    box-shadow: 0 6px 8px rgba(0,0,0,0.10);
+}
 :root {
     --hemotec-red: #e02020;
     --hemotec-dark-red: #c01010;
@@ -44,7 +86,7 @@ body {
     text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
 }
 
-.btn-login {
+/* .btn-login {
     background-color: var(--hemotec-red);
     border-color: var(--hemotec-red);
     padding: 0.8rem 2.5rem;
@@ -53,15 +95,17 @@ body {
     border-radius: 50px;
     transition: all 0.3s ease;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    min-width: 180px;
 }
 
 .btn-login:hover,
 .btn-login:focus {
-    background-color: var(--hemotec-dark-red);
-    border-color: var(--hemotec-dark-red);
+    background-color: #333333;
+    border-color: #333333;
+    color: white;
     transform: translateY(-3px);
-    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
-}
+    box-shadow: 0 6px 8px rgba(0,0,0,0.18);
+} */
 
 .section-title {
     color: var(--hemotec-red);
