@@ -107,193 +107,28 @@
             <div class="col-12">
                 <div class="notifications-list">
                     <!-- Notificação Crítica -->
-                    
-                    <div class="notification-item critical unread" data-type="important" data-id="1">
-                        <div class="notification-icon">
-                            <i class="fas fa-exclamation-triangle"></i>
-                        </div>
-                        <div class="notification-content">
-                            <div class="notification-header">
-                                <h5>{{notificacao.tipo}}</h5>
-                                <div class="notification-meta">
-                                    <span class="time">{{notificacao.data_envio}}</span>
-                                    <span class="badge badge-critical">{{notificacao.status}}</span>
+                    {% for notificacao in notificacao:%}
+                        <div class="notification-item critical unread" data-type="important" data-id="1">
+                            <div class="notification-icon">
+                                <i class="fas fa-exclamation-triangle"></i>
+                            </div>
+                            <div class="notification-content">
+                                <div class="notification-header">
+                                    <h5>{{notificacao.tipo}}</h5>
+                                    <div class="notification-meta">
+                                        <span class="time">{{notificacao.data_envio.strftime('%d/%m/%Y')}}</span>
+                                    </div>
+                                </div>
+                                <p>{{notificacao.mensagem}}</p>
+                                <div class="notification-actions">
+                                    <button class="btn btn-sm btn-outline-secondary" onclick="markAsRead(1)">Marcar como Lida</button>
                                 </div>
                             </div>
-                            <p>{{notificacao.mensagem}}</p>
-                            <div class="notification-actions">
-                                <button class="btn btn-sm btn-outline-secondary" onclick="markAsRead(1)">Marcar como Lida</button>
+                            <div class="notification-status">
+                                <div class="unread-indicator"></div>
                             </div>
                         </div>
-                        <div class="notification-status">
-                            <div class="unread-indicator"></div>
-                        </div>
-                    </div>
-
-                    <!-- Notificação de Campanha -->
-                    <div class="notification-item campaign unread" data-type="campaigns" data-id="2">
-                        <div class="notification-icon">
-                            <i class="fas fa-bullhorn"></i>
-                        </div>
-                        <div class="notification-content">
-                            <div class="notification-header">
-                                <h5>Nova Campanha: Junho Vermelho 2025</h5>
-                                <div class="notification-meta">
-                                    <span class="time">Há 2 horas</span>
-                                    <span class="badge badge-campaign">Campanha</span>
-                                </div>
-                            </div>
-                            <p>A campanha "Junho Vermelho 2025" foi iniciada com meta de 500 doações. Participe e ajude a salvar vidas!</p>
-                            <div class="notification-actions">
-                                <button class="btn btn-sm btn-primary" onclick="viewCampaign(2)">Ver Campanha</button>
-                                <button class="btn btn-sm btn-outline-secondary" onclick="markAsRead(2)">Marcar como Lida</button>
-                            </div>
-                        </div>
-                        <div class="notification-status">
-                            <div class="unread-indicator"></div>
-                        </div>
-                    </div>
-
-                    <!-- Notificação de Agendamento -->
-                    <div class="notification-item appointment unread" data-type="all" data-id="3">
-                        <div class="notification-icon">
-                            <i class="fas fa-calendar-check"></i>
-                        </div>
-                        <div class="notification-content">
-                            <div class="notification-header">
-                                <h5>Agendamento Confirmado</h5>
-                                <div class="notification-meta">
-                                    <span class="time">Há 3 horas</span>
-                                    <span class="badge badge-success">Confirmado</span>
-                                </div>
-                            </div>
-                            <p>Seu agendamento para doação foi confirmado para amanhã (20/06/2025) às 14:00 no Hemocentro Regional.</p>
-                            <div class="notification-actions">
-                                <button class="btn btn-sm btn-primary" onclick="viewAppointment(3)">Ver Agendamento</button>
-                                <button class="btn btn-sm btn-outline-secondary" onclick="markAsRead(3)">Marcar como Lida</button>
-                            </div>
-                        </div>
-                        <div class="notification-status">
-                            <div class="unread-indicator"></div>
-                        </div>
-                    </div>
-
-                    <!-- Notificação de Sistema -->
-                    <div class="notification-item system read" data-type="all" data-id="4">
-                        <div class="notification-icon">
-                            <i class="fas fa-cog"></i>
-                        </div>
-                        <div class="notification-content">
-                            <div class="notification-header">
-                                <h5>Atualização do Sistema</h5>
-                                <div class="notification-meta">
-                                    <span class="time">Há 5 horas</span>
-                                    <span class="badge badge-info">Sistema</span>
-                                </div>
-                            </div>
-                            <p>O sistema foi atualizado com novas funcionalidades. Confira as melhorias na área de agendamentos.</p>
-                            <div class="notification-actions">
-                                <button class="btn btn-sm btn-primary" onclick="viewUpdate(4)">Ver Novidades</button>
-                            </div>
-                        </div>
-                        <div class="notification-status">
-                            <!-- Sem indicador para lidas -->
-                        </div>
-                    </div>
-
-                    <!-- Notificação de Doação -->
-                    <div class="notification-item donation read" data-type="all" data-id="5">
-                        <div class="notification-icon">
-                            <i class="fas fa-heart"></i>
-                        </div>
-                        <div class="notification-content">
-                            <div class="notification-header">
-                                <h5>Doação Realizada com Sucesso</h5>
-                                <div class="notification-meta">
-                                    <span class="time">Ontem</span>
-                                    <span class="badge badge-success">Concluída</span>
-                                </div>
-                            </div>
-                            <p>Sua doação de sangue foi processada e está disponível para salvar vidas. Obrigado pela sua generosidade!</p>
-                            <div class="notification-actions">
-                                <button class="btn btn-sm btn-primary" onclick="viewDonation(5)">Ver Certificado</button>
-                            </div>
-                        </div>
-                        <div class="notification-status">
-                            <!-- Sem indicador para lidas -->
-                        </div>
-                    </div>
-
-                    <!-- Notificação de Lembrete -->
-                    <div class="notification-item reminder unread" data-type="all" data-id="6">
-                        <div class="notification-icon">
-                            <i class="fas fa-clock"></i>
-                        </div>
-                        <div class="notification-content">
-                            <div class="notification-header">
-                                <h5>Lembrete: Próxima Doação Disponível</h5>
-                                <div class="notification-meta">
-                                    <span class="time">Há 1 dia</span>
-                                    <span class="badge badge-reminder">Lembrete</span>
-                                </div>
-                            </div>
-                            <p>Você já pode agendar sua próxima doação! Sua última doação foi há 60 dias.</p>
-                            <div class="notification-actions">
-                                <button class="btn btn-sm btn-primary" onclick="scheduleNewDonation()">Agendar Doação</button>
-                                <button class="btn btn-sm btn-outline-secondary" onclick="markAsRead(6)">Marcar como Lida</button>
-                            </div>
-                        </div>
-                        <div class="notification-status">
-                            <div class="unread-indicator"></div>
-                        </div>
-                    </div>
-
-                    <!-- Notificação de Resultado -->
-                    <div class="notification-item result unread" data-type="important" data-id="7">
-                        <div class="notification-icon">
-                            <i class="fas fa-file-medical"></i>
-                        </div>
-                        <div class="notification-content">
-                            <div class="notification-header">
-                                <h5>Resultado dos Exames Disponível</h5>
-                                <div class="notification-meta">
-                                    <span class="time">Há 2 dias</span>
-                                    <span class="badge badge-info">Resultado</span>
-                                </div>
-                            </div>
-                            <p>Os resultados dos seus exames de sangue estão disponíveis para consulta. Todos os parâmetros estão normais.</p>
-                            <div class="notification-actions">
-                                <button class="btn btn-sm btn-primary" onclick="viewResults(7)">Ver Resultados</button>
-                                <button class="btn btn-sm btn-outline-secondary" onclick="markAsRead(7)">Marcar como Lida</button>
-                            </div>
-                        </div>
-                        <div class="notification-status">
-                            <div class="unread-indicator"></div>
-                        </div>
-                    </div>
-
-                    <!-- Notificação de Agradecimento -->
-                    <div class="notification-item thanks read" data-type="all" data-id="8">
-                        <div class="notification-icon">
-                            <i class="fas fa-hands-helping"></i>
-                        </div>
-                        <div class="notification-content">
-                            <div class="notification-header">
-                                <h5>Sua Doação Salvou Vidas!</h5>
-                                <div class="notification-meta">
-                                    <span class="time">Há 3 dias</span>
-                                    <span class="badge badge-success">Impacto</span>
-                                </div>
-                            </div>
-                            <p>Sua doação de sangue tipo A+ ajudou a salvar 3 vidas em cirurgias de emergência. Muito obrigado!</p>
-                            <div class="notification-actions">
-                                <button class="btn btn-sm btn-primary" onclick="viewImpact(8)">Ver Impacto</button>
-                            </div>
-                        </div>
-                        <div class="notification-status">
-                            <!-- Sem indicador para lidas -->
-                        </div>
-                    </div>
+                    {% endfor  %}                    
                 </div>
 
                 <!-- Paginação -->
