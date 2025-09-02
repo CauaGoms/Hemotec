@@ -2,41 +2,30 @@
 
 {% block custom_css %}
 <link href="/static/css/doador/doador_campanha_detalhes.css" rel="stylesheet">
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 {% endblock %}
 
 {% block conteudo %}
-<div class="campaign-container">
+<div class="campaign-container" style="padding-top: 80px;">
     <div class="campaign-card">
-        <!-- Header da Campanha -->
-        <div class="campaign-header">
-            <h1 class="campaign-title">{{ campanha.titulo }}</h1>
+        <!-- Header Moderno da Campanha -->
+        <div class="campaign-header-modern">
+            <h1 class="campaign-title-modern">{{ campanha.titulo }}</h1>
+            {% if campanha.imagem %}
+                <img src="{{ campanha.imagem }}" alt="Imagem da campanha" class="campaign-image" />
+            {% else %}
+                <img src="https://images.unsplash.com/photo-1559757148-5c350d0d3c56?w=900&h=350&fit=crop" alt="Imagem padrão campanha" class="campaign-image" />
+            {% endif %}
+            <!-- <h1 class="campaign-title-modern">{{ campanha.titulo }}</h1> -->
+            <p class="campaign-description-modern">{{ campanha.descricao | replace('\n', '<br>') | safe }}</p>
+                <div class="campaign-info-footer">
+                    <span class="info-footer-item"><i class="fas fa-calendar-day"></i> {{ campanha.data_inicio }}</span>
+                    <span class="info-footer-item"><i class="fas fa-calendar-check"></i> {{ campanha.data_fim }}</span>
+                    <span class="info-footer-item"><i class="fas fa-info-circle"></i> {{ campanha.status }}</span>
+                </div>
         </div>
-        
+
         <!-- Corpo da Campanha -->
         <div class="campaign-body">
-            <!-- Descrição -->
-            <div class="campaign-section">
-                <h3 class="section-title">Descrição</h3>
-                <p class="campaign-description">{{ campanha.descricao }}</p>
-            </div>
-
-            <!-- Informações Básicas -->
-            <div class="campaign-info-grid">
-                <div class="info-item">
-                    <span class="info-label">Data de Início</span>
-                    <span class="info-value">{{ campanha.data_inicio }}</span>
-                </div>
-                <div class="info-item">
-                    <span class="info-label">Data de Fim</span>
-                    <span class="info-value">{{ campanha.data_fim }}</span>
-                </div>
-                <div class="info-item">
-                    <span class="info-label">Status</span>
-                    <span class="info-value status-active">{{ campanha.status }}</span>
-                </div>
-            </div>
-
             <!-- Cronograma -->
             {% if campanha.cronograma %}
             <div class="campaign-section">
@@ -146,34 +135,31 @@
 
             <!-- Ações Principais -->
             <div class="campaign-actions">
-                <a href="/doador/agendamento/adicionar" class="btn btn-primary btn-large">
+                    <a href="/doador/agendamento/adicionar" class="btn btn-agendar">
                     <i class="fas fa-calendar-plus"></i>
                     Agendar Doação
-                </a>
-                <a href="/doador/campanha" class="btn btn-outline btn-large">
-                    <i class="fas fa-arrow-left"></i>
-                    Voltar às Campanhas
                 </a>
             </div>
 
             <!-- Compartilhamento -->
             <div class="share-section">
-                <p class="share-text">Compartilhe esta campanha</p>
-                <div class="share-buttons">
-                    <button class="share-btn facebook" data-platform="facebook">
-                        <i class="fab fa-facebook-f"></i>
-                    </button>
-                    <button class="share-btn twitter" data-platform="twitter">
-                        <i class="fab fa-twitter"></i>
-                    </button>
-                    <button class="share-btn whatsapp" data-platform="whatsapp">
-                        <i class="fab fa-whatsapp"></i>
-                    </button>
-                    <button class="share-btn link" data-platform="link">
-                        <i class="fas fa-link"></i>
-                    </button>
+                <div class="share-section-modern">
+                    <p class="share-text-modern"><i class="fas fa-share-alt"></i> Compartilhe esta campanha</p>
+                    <div class="share-buttons-modern">
+                        <button class="share-btn-modern facebook" data-platform="facebook">
+                            <i class="fab fa-facebook-f"></i> Facebook
+                        </button>
+                        <button class="share-btn-modern twitter" data-platform="twitter">
+                            <i class="fab fa-twitter"></i> Twitter
+                        </button>
+                        <button class="share-btn-modern whatsapp" data-platform="whatsapp">
+                            <i class="fab fa-whatsapp"></i> WhatsApp
+                        </button>
+                        <button class="share-btn-modern link" data-platform="link">
+                            <i class="fas fa-link"></i> Link
+                        </button>
+                    </div>
                 </div>
-            </div>
 
             <!-- Campanhas Relacionadas -->
             {% if campanhas_relacionadas %}

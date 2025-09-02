@@ -21,7 +21,6 @@ def inserir(notificacao: Notificacao, cursor=None) -> Optional[int]:
     if cursor is not None:
         cursor.execute(INSERIR, (
             notificacao.cod_adm,
-            notificacao.destino,
             notificacao.tipo,
             notificacao.mensagem,
             notificacao.status,
@@ -33,7 +32,6 @@ def inserir(notificacao: Notificacao, cursor=None) -> Optional[int]:
             cursor = conn.cursor()
             cursor.execute(INSERIR, (
                 notificacao.cod_adm,
-                notificacao.destino,
                 notificacao.tipo,
                 notificacao.mensagem,
                 notificacao.status,
@@ -51,7 +49,6 @@ def obter_todos() -> list[Notificacao]:
             Notificacao(
                 cod_notificacao=row["cod_notificacao"],
                 cod_adm=row["cod_adm"],
-                destino=row["destino"],
                 tipo=row["tipo"],
                 mensagem=row["mensagem"],
                 status=row["status"],
@@ -73,7 +70,6 @@ def obter_por_id(cod_notificacao: int) -> Optional[Notificacao]:
             return Notificacao(
                 cod_notificacao=row["cod_notificacao"],
                 cod_adm=row["cod_adm"],
-                destino=row["destino"],
                 tipo=row["tipo"],
                 mensagem=row["mensagem"],
                 status=row["status"],
@@ -88,7 +84,6 @@ def update(notificacao: Notificacao) -> bool:
             UPDATE,
             (
                 notificacao.cod_adm,
-                notificacao.destino,
                 notificacao.tipo,
                 notificacao.mensagem,
                 notificacao.status,
