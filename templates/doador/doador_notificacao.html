@@ -107,21 +107,21 @@
             <div class="col-12">
                 <div class="notifications-list">
                     <!-- Notificação Crítica -->
+                    
                     <div class="notification-item critical unread" data-type="important" data-id="1">
                         <div class="notification-icon">
                             <i class="fas fa-exclamation-triangle"></i>
                         </div>
                         <div class="notification-content">
                             <div class="notification-header">
-                                <h5>Estoque Crítico - Tipo O+</h5>
+                                <h5>{{notificacao.tipo}}</h5>
                                 <div class="notification-meta">
-                                    <span class="time">Há 30 minutos</span>
-                                    <span class="badge badge-critical">Crítico</span>
+                                    <span class="time">{{notificacao.data_envio}}</span>
+                                    <span class="badge badge-critical">{{notificacao.status}}</span>
                                 </div>
                             </div>
-                            <p>O estoque de sangue tipo O+ está em nível crítico com apenas 4 unidades disponíveis. Ação imediata necessária.</p>
+                            <p>{{notificacao.mensagem}}</p>
                             <div class="notification-actions">
-                                <button class="btn btn-sm btn-primary" onclick="viewDetails(1)">Ver Detalhes</button>
                                 <button class="btn btn-sm btn-outline-secondary" onclick="markAsRead(1)">Marcar como Lida</button>
                             </div>
                         </div>
