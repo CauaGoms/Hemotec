@@ -1,5 +1,6 @@
 /* Botões padronizados: login e adquirir assinatura */
-.btn-login, .btn-assinatura {
+.btn-login,
+.btn-assinatura {
     padding: 0.8rem 2.5rem;
     font-size: 1.1rem;
     font-weight: 500;
@@ -19,12 +20,13 @@
     border-color: var(--hemotec-red);
     color: white;
 }
-.btn-login:hover, .btn-login:focus {
+
+.btn-login:hover,
+.btn-login:focus {
     background-color: var(--hemotec-dark-red);
     border-color: var(--hemotec-dark-red);
-    color: white;
     transform: translateY(-3px);
-    box-shadow: 0 6px 8px rgba(0,0,0,0.18);
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.18);
 }
 
 /* Adquirir assinatura padrão */
@@ -33,13 +35,15 @@
     color: var(--hemotec-red);
     border: 2px solid var(--hemotec-bg-light);
 }
-.btn-assinatura:hover, .btn-assinatura:focus {
+
+.btn-assinatura:hover,
+.btn-assinatura:focus {
     background-color: #f0f0f0;
-    color: var(--hemotec-red);
     border-color: #e0e0e0;
     transform: translateY(-3px);
-    box-shadow: 0 6px 8px rgba(0,0,0,0.10);
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.10);
 }
+
 :root {
     --hemotec-red: #e02020;
     --hemotec-dark-red: #c01010;
@@ -85,27 +89,6 @@ body {
     font-weight: 300;
     text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
 }
-
-/* .btn-login {
-    background-color: var(--hemotec-red);
-    border-color: var(--hemotec-red);
-    padding: 0.8rem 2.5rem;
-    font-size: 1.1rem;
-    font-weight: 500;
-    border-radius: 50px;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    min-width: 180px;
-}
-
-.btn-login:hover,
-.btn-login:focus {
-    background-color: #333333;
-    border-color: #333333;
-    color: white;
-    transform: translateY(-3px);
-    box-shadow: 0 6px 8px rgba(0,0,0,0.18);
-} */
 
 .section-title {
     color: var(--hemotec-red);
@@ -265,8 +248,34 @@ body {
 }
 
 #mapa {
-  border-radius: 12px;
-  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    border-radius: 12px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Estilo para o botão "Rota" */
+.unidade-list li button {
+    background: rgb(243, 30, 30);
+    padding: 5px 10px;
+    font-size: 0.72rem;
+    border-radius: 5px;
+    transition: all 0.2s ease;
+    color: #fff;
+    border: none;
+    font-weight: bold;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.unidade-list li button:hover {
+    background: #a81208;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.unidade-list li button:disabled {
+    background: #ccc;
+    color: #666;
+    cursor: not-allowed;
+    box-shadow: none;
 }
 
 @media (max-width: 768px) {
@@ -286,4 +295,204 @@ body {
     .stats-number {
         font-size: 2rem;
     }
-} 
+}
+
+#mapa {
+    height: 500px;
+    width: 100%;
+    border-radius: 8px;
+}
+
+.info-box {
+    background-color: #fff;
+    padding: 10px;
+    border-radius: 6px;
+    margin-top: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, .15);
+    font-size: .9rem;
+}
+
+.map-tools {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 10px;
+    align-items: center;
+}
+
+.map-tools button {
+    border: 0;
+    background: #dc3545;
+    color: #fff;
+    padding: 8px 14px;
+    border-radius: 4px;
+    font-size: .85rem;
+    cursor: pointer;
+}
+
+.map-tools button:disabled {
+    opacity: .55;
+    cursor: not-allowed;
+}
+
+.unidade-list {
+    list-style: none;
+    padding: 0;
+    margin: 10px 0 0;
+    display: grid;
+    gap: 6px;
+}
+
+.unidade-list li {
+    background: #f8f9fa;
+    border: 1px solid #e2e6ea;
+    border-radius: 4px;
+    padding: 6px 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: .8rem;
+}
+
+.unidade-list li button {
+    background: #0d6efd;
+    padding: 4px 8px;
+    font-size: .7rem;
+}
+
+.geo-status {
+    font-size: .75rem;
+    color: #555;
+    margin-top: 4px;
+}
+
+@media (max-width: 576px) {
+    #mapa {
+        height: 380px;
+    }
+}
+
+#mapa {
+    height: 500px;
+    width: 100%;
+    border-radius: 12px;
+    border: 25px solid #ffffff;
+    /* borda branca */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.leaflet-container {
+    font-family: "Segoe UI", Roboto, sans-serif;
+}
+
+.leaflet-popup-content-wrapper {
+    border-radius: 10px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, .2);
+}
+
+.leaflet-popup-content {
+    font-size: .85rem;
+}
+
+.leaflet-control-zoom a {
+    background: #fff !important;
+    color: #dc3545 !important;
+    border-radius: 6px !important;
+    border: 1px solid #ddd !important;
+    transition: all .2s ease;
+}
+
+.leaflet-control-zoom a:hover {
+    background: #dc3545 !important;
+    color: #fff !important;
+}
+
+.info-box {
+    background-color: #fff;
+    padding: 12px;
+    border-radius: 8px;
+    margin-top: 12px;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, .1);
+    font-size: .9rem;
+    border-left: 4px solid #dc3545;
+}
+
+.map-tools {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 12px;
+    align-items: center;
+}
+
+.map-tools button {
+    border: 0;
+    background: #dc3545;
+    color: #fff;
+    padding: 9px 16px;
+    border-radius: 6px;
+    font-size: .85rem;
+    cursor: pointer;
+    font-weight: 500;
+    transition: all .2s ease;
+}
+
+.map-tools button:hover:not(:disabled) {
+    background: #b02a37;
+    transform: translateY(-2px);
+    box-shadow: 0 3px 8px rgba(0, 0, 0, .15);
+}
+
+.map-tools button:disabled {
+    opacity: .55;
+    cursor: not-allowed;
+}
+
+.unidade-list {
+    list-style: none;
+    padding: 0;
+    margin: 12px 0 0;
+    display: grid;
+    gap: 8px;
+}
+
+.unidade-list li {
+    background: #fff;
+    border: 1px solid #e2e6ea;
+    border-radius: 6px;
+    padding: 8px 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: .82rem;
+    transition: background .2s ease;
+}
+
+.unidade-list li:hover {
+    background: #fdf2f2;
+}
+
+.unidade-list li button {
+    background: rgb(243, 30, 30);
+    padding: 5px 10px;
+    font-size: .72rem;
+    border-radius: 5px;
+    transition: all .2s ease;
+}
+
+.unidade-list li button:hover {
+    background: #a81208;
+}
+
+.geo-status {
+    font-size: .8rem;
+    color: #666;
+    margin-top: 4px;
+    font-style: italic;
+}
+
+@media (max-width: 576px) {
+    #mapa {
+        height: 380px;
+    }
+}
