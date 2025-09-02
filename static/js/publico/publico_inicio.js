@@ -47,8 +47,8 @@ document.addEventListener("DOMContentLoaded", async function () {
   } catch (error) {
     console.error("ERRO CRÍTICO: Falha ao buscar ou processar os dados das unidades.", error);
     unidades = [
-      {"Hospital Evangélico":[-20.843485026484874,-41.113190979813844]},
-      {"Santa Casa":[-20.85124724515817,-41.11350464599875]}
+      { "Hospital Evangélico": [-20.843485026484874, -41.113190979813844] },
+      { "Santa Casa": [-20.85124724515817, -41.11350464599875] }
     ];
     console.log("Usando dados de unidades simulados devido a erro na API.");
 
@@ -156,9 +156,12 @@ document.addEventListener("DOMContentLoaded", async function () {
 
   mapa.on("locationfound", function (e) {
     console.log("Sucesso: Localização do usuário encontrada!", e.latlng);
+    // Adiciona marcador na posição exata
     const userMarker = L.marker(e.latlng, { icon: iconeUsuario }).addTo(mapa)
       .bindPopup("<strong>Você está aqui</strong>");
     userMarker.openPopup();
+    // Centraliza o mapa na localização do usuário com zoom mais alto
+    mapa.setView(e.latlng, 18);
 
     let unidadeProxima = null;
     let menorDistancia = Infinity;
@@ -223,6 +226,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     alert("Não foi possível obter sua localização. Verifique se você permitiu o acesso à localização no navegador.");
   });
 
-  mapa.locate({ setView: false, maxZoom: 16 });
+  // Solicita localização com alta precisão
+  mapa.locate({ setView: false, maxZoom: 18, enableHighAccuracy: true });
 
 });
