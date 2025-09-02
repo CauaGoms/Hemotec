@@ -2,137 +2,8 @@
 
 {% block custom_css %}
 <link href="/static/css/publico/publico_inicio.css" rel="stylesheet">
-<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin=""/>
-<link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.css" />
-<style>
-    #mapa { height: 500px; width: 100%; border-radius: 8px; }
-    .info-box { background-color: #fff; padding: 10px; border-radius: 6px; margin-top: 10px; box-shadow: 0 2px 5px rgba(0,0,0,.15); font-size: .9rem; }
-    .map-tools { display:flex; flex-wrap:wrap; gap:8px; margin-bottom:10px; align-items:center; }
-    .map-tools button { border:0; background:#dc3545; color:#fff; padding:8px 14px; border-radius:4px; font-size:.85rem; cursor:pointer; }
-    .map-tools button:disabled { opacity:.55; cursor:not-allowed; }
-    .unidade-list { list-style:none; padding:0; margin:10px 0 0; display:grid; gap:6px; }
-    .unidade-list li { background:#f8f9fa; border:1px solid #e2e6ea; border-radius:4px; padding:6px 8px; display:flex; justify-content:space-between; align-items:center; font-size:.8rem; }
-    .unidade-list li button { background:#0d6efd; padding:4px 8px; font-size:.7rem; }
-    .geo-status { font-size:.75rem; color:#555; margin-top:4px; }
-    @media (max-width: 576px){
-        #mapa { height: 380px; }
-    }
-    #mapa { 
-        height: 500px; 
-        width: 100%; 
-        border-radius: 12px; 
-        border: 25px solid #ffffff; /* borda branca */
-        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-    }
-
-    .leaflet-container {
-        font-family: "Segoe UI", Roboto, sans-serif;
-    }
-
-    .leaflet-popup-content-wrapper {
-        border-radius: 10px;
-        box-shadow: 0 2px 12px rgba(0,0,0,.2);
-    }
-
-    .leaflet-popup-content {
-        font-size: .85rem;
-    }
-
-    .leaflet-control-zoom a {
-        background: #fff !important;
-        color: #dc3545 !important;
-        border-radius: 6px !important;
-        border: 1px solid #ddd !important;
-        transition: all .2s ease;
-    }
-    .leaflet-control-zoom a:hover {
-        background: #dc3545 !important;
-        color: #fff !important;
-    }
-
-    .info-box { 
-        background-color: #fff; 
-        padding: 12px; 
-        border-radius: 8px; 
-        margin-top: 12px; 
-        box-shadow: 0 3px 10px rgba(0,0,0,.1); 
-        font-size: .9rem; 
-        border-left: 4px solid #dc3545;
-    }
-
-    .map-tools { 
-        display:flex; 
-        flex-wrap:wrap; 
-        gap:10px; 
-        margin-bottom:12px; 
-        align-items:center; 
-    }
-
-    .map-tools button { 
-        border:0; 
-        background:#dc3545; 
-        color:#fff; 
-        padding:9px 16px; 
-        border-radius:6px; 
-        font-size:.85rem; 
-        cursor:pointer; 
-        font-weight: 500;
-        transition: all .2s ease;
-    }
-    .map-tools button:hover:not(:disabled) {
-        background:#b02a37;
-        transform: translateY(-2px);
-        box-shadow: 0 3px 8px rgba(0,0,0,.15);
-    }
-    .map-tools button:disabled { 
-        opacity:.55; 
-        cursor:not-allowed; 
-    }
-
-    .unidade-list { 
-        list-style:none; 
-        padding:0; 
-        margin:12px 0 0; 
-        display:grid; 
-        gap:8px; 
-    }
-    .unidade-list li { 
-        background:#fff; 
-        border:1px solid #e2e6ea; 
-        border-radius:6px; 
-        padding:8px 10px; 
-        display:flex; 
-        justify-content:space-between; 
-        align-items:center; 
-        font-size:.82rem; 
-        transition: background .2s ease;
-    }
-    .unidade-list li:hover {
-        background: #fdf2f2;
-    }
-
-    .unidade-list li button { 
-        background:rgb(243, 30, 30); 
-        padding:5px 10px; 
-        font-size:.72rem; 
-        border-radius:5px;
-        transition: all .2s ease;
-    }
-    .unidade-list li button:hover {
-        background:#a81208;
-    }
-
-    .geo-status { 
-        font-size:.8rem; 
-        color:#666; 
-        margin-top:4px; 
-        font-style: italic;
-    }
-
-    @media (max-width: 576px){
-        #mapa { height: 380px; }
-    }
-</style>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="">
+<link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.css">
 {% endblock %}
 
 {% block corpo %}
@@ -151,7 +22,6 @@
         </div>
     </div>
 </section>
-
 <section class="container">
     <div class="text-center mb-5">
         <h2 class="section-title">Campanhas Recentes</h2>
@@ -200,14 +70,12 @@
         </div>
     </div>
 </section>
-
 <section class="quote-section">
     <div class="container text-center">
         <p class="quote-text">Doar sangue não é só um ato de solidariedade, é um compromisso com a vida. Cada gota doada é uma chance de recomeço para alguém.</p>
         <p class="quote-author">— Campanha Nacional de Doação de Sangue</p>
     </div>
 </section>
-
 <section class="container my-5">
     <!-- ...existing code (informações + estoque) ... -->
     <div class="row">
@@ -217,7 +85,9 @@
             <!-- ...existing code... -->
             <div class="card border-0 shadow-sm">
                 <div class="card-body p-4">
-                    <h3 class="card-title text-danger mb-3"><i class="fas fa-info-circle me-2"></i>Informações Importantes</h3>
+                    <h3 class="card-title text-danger mb-3">
+                        <i class="fas fa-info-circle me-2"></i>Informações Importantes
+                    </h3>
                     <div class="row">
                         <!-- ...existing info items... -->
                         <div class="col-md-6 mb-3">
@@ -225,7 +95,9 @@
                                 <i class="fas fa-clock text-danger me-3 mt-1"></i>
                                 <div>
                                     <h6 class="mb-1">Atenção</h6>
-                                    <p class="text-muted mb-0">Durma pelo menos 6 horas<br>na noite anterior à doação.</p>
+                                    <p class="text-muted mb-0">Durma pelo menos 6 horas
+                                        <br>na noite anterior à doação.
+                                    </p>
                                 </div>
                             </div>
                         </div>
@@ -234,7 +106,9 @@
                                 <i class="fas fa-user-check text-danger me-3 mt-1"></i>
                                 <div>
                                     <h6 class="mb-1">Requisitos Básicos</h6>
-                                    <p class="text-muted mb-0">Idade: 16 a 69 anos<br>Peso mínimo: 50kg</p>
+                                    <p class="text-muted mb-0">Idade: 16 a 69 anos
+                                        <br>Peso mínimo: 50kg
+                                    </p>
                                 </div>
                             </div>
                         </div>
@@ -243,7 +117,9 @@
                                 <i class="fas fa-calendar-alt text-danger me-3 mt-1"></i>
                                 <div>
                                     <h6 class="mb-1">Intervalo entre Doações</h6>
-                                    <p class="text-muted mb-0">Homens: 60 dias<br>Mulheres: 90 dias</p>
+                                    <p class="text-muted mb-0">Homens: 60 dias
+                                        <br>Mulheres: 90 dias
+                                    </p>
                                 </div>
                             </div>
                         </div>
@@ -252,7 +128,9 @@
                                 <i class="fas fa-id-card text-danger me-3 mt-1"></i>
                                 <div>
                                     <h6 class="mb-1">Documentos Necessários</h6>
-                                    <p class="text-muted mb-0">RG, CPF ou CNH<br>Em boas condições</p>
+                                    <p class="text-muted mb-0">RG, CPF ou CNH
+                                        <br>Em boas condições
+                                    </p>
                                 </div>
                             </div>
                         </div>
@@ -260,7 +138,6 @@
                 </div>
             </div>
         </div>
-
         <!-- Estoque Atual (original) -->
         <div class="col-lg-12 mb-4">
             <!-- ...existing code (estoque) ... -->
@@ -268,59 +145,101 @@
                 <div class="card-body p-4 d-flex flex-column">
                     <h4 class="card-title text-danger mb-3">
                         <i class="fas fa-exclamation-triangle me-2"></i>
-                        Estoque Atual - <span id="nome-unidade-estoque">Carregando...</span>
+                        Estoque Atual -
+                        <span id="nome-unidade-estoque">Carregando...</span>
                     </h4>
                     <!-- ...existing code (progress bars) ... -->
                     <div class="row">
                         <!-- ...existing progress bars left/right ... -->
                         <div class="col-md-6">
                             <div class="mb-3">
-                                <div class="d-flex justify-content-between align-items-center mb-2"><span class="fw-bold">O+</span><span class="badge bg-danger">Crítico</span></div>
-                                <div class="progress mb-2" style="height:8px;"><div class="progress-bar bg-danger" style="width:20%;"></div></div>
+                                <div class="d-flex justify-content-between align-items-center mb-2">
+                                    <span class="fw-bold">O+</span>
+                                    <span class="badge bg-danger">Crítico</span>
+                                </div>
+                                <div class="progress mb-2" style="height:8px;">
+                                    <div class="progress-bar bg-danger" style="width:20%;"></div>
+                                </div>
                             </div>
                             <div class="mb-3">
-                                <div class="d-flex justify-content-between align-items-center mb-2"><span class="fw-bold">A+</span><span class="badge bg-warning">Baixo</span></div>
-                                <div class="progress mb-2" style="height:8px;"><div class="progress-bar bg-warning" style="width:35%;"></div></div>
+                                <div class="d-flex justify-content-between align-items-center mb-2">
+                                    <span class="fw-bold">A+</span>
+                                    <span class="badge bg-warning">Baixo</span>
+                                </div>
+                                <div class="progress mb-2" style="height:8px;">
+                                    <div class="progress-bar bg-warning" style="width:35%;"></div>
+                                </div>
                             </div>
                             <div class="mb-3">
-                                <div class="d-flex justify-content-between align-items-center mb-2"><span class="fw-bold">B+</span><span class="badge bg-success">Adequado</span></div>
-                                <div class="progress mb-2" style="height:8px;"><div class="progress-bar bg-success" style="width:70%;"></div></div>
+                                <div class="d-flex justify-content-between align-items-center mb-2">
+                                    <span class="fw-bold">B+</span>
+                                    <span class="badge bg-success">Adequado</span>
+                                </div>
+                                <div class="progress mb-2" style="height:8px;">
+                                    <div class="progress-bar bg-success" style="width:70%;"></div>
+                                </div>
                             </div>
                             <div class="mb-3">
-                                <div class="d-flex justify-content-between align-items-center mb-2"><span class="fw-bold">AB+</span><span class="badge bg-warning">Baixo</span></div>
-                                <div class="progress mb-2" style="height:8px;"><div class="progress-bar bg-warning" style="width:30%;"></div></div>
+                                <div class="d-flex justify-content-between align-items-center mb-2">
+                                    <span class="fw-bold">AB+</span>
+                                    <span class="badge bg-warning">Baixo</span>
+                                </div>
+                                <div class="progress mb-2" style="height:8px;">
+                                    <div class="progress-bar bg-warning" style="width:30%;"></div>
+                                </div>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="mb-3">
-                                <div class="d-flex justify-content-between align-items-center mb-2"><span class="fw-bold">O-</span><span class="badge bg-warning">Moderado</span></div>
-                                <div class="progress mb-2" style="height:8px;"><div class="progress-bar bg-warning" style="width:45%;"></div></div>
+                                <div class="d-flex justify-content-between align-items-center mb-2">
+                                    <span class="fw-bold">O-</span>
+                                    <span class="badge bg-warning">Moderado</span>
+                                </div>
+                                <div class="progress mb-2" style="height:8px;">
+                                    <div class="progress-bar bg-warning" style="width:45%;"></div>
+                                </div>
                             </div>
                             <div class="mb-3">
-                                <div class="d-flex justify-content-between align-items-center mb-2"><span class="fw-bold">A-</span><span class="badge bg-success">Adequado</span></div>
-                                <div class="progress mb-2" style="height:8px;"><div class="progress-bar bg-success" style="width:65%;"></div></div>
+                                <div class="d-flex justify-content-between align-items-center mb-2">
+                                    <span class="fw-bold">A-</span>
+                                    <span class="badge bg-success">Adequado</span>
+                                </div>
+                                <div class="progress mb-2" style="height:8px;">
+                                    <div class="progress-bar bg-success" style="width:65%;"></div>
+                                </div>
                             </div>
                             <div class="mb-3">
-                                <div class="d-flex justify-content-between align-items-center mb-2"><span class="fw-bold">B-</span><span class="badge bg-danger">Crítico</span></div>
-                                <div class="progress mb-2" style="height:8px;"><div class="progress-bar bg-danger" style="width:25%;"></div></div>
+                                <div class="d-flex justify-content-between align-items-center mb-2">
+                                    <span class="fw-bold">B-</span>
+                                    <span class="badge bg-danger">Crítico</span>
+                                </div>
+                                <div class="progress mb-2" style="height:8px;">
+                                    <div class="progress-bar bg-danger" style="width:25%;"></div>
+                                </div>
                             </div>
                             <div class="mb-3">
-                                <div class="d-flex justify-content-between align-items-center mb-2"><span class="fw-bold">AB-</span><span class="badge bg-success">Adequado</span></div>
-                                <div class="progress mb-2" style="height:8px;"><div class="progress-bar bg-success" style="width:80%;"></div></div>
+                                <div class="d-flex justify-content-between align-items-center mb-2">
+                                    <span class="fw-bold">AB-</span>
+                                    <span class="badge bg-success">Adequado</span>
+                                </div>
+                                <div class="progress mb-2" style="height:8px;">
+                                    <div class="progress-bar bg-success" style="width:80%;"></div>
+                                </div>
                             </div>
                         </div>
                     </div>
                     <div class="mt-auto">
                         <div class="alert alert-danger mb-0" role="alert">
-                            <small><i class="fas fa-heart me-1"></i>Sua doação pode salvar vidas! Tipos O+, A+ e B- são urgentes.</small>
+                            <small>
+                                <i class="fas fa-heart me-1"></i>Sua doação pode salvar vidas! Tipos O+, A+ e B- são urgentes.
+                            </small>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>    
+    </div>
 </section>
-
 <!-- Mapa Section (atualizado) -->
 <section class="container mb-5">
     <div class="text-center mb-4">
@@ -374,6 +293,7 @@
             const btn = document.createElement('button');
             btn.type = 'button';
             btn.textContent = 'Rota';
+            btn.classList.add('btn-rota');
             btn.addEventListener('click', () => {
                 if(!userMarker){
                     statusEl.textContent = 'Obtenha sua localização primeiro.';
@@ -492,7 +412,6 @@
     }
 })();
 </script>
-
 <!-- (Opcional) remover script externo antigo se estava vazio ou falhando -->
 <!-- <script src="/static/js/publico/publico_inicio.js"></script> -->
 {% endblock %}
