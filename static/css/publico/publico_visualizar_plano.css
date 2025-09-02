@@ -1,77 +1,3 @@
-/* Animação de brilho no badge Mais Popular */
-.brilho {
-    animation: brilhoBadge 1.5s infinite alternate;
-}
-@keyframes brilhoBadge {
-    0% { box-shadow: 0 0 10px 2px var(--hemotec-light-red); }
-    100% { box-shadow: 0 0 30px 8px var(--hemotec-red); }
-}
-
-/* Ícones animados nos benefícios rápidos */
-.animated-icon {
-    animation: bounceIcon 1.2s infinite alternate;
-}
-@keyframes bounceIcon {
-    0% { transform: translateY(0); }
-    100% { transform: translateY(-8px); }
-}
-
-/* Selo de segurança */
-.selo-seguranca {
-    font-size: 0.95rem;
-    color: var(--hemotec-dark-red);
-    background: #f8f9fa;
-    border-radius: 20px;
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    padding: 4px 14px;
-    font-weight: 500;
-    box-shadow: 0 2px 8px rgba(224,32,32,0.08);
-}
-
-/* Efeito ripple nos botões */
-.ripple {
-    position: relative;
-    overflow: hidden;
-}
-.ripple:after {
-    content: '';
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    width: 0;
-    height: 0;
-    background: rgba(224,32,32,0.15);
-    border-radius: 100%;
-    transform: translate(-50%, -50%);
-    transition: width 0.4s ease, height 0.4s ease, opacity 0.4s ease;
-    opacity: 0;
-    pointer-events: none;
-}
-.ripple:active:after {
-    width: 180px;
-    height: 180px;
-    opacity: 1;
-    transition: 0s;
-}
-
-/* Benefícios rápidos */
-.beneficios-rapidos {
-    background: linear-gradient(90deg, #fff, #f8f9fa 70%);
-    border-radius: 20px;
-    margin-bottom: 2rem;
-    box-shadow: 0 2px 12px rgba(224,32,32,0.07);
-}
-.beneficio-titulo {
-    font-weight: 600;
-    font-size: 1.1rem;
-    color: var(--hemotec-red);
-}
-.beneficio-desc {
-    font-size: 0.95rem;
-    color: #555;
-}
 :root {
     --hemotec-red: #e02020;
     --hemotec-dark-red: #c01010;
@@ -142,7 +68,7 @@ body {
 .hero-section {
     background: linear-gradient(135deg, var(--hemotec-red) 0%, var(--hemotec-dark-red) 100%);
     color: white;
-    padding: 6rem 0 4rem;
+    padding: 8rem 0 6rem;
     margin-bottom: 4rem;
     position: relative;
     overflow: hidden;
@@ -162,19 +88,111 @@ body {
 .hero-title {
     font-family: 'Montserrat', sans-serif;
     font-weight: 700;
-    font-size: 3rem;
-    margin-bottom: 1rem;
+    font-size: 3.5rem;
+    margin-bottom: 1.5rem;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
     position: relative;
     z-index: 1;
 }
 
 .hero-subtitle {
-    font-size: 1.3rem;
+    font-size: 1.4rem;
     font-weight: 300;
     opacity: 0.9;
     position: relative;
     z-index: 1;
+    margin-bottom: 3rem;
+}
+
+.hero-stats {
+    display: flex;
+    justify-content: center;
+    gap: 3rem;
+    margin-top: 3rem;
+    position: relative;
+    z-index: 1;
+}
+
+.stat-item {
+    text-align: center;
+}
+
+.stat-number {
+    font-size: 2.5rem;
+    font-weight: 700;
+    font-family: 'Montserrat', sans-serif;
+    margin-bottom: 0.5rem;
+}
+
+.stat-label {
+    font-size: 0.9rem;
+    opacity: 0.8;
+}
+
+/* Section Titles */
+.section-title {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    font-size: 2.5rem;
+    color: var(--hemotec-text-dark);
+    margin-bottom: 1rem;
+}
+
+.section-subtitle {
+    font-size: 1.2rem;
+    color: #666;
+    margin-bottom: 3rem;
+}
+
+/* Benefits Section */
+.benefits-section {
+    background: white;
+}
+
+.benefit-card {
+    background: white;
+    padding: 2.5rem 2rem;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    transition: all 0.3s ease;
+    height: 100%;
+    border: 2px solid transparent;
+}
+
+.benefit-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+    border-color: var(--hemotec-red);
+}
+
+.benefit-icon {
+    width: 80px;
+    height: 80px;
+    background: linear-gradient(135deg, var(--hemotec-red), var(--hemotec-light-red));
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1.5rem;
+    box-shadow: 0 8px 20px rgba(224, 32, 32, 0.3);
+}
+
+.benefit-icon i {
+    font-size: 2rem;
+    color: white;
+}
+
+.benefit-card h4 {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+    color: var(--hemotec-text-dark);
+    margin-bottom: 1rem;
+}
+
+.benefit-card p {
+    color: #666;
+    line-height: 1.6;
 }
 
 /* Planos Section */
@@ -285,6 +303,17 @@ body {
     font-weight: 500;
 }
 
+.price-note {
+    font-size: 0.8rem;
+    color: #28a745;
+    font-weight: 600;
+    margin-top: 0.5rem;
+    background: rgba(40, 167, 69, 0.1);
+    padding: 0.25rem 0.5rem;
+    border-radius: 15px;
+    display: inline-block;
+}
+
 .custom-price {
     font-size: 1.5rem;
     font-weight: 600;
@@ -387,6 +416,135 @@ body {
     color: #333;
 }
 
+/* Comparison Section */
+.comparison-section {
+    background: #f8f9fa;
+}
+
+.comparison-table {
+    background: white;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.comparison-table table {
+    margin: 0;
+}
+
+.comparison-table th {
+    background: var(--hemotec-red);
+    color: white;
+    font-weight: 600;
+    padding: 1.5rem 1rem;
+    border: none;
+}
+
+.comparison-table td {
+    padding: 1rem;
+    vertical-align: middle;
+    border-color: #f0f0f0;
+}
+
+.comparison-table tr:hover {
+    background: rgba(224, 32, 32, 0.05);
+}
+
+/* FAQ Section */
+.faq-section {
+    background: white;
+}
+
+.accordion-item {
+    border: none;
+    margin-bottom: 1rem;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+}
+
+.accordion-button {
+    background: white;
+    border: none;
+    font-weight: 600;
+    color: var(--hemotec-text-dark);
+    padding: 1.5rem;
+}
+
+.accordion-button:not(.collapsed) {
+    background: var(--hemotec-red);
+    color: white;
+    box-shadow: none;
+}
+
+.accordion-button:focus {
+    box-shadow: none;
+    border: none;
+}
+
+.accordion-body {
+    padding: 1.5rem;
+    color: #666;
+    line-height: 1.6;
+}
+
+/* CTA Section */
+.cta-section {
+    background: linear-gradient(135deg, var(--hemotec-red), var(--hemotec-dark-red));
+    color: white;
+}
+
+.cta-title {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+}
+
+.cta-subtitle {
+    font-size: 1.2rem;
+    margin-bottom: 2rem;
+    opacity: 0.9;
+}
+
+.cta-buttons {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.btn-cta-primary {
+    background: white;
+    color: var(--hemotec-red);
+    border: 2px solid white;
+    padding: 1rem 2rem;
+    border-radius: 50px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.btn-cta-primary:hover {
+    background: transparent;
+    color: white;
+    border-color: white;
+}
+
+.btn-cta-secondary {
+    background: transparent;
+    color: white;
+    border: 2px solid white;
+    padding: 1rem 2rem;
+    border-radius: 50px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.btn-cta-secondary:hover {
+    background: white;
+    color: var(--hemotec-red);
+}
+
 /* Footer */
 .footer {
     background-color: #343a40;
@@ -455,20 +613,34 @@ body {
     animation: fadeInUp 0.6s ease forwards;
 }
 
+.benefit-card {
+    animation: fadeInUp 0.6s ease forwards;
+}
+
 .plano-card:nth-child(1) { animation-delay: 0.1s; }
 .plano-card:nth-child(2) { animation-delay: 0.2s; }
 .plano-card:nth-child(3) { animation-delay: 0.3s; }
 .plano-card:nth-child(4) { animation-delay: 0.4s; }
 .plano-card:nth-child(5) { animation-delay: 0.5s; }
 
+.benefit-card:nth-child(1) { animation-delay: 0.1s; }
+.benefit-card:nth-child(2) { animation-delay: 0.2s; }
+.benefit-card:nth-child(3) { animation-delay: 0.3s; }
+.benefit-card:nth-child(4) { animation-delay: 0.4s; }
+
 /* Responsive */
 @media (max-width: 768px) {
     .hero-title {
-        font-size: 2.2rem;
+        font-size: 2.5rem;
     }
     
     .hero-subtitle {
         font-size: 1.1rem;
+    }
+    
+    .hero-stats {
+        flex-direction: column;
+        gap: 1.5rem;
     }
     
     .plano-card.plano-popular {
@@ -492,6 +664,20 @@ body {
     .plano-features li {
         font-size: 0.9rem;
     }
+    
+    .cta-buttons {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .btn-cta-primary,
+    .btn-cta-secondary {
+        width: 100%;
+        max-width: 300px;
+    }
+    
+    .comparison-table {
+        overflow-x: auto;
+    }
 }
-
 
