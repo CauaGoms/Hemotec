@@ -38,7 +38,6 @@ class TestNotificacaoRepo:
             assert dados_db is not None, "A licenca inserida não deveria ser None"
             assert dados_db.cod_notificacao == id_notificacao, "O ID da unidade inserida não confere"
             assert dados_db.cod_adm == id_adm, "O nome inserido não confere"
-            assert dados_db.destino == "destino teste", "O email inserido não confere"
             assert dados_db.tipo == "tipo teste", "O ID da unidade inserida não confere"
             assert dados_db.mensagem == "mensagem teste", "O ID da unidade inserida não confere"
             assert dados_db.status == 1, "O status inserido não confere"
@@ -83,7 +82,6 @@ class TestNotificacaoRepo:
         assert dados_db is not None, "A licenca inserida não deveria ser None"
         assert dados_db.cod_notificacao == id_notificacao, "O ID da unidade inserida não confere"
         assert dados_db.cod_adm == id_adm, "O nome inserido não confere"
-        assert dados_db.destino == "destino teste", "O email inserido não confere"
         assert dados_db.tipo == "tipo teste", "O ID da unidade inserida não confere"
         assert dados_db.mensagem == "mensagem teste", "O ID da unidade inserida não confere"
         assert dados_db.status == 1, "O status inserido não confere"
@@ -277,7 +275,6 @@ class TestNotificacaoRepo:
         #Assert
         assert dados_db.cod_notificacao == id_tabela_inserida, "O ID da unidade inserida não confere"
         assert dados_db.cod_adm == id_adm_unidade, "O nome inserido não confere"
-        assert dados_db.destino == "destino teste", "O email inserido não confere"
         assert dados_db.tipo == "tipo teste", "O ID da unidade inserida não confere"
         assert dados_db.mensagem == "mensagem teste", "O ID da unidade inserida não confere"
         assert dados_db.status == 1, "O status inserido não confere"

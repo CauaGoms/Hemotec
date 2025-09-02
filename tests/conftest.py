@@ -427,7 +427,6 @@ def notificacao_exemplo():
     notificacao = Notificacao(
         cod_notificacao=1,
         cod_adm=1,
-        destino="destino teste",
         tipo="tipo teste",
         mensagem="mensagem teste",
         status=1,
@@ -443,7 +442,6 @@ def lista_notificacoes_exemplo():
         notificacao = Notificacao(
             cod_notificacao=i,
             cod_adm=i,
-            destino=f'destino {i:02d}',
             tipo=f'tipo {i:02d}',
             mensagem=f'mensagem {i:02d}',
             status=i,

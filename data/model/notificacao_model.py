@@ -6,7 +6,6 @@ from datetime import datetime
 class Notificacao:
     cod_notificacao: int
     cod_adm: int
-    destino: str
     tipo: str
     mensagem: str
     status: int
