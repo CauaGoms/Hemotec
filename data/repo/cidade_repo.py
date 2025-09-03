@@ -3,7 +3,7 @@ from sqlite3 import Connection
 from typing import Optional
 from data.model.cidade_model import Cidade
 from data.sql.cidade_sql import *
-from data.util.database import get_connection
+from util.database import get_connection
 
 def criar_tabela() -> bool:
     try:

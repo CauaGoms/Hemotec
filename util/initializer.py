@@ -1,5 +1,5 @@
 from util.database import get_connection as obter_conexao
-from repo import usuario_repo, adm_campanha_repo, adm_unidade_repo, agendamento_repo, assinatura_repo, campanha_repo, cidade_repo, colaborador_repo, doacao_repo, doador_repo, estoque_repo, exame_repo, gestor_repo, instituicao_repo, licenca_repo, notificacao_repo, plano_repo, prontuario_repo, unidade_coleta_repo 
+from data.repo import usuario_repo, adm_campanha_repo, adm_unidade_repo, agendamento_repo, assinatura_repo, campanha_repo, cidade_repo, colaborador_repo, doacao_repo, doador_repo, estoque_repo, exame_repo, gestor_repo, instituicao_repo, licenca_repo, notificacao_repo, plano_repo, prontuario_repo, unidade_coleta_repo 
 
 def criar_tabelas():
     cidade_repo.criar_tabela()

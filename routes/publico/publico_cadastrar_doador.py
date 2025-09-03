@@ -6,7 +6,7 @@ from fastapi.templating import Jinja2Templates
 from data.model.cidade_model import Cidade
 from data.model.usuario_model import Usuario
 from data.repo import cidade_repo, usuario_repo
-from data.util.database import get_connection
+from util.database import get_connection
 
 router = APIRouter()
 templates = Jinja2Templates(directory="templates")

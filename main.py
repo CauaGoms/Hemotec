@@ -2,8 +2,27 @@ from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from starlette.middleware.sessions import SessionMiddleware
+import secrets
 import uvicorn
 
+app = FastAPI()
+
+# Gerar chave secreta (em produção, use variável de ambiente!)
+SECRET_KEY = secrets.token_urlsafe(32)
+
+# Adicionar middleware de sessão
+app.add_middleware(
+    SessionMiddleware, 
+    secret_key=SECRET_KEY,
+    max_age=3600,  # Sessão expira em 1 hora
+    same_site="lax",
+    https_only=False  # Em produção, mude para True com HTTPS
+)
+
+app.mount("/static", StaticFiles(directory="static"), name="static")
+templates = Jinja2Templates(directory="templates")
+
+# Importando os repositórios
 from data.repo import cidade_repo
 from data.repo import campanha_repo
 from data.repo import usuario_repo
@@ -120,11 +139,6 @@ from routes.usuario.usuario_sair import router as usuario_sair_router
 #Importando os routers de telas de teste
 from routes.rotas_teste.doador_agendamento_historico_agendamentos import router as doador_agendamento_historico_agendamentos_teste_router
 from routes.rotas_teste.doador_estoque import router as doador_estoque_teste_router
-
-app = FastAPI()
-app.add_middleware(SessionMiddleware, secret_key="your-secret-key-here")
-app.mount("/static", StaticFiles(directory="static"), name="static")
-templates = Jinja2Templates(directory="templates")
 
 cidade_repo.criar_tabela()
 usuario_repo.criar_tabela()
