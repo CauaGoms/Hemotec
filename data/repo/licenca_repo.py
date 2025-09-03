@@ -3,7 +3,7 @@ from sqlite3 import Connection
 from typing import Optional
 from data.model.licenca_model import Licenca
 from data.sql.licenca_sql import *
-from data.util.database import get_connection
+from util.database import get_connection
 
 def criar_tabela() -> bool:
     try:

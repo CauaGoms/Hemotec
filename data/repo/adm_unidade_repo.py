@@ -5,7 +5,7 @@ from data.repo import usuario_repo
 from data.model.adm_unidade_model import Adm_unidade
 from data.sql.adm_unidade_sql import *
 from data.model.usuario_model import Usuario
-from data.util.database import get_connection
+from util.database import get_connection
 from datetime import datetime
 
 def criar_tabela() -> bool:

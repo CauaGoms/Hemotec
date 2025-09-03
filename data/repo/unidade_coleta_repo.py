@@ -3,7 +3,7 @@ from sqlite3 import Connection
 from typing import Optional
 from data.model.unidade_coleta_model import Unidade_coleta
 from data.sql.unidade_coleta_sql import *
-from data.util.database import get_connection
+from util.database import get_connection
 
 def criar_tabela() -> bool:
     try:

@@ -3,7 +3,7 @@ from sqlite3 import Connection
 from typing import Optional
 from data.model.notificacao_model import Notificacao
 from data.sql.notificacao_sql import *
-from data.util.database import get_connection
+from util.database import get_connection
 from datetime import datetime
 
 def criar_tabela() -> bool:

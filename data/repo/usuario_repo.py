@@ -1,7 +1,7 @@
 from typing import Any, Optional
 from data.model.usuario_model import Usuario
 from data.sql.usuario_sql import *
-from data.util.database import get_connection
+from util.database import get_connection
 from datetime import datetime
 import os
 from sqlite3 import Connection

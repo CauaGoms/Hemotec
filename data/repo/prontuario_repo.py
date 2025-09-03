@@ -3,7 +3,7 @@ from sqlite3 import Connection
 from typing import Optional
 from data.model.prontuario_model import Prontuario
 from data.sql.prontuario_sql import *
-from data.util.database import get_connection
+from util.database import get_connection
 from datetime import datetime
 
 def criar_tabela() -> bool:
