@@ -23,6 +23,7 @@ body {
     border-radius: 15px;
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
     max-width: 500px;
+    /* Aumentado para acomodar mais campos */
     width: 100%;
     text-align: center;
 }
@@ -40,7 +41,6 @@ body {
     padding: 0.8rem 1.5rem;
     border: 1px solid #ced4da;
     margin-bottom: 1.5rem;
-    width: 100%;
 }
 
 .form-control:focus {
@@ -121,28 +121,3 @@ body {
     font-size: 0.95rem;
     width: 50%;
 }
-
-/* Multi-step form specific styles */
-.form-section {
-    display: none;
-}
-
-.form-section.active {
-    display: block;
-}
-
-.d-flex.justify-content-between.mt-4 {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 1.5rem !important;
-}
-
-.form-section h3 {
-    font-family: 'Montserrat', sans-serif;
-    font-weight: 600;
-    color: var(--hemotec-text-dark);
-    margin-bottom: 1.5rem;
-    font-size: 1.5rem;
-}
-
-
