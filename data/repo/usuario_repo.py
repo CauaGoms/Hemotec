@@ -30,7 +30,8 @@ def inserir(usuario: Usuario, cursor: Any) -> Optional[int]:
         usuario.bairro_usuario,
         usuario.cidade_usuario,
         usuario.cep_usuario,
-        usuario.telefone))
+        usuario.telefone,
+        usuario.perfil))
     return cursor.lastrowid
     
 
@@ -53,7 +54,9 @@ def obter_todos() -> list[Usuario]:
                 bairro_usuario=row["bairro_usuario"],
                 cidade_usuario=row["cidade_usuario"],
                 cep_usuario=row["cep_usuario"],
-                telefone=row["telefone"])  
+                telefone=row["telefone"],
+                perfil=row["perfil"],
+                foto=row["foto"])  
                 for row in rows]
         return usuario
     
@@ -76,7 +79,11 @@ def obter_por_id(cod_usuario: int) -> Optional[Usuario]:
                 bairro_usuario=row["bairro_usuario"],
                 cidade_usuario=row["cidade_usuario"],
                 cep_usuario=row["cep_usuario"],
-                telefone=row["telefone"]
+                telefone=row["telefone"],
+                perfil=row["perfil"],
+                foto=row["foto"],
+                token_redefinicao=row["token_redefinicao"],
+                data_token=row["data_token"]
             )
         return None
     
@@ -99,7 +106,9 @@ def obter_por_email(email: str) -> Optional[Usuario]:
                 bairro_usuario=row["bairro_usuario"],
                 cidade_usuario=row["cidade_usuario"],
                 cep_usuario=row["cep_usuario"],
-                telefone=row["telefone"])
+                telefone=row["telefone"],
+                perfil=row["perfil"],
+                foto=row["foto"])
         return None
     
 def update(usuario: Usuario, cursor=None) -> bool:
@@ -147,10 +156,16 @@ def update(usuario: Usuario, cursor=None) -> bool:
             return cursor.rowcount > 0
 
 def atualizar_senha(cod_usuario: int, senha: str) -> bool:
-    with get_connection() as conn:
-        cursor = conn.cursor()
-        cursor.execute(ALTERAR_SENHA, (senha, cod_usuario))
-    return (cursor.rowcount > 0)
+    if cursor:
+        with get_connection() as conn:
+            cursor = conn.cursor()
+            cursor.execute(ALTERAR_SENHA, (senha, cod_usuario))
+            return (cursor.rowcount > 0)
+    else:
+         with get_connection() as conn:
+            cursor = conn.cursor()
+            cursor.execute(ALTERAR_SENHA, (senha, id))
+            return (cursor.rowcount > 0)
 
 def delete(cod_usuario: int, cursor=None) -> bool:
     if cursor is None:
@@ -161,6 +176,81 @@ def delete(cod_usuario: int, cursor=None) -> bool:
     else:
         cursor.execute(DELETE, (cod_usuario,))
         return cursor.rowcount > 0
+    
+def atualizar_token(email: str, token: str, data_expiracao: str) -> bool:
+    with get_connection() as conn:
+        cursor = conn.cursor()
+        cursor.execute(ATUALIZAR_TOKEN, (token, data_expiracao, email))
+        return (cursor.rowcount > 0)
+
+def atualizar_foto(cod_usuario: int, caminho_foto: str) -> bool:
+    with get_connection() as conn:
+        cursor = conn.cursor()
+        cursor.execute(ATUALIZAR_FOTO, (caminho_foto, cod_usuario))
+        return (cursor.rowcount > 0)
+    
+def obter_por_token(token: str) -> Optional[Usuario]:
+    with get_connection() as conn:
+        cursor = conn.cursor()
+        cursor.execute(OBTER_POR_TOKEN, (token,))
+        row = cursor.fetchone()
+        if row:
+            usuario = Usuario(
+                    cod_usuario=row["cod_usuario"],
+                    nome=row["nome"],
+                    email=row["email"],
+                    senha=row["senha"],
+                    cpf=row["cpf"],
+                    data_nascimento=datetime.strptime(row["data_nascimento"], "%Y-%m-%d").date(),
+                    status=row["status"],
+                    data_cadastro=datetime.strptime(row["data_cadastro"], "%Y-%m-%d").date(),
+                    rua_usuario=row["rua_usuario"],
+                    bairro_usuario=row["bairro_usuario"],
+                    cidade_usuario=row["cidade_usuario"],
+                    cep_usuario=row["cep_usuario"],
+                    telefone=row["telefone"],
+                    perfil=row["perfil"],
+                    foto=row["foto"],
+                    token_redefinicao=row["token_redefinicao"],
+                    data_token=row["data_token"])
+            return usuario
+        return None
+    
+def limpar_token(cod_usuario: int) -> bool:
+    with get_connection() as conn:
+        cursor = conn.cursor()
+        cursor.execute("UPDATE usuario SET token_redefinicao=NULL, data_token=NULL WHERE cod_usuario=?", (cod_usuario,))
+        return (cursor.rowcount > 0)
+
+def obter_todos_por_perfil(perfil: str) -> list[Usuario]:
+    with get_connection() as conn:
+        cursor = conn.cursor()
+        cursor.execute("SELECT * FROM usuario WHERE perfil=? ORDER BY nome", (perfil,))
+        rows = cursor.fetchall()
+        usuarios = []
+        for row in rows:
+            usuario = Usuario(
+                cod_usuario=row["cod_usuario"],
+                nome=row["nome"],
+                email=row["email"],
+                senha=row["senha"],
+                cpf=row["cpf"],
+                data_nascimento=datetime.strptime(row["data_nascimento"], "%Y-%m-%d").date(),
+                status=row["status"],
+                data_cadastro=datetime.strptime(row["data_cadastro"], "%Y-%m-%d").date(),
+                rua_usuario=row["rua_usuario"],
+                bairro_usuario=row["bairro_usuario"],
+                cidade_usuario=row["cidade_usuario"],
+                cep_usuario=row["cep_usuario"],
+                telefone=row["telefone"],
+                perfil=row["perfil"],
+                foto=row["foto"],
+                token_redefinicao=row["token_redefinicao"],
+                data_token=row["data_token"]
+            )
+            usuarios.append(usuario)
+        return usuarios
+
 
 """def inserir_dados_iniciais(conexao: Connection) -> None:
     # Verifica se já existem categorias na tabela

@@ -17,3 +17,7 @@ class Usuario:
     cidade_usuario: int
     cep_usuario: str
     telefone: str
+    perfil: str = 'cliente'
+    foto: Optional[str] = None
+    token_redefinicao: Optional[str] = None
+    data_token: Optional[str] = None
