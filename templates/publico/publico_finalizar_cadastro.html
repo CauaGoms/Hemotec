@@ -1,80 +1,108 @@
-
 {% block custom_css %}
 <link href="/static/css/publico/publico_finalizar_cadastro.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 {% endblock %}
 
 {% block corpo %}
-    <a href="/login" class="back-arrow"><i class="fas fa-arrow-left"></i></a>
-
-    <div class="register-container">
-        <a href="/">
+<a href="/login" class="back-arrow"><i class="fas fa-arrow-left"></i></a>
+<div class="register-container" style="position: relative;">
+    <a href="/">
         <img src="/static/img/logo_vermelha.svg" alt="Hemotec Logo" class="logo-register">
-        </a>
-        <h2 class="register-title">Cadastro de Gestor</h2>
+    </a>
+    <h2 class="register-title">Cadastro de Gestor</h2>
 
-        <form method="post" action="#">
-            <!-- Seção 1: Dados Pessoais do Gestor -->
-            <div class="form-section" id="cadastroSection1">
-                <h3>Dados Pessoais do Gestor</h3>
-                <div class="mb-3">
-                    <input type="text" class="form-control" id="nome_gestor" placeholder="Nome Completo do Gestor" required name="nome_gestor">
-                </div>
-                <div class="mb-3">
-                    <input type="text" class="form-control" id="cpf_gestor" placeholder="CPF do Gestor" required name="cpf_gestor">
-                </div>
-                <div class="mb-3">
-                    <input type="email" class="form-control" id="email_gestor" placeholder="Email Pessoal do Gestor" required name="email_gestor">
-                </div>
-                <div class="mb-3">
-                    <input type="tel" class="form-control" id="telefone_gestor" placeholder="Telefone do Gestor" name="telefone_gestor">
-                </div>
+    <form method="post" action="#">
+        <!-- Seção 1: Dados Pessoais do Gestor -->
+        <div class="form-section" id="cadastroSection1">
+            <h3>Dados Pessoais do Gestor</h3>
+            <div class="mb-3">
+                <input type="text" class="form-control" id="nome_gestor" placeholder="Nome Completo do Gestor" required name="nome_gestor">
             </div>
-
-            <!-- Seção 2: Informações da Instituição -->
-            <div class="form-section" id="cadastroSection2" style="display: none;">
-                <h3>Informações da Instituição</h3>
-                <div class="mb-3">
-                    <input type="text" class="form-control" id="razao_social" placeholder="Razão Social da Instituição" required name="razao_social">
-                </div>
-                <div class="mb-3">
-                    <input type="text" class="form-control" id="cnpj_instituicao" placeholder="CNPJ da Instituição" required name="cnpj_instituicao">
-                </div>
-                <div class="mb-3">
-                    <input type="email" class="form-control" id="email_institucional" placeholder="Email Institucional" required name="email_institucional">
-                </div>
-                <div class="mb-3">
-                    <input type="text" class="form-control" id="endereco_instituicao" placeholder="Endereço Completo da Instituição" required name="endereco_instituicao">
-                </div>
+            <div class="mb-3">
+                <input type="text" class="form-control" id="cpf_gestor" placeholder="CPF do Gestor" required name="cpf_gestor">
             </div>
-
-            <!-- Seção 3: Senha de Acesso -->
-            <div class="form-section" id="cadastroSection3" style="display: none;">
-                <h3>Crie sua Senha de Acesso</h3>
-                <div class="mb-3">
-                    <input type="password" class="form-control" id="senha" placeholder="Crie uma senha" required name="senha">
-                </div>
-                <div class="mb-3">
-                    <input type="password" class="form-control" id="confirmar_senha" placeholder="Confirme sua senha" required>
-                </div>
+            <div class="mb-3">
+                <input type="email" class="form-control" id="email_gestor" placeholder="Email Pessoal do Gestor" required name="email_gestor">
             </div>
+            <div class="mb-3">
+                <input type="tel" class="form-control" id="telefone_gestor" placeholder="Telefone do Gestor" name="telefone_gestor">
+            </div>
+        </div>
 
-            <!-- Botões de navegação -->
+        <!-- Seção 2: Informações da Instituição -->
+        <div class="form-section" id="cadastroSection2" style="display: none;">
+            <h3>Informações da Instituição</h3>
+            <div class="mb-3">
+                <input type="text" class="form-control" id="razao_social" placeholder="Razão Social da Instituição" required name="razao_social">
+            </div>
+            <div class="mb-3">
+                <input type="text" class="form-control" id="cnpj_instituicao" placeholder="CNPJ da Instituição" required name="cnpj_instituicao">
+            </div>
+            <div class="mb-3">
+                <input type="email" class="form-control" id="email_institucional" placeholder="Email Institucional" required name="email_institucional">
+            </div>
             <div class="d-flex justify-content-between mt-4">
-                <button type="button" class="btn btn-outline-danger btn-sml" id="cadastroPrevBtn" onclick="cadastroChangeStep(-1)" style="display: none;">
+                <button type="button" class="btn btn-outline-danger btn-sml" id="cadastroPrevBtn" onclick="cadastroChangeStep(-1)">
                     <i class="fas fa-arrow-left me-2"></i>Anterior
                 </button>
-                <button type="button" class="btn btn-register" id="cadastroNextBtn" onclick="cadastroChangeStep(1)">
-                    Próximo<i class="fas fa-arrow-right ms-2"></i>
-                </button>
-                <button type="submit" class="btn btn-register btn-small" id="cadastroSubmitBtn" style="display: none;">
-                    <i class="fas fa-check me-2"></i>Finalizar Cadastro
+                <button type="button" class="btn btn-register btn-sml" id="cadastroNextBtn" onclick="cadastroChangeStep(1)">
+                    Próximo <i class="fas fa-arrow-right ms-2"></i>
                 </button>
             </div>
-        </form>
-    </div>
+        </div>
+
+        <!-- Seção 2.1: Endereço Instituição -->
+        <div class="form-section" id="cadastroSectionEndereco" style="display: none;">
+            <h3>Endereço Instituição</h3>
+            <div class="mb-3">
+                <input type="text" class="form-control" id="cep_instituicao" placeholder="CEP" maxlength="9" required name="cep_instituicao">
+            </div>
+            <div class="mb-3">
+                <input type="text" class="form-control" id="rua_instituicao" placeholder="Rua" required name="rua_instituicao">
+            </div>
+            <div class="mb-3">
+                <input type="text" class="form-control" id="bairro_instituicao" placeholder="Bairro" required name="bairro_instituicao">
+            </div>
+            <div class="mb-3">
+                <input type="text" class="form-control" id="cidade_instituicao" placeholder="Cidade" required name="cidade_instituicao">
+            </div>
+            <div class="d-flex justify-content-between mt-4">
+                <button type="button" class="btn btn-outline-danger btn-sml" id="cadastroPrevEnderecoBtn" onclick="cadastroChangeStep(-1)">
+                    <i class="fas fa-arrow-left me-2"></i>Anterior
+                </button>
+                <button type="button" class="btn btn-register btn-sml" id="cadastroNextEnderecoBtn" onclick="cadastroChangeStep(1)">
+                    Próximo <i class="fas fa-arrow-right ms-2"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Seção 3: Senha -->
+        <div class="form-section" id="cadastroSection3" style="display: none;">
+            <h3>Crie sua Senha de Acesso</h3>
+            <div class="mb-3">
+                <input type="password" class="form-control" id="senha" placeholder="Crie uma senha" required name="senha">
+            </div>
+            <div class="mb-3">
+                <input type="password" class="form-control" id="confirmar_senha" placeholder="Confirme sua senha" required>
+            </div>
+        </div>
+
+        <!-- Botões de navegação -->
+        <div class="d-flex justify-content-between mt-4">
+            <button type="button" class="btn btn-outline-danger btn-sml" id="cadastroPrevBtn" onclick="cadastroChangeStep(-1)" style="display: none;">
+                <i class="fas fa-arrow-left me-2"></i>Anterior
+            </button>
+            <button type="button" class="btn btn-register" id="cadastroNextBtn" onclick="cadastroChangeStep(1)">
+                Próximo <i class="fas fa-arrow-right ms-2"></i>
+            </button>
+            <button type="submit" class="btn btn-register btn-small" id="cadastroSubmitBtn" style="display: none;">
+                <i class="fas fa-check me-2"></i>Finalizar Cadastro
+            </button>
+        </div>
+    </form>
+</div>
 {% endblock %}
 
-<!-- Custom JavaScript -->
 {% block custom_js %}
 <script src="/static/js/publico/publico_finalizar_cadastro.js"></script>
 {% endblock %}

@@ -1,3 +1,12 @@
+.w-48 {
+    width: 48%;
+}
+.form-section h3 {
+    font-size: 28px;
+}
+.form-control::placeholder {
+    font-size: 1rem;
+}
 :root {
     --hemotec-red: #e02020;
     --hemotec-dark-red: #c01010;
@@ -23,7 +32,6 @@ body {
     border-radius: 15px;
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
     max-width: 500px;
-    /* Aumentado para acomodar mais campos */
     width: 100%;
     text-align: center;
 }
@@ -39,13 +47,16 @@ body {
 .form-control {
     border-radius: 50px;
     padding: 0.8rem 1.5rem;
-    border: 1px solid #ced4da;
+    border: 1px solid #ced4da !important;
     margin-bottom: 1.5rem;
+    width: 100%;
+    height: 55px;
 }
 
 .form-control:focus {
-    border-color: var(--hemotec-red);
-    box-shadow: 0 0 0 0.25rem rgba(224, 32, 32, 0.25);
+    border-color: var(--hemotec-red) !important;
+    box-shadow: 0 0 0 0.25rem rgba(224, 32, 32, 0.25) !important;
+    outline: none !important;
 }
 
 .btn-register {
@@ -83,6 +94,7 @@ body {
     color: var(--hemotec-red);
     text-decoration: none;
     transition: all 0.3s ease;
+    z-index: 10;
 }
 
 .back-arrow:hover {
@@ -121,3 +133,4 @@ body {
     font-size: 0.95rem;
     width: 50%;
 }
+
