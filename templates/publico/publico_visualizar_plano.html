@@ -9,21 +9,312 @@
     <section class="hero-section">
         <div class="container">
             <div class="row justify-content-center">
-                <div class="col-lg-8 text-center">
-                    <h1 class="hero-title">Escolha o Plano Ideal para sua Instituição</h1>
-                    <p class="hero-subtitle">Soluções escaláveis e completas para hemocentros de todos os tamanhos</p>
-                    <div class="hero-stats">
-                        <div class="stat-item">
-                            <div class="stat-number">500+</div>
-                            <div class="stat-label">Instituições Atendidas</div>
+                <div class="col-lg-10 text-center">
+                    <h1 class="hero-title">Escolha o Plano Perfeito</h1>
+                    <p class="hero-subtitle">Soluções escaláveis para hemocentros de todos os tamanhos</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Planos Section -->
+    <section class="planos-section py-5">
+        <div class="container">
+            <div class="row justify-content-center">
+                <!-- Plano Básico -->
+                <div class="col-xl-3 col-lg-4 col-md-6 mb-4">
+                    <div class="pricing-card basic-plan" data-plan="basico">
+                        <div class="card-header">
+                            <div class="plan-icon">
+                                <i class="fas fa-user"></i>
+                            </div>
+                            <h3 class="plan-name">Básico</h3>
+                            <p class="plan-description">Ideal para pequenos hemocentros</p>
                         </div>
-                        <div class="stat-item">
-                            <div class="stat-number">50k+</div>
-                            <div class="stat-label">Doadores Cadastrados</div>
+                        
+                        <div class="pricing-section">
+                            <div class="price-container">
+                                <span class="currency">R$</span>
+                                <span class="price">399</span>
+                                <span class="period">/mês</span>
+                            </div>
+                            <div class="license-info">1 licença incluída</div>
                         </div>
-                        <div class="stat-item">
-                            <div class="stat-number">99.9%</div>
-                            <div class="stat-label">Uptime Garantido</div>
+
+                        <div class="features-section">
+                            <ul class="features-list">
+                                <li class="feature-item">
+                                    <i class="fas fa-check feature-check"></i>
+                                    <span>Gestão completa de doadores</span>
+                                </li>
+                                <li class="feature-item">
+                                    <i class="fas fa-check feature-check"></i>
+                                    <span>Controle de estoque básico</span>
+                                </li>
+                                <li class="feature-item">
+                                    <i class="fas fa-check feature-check"></i>
+                                    <span>Relatórios essenciais</span>
+                                </li>
+                                <li class="feature-item">
+                                    <i class="fas fa-check feature-check"></i>
+                                    <span>Backup automático</span>
+                                </li>
+                                <li class="feature-item">
+                                    <i class="fas fa-check feature-check"></i>
+                                    <span>Suporte por email</span>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div class="card-footer">
+                            <button class="select-plan-btn">
+                                <span class="btn-text">Começar Agora</span>
+                                <i class="fas fa-arrow-right btn-icon"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Plano Profissional -->
+                <div class="col-xl-3 col-lg-4 col-md-6 mb-4">
+                    <div class="pricing-card professional-plan popular" data-plan="profissional">
+                        <div class="popular-badge">Mais Popular</div>
+                        
+                        <div class="card-header">
+                            <div class="plan-icon">
+                                <i class="fas fa-users"></i>
+                            </div>
+                            <h3 class="plan-name">Profissional</h3>
+                            <p class="plan-description">Para equipes em crescimento</p>
+                        </div>
+                        
+                        <div class="pricing-section">
+                            <div class="price-container">
+                                <span class="currency">R$</span>
+                                <span class="price">799</span>
+                                <span class="period">/mês</span>
+                            </div>
+                            <div class="license-info">Até 3 licenças</div>
+                            <div class="savings-badge">Economia de 33%</div>
+                        </div>
+
+                        <div class="features-section">
+                            <ul class="features-list">
+                                <li class="feature-item">
+                                    <i class="fas fa-check feature-check"></i>
+                                    <span>Tudo do plano Básico</span>
+                                </li>
+                                <li class="feature-item">
+                                    <i class="fas fa-check feature-check"></i>
+                                    <span>Relatórios avançados</span>
+                                </li>
+                                <li class="feature-item">
+                                    <i class="fas fa-check feature-check"></i>
+                                    <span>Dashboard personalizado</span>
+                                </li>
+                                <li class="feature-item">
+                                    <i class="fas fa-check feature-check"></i>
+                                    <span>Integração com APIs</span>
+                                </li>
+                                <li class="feature-item">
+                                    <i class="fas fa-check feature-check"></i>
+                                    <span>Suporte prioritário</span>
+                                </li>
+                                <li class="feature-item">
+                                    <i class="fas fa-check feature-check"></i>
+                                    <span>Treinamento online</span>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div class="card-footer">
+                            <button class="select-plan-btn">
+                                <span class="btn-text">Escolher Plano</span>
+                                <i class="fas fa-arrow-right btn-icon"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Plano Empresarial -->
+                <div class="col-xl-3 col-lg-4 col-md-6 mb-4">
+                    <div class="pricing-card business-plan" data-plan="empresarial">
+                        <div class="card-header">
+                            <div class="plan-icon">
+                                <i class="fas fa-building"></i>
+                            </div>
+                            <h3 class="plan-name">Empresarial</h3>
+                            <p class="plan-description">Para médias instituições</p>
+                        </div>
+                        
+                        <div class="pricing-section">
+                            <div class="price-container">
+                                <span class="currency">R$</span>
+                                <span class="price">1.599</span>
+                                <span class="period">/mês</span>
+                            </div>
+                            <div class="license-info">Até 8 licenças</div>
+                            <div class="savings-badge">Economia de 50%</div>
+                        </div>
+
+                        <div class="features-section">
+                            <ul class="features-list">
+                                <li class="feature-item">
+                                    <i class="fas fa-check feature-check"></i>
+                                    <span>Tudo do plano Profissional</span>
+                                </li>
+                                <li class="feature-item">
+                                    <i class="fas fa-check feature-check"></i>
+                                    <span>Módulo de agendamento</span>
+                                </li>
+                                <li class="feature-item">
+                                    <i class="fas fa-check feature-check"></i>
+                                    <span>Campanhas automatizadas</span>
+                                </li>
+                                <li class="feature-item">
+                                    <i class="fas fa-check feature-check"></i>
+                                    <span>Relatórios customizados</span>
+                                </li>
+                                <li class="feature-item">
+                                    <i class="fas fa-check feature-check"></i>
+                                    <span>Suporte dedicado</span>
+                                </li>
+                                <li class="feature-item">
+                                    <i class="fas fa-check feature-check"></i>
+                                    <span>Treinamento presencial</span>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div class="card-footer">
+                            <button class="select-plan-btn">
+                                <span class="btn-text">Escolher Plano</span>
+                                <i class="fas fa-arrow-right btn-icon"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Plano Premium -->
+                <div class="col-xl-3 col-lg-4 col-md-6 mb-4">
+                    <div class="pricing-card premium-plan" data-plan="premium">
+                        <div class="card-header">
+                            <div class="plan-icon">
+                                <i class="fas fa-crown"></i>
+                            </div>
+                            <h3 class="plan-name">Premium</h3>
+                            <p class="plan-description">Para grandes instituições</p>
+                        </div>
+                        
+                        <div class="pricing-section">
+                            <div class="price-container">
+                                <span class="currency">R$</span>
+                                <span class="price">3.199</span>
+                                <span class="period">/mês</span>
+                            </div>
+                            <div class="license-info">Até 15 licenças</div>
+                            <div class="savings-badge best-value">Melhor Valor</div>
+                        </div>
+
+                        <div class="features-section">
+                            <ul class="features-list">
+                                <li class="feature-item">
+                                    <i class="fas fa-check feature-check"></i>
+                                    <span>Tudo do plano Empresarial</span>
+                                </li>
+                                <li class="feature-item">
+                                    <i class="fas fa-check feature-check"></i>
+                                    <span>BI e Analytics avançado</span>
+                                </li>
+                                <li class="feature-item">
+                                    <i class="fas fa-check feature-check"></i>
+                                    <span>Integração com sistemas externos</span>
+                                </li>
+                                <li class="feature-item">
+                                    <i class="fas fa-check feature-check"></i>
+                                    <span>Consultoria especializada</span>
+                                </li>
+                                <li class="feature-item">
+                                    <i class="fas fa-check feature-check"></i>
+                                    <span>Suporte premium 24/7</span>
+                                </li>
+                                <li class="feature-item">
+                                    <i class="fas fa-check feature-check"></i>
+                                    <span>Customizações incluídas</span>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div class="card-footer">
+                            <button class="select-plan-btn">
+                                <span class="btn-text">Escolher Plano</span>
+                                <i class="fas fa-arrow-right btn-icon"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Enterprise Plan - Full Width -->
+            <div class="row justify-content-center mt-4">
+                <div class="col-lg-10">
+                    <div class="enterprise-card" data-plan="enterprise">
+                        <div class="enterprise-content">
+                            <div class="row align-items-center">
+                                <div class="col-lg-8">
+                                    <div class="enterprise-header">
+                                        <div class="enterprise-icon">
+                                            <i class="fas fa-rocket"></i>
+                                        </div>
+                                        <div class="enterprise-info">
+                                            <h3 class="enterprise-title">Plano Enterprise</h3>
+                                            <p class="enterprise-description">Soluções personalizadas para grandes redes hospitalares</p>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="enterprise-features">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="enterprise-feature">
+                                                    <i class="fas fa-infinity"></i>
+                                                    <span>Licenças ilimitadas</span>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="enterprise-feature">
+                                                    <i class="fas fa-cogs"></i>
+                                                    <span>Implementação dedicada</span>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="enterprise-feature">
+                                                    <i class="fas fa-headset"></i>
+                                                    <span>Suporte exclusivo</span>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="enterprise-feature">
+                                                    <i class="fas fa-code"></i>
+                                                    <span>Desenvolvimento sob demanda</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="col-lg-4 text-center">
+                                    <div class="enterprise-pricing">
+                                        <div class="enterprise-price">Sob consulta</div>
+                                        <div class="enterprise-note">Orçamento personalizado</div>
+                                        <div class="enterprise-extra">R$ 300,00 por licença extra</div>
+                                    </div>
+                                    
+                                    <button class="enterprise-btn">
+                                        <span>Falar com Especialista</span>
+                                        <i class="fas fa-comments"></i>
+                                    </button>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -31,7 +322,7 @@
         </div>
     </section>
 
-    <!-- Benefits Section -->
+     <!-- Benefits Section -->
     <section class="benefits-section py-5">
         <div class="container">
             <div class="row text-center mb-5">
@@ -75,184 +366,6 @@
                         </div>
                         <h4>Suporte 24/7</h4>
                         <p>Equipe especializada sempre disponível para ajudar</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Planos Section -->
-    <section class="planos-section py-5">
-        <div class="container">
-            <div class="row text-center mb-5">
-                <div class="col-12">
-                    <h2 class="section-title">Nossos Planos</h2>
-                    <p class="section-subtitle">Escolha o plano que melhor se adapta ao seu hemocentro</p>
-                </div>
-            </div>
-            <div class="row">
-                <!-- Plano 1 Licença -->
-                <div class="col-lg-4 col-md-6 mb-4">
-                    <div class="plano-card h-100">
-                        <div class="plano-header">
-                            <div class="plano-icon">
-                                <i class="fas fa-user"></i>
-                            </div>
-                            <h3 class="plano-title">Plano Básico</h3>
-                            <p class="plano-subtitle">Ideal para pequenos hemocentros</p>
-                        </div>
-                        <div class="plano-price">
-                            <span class="currency">R$</span>
-                            <span class="amount">399</span>
-                            <span class="period">/mês</span>
-                        </div>
-                        <div class="plano-features">
-                            <ul>
-                                <li><i class="fas fa-check"></i> 1 licença de uso</li>
-                                <li><i class="fas fa-check"></i> Gestão de doadores</li>
-                                <li><i class="fas fa-check"></i> Controle de estoque</li>
-                                <li><i class="fas fa-check"></i> Relatórios básicos</li>
-                                <li><i class="fas fa-check"></i> Backup automático</li>
-                                <li><i class="fas fa-check"></i> Suporte por email</li>
-                            </ul>
-                        </div>
-                        <div class="plano-footer">
-                            <button class="btn-plano" data-plano="basico">Selecionar Plano</button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Plano 3 Licenças -->
-                <div class="col-lg-4 col-md-6 mb-4">
-                    <div class="plano-card plano-popular h-100">
-                        <div class="popular-badge">Mais Popular</div>
-                        <div class="plano-header">
-                            <div class="plano-icon">
-                                <i class="fas fa-users"></i>
-                            </div>
-                            <h3 class="plano-title">Plano Profissional</h3>
-                            <p class="plano-subtitle">Para equipes pequenas e médias</p>
-                        </div>
-                        <div class="plano-price">
-                            <span class="currency">R$</span>
-                            <span class="amount">799</span>
-                            <span class="period">/mês</span>
-                            <div class="price-note">Economia de 33%</div>
-                        </div>
-                        <div class="plano-features">
-                            <ul>
-                                <li><i class="fas fa-check"></i> Até 3 licenças de uso</li>
-                                <li><i class="fas fa-check"></i> Todas as funcionalidades básicas</li>
-                                <li><i class="fas fa-check"></i> Relatórios avançados</li>
-                                <li><i class="fas fa-check"></i> Integração com APIs</li>
-                                <li><i class="fas fa-check"></i> Dashboard personalizado</li>
-                                <li><i class="fas fa-check"></i> Suporte prioritário</li>
-                                <li><i class="fas fa-check"></i> Treinamento online</li>
-                            </ul>
-                        </div>
-                        <div class="plano-footer">
-                            <button class="btn-plano" data-plano="profissional">Selecionar Plano</button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Plano 8 Licenças -->
-                <div class="col-lg-4 col-md-6 mb-4">
-                    <div class="plano-card h-100">
-                        <div class="plano-header">
-                            <div class="plano-icon">
-                                <i class="fas fa-building"></i>
-                            </div>
-                            <h3 class="plano-title">Plano Empresarial</h3>
-                            <p class="plano-subtitle">Para médias instituições</p>
-                        </div>
-                        <div class="plano-price">
-                            <span class="currency">R$</span>
-                            <span class="amount">1.599</span>
-                            <span class="period">/mês</span>
-                            <div class="price-note">Economia de 50%</div>
-                        </div>
-                        <div class="plano-features">
-                            <ul>
-                                <li><i class="fas fa-check"></i> Até 8 licenças de uso</li>
-                                <li><i class="fas fa-check"></i> Todas as funcionalidades profissionais</li>
-                                <li><i class="fas fa-check"></i> Módulo de agendamento</li>
-                                <li><i class="fas fa-check"></i> Campanhas automatizadas</li>
-                                <li><i class="fas fa-check"></i> Relatórios customizados</li>
-                                <li><i class="fas fa-check"></i> Suporte dedicado</li>
-                                <li><i class="fas fa-check"></i> Treinamento presencial</li>
-                            </ul>
-                        </div>
-                        <div class="plano-footer">
-                            <button class="btn-plano" data-plano="empresarial">Selecionar Plano</button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Plano 15 Licenças -->
-                <div class="col-lg-4 col-md-6 mb-4">
-                    <div class="plano-card h-100">
-                        <div class="plano-header">
-                            <div class="plano-icon">
-                                <i class="fas fa-hospital"></i>
-                            </div>
-                            <h3 class="plano-title">Plano Premium</h3>
-                            <p class="plano-subtitle">Para grandes instituições</p>
-                        </div>
-                        <div class="plano-price">
-                            <span class="currency">R$</span>
-                            <span class="amount">3.199</span>
-                            <span class="period">/mês</span>
-                            <div class="price-note">Melhor custo-benefício</div>
-                        </div>
-                        <div class="plano-features">
-                            <ul>
-                                <li><i class="fas fa-check"></i> Até 15 licenças de uso</li>
-                                <li><i class="fas fa-check"></i> Todas as funcionalidades empresariais</li>
-                                <li><i class="fas fa-check"></i> BI e Analytics avançado</li>
-                                <li><i class="fas fa-check"></i> Integração com sistemas externos</li>
-                                <li><i class="fas fa-check"></i> Consultoria especializada</li>
-                                <li><i class="fas fa-check"></i> Suporte premium 24/7</li>
-                                <li><i class="fas fa-check"></i> Customizações incluídas</li>
-                            </ul>
-                        </div>
-                        <div class="plano-footer">
-                            <button class="btn-plano" data-plano="premium">Selecionar Plano</button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Plano Personalizado -->
-                <div class="col-lg-8 col-md-12 mb-4">
-                    <div class="plano-card plano-enterprise h-100">
-                        <div class="row align-items-center">
-                            <div class="col-md-8">
-                                <div class="plano-header">
-                                    <div class="plano-icon">
-                                        <i class="fas fa-crown"></i>
-                                    </div>
-                                    <h3 class="plano-title">Plano Enterprise</h3>
-                                    <p class="plano-subtitle">Soluções personalizadas para grandes redes hospitalares</p>
-                                </div>
-                                <div class="plano-features">
-                                    <ul class="row">
-                                        <li class="col-md-6"><i class="fas fa-check"></i> Licenças ilimitadas</li>
-                                        <li class="col-md-6"><i class="fas fa-check"></i> R$ 300,00 por licença extra</li>
-                                        <li class="col-md-6"><i class="fas fa-check"></i> Implementação dedicada</li>
-                                        <li class="col-md-6"><i class="fas fa-check"></i> Suporte exclusivo</li>
-                                        <li class="col-md-6"><i class="fas fa-check"></i> SLA garantido</li>
-                                        <li class="col-md-6"><i class="fas fa-check"></i> Desenvolvimento sob demanda</li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="col-md-4 text-center">
-                                <div class="plano-price">
-                                    <span class="custom-price">Sob consulta</span>
-                                    <div class="price-note">Orçamento personalizado</div>
-                                </div>
-                                <button class="btn-plano btn-enterprise" data-plano="enterprise">Entre em Contato</button>
-                            </div>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -420,7 +533,6 @@
             </div>
         </div>
     </section>
-
 {% endblock %}
 
 <!-- Custom JavaScript -->
