@@ -3,7 +3,7 @@ from data.model.usuario_model import Usuario
 
 
 @dataclass
-class Doador(Usuario):
+class Doador:
     cod_doador: int
     tipo_sanguineo: str
     fator_rh: str

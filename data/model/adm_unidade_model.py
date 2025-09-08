@@ -2,7 +2,7 @@ from dataclasses import dataclass
 from data.model.usuario_model import Usuario
 
 @dataclass
-class Adm_unidade(Usuario):
+class Adm_unidade:
     cod_adm: int
     cod_unidade: int
     permissao_envio_campanha: bool

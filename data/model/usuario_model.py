@@ -11,13 +11,13 @@ class Usuario:
     cpf: str
     data_nascimento: datetime
     status: bool
-    data_cadastro: datetime
     rua_usuario: str
     bairro_usuario: str
     cidade_usuario: int
     cep_usuario: str
     telefone: str
-    perfil: str = 'cliente'
+    perfil: str = 'doador'
+    data_cadastro: Optional[str] = None
     foto: Optional[str] = None
     token_redefinicao: Optional[str] = None
     data_token: Optional[str] = None
