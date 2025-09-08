@@ -336,6 +336,14 @@ body {
     margin-left: auto;
 }
 
+.btn-next {
+    max-width: 100px !important;
+    width: 100px !important;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+    font-size: 0.90rem;
+}
+
 .btn-back {
     flex: 0 0 auto;
 }
@@ -476,6 +484,13 @@ body {
     }
     
     .btn-next,
+    .btn-next {
+        max-width: 80px !important;
+        width: 80px !important;
+        padding-left: 0.5rem;
+        padding-right: 0.5rem;
+        font-size: 0.90rem;
+    }
     .btn-submit,
     .btn-back {
         width: 100%;
