@@ -68,7 +68,7 @@ from routes.doador.doador import router as doador_router
 from routes.doador.doador_notificacoes import router as doador_notificacao_router
 from routes.doador.doador_doacoes import router as doador_doacoes_router
 from routes.doador.doador_doacoes_detalhes import router as doador_doacoes_detalhes_router
-from routes.doador.doador_dados_cadastrais import router as doador_dados_cadastrais_router
+from routes.usuario.dados_cadastrais import router as doador_dados_cadastrais_router
 from routes.doador.doador_configuracoes import router as doador_configuracoes_router
 from routes.doador.doador_carteira import router as doador_carteira_router
 from routes.doador.doador_campanhas import router as doador_campanha_router
