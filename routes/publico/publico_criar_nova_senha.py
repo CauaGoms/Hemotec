@@ -8,3 +8,8 @@ templates = Jinja2Templates(directory="templates")
 async def get_criar_nova_senha(request: Request):
     response = templates.TemplateResponse("publico/publico_criar_nova_senha.html", {"request": request})
     return response
+
+@router.post("/criar_nova_senha")
+async def get_criar_nova_senha(request: Request):
+    response = templates.TemplateResponse("publico/publico_criar_nova_senha.html", {"request": request})
+    return response
