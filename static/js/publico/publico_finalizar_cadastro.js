@@ -1,5 +1,5 @@
 let cadastroStep = 1;
-const cadastroTotalSteps = 3;
+const cadastroTotalSteps = 4;
 
 function cadastroChangeStep(direction) {
     if (direction === 1 && !cadastroValidateCurrentStep()) {
@@ -38,7 +38,7 @@ function cadastroValidateCurrentStep() {
         }
     }
 
-    if (cadastroStep === 3) {
+    if (cadastroStep === 4) {
         const senha = document.getElementById('senha').value;
         const confirmar = document.getElementById('confirmar_senha').value;
         if (senha !== confirmar) {
@@ -89,4 +89,28 @@ document.querySelector('form').addEventListener('submit', function (e) {
     }
 
     alert('Cadastro de Gestor realizado com sucesso!');
+});
+
+// Preenchimento automático de endereço pelo CEP
+document.getElementById('cep_instituicao').addEventListener('blur', function (e) {
+    const cep = e.target.value.replace(/\D/g, '');
+    if (cep.length === 8) {
+        fetch(`https://viacep.com.br/ws/${cep}/json/`)
+            .then(response => response.json())
+            .then(data => {
+                if (!data.erro) {
+                    document.getElementById('rua_instituicao').value = data.logradouro || '';
+                    document.getElementById('bairro_instituicao').value = data.bairro || '';
+                    document.getElementById('cidade_instituicao').value = data.localidade || '';
+                } else {
+                    document.getElementById('rua_instituicao').value = '';
+                    document.getElementById('bairro_instituicao').value = '';
+                    document.getElementById('cidade_instituicao').value = '';
+                    alert('CEP não encontrado.');
+                }
+            })
+            .catch(() => {
+                alert('Erro ao buscar o CEP.');
+            });
+    }
 });
