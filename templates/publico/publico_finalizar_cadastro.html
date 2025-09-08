@@ -27,6 +27,11 @@
             <div class="mb-3">
                 <input type="tel" class="form-control" id="telefone_gestor" placeholder="Telefone do Gestor" name="telefone_gestor">
             </div>
+                <div class="d-flex justify-content-end mt-4">
+                    <button type="button" class="btn btn-register btn-sml" id="cadastroNextBtn1" onclick="cadastroChangeStep(1)">
+                        Próximo <i class="fas fa-arrow-right ms-2"></i>
+                    </button>
+                </div>
         </div>
 
         <!-- Seção 2: Informações da Instituição -->
@@ -42,12 +47,14 @@
                 <input type="email" class="form-control" id="email_institucional" placeholder="Email Institucional" required name="email_institucional">
             </div>
             <div class="d-flex justify-content-between mt-4">
-                <button type="button" class="btn btn-outline-danger btn-sml" id="cadastroPrevBtn" onclick="cadastroChangeStep(-1)">
-                    <i class="fas fa-arrow-left me-2"></i>Anterior
-                </button>
-                <button type="button" class="btn btn-register btn-sml" id="cadastroNextBtn" onclick="cadastroChangeStep(1)">
-                    Próximo <i class="fas fa-arrow-right ms-2"></i>
-                </button>
+                <div style="display: flex; gap: 10px; width: 100%;">
+                    <button type="button" class="btn btn-outline-danger btn-sml" id="cadastroPrevBtn" onclick="cadastroChangeStep(-1)">
+                        <i class="fas fa-arrow-left me-2"></i>Anterior
+                    </button>
+                    <button type="button" class="btn btn-register btn-sml" id="cadastroNextBtn" onclick="cadastroChangeStep(1)">
+                        Próximo <i class="fas fa-arrow-right ms-2"></i>
+                    </button>
+                </div>
             </div>
         </div>
 
@@ -87,18 +94,12 @@
             </div>
         </div>
 
-        <!-- Botões de navegação -->
-        <div class="d-flex justify-content-between mt-4">
-            <button type="button" class="btn btn-outline-danger btn-sml" id="cadastroPrevBtn" onclick="cadastroChangeStep(-1)" style="display: none;">
-                <i class="fas fa-arrow-left me-2"></i>Anterior
-            </button>
-            <button type="button" class="btn btn-register" id="cadastroNextBtn" onclick="cadastroChangeStep(1)">
-                Próximo <i class="fas fa-arrow-right ms-2"></i>
-            </button>
-            <button type="submit" class="btn btn-register btn-small" id="cadastroSubmitBtn" style="display: none;">
-                <i class="fas fa-check me-2"></i>Finalizar Cadastro
-            </button>
-        </div>
+            <!-- Botão de finalizar cadastro, exibido apenas na última etapa -->
+            <div class="d-flex justify-content-end mt-4">
+                <button type="submit" class="btn btn-register btn-small" id="cadastroSubmitBtn" style="display: none;">
+                    <i class="fas fa-check me-2"></i>Finalizar Cadastro
+                </button>
+            </div>
     </form>
 </div>
 {% endblock %}
