@@ -51,6 +51,7 @@ body {
     margin-bottom: 1.5rem;
     width: 100%;
     height: 55px;
+    font-size: 1rem;
 }
 
 .form-control:focus {
@@ -115,11 +116,26 @@ body {
 }
 
 .btn-outline-danger {
+    /* background-color: var(--hemotec-red);
+    border-color: var(--hemotec-bg-light); */
     border-radius: 50px;
     padding: 0.8rem 2.5rem;
     font-size: 1.1rem;
     font-weight: 500;
     transition: all 0.3s ease;
+    width: 100%;
+    background-color: #fff;
+    border: 2px solid var(--hemotec-red);
+    color: var(--hemotec-red);
+}
+
+.btn-outline-danger:hover,
+.btn-outline-danger:focus {
+    color: white;
+    background-color: var(--hemotec-dark-red);
+    border-color: var(--hemotec-dark-red);
+    transform: translateY(-3px);
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
 }
 
 .btn-small {
@@ -134,3 +150,8 @@ body {
     width: 50%;
 }
 
+.btn-maior {
+    width: 100%;
+    padding: 1rem 2.5rem;
+    font-size: 1.2rem;
+}

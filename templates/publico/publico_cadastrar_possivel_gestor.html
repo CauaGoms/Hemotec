@@ -2,6 +2,7 @@
 
 {% block custom_css %}
 <link rel="stylesheet" href="/static/css/publico/publico_cadastrar_possivel_gestor.css">
+<script src="/static/js/publico/publico_cadastrar_possivel_gestor.js"></script>
 {% endblock %}
 
 {% block corpo %}
@@ -62,6 +63,7 @@
                         </div>
                         
                         <form id="cadastroForm" class="cadastro-form">
+                            <form id="cadastroForm" class="cadastro-form" action="/finalizar_cadastro" method="post">
                             <div class="form-step active" id="step1">
                                 <h4 class="step-title">
                                     <span class="step-number">1</span>
@@ -96,181 +98,15 @@
                                         <input type="tel" class="form-control" id="telefone" required>
                                     </div>
                                 </div>
-                                
-                                <button type="button" class="btn btn-primary btn-next" onclick="nextStep()">
-                                    Próximo <i class="fas fa-arrow-right ms-2"></i>
-                                </button>
-                            </div>
-                            
-                            <div class="form-step" id="step2">
-                                <h4 class="step-title">
-                                    <span class="step-number">2</span>
-                                    Informações da Instituição
-                                </h4>
-                                
-                                <div class="mb-3">
-                                    <label for="instituicao" class="form-label">Nome da Instituição *</label>
-                                    <input type="text" class="form-control" id="instituicao" required>
-                                </div>
-                                
-                                <div class="row">
-                                    <div class="col-md-6 mb-3">
-                                        <label for="cidade" class="form-label">Cidade *</label>
-                                        <input type="text" class="form-control" id="cidade" required>
-                                    </div>
-                                    <div class="col-md-6 mb-3">
-                                        <label for="estado" class="form-label">Estado *</label>
-                                        <select class="form-control" id="estado" required>
-                                            <option value="">Selecione o estado</option>
-                                            <option value="AC">Acre</option>
-                                            <option value="AL">Alagoas</option>
-                                            <option value="AP">Amapá</option>
-                                            <option value="AM">Amazonas</option>
-                                            <option value="BA">Bahia</option>
-                                            <option value="CE">Ceará</option>
-                                            <option value="DF">Distrito Federal</option>
-                                            <option value="ES">Espírito Santo</option>
-                                            <option value="GO">Goiás</option>
-                                            <option value="MA">Maranhão</option>
-                                            <option value="MT">Mato Grosso</option>
-                                            <option value="MS">Mato Grosso do Sul</option>
-                                            <option value="MG">Minas Gerais</option>
-                                            <option value="PA">Pará</option>
-                                            <option value="PB">Paraíba</option>
-                                            <option value="PR">Paraná</option>
-                                            <option value="PE">Pernambuco</n>
-                                            <option value="PI">Piauí</option>
-                                            <option value="RJ">Rio de Janeiro</option>
-                                            <option value="RN">Rio Grande do Norte</option>
-                                            <option value="RS">Rio Grande do Sul</option>
-                                            <option value="RO">Rondônia</option>
-                                            <option value="RR">Roraima</option>
-                                            <option value="SC">Santa Catarina</option>
-                                            <option value="SP">São Paulo</option>
-                                            <option value="SE">Sergipe</option>
-                                            <option value="TO">Tocantins</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                
-                                <div class="row">
-                                    <div class="col-md-6 mb-3">
-                                        <label for="porte" class="form-label">Porte da Instituição *</label>
-                                        <select class="form-control" id="porte" required>
-                                            <option value="">Selecione o porte</option>
-                                            <option value="pequeno">Pequeno (até 100 doações/mês)</option>
-                                            <option value="medio">Médio (100-500 doações/mês)</option>
-                                            <option value="grande">Grande (500-1000 doações/mês)</option>
-                                            <option value="muito-grande">Muito Grande (1000+ doações/mês)</option>
-                                        </select>
-                                    </div>
-                                    <div class="col-md-6 mb-3">
-                                        <label for="funcionarios" class="form-label">Número de Funcionários</label>
-                                        <select class="form-control" id="funcionarios">
-                                            <option value="">Selecione</option>
-                                            <option value="1-10">1-10</option>
-                                            <option value="11-50">11-50</option>
-                                            <option value="51-100">51-100</option>
-                                            <option value="100+">Mais de 100</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                
-                                <div class="form-buttons">
-                                    <button type="button" class="btn btn-outline-secondary btn-back" onclick="prevStep()">
-                                        <i class="fas fa-arrow-left me-2"></i>Voltar
-                                    </button>
-                                    <button type="button" class="btn btn-primary btn-next" onclick="nextStep()">
+                    
+                                    <a href="/finalizar_cadastro" class="btn btn-primary btn-next">
                                         Próximo <i class="fas fa-arrow-right ms-2"></i>
-                                    </button>
-                                </div>
-                            </div>
+                                    </a>
                             
-                            <div class="form-step" id="step3">
-                                <h4 class="step-title">
-                                    <span class="step-number">3</span>
-                                    Necessidades e Preferências
-                                </h4>
-                                
-                                <div class="mb-3">
-                                    <label for="desafios" class="form-label">Principais Desafios Atuais</label>
-                                    <div class="checkbox-group">
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" id="desafio1" value="controle-estoque">
-                                            <label class="form-check-label" for="desafio1">
-                                                Controle de estoque de sangue
-                                            </label>
-                                        </div>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" id="desafio2" value="gestao-doadores">
-                                            <label class="form-check-label" for="desafio2">
-                                                Gestão de doadores
-                                            </label>
-                                        </div>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" id="desafio3" value="relatorios">
-                                            <label class="form-check-label" for="desafio3">
-                                                Geração de relatórios
-                                            </label>
-                                        </div>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" id="desafio4" value="comunicacao-doadores">
-                                            <label class="form-check-label" for="desafio4">
-                                                Comunicação com doadores
-                                            </label>
-                                        </div>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" id="desafio5" value="agendamento-online">
-                                            <label class="form-check-label" for="desafio5">
-                                                Agendamento online
-                                            </label>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="mb-3">
-                                    <label for="mensagem" class="form-label">Mensagem Adicional</label>
-                                    <textarea class="form-control" id="mensagem" rows="3" placeholder="Fale um pouco sobre suas necessidades..."></textarea>
-                                </div>
-                                
-                                <div class="form-buttons">
-                                    <button type="button" class="btn btn-outline-secondary btn-back" onclick="prevStep()">
-                                        <i class="fas fa-arrow-left me-2"></i>Voltar
-                                    </button>
-                                    <button type="submit" class="btn btn-success btn-submit">
-                                        <i class="fas fa-paper-plane me-2"></i>Enviar Solicitação
-                                    </button>
-                                </div>
-                            </div>
-                        </form>
-                        
-                        <div class="progress-bar-container">
-                            <div class="progress-bar-step active">1</div>
-                            <div class="progress-bar-line"></div>
-                            <div class="progress-bar-step">2</div>
-                            <div class="progress-bar-line"></div>
-                            <div class="progress-bar-step">3</div>
-                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
-
-    <!-- Modal de Sucesso -->
-    <div class="modal fade" id="successModal" tabindex="-1" aria-labelledby="successModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-body text-center">
-                    <div class="success-icon">
-                        <i class="fas fa-check-circle"></i>
-                    </div>
-                    <h5 class="modal-title" id="successModalLabel">Solicitação Enviada!</h5>
-                    <p>Sua solicitação de demonstração foi enviada com sucesso. Nossa equipe entrará em contato em breve.</p>
-                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Fechar</button>
-                </div>
-            </div>
-        </div>
-    </div>
 {% endblock %}
 
