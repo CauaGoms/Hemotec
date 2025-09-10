@@ -8,3 +8,8 @@ templates = Jinja2Templates(directory="templates")
 async def get_validar_telefone(request: Request):
     response = templates.TemplateResponse("publico/publico_validar_telefone.html", {"request": request, "active_page": "home"})
     return response
+
+@router.post("/validar_telefone")
+async def get_validar_telefone(request: Request):
+    response = templates.TemplateResponse("publico/publico_validar_telefone.html", {"request": request, "active_page": "home"})
+    return response

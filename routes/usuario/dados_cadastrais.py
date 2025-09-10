@@ -6,5 +6,5 @@ templates = Jinja2Templates(directory="templates")
 
 @router.get("/dados_cadastrais")
 async def get_doador_dados_cadastrais(request: Request):
-    response = templates.TemplateResponse("doador/doador_dados_cadastrais.html", {"request": request, "active_page": "perfil"})
+    response = templates.TemplateResponse("usuario/dados_cadastrais.html", {"request": request, "active_page": "perfil"})
     return response
