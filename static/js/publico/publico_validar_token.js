@@ -142,7 +142,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 
                 // Redireciona após 2 segundos
                 setTimeout(() => {
-                    window.location.href = '/criar-nova-senha';
+                    window.location.href = '/criar_nova_senha';
                 }, 2000);
             } else {
                 showError(result.message);

@@ -1,4 +1,5 @@
 // Criar Nova Senha - JavaScript
+console.log('JS de criar nova senha carregado e executado');
 document.addEventListener('DOMContentLoaded', function() {
     const form = document.querySelector('form');
     const novaSenhaInput = document.getElementById('nova_senha');
@@ -130,39 +131,7 @@ document.addEventListener('DOMContentLoaded', function() {
         
         novaSenhaInput.parentNode.appendChild(strengthDiv);
     }
-    
-    // Função para mostrar/esconder senha
-    function addPasswordToggle(input) {
-        const toggleBtn = document.createElement('button');
-        toggleBtn.type = 'button';
-        toggleBtn.className = 'btn btn-outline-secondary password-toggle';
-        toggleBtn.innerHTML = '<i class="fas fa-eye"></i>';
-        toggleBtn.style.position = 'absolute';
-        toggleBtn.style.right = '10px';
-        toggleBtn.style.top = '50%';
-        toggleBtn.style.transform = 'translateY(-50%)';
-        toggleBtn.style.border = 'none';
-        toggleBtn.style.background = 'transparent';
-        toggleBtn.style.zIndex = '10';
-        
-        input.parentNode.style.position = 'relative';
-        input.style.paddingRight = '45px';
-        input.parentNode.appendChild(toggleBtn);
-        
-        toggleBtn.addEventListener('click', function() {
-            if (input.type === 'password') {
-                input.type = 'text';
-                this.innerHTML = '<i class="fas fa-eye-slash"></i>';
-            } else {
-                input.type = 'password';
-                this.innerHTML = '<i class="fas fa-eye"></i>';
-            }
-        });
-    }
-    
-    // Adiciona botões de mostrar/esconder senha
-    addPasswordToggle(novaSenhaInput);
-    addPasswordToggle(confirmarSenhaInput);
+
     
     // Event listener para mostrar força da senha
     novaSenhaInput.addEventListener('input', function() {
@@ -245,8 +214,14 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // Validação de força da senha
         const strengthValidation = validatePasswordStrength(novaSenha);
+        const strength = calculatePasswordStrength(novaSenha);
         if (!strengthValidation.isValid) {
             showError(strengthValidation.errors.join('<br>'));
+            novaSenhaInput.focus();
+            return;
+        }
+        if (strength < 40) {
+            showError('A senha está muito fraca. Crie uma senha mais forte!');
             novaSenhaInput.focus();
             return;
         }
@@ -271,7 +246,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 
                 // Redireciona após 2 segundos
                 setTimeout(() => {
-                    window.location.href = '/confirmar-redefinicao-senha';
+                    window.location.href = '/confirmar_redefinicao_senha';
                 }, 2000);
             } else {
                 showError(result.message);
@@ -279,7 +254,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 // Se for erro de sessão, redireciona para o início
                 if (result.message.includes('Sessão expirada')) {
                     setTimeout(() => {
-                        window.location.href = '/redefinir-senha';
+                        window.location.href = '/redefinir_senha';
                     }, 3000);
                 }
             }
