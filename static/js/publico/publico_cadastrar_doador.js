@@ -109,7 +109,7 @@ document.getElementById('cep').addEventListener('blur', function () {
             .then(response => response.json())
             .then(data => {
                 showCepLoading(false);
-
+                console.log('Resposta ViaCEP:', data); // debug
                 if (!data.erro) {
                     // Preenche os campos com animação
                     if (data.logradouro) {
@@ -124,7 +124,18 @@ document.getElementById('cep').addEventListener('blur', function () {
                         cidadeField.value = data.localidade;
                         animateFilledField('cidade');
                     }
-
+                    // Preenche o campo hidden do estado
+                    var estadoField = document.getElementById('estado_usuario');
+                    if (data.uf) {
+                        if (estadoField) {
+                            estadoField.value = data.uf;
+                            console.log('Estado preenchido:', data.uf); // debug
+                        } else {
+                            console.warn('Campo estado_usuario não encontrado no DOM');
+                        }
+                    } else {
+                        console.warn('data.uf não veio na resposta ViaCEP');
+                    }
                     // Foca no próximo campo vazio
                     if (!data.logradouro) {
                         ruaField.focus();

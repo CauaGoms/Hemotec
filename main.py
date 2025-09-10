@@ -54,7 +54,7 @@ from routes.publico.publico_adquirir_assinatura import router as publico_adquiri
 from routes.publico.publico_cadastrar_possivel_gestor import router as publico_cadastrar_possivel_gestor_router
 from routes.publico.publico_visualizar_plano import router as publico_visualizar_plano_router
 from routes.publico.publico_finalizar_cadastro import router as publico_finalizar_cadastro_router
-from routes.publico.publico_cadastrar_doador import router as publico_cadastrar_doador_router
+from routes.publico.publico_cadastrar import router as publico_cadastrar_doador_router
 from routes.publico.publico_validar_telefone import router as publico_validar_telefone_router
 from routes.publico.publico_confirmar_cadastro import router as publico_confirmar_cadastro_router
 from routes.publico.publico_redefinir_senha import router as publico_redefinir_senha_router
@@ -139,6 +139,9 @@ from routes.usuario.usuario_sair import router as usuario_sair_router
 #Importando os routers de telas de teste
 from routes.rotas_teste.doador_agendamento_historico_agendamentos import router as doador_agendamento_historico_agendamentos_teste_router
 from routes.rotas_teste.doador_estoque import router as doador_estoque_teste_router
+
+#Importando routers de atenticação
+from routes.auth_routes import router as auth_router
 
 cidade_repo.criar_tabela()
 usuario_repo.criar_tabela()
@@ -252,9 +255,12 @@ app.include_router(gestor_centro_coleta_detalhe_router)
 app.include_router(usuario_alterar_senha_router)
 app.include_router(usuario_sair_router)
 
-#routes das telas de testes
+#routers das telas de testes
 app.include_router(doador_agendamento_historico_agendamentos_teste_router)
 app.include_router(doador_estoque_teste_router)
+
+#routers de autenticação
+app.include_router(auth_router)
 
 if __name__ == "__main__":
     uvicorn.run(app="main:app", host="127.0.0.1", port=8000, reload=True)

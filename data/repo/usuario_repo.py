@@ -17,21 +17,25 @@ def criar_tabela() -> bool:
         return False
     
 
-def inserir(usuario: Usuario, cursor: Any) -> Optional[int]:
-    cursor.execute(INSERIR, (
-        usuario.nome,
-        usuario.email, 
-        usuario.senha,
-        usuario.cpf,
-        usuario.data_nascimento,
-        usuario.status,
-        usuario.rua_usuario,
-        usuario.bairro_usuario,
-        usuario.cidade_usuario,
-        usuario.cep_usuario,
-        usuario.telefone,
-        usuario.perfil,
-        usuario.data_cadastro))
+def inserir(usuario: Usuario) -> Optional[int]:
+    with get_connection() as conn:
+        cursor = conn.cursor()
+        cursor.execute(INSERIR, (
+            usuario.nome,
+            usuario.email, 
+            usuario.senha,
+            usuario.cpf,
+            usuario.data_nascimento,
+            usuario.status,
+            usuario.rua_usuario,
+            usuario.bairro_usuario,
+            usuario.cidade_usuario,
+            usuario.cep_usuario,
+            usuario.telefone,
+            usuario.perfil,
+            usuario.data_cadastro,
+            usuario.estado_usuario
+            ))
     return cursor.lastrowid
     
 
@@ -47,7 +51,7 @@ def obter_todos() -> list[Usuario]:
                 email=row["email"],
                 senha=row["senha"],
                 cpf=row["cpf"],
-                data_nascimento=datetime.strptime(row["data_nascimento"], '%d/%m/%Y').date(),
+                data_nascimento=datetime.strptime(row["data_nascimento"], '%Y-%m-%d').date(),
                 status=bool(row["status"]),
                 rua_usuario=row["rua_usuario"],
                 bairro_usuario=row["bairro_usuario"],
@@ -55,9 +59,11 @@ def obter_todos() -> list[Usuario]:
                 cep_usuario=row["cep_usuario"],
                 telefone=row["telefone"],
                 perfil=row["perfil"],
-                data_cadastro=datetime.strptime(row["data_cadastro"], '%d/%m/%Y').date(),
-                foto=row["foto"])  
-                for row in rows]
+                data_cadastro=datetime.strptime(row["data_cadastro"], '%Y-%m-%d').date(),
+                foto=row["foto"],
+                estado_usuario=row["estado_usuario"]
+            )
+            for row in rows]
         return usuario
     
 def obter_por_id(cod_usuario: int) -> Optional[Usuario]:
@@ -72,7 +78,7 @@ def obter_por_id(cod_usuario: int) -> Optional[Usuario]:
                 email=row["email"],
                 senha=row["senha"],
                 cpf=row["cpf"],
-                data_nascimento=datetime.strptime(row["data_nascimento"], "%d/%m/%Y").date(),
+                data_nascimento=datetime.strptime(row["data_nascimento"], "%Y-%m-%d").date(),
                 status=row["status"],
                 rua_usuario=row["rua_usuario"],
                 bairro_usuario=row["bairro_usuario"],
@@ -80,10 +86,11 @@ def obter_por_id(cod_usuario: int) -> Optional[Usuario]:
                 cep_usuario=row["cep_usuario"],
                 telefone=row["telefone"],
                 perfil=row["perfil"],
-                data_cadastro=datetime.strptime(row["data_cadastro"], "%d/%m/%Y").date(),
+                data_cadastro=datetime.strptime(row["data_cadastro"], "%Y-%m-%d").date(),
                 foto=row["foto"],
                 token_redefinicao=row["token_redefinicao"],
-                data_token=row["data_token"]
+                data_token=row["data_token"],
+                estado_usuario=row["estado_usuario"]
             )
         return None
     
@@ -99,7 +106,7 @@ def obter_por_email(email: str) -> Optional[Usuario]:
                 email=row["email"],
                 senha=row["senha"],
                 cpf=row["cpf"],
-                data_nascimento=datetime.strptime(row["data_nascimento"], "%d/%m/%Y").date(),
+                data_nascimento=datetime.strptime(row["data_nascimento"], "%Y-%m-%d").date(),
                 status=row["status"],
                 rua_usuario=row["rua_usuario"],
                 bairro_usuario=row["bairro_usuario"],
@@ -107,8 +114,10 @@ def obter_por_email(email: str) -> Optional[Usuario]:
                 cep_usuario=row["cep_usuario"],
                 telefone=row["telefone"],
                 perfil=row["perfil"],
-                data_cadastro=datetime.strptime(row["data_cadastro"], "%d/%m/%Y").date(),
-                foto=row["foto"])
+                data_cadastro=datetime.strptime(row["data_cadastro"], "%Y-%m-%d").date(),
+                foto=row["foto"],
+                estado_usuario=row["estado_usuario"]
+            )
         return None
     
 def update(usuario: Usuario, cursor=None) -> bool:
@@ -128,6 +137,7 @@ def update(usuario: Usuario, cursor=None) -> bool:
                 usuario.cep_usuario,
                 usuario.telefone,
                 usuario.perfil,
+                usuario.estado_usuario,
                 usuario.cod_usuario
             )
         )
@@ -150,6 +160,7 @@ def update(usuario: Usuario, cursor=None) -> bool:
                     usuario.cep_usuario,
                     usuario.telefone,
                     usuario.perfil,
+                    usuario.estado_usuario,
                     usuario.cod_usuario
                 )
             )
@@ -195,7 +206,7 @@ def obter_por_token(token: str) -> Optional[Usuario]:
                     email=row["email"],
                     senha=row["senha"],
                     cpf=row["cpf"],
-                    data_nascimento=datetime.strptime(row["data_nascimento"], "%d/%m/%Y").date(),
+                    data_nascimento=datetime.strptime(row["data_nascimento"], "%Y-%m-%d").date(),
                     status=row["status"],
                     rua_usuario=row["rua_usuario"],
                     bairro_usuario=row["bairro_usuario"],
@@ -203,10 +214,12 @@ def obter_por_token(token: str) -> Optional[Usuario]:
                     cep_usuario=row["cep_usuario"],
                     telefone=row["telefone"],
                     perfil=row["perfil"],
-                    data_cadastro=datetime.strptime(row["data_cadastro"], "%d/%m/%Y").date(),
+                    data_cadastro=datetime.strptime(row["data_cadastro"], "%Y-%m-%d").date(),
                     foto=row["foto"],
                     token_redefinicao=row["token_redefinicao"],
-                    data_token=row["data_token"])
+                    data_token=row["data_token"],
+                    estado_usuario=row["estado_usuario"]
+            )
             return usuario
         return None
     
@@ -229,7 +242,7 @@ def obter_todos_por_perfil(perfil: str) -> list[Usuario]:
                 email=row["email"],
                 senha=row["senha"],
                 cpf=row["cpf"],
-                data_nascimento=datetime.strptime(row["data_nascimento"], "%d/%m/%Y").date(),
+                data_nascimento=datetime.strptime(row["data_nascimento"], "%Y-%m-%d").date(),
                 status=row["status"],
                 rua_usuario=row["rua_usuario"],
                 bairro_usuario=row["bairro_usuario"],
@@ -237,10 +250,11 @@ def obter_todos_por_perfil(perfil: str) -> list[Usuario]:
                 cep_usuario=row["cep_usuario"],
                 telefone=row["telefone"],
                 perfil=row["perfil"],
-                data_cadastro=datetime.strptime(row["data_cadastro"], "%d/%m/%Y").date(),
+                data_cadastro=datetime.strptime(row["data_cadastro"], "%Y-%m-%d").date(),
                 foto=row["foto"],
                 token_redefinicao=row["token_redefinicao"],
-                data_token=row["data_token"]
+                data_token=row["data_token"],
+                estado_usuario=row["estado_usuario"]
             )
             usuarios.append(usuario)
         return usuarios

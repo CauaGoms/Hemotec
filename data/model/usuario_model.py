@@ -21,3 +21,4 @@ class Usuario:
     foto: Optional[str] = None
     token_redefinicao: Optional[str] = None
     data_token: Optional[str] = None
+    estado_usuario: Optional[str] = None
