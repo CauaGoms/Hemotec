@@ -6,5 +6,5 @@ templates = Jinja2Templates(directory="templates")
 
 @router.get("/cadastrar")
 async def get_cadastro(request: Request):
-    response = templates.TemplateResponse("publico/publico_cadastrar.html", {"request": request})
+    response = templates.TemplateResponse("publico/publico_cadastrar_doador.html", {"request": request})
     return response

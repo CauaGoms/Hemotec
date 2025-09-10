@@ -90,7 +90,7 @@ async def post_cadastro(
     if usuario_repo.obter_por_email(email):
         print("Email já cadastrado")
         return templates.TemplateResponse(
-            "publico/publico_cadastrar.html",
+            "publico/publico_cadastrar_doador.html",
             {"request": request, "erro": "Email já cadastrado"}
         )
     
