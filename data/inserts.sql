@@ -3,7 +3,7 @@ INSERT INTO cidade (cod_cidade, nome_cidade, sigla_estado) VALUES
 (2, 'Marataizes', 'ES'),
 (3, 'Rio de janeiro', 'RJ');
 
-INSERT INTO usuario (cod_usuario, nome, email, senha, cpf, data_nascimento, status, rua_usuario, bairro_usuario, cidade_usuario, cep_usuario, telefone, perfil, data_cadastro, foto, token_redefinição, data_token) VALUES
+INSERT INTO usuario (cod_usuario, nome, email, senha, cpf, data_nascimento, status, rua_usuario, bairro_usuario, cidade_usuario, cep_usuario, telefone, perfil, data_cadastro, foto, token_redefinicao, data_token) VALUES
 (1, 'lucas', 'lucas@gmail.com', '123456', '12345678900', '2000-01-01', 1, 'Rua Horacio Leandro de Souza', 'Basileia', 1, '29302875', '11999999999', 'doador', '2023-10-01', '', '', ''),
 (2, 'caua', 'caua@gmail.com', '123456', '12345678900', '2000-01-01', 1, 'Rua Projetada', 'Timbo I', 2, '29345000', '11999999999', 'doador', '2023-10-01', '', '', '');
 
@@ -34,7 +34,7 @@ INSERT INTO licenca (cod_licenca, cod_assinatura, status) VALUES
 (1, 1, 1),
 (2, 2, 1);
 
-INSERT INTO unidade_coleta (cod_unidade, cod_licenca, nome, email, rua_unidade, bairro_unidade, cidade_unidade, cep_unidade, latitude, logitude, telefone) VALUES
+INSERT INTO unidade_coleta (cod_unidade, cod_licenca, nome, email, rua_unidade, bairro_unidade, cidade_unidade, cep_unidade, latitude, longitude, telefone) VALUES
 (1, 1, 'Unidade de Coleta Central', 'unidade@gmail.com', 'Rua Dr. Luiz Palmier', 'Marbrasa', 1, '29050010', -20.3155, -40.3378, '2733333333'),
 (2, 2, 'Unidade de Coleta Botafogo', 'unidade2@gmail.com', 'Rua Mario de Andrade', 'Botafogo', 3, '29307000', -22.1234, -43.1234, '2133333333');
 
