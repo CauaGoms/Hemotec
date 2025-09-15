@@ -33,7 +33,7 @@ async def post_login(
         "nome": usuario.nome,
         "email": usuario.email,
         "cpf": usuario.cpf,
-        "data_nascimento": usuario.data_nascimento,
+        "data_nascimento": str(usuario.data_nascimento),
         "status": usuario.status,
         "rua_usuario": usuario.rua_usuario,
         "bairro_usuario": usuario.bairro_usuario,
@@ -85,41 +85,52 @@ async def post_cadastro(
     estado_usuario: str = Form(...),
     senha: str = Form(...)
 ):
-    print(f"estado: {estado_usuario}")
-    # Verificar se email já existe
-    if usuario_repo.obter_por_email(email):
-        print("Email já cadastrado")
+    try:
+        if usuario_repo.obter_por_email(email):
+            return templates.TemplateResponse(
+                "publico/publico_cadastrar_doador.html",
+                {"request": request, "erro": "Email já cadastrado"}
+            )
+
+        cidade = cidade_repo.obter_por_nome_estado(cidade_usuario, estado_usuario)
+        if not cidade:
+            cidade_id = cidade_repo.inserir(Cidade(cod_cidade=0, nome_cidade=cidade_usuario, sigla_estado=estado_usuario))
+            print(f"Cidade inserida, id: {cidade_id}")
+        else:
+            cidade_id = cidade.cod_cidade
+            print(f"Cidade já existe, id: {cidade_id}")
+
+        data_nascimento_conv = data_nascimento
+        senha_hash = criar_hash_senha(senha)
+
+        usuario = Usuario(
+            cod_usuario=0,
+            nome=nome,
+            email=email,
+            senha=senha_hash,
+            cpf=cpf,
+            data_nascimento=data_nascimento_conv,
+            status=1,
+            rua_usuario=rua_usuario,
+            bairro_usuario=bairro_usuario,
+            cidade_usuario=cidade_id,
+            cep_usuario=cep_usuario,
+            telefone=telefone,
+            perfil="doador",
+            data_cadastro=None,
+            estado_usuario=estado_usuario
+        )
+        print(f"Tentando inserir usuario: {usuario}")
+        usuario_id = usuario_repo.inserir(usuario)
+        print(f"Usuário inserido, id: {usuario_id}")
+
+        return RedirectResponse("/login", status.HTTP_303_SEE_OTHER)
+    except Exception as e:
+        print(f"Erro ao cadastrar: {e}")
         return templates.TemplateResponse(
             "publico/publico_cadastrar_doador.html",
-            {"request": request, "erro": "Email já cadastrado"}
+            {"request": request, "erro": f"Erro ao cadastrar: {e}"}
         )
-    
-    # Criar hash da senha
-    senha_hash = criar_hash_senha(senha)
-    
-    # Criar usuário
-    usuario = Usuario(
-        cod_usuario=0,
-        nome=nome,
-        email=email,
-        senha=senha_hash,
-        cpf=cpf,
-        data_nascimento=data_nascimento,
-        status=True,
-        rua_usuario=rua_usuario,
-        bairro_usuario=bairro_usuario,
-        cidade_usuario=cidade_usuario,
-        cep_usuario=cep_usuario,
-        telefone=telefone,
-        perfil="doador",
-        data_cadastro=None,
-        estado_usuario=estado_usuario
-    )
-
-    # cidade_repo.inserir(Cidade(cod_cidade=0, nome_cidade=cidade_usuario, sigla_estado=estado_usuario))
-    # usuario_repo.inserir(usuario)
-
-    return RedirectResponse("/login", status.HTTP_303_SEE_OTHER)
 
 # Rota acessível apenas para usuários logados
 @router.get("/dados_cadastrais")
@@ -137,7 +148,7 @@ async def get_dados_cadastrais(request: Request, usuario_logado: dict = None):
 async def get_gestor_dashboard(request: Request, usuario_logado: dict = None):
     return templates.TemplateResponse(
         "gestor_inicio.html",
-        {"request": request}
+        {"request": request, "usuario": usuario_logado}
     )
 
 # Rota apenas para administradores de unidade
@@ -146,7 +157,7 @@ async def get_gestor_dashboard(request: Request, usuario_logado: dict = None):
 async def get_administrador_dashboard(request: Request, usuario_logado: dict = None):
     return templates.TemplateResponse(
         "administrador_inicio.html",
-        {"request": request}
+        {"request": request, "usuario": usuario_logado}
     )
 
 # Rota apenas para colaboradores
@@ -155,7 +166,7 @@ async def get_administrador_dashboard(request: Request, usuario_logado: dict = N
 async def get_colaborador_dashboard(request: Request, usuario_logado: dict = None):
     return templates.TemplateResponse(
         "colaborador_inicio.html",
-        {"request": request}
+        {"request": request, "usuario": usuario_logado}
     )
 
 # Rota apenas para doadores
@@ -164,7 +175,7 @@ async def get_colaborador_dashboard(request: Request, usuario_logado: dict = Non
 async def get_doador_dashboard(request: Request, usuario_logado: dict = None):
     return templates.TemplateResponse(
         "doador_inicio.html",
-        {"request": request}
+        {"request": request, "usuario": usuario_logado}
     )
 
 # # Rota para múltiplos perfis

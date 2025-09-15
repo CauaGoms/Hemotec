@@ -36,6 +36,7 @@ def inserir(usuario: Usuario) -> Optional[int]:
             usuario.data_cadastro,
             usuario.estado_usuario
             ))
+        conn.commit()
     return cursor.lastrowid
     
 
@@ -59,7 +60,7 @@ def obter_todos() -> list[Usuario]:
                 cep_usuario=row["cep_usuario"],
                 telefone=row["telefone"],
                 perfil=row["perfil"],
-                data_cadastro=datetime.strptime(row["data_cadastro"], '%Y-%m-%d').date(),
+                data_cadastro=datetime.strptime(row["data_cadastro"], '%Y-%m-%d').date() if row["data_cadastro"] else None,
                 foto=row["foto"],
                 estado_usuario=row["estado_usuario"]
             )
@@ -86,7 +87,7 @@ def obter_por_id(cod_usuario: int) -> Optional[Usuario]:
                 cep_usuario=row["cep_usuario"],
                 telefone=row["telefone"],
                 perfil=row["perfil"],
-                data_cadastro=datetime.strptime(row["data_cadastro"], "%Y-%m-%d").date(),
+                data_cadastro=datetime.strptime(row["data_cadastro"], "%Y-%m-%d").date() if row["data_cadastro"] else None,
                 foto=row["foto"],
                 token_redefinicao=row["token_redefinicao"],
                 data_token=row["data_token"],
@@ -114,7 +115,7 @@ def obter_por_email(email: str) -> Optional[Usuario]:
                 cep_usuario=row["cep_usuario"],
                 telefone=row["telefone"],
                 perfil=row["perfil"],
-                data_cadastro=datetime.strptime(row["data_cadastro"], "%Y-%m-%d").date(),
+                data_cadastro=datetime.strptime(row["data_cadastro"], "%Y-%m-%d").date() if row["data_cadastro"] else None,
                 foto=row["foto"],
                 estado_usuario=row["estado_usuario"]
             )
@@ -214,7 +215,7 @@ def obter_por_token(token: str) -> Optional[Usuario]:
                     cep_usuario=row["cep_usuario"],
                     telefone=row["telefone"],
                     perfil=row["perfil"],
-                    data_cadastro=datetime.strptime(row["data_cadastro"], "%Y-%m-%d").date(),
+                    data_cadastro=datetime.strptime(row["data_cadastro"], "%Y-%m-%d").date() if row["data_cadastro"] else None,
                     foto=row["foto"],
                     token_redefinicao=row["token_redefinicao"],
                     data_token=row["data_token"],
@@ -250,7 +251,7 @@ def obter_todos_por_perfil(perfil: str) -> list[Usuario]:
                 cep_usuario=row["cep_usuario"],
                 telefone=row["telefone"],
                 perfil=row["perfil"],
-                data_cadastro=datetime.strptime(row["data_cadastro"], "%Y-%m-%d").date(),
+                data_cadastro=datetime.strptime(row["data_cadastro"], "%Y-%m-%d").date() if row["data_cadastro"] else None,
                 foto=row["foto"],
                 token_redefinicao=row["token_redefinicao"],
                 data_token=row["data_token"],

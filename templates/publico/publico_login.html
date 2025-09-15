@@ -27,6 +27,9 @@
             <div class="alert alert-danger">{{ erro }}</div>
         {% endif %}
         <form method="post" action="/login">
+            {% if redirect %}
+                <input type="hidden" name="redirect" value="{{ redirect }}">
+            {% endif %}
             <div class="mb-3">
                 <input type="email" class="form-control" id="email" placeholder="Seu e-mail" required name="email">
             </div>

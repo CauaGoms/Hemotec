@@ -22,6 +22,7 @@ def inserir(cidade: Cidade) -> Optional[int]:
         cursor.execute(INSERIR, (
             cidade.nome_cidade, 
             cidade.sigla_estado))
+        conn.commit()
         return cursor.lastrowid
     
 
@@ -51,10 +52,11 @@ def obter_por_id(cod_cidade: int) -> Optional[Cidade]:
             )
         return None
     
-def obter_por_nome(nome_cidade: str) -> Optional[Cidade]:
+
+def obter_por_nome_estado(nome_cidade: str, sigla_estado: str) -> Optional[Cidade]:
     with get_connection() as conn:
         cursor = conn.cursor()
-        cursor.execute(OBTER_POR_NOME, (nome_cidade,))
+        cursor.execute(OBTER_POR_NOME_ESTADO, (nome_cidade, sigla_estado))
         row = cursor.fetchone()
         if row:
             return Cidade(

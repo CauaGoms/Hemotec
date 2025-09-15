@@ -33,8 +33,9 @@ FROM cidade c
 WHERE c.cod_cidade = ?;
 """
 
-OBTER_POR_NOME = """
+
+OBTER_POR_NOME_ESTADO = """
 SELECT c.cod_cidade, c.nome_cidade, c.sigla_estado
 FROM cidade c
-WHERE c.nome_cidade = ?;
+WHERE c.nome_cidade = ? AND c.sigla_estado = ?;
 """
