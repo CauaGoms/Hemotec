@@ -76,35 +76,37 @@ var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
     return new bootstrap.Tooltip(tooltipTriggerEl);
 });
 
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     const fotoInput = document.getElementById('foto');
     const fotoAtual = document.getElementById('foto-atual');
     const previewContainer = document.getElementById('preview-foto-container');
     const previewFoto = document.getElementById('preview-foto');
+    const btnSelecionarFoto = document.getElementById('btn-selecionar-foto');
     const btnAlterar = document.getElementById('btn-alterar');
     const btnCancelar = document.getElementById('btn-cancelar');
 
-    fotoInput.addEventListener('change', function(e) {
+    fotoInput.addEventListener('change', function (e) {
         const file = e.target.files[0];
 
         if (file) {
-            // Verificar se é uma imagem
             if (file.type.startsWith('image/')) {
                 const reader = new FileReader();
-
-                reader.onload = function(e) {
-                    // Esconder foto atual e mostrar preview
+                reader.onload = function (e) {
                     fotoAtual.style.display = 'none';
                     previewFoto.src = e.target.result;
                     previewContainer.style.display = 'block';
 
-                    // Habilitar botão e mostrar opções
-                    btnAlterar.disabled = false;
-                    btnAlterar.innerHTML = '<i class="bi-check"></i> Confirmar Alteração';
+                    // Muda botão para confirmar foto
+                    btnSelecionarFoto.innerHTML = '<i class="bi-check"></i> Confirmar Foto';
+                    btnSelecionarFoto.onclick = function () {
+                        btnSelecionarFoto.disabled = true;
+                        // Envia o formulário
+                        btnSelecionarFoto.closest('form').submit();
+                    };
+                    btnSelecionarFoto.classList.add('btn-alterar-foto');
                     btnCancelar.style.display = 'inline-block';
                 };
-
-                reader.readAsDataURL(file);  // ← Converte arquivo em URL para preview
+                reader.readAsDataURL(file);
             } else {
                 alert('Por favor, selecione apenas arquivos de imagem.');
                 cancelarSelecao();
@@ -119,14 +121,19 @@ function cancelarSelecao() {
     const fotoInput = document.getElementById('foto');
     const fotoAtual = document.getElementById('foto-atual');
     const previewContainer = document.getElementById('preview-foto-container');
+    const btnSelecionarFoto = document.getElementById('btn-selecionar-foto');
     const btnAlterar = document.getElementById('btn-alterar');
     const btnCancelar = document.getElementById('btn-cancelar');
 
-    // Limpar seleção e voltar ao estado inicial
     fotoInput.value = '';
     fotoAtual.style.display = 'block';
     previewContainer.style.display = 'none';
+    btnSelecionarFoto.innerHTML = '<i class="bi-camera"></i> Selecionar Nova Foto';
+    btnSelecionarFoto.onclick = function () {
+        document.getElementById('foto').click();
+    };
+    btnSelecionarFoto.disabled = false;
     btnAlterar.disabled = true;
-    btnAlterar.innerHTML = '<i class="bi-camera"></i> Alterar Foto';
+    btnAlterar.classList.add('d-none');
     btnCancelar.style.display = 'none';
 }

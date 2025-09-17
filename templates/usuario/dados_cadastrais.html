@@ -10,9 +10,9 @@
             <div class="d-flex justify-content-center">
                 <img
                     id="foto-atual"
-                    src="{{ usuario.foto or '/static/img/user-default.png' }}"
+                    src="{{ '/static/uploads/usuarios/user_default.jpg' if not usuario.foto else usuario.foto }}"
                     class="profile-avatar rounded-circle mb-3"
-                    style="width: 150px; height: 150px; object-fit: cover; border: 3px solid #dee2e6;"
+                    style="width: 200px; height: 200px; object-fit: cover; border: 3px solid #dee2e6;"
                     alt="Foto do perfil"
                 >
             </div>
@@ -22,63 +22,62 @@
                         id="preview-foto"
                         src=""
                         class="profile-avatar rounded-circle mb-2"
-                        style="width: 150px; height: 150px; object-fit: cover; border: 3px solid #28a745;"
+                        style="width: 200px; height: 200px; object-fit: cover; border: 3px solid #6ee7b7;"
                         alt="Preview da nova foto"
                     >
                 </div>
-                <div class="small text-success mb-2">
+                <div class="small foto-selecionada-light mb-2">
                     <i class="bi-check-circle"></i>
                     Nova foto selecionada
                 </div>
             </div>
             <form action="/dados_cadastrais/alterar-foto" method="post" enctype="multipart/form-data">
-                <div class="mb-2">
-                    <label for="foto" class="form-label small">Selecionar Nova Foto</label>
-                    <input
-                        type="file"
-                        class="form-control form-control-sm"
-                        id="foto"
-                        name="foto"
-                        accept="image/*"
-                    >
-                    <div class="form-text small">JPG, JPEG ou PNG</div>
+                <div class="mb-2 d-flex justify-content-center">
+                    <div style="width: 250px;">
+                        <div class="custom-file-upload">
+                            <input
+                                type="file"
+                                id="foto"
+                                name="foto"
+                                accept="image/*"
+                                style="display:none;"
+                            >
+                            <div class="d-flex gap-2">
+                                <button
+                                    type="button"
+                                    id="btn-selecionar-foto"
+                                    class="btn btn-alterar-foto w-100"
+                                    onclick="document.getElementById('foto').click();"
+                                >
+                                    <i class="bi-camera"></i>
+                                    Selecionar Nova Foto
+                                </button>
+                                <button
+                                    type="button"
+                                    class="btn btn-cancelar-foto w-100"
+                                    id="btn-cancelar"
+                                    onclick="cancelarSelecao()"
+                                    style="display: none;"
+                                >
+                                    <i class="bi-x"></i>
+                                    Cancelar
+                                </button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <button
                     type="submit"
-                    class="btn btn-sm btn-outline-primary"
+                    class="d-none"
                     id="btn-alterar"
                     disabled
                 >
                     <i class="bi-camera"></i>
                     Alterar Foto
                 </button>
-                <button
-                    type="button"
-                    class="btn btn-sm btn-outline-secondary"
-                    id="btn-cancelar"
-                    onclick="cancelarSelecao()"
-                    style="display: none;"
-                >
-                    <i class="bi-x"></i>
-                    Cancelar
-                </button>
             </form>
-            <h2 class="profile-name">João Silva</h2>
-            <p class="profile-role">Colaborador - Hemocentro Regional</p>
-            <div class="profile-stats">
-                <div class="profile-stat">
-                    <div class="profile-stat-number">24</div>
-                    <div class="profile-stat-label">Doações</div>
-                </div>
-                <div class="profile-stat">
-                    <div class="profile-stat-number">3</div>
-                    <div class="profile-stat-label">Campanhas</div>
-                </div>
-                <div class="profile-stat">
-                    <div class="profile-stat-number">15</div>
-                    <div class="profile-stat-label">Agendamentos</div>
-                </div>
-            </div>
+            <h2 class="profile-name">{{usuario.nome}}</h2>
+            <p class="profile-role">{{ usuario.perfil|capitalize }}</p>
         </div>
     </div>
     <ul class="nav nav-tabs profile-tabs" id="profileTab" role="tablist">
@@ -156,7 +155,7 @@
                                 </div>
                                 <div class="profile-info-content">
                                     <div class="profile-info-label">Nome Completo</div>
-                                    <div class="profile-info-value">João da Silva Oliveira</div>
+                                    <div class="profile-info-value">{{usuario.nome}}</div>
                                 </div>
                             </div>
                             <div class="profile-info-item">
@@ -165,7 +164,7 @@
                                 </div>
                                 <div class="profile-info-content">
                                     <div class="profile-info-label">E-mail</div>
-                                    <div class="profile-info-value">joao.silva@exemplo.com</div>
+                                    <div class="profile-info-value">{{usuario.email}}</div>
                                 </div>
                             </div>
                             <div class="profile-info-item">
@@ -174,7 +173,7 @@
                                 </div>
                                 <div class="profile-info-content">
                                     <div class="profile-info-label">CPF</div>
-                                    <div class="profile-info-value">123.456.789-00</div>
+                                    <div class="profile-info-value">{{usuario.cpf}}</div>
                                 </div>
                             </div>
                             <div class="profile-info-item">
@@ -183,7 +182,7 @@
                                 </div>
                                 <div class="profile-info-content">
                                     <div class="profile-info-label">Telefone</div>
-                                    <div class="profile-info-value">(28) 99999-9999</div>
+                                    <div class="profile-info-value">{{usuario.telefone}}</div>
                                 </div>
                             </div>
                             <div class="profile-info-item">
@@ -192,16 +191,7 @@
                                 </div>
                                 <div class="profile-info-content">
                                     <div class="profile-info-label">Data de Nascimento</div>
-                                    <div class="profile-info-value">15/03/1985</div>
-                                </div>
-                            </div>
-                            <div class="profile-info-item">
-                                <div class="profile-info-icon">
-                                    <i class="fas fa-map-marker-alt"></i>
-                                </div>
-                                <div class="profile-info-content">
-                                    <div class="profile-info-label">Endereço</div>
-                                    <div class="profile-info-value">Rua das Flores, 123 - Centro, Cachoeiro de Itapemirim - ES</div>
+                                    <div class="profile-info-value">{{usuario.data_nascimento}}</div>
                                 </div>
                             </div>
                         </div>
@@ -284,7 +274,7 @@
                                     </div>
                                     <div class="profile-info-content">
                                         <div class="profile-info-label">CEP</div>
-                                        <div class="profile-info-value">29302-875</div>
+                                        <div class="profile-info-value">{{usuario.cep_usuario}}</div>
                                     </div>
                                 </div>
                                 <div class="profile-info-item">
@@ -293,7 +283,7 @@
                                     </div>
                                     <div class="profile-info-content">
                                         <div class="profile-info-label">Rua</div>
-                                        <div class="profile-info-value">Horácio Leandro de Souza</div>
+                                        <div class="profile-info-value">{{usuario.rua_usuario}}</div>
                                     </div>
                                 </div>
                                 <div class="profile-info-item">
@@ -302,7 +292,7 @@
                                     </div>
                                     <div class="profile-info-content">
                                         <div class="profile-info-label">Bairro</div>
-                                        <div class="profile-info-value">Basileia</div>
+                                        <div class="profile-info-value">{{usuario.bairro_usuario}}</div>
                                     </div>
                                 </div>
                                 <div class="profile-info-item">
@@ -311,7 +301,7 @@
                                     </div>
                                     <div class="profile-info-content">
                                         <div class="profile-info-label">Cidade</div>
-                                        <div class="profile-info-value">Cachoeiro de Itapemirim</div>
+                                        <div class="profile-info-value">{{cidade.nome_cidade}}</div>
                                     </div>
                                 </div>
                             </div>
@@ -346,7 +336,7 @@
                                 </div>
                                 <div class="profile-info-content">
                                     <div class="profile-info-label">Tipo Sanguíneo</div>
-                                    <div class="profile-info-value">O+ (Positivo)</div>
+                                    <div class="profile-info-value">{{doador.tipo_sanguineo}}{{'+' if doador.fator_rh == 'positivo' else '-'}}  ({{doador.fator_rh|capitalize}})</div>
                                 </div>
                             </div>
                             <div class="profile-info-item">

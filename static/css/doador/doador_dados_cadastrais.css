@@ -1,3 +1,99 @@
+.foto-selecionada-light {
+    color: #6ee7b7 !important;
+    /* Light green */
+}
+
+/* Campo de seleção de arquivo moderno */
+.custom-file-upload {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.custom-file-upload input[type="file"] {
+    display: none;
+}
+
+.custom-file-upload label {
+    background: #fff;
+    color: var(--hemotec-red);
+    border: 2px solid var(--hemotec-red);
+    border-radius: 30px;
+    padding: 0.5rem 1.5rem;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    box-shadow: 0 2px 8px rgba(224, 32, 32, 0.08);
+}
+
+.custom-file-upload label:hover,
+.custom-file-upload label:focus {
+    background: var(--hemotec-red);
+    color: #fff;
+    border-color: var(--hemotec-red);
+}
+
+/* Estilo para textos do campo de foto */
+.foto-label-custom {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+    font-size: 1rem;
+    color: #fff;
+    text-align: center;
+    margin-bottom: 0.25rem;
+}
+
+.foto-hint-custom {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 400;
+    font-size: 0.95rem;
+    color: #fff;
+    text-align: center;
+    margin-top: 0.25rem;
+}
+
+/* Botão Alterar Foto personalizado */
+.btn-alterar-foto {
+    background: #fff !important;
+    color: var(--hemotec-red) !important;
+    border: 1px solid var(--hemotec-red) !important;
+    font-weight: 500;
+    transition: all 0.2s;
+    border-radius: 30px;
+    font-size: 1rem;
+    padding: 0.5rem 2.30rem;
+    white-space: nowrap;
+}
+
+.btn-alterar-foto:hover,
+.btn-alterar-foto:focus {
+    background: var(--hemotec-red) !important;
+    color: #fff !important;
+    border: 1px solid var(--hemotec-red) !important;
+}
+
+.btn-cancelar-foto {
+    background: #fff !important;
+    color: var(--hemotec-red) !important;
+    border: 1px solid var(--hemotec-red) !important;
+    font-weight: 500;
+    border-radius: 30px;
+    font-size: 1rem;
+    padding: 0.5rem 2.30rem;
+    white-space: nowrap;
+}
+
+.btn-cancelar-foto:hover,
+.btn-cancelar-foto:focus {
+    background: #fff !important;
+    color: var(--hemotec-red) !important;
+    border: 1px solid var(--hemotec-red) !important;
+}
+
 :root {
     --hemotec-red: #e02020;
     --hemotec-text-dark: #222;
@@ -91,7 +187,8 @@
 .profile-tabs .nav-link.active:focus,
 .profile-tabs .nav-link.active:visited {
     background-color: var(--hemotec-red);
-    color: #fff !important; /* Garante que o texto fique branco */
+    color: #fff !important;
+    /* Garante que o texto fique branco */
 }
 
 .profile-tabs .nav-link:hover:not(.active) {
