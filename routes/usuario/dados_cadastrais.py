@@ -10,8 +10,10 @@ router = APIRouter()
 templates = Jinja2Templates(directory="templates")
 
 @router.get("/dados_cadastrais")
-async def get_doador_dados_cadastrais(request: Request):
-    response = templates.TemplateResponse("usuario/dados_cadastrais.html", {"request": request, "active_page": "perfil"})
+@requer_autenticacao()
+async def get_doador_dados_cadastrais(request: Request, usuario_logado: dict = None):
+    usuario = usuario_repo.obter_por_id(usuario_logado['cod_usuario'])
+    response = templates.TemplateResponse("usuario/dados_cadastrais.html", {"request": request, "active_page": "perfil", "usuario": usuario})
     return response
 
 @router.post("/dados_cadastrais/alterar-foto")
@@ -21,6 +23,7 @@ async def alterar_foto(
     foto: UploadFile = File(...),  # ← Recebe arquivo de foto
     usuario_logado: dict = None
 ):
+    
     # 1. Validar tipo de arquivo
     tipos_permitidos = ["image/jpeg", "image/png", "image/jpg"]
     if foto.content_type not in tipos_permitidos:
