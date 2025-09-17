@@ -1,232 +1,219 @@
-// Garante que o script só execute após o carregamento completo do HTML.
-document.addEventListener("DOMContentLoaded", async function () {
+(function(){
+    // Config das unidades será carregado dinamicamente do backend
+    fetch('/api/unidades')
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Erro ao carregar dados da API: ' + response.statusText);
+            }
+            return response.json();
+        })
+        .then(unidades => {
+            if (!Array.isArray(unidades) || unidades.length === 0) {
+                console.error('Nenhuma unidade encontrada ou formato inválido.');
+                return;
+            }
 
-  console.log("Iniciando a configuração do mapa...");
+            const mapa = L.map('mapa', { zoomControl:true, attributionControl:true })
+                .setView([-20.851136957150032, -41.113483188824155], 11); // Coordenadas iniciais
 
-  const mapa = L.map("mapa").setView([-20.839, -41.112], 12);
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{
+                maxZoom: 19,
+                attribution: '© OpenStreetMap'
+            }).addTo(mapa);
 
-  L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-    attribution: "© <a href=\"https://www.openstreetmap.org/copyright\">OpenStreetMap</a> contributors"
-  }).addTo(mapa);
+            const statusEl = document.getElementById('geo-status');
+            const infoRota = document.getElementById('info-rota');
+            const btnLocate = document.getElementById('btn-locate');
+            const btnClear = document.getElementById('btn-clear-route');
+            const listaUnidades = document.getElementById('lista-unidades');
 
-  let iconeGota, iconeUsuario;
-  let unidades = [];
-  let unidadesArray = [];
+            let userMarker = null;
+            let routingControl = null;
 
-  try {
-    const response = await fetch("/api/unidades");
-    if (!response.ok) throw new Error(`A resposta da API não foi bem-sucedida: ${response.statusText}`);
-    unidades = await response.json();
-    console.log("sucesso: Dados das unidades recebidos da API:", unidades);
+            function listarUnidades(){
+                listaUnidades.innerHTML = '';
+                unidades.forEach(u => {
+                    const { cod_unidade, nome, latitude: lat, longitude: lng } = u;
 
-    iconeGota = L.icon({
-      iconUrl: "/static/img/gota.png",
-      iconSize: [40, 40],
-      iconAnchor: [20, 40],
-      popupAnchor: [0, -35]
-    });
-    iconeUsuario = L.icon({
-      iconUrl: "/static/img/gota.png",
-      iconSize: [50, 50],
-      iconAnchor: [25, 50],
-      popupAnchor: [0, -45]
-    });
+                    const li = document.createElement('li');
+                    li.innerHTML = '<strong>' + nome + '</strong><span>Coordenadas: ' + lat + ', ' + lng + '</span>';
+                    const btn = document.createElement('button');
+                    btn.type = 'button';
+                    btn.textContent = 'Rota';
+                    btn.classList.add('btn-rota');
+                    btn.addEventListener('click', () => {
+                        if (!userMarker) {
+                            statusEl.textContent = 'Obtenha sua localização primeiro.';
+                            return;
+                        }
+                        criarRota([userMarker.getLatLng().lat, userMarker.getLatLng().lng], [lat, lng], nome);
+                        // Buscar estoque da unidade selecionada
+                        fetch(`/api/estoque/${cod_unidade}`)
+                            .then(resp => resp.json())
+                            .then(estoque => {
+                                document.getElementById('nome-unidade-estoque').textContent = nome;
+                                const estoqueEl = document.getElementById('estoque-atual');
+                                if (estoqueEl) {
+                                    estoqueEl.innerHTML = JSON.stringify(estoque, null, 2);
+                                }
+                            })
+                            .catch(() => {
+                                document.getElementById('nome-unidade-estoque').textContent = 'Erro ao buscar estoque';
+                            });
+                    });
+                    li.appendChild(btn);
+                    listaUnidades.appendChild(li);
+                });
+            }
 
-    if (unidades && unidades.length > 0) {
-      unidades.forEach(function (unidadeObjeto) {
-        const nome = Object.keys(unidadeObjeto)[0];
-        const coords = unidadeObjeto[nome];
-        if (nome && coords && coords.length === 2) {
-          const marker = L.marker(coords, { icon: iconeGota }).addTo(mapa)
-            .bindPopup(`<strong>${nome}</strong>`);
-          unidadesArray.push({ nome, coords, marker });
-        }
-      });
-    }
+            const unidadeIcon = L.icon({
+                iconUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png',
+                iconSize: [25, 41],
+                iconAnchor: [12, 41],
+                popupAnchor: [1, -34],
+                shadowUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png',
+                shadowSize: [41, 41]
+            });
 
-  } catch (error) {
-    console.error("ERRO CRÍTICO: Falha ao buscar ou processar os dados das unidades.", error);
-    unidades = [
-      { "Hospital Evangélico": [-20.843485026484874, -41.113190979813844] },
-      { "Santa Casa": [-20.85124724515817, -41.11350464599875] }
-    ];
-    console.log("Usando dados de unidades simulados devido a erro na API.");
+            unidades.forEach(u => {
+                const { cod_unidade, nome, latitude: lat, longitude: lng } = u;
 
-    iconeGota = L.icon({
-      iconUrl: "https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-red.png",
-      iconSize: [25, 41],
-      iconAnchor: [12, 41],
-      popupAnchor: [1, -34],
-      shadowUrl: "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-shadow.png",
-      shadowSize: [41, 41]
-    });
-    iconeUsuario = L.icon({
-      iconUrl: "https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-blue.png",
-      iconSize: [25, 41],
-      iconAnchor: [12, 41],
-      popupAnchor: [1, -34],
-      shadowUrl: "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-shadow.png",
-      shadowSize: [41, 41]
-    });
+                const m = L.marker([lat, lng], { icon: unidadeIcon }).addTo(mapa);
+                m.bindPopup('<strong>' + nome + '</strong><br>Coordenadas: ' + lat + ', ' + lng + '<br><button type="button" class="btn-rota" data-id="' + cod_unidade + '">Traçar rota</button>');
+                m.on('popupopen', (e) => {
+                    const btn = e.popup._contentNode.querySelector('.btn-rota');
+                    btn.addEventListener('click', () => {
+                        if (!userMarker) {
+                            statusEl.textContent = 'Obtenha sua localização primeiro.';
+                            return;
+                        }
+                        criarRota([userMarker.getLatLng().lat, userMarker.getLatLng().lng], [lat, lng], nome);
+                        // Buscar estoque da unidade selecionada
+                        fetch(`/api/estoque/${cod_unidade}`)
+                            .then(resp => resp.json())
+                            .then(estoque => {
+                                document.getElementById('nome-unidade-estoque').textContent = nome;
+                                const estoqueEl = document.getElementById('estoque-atual');
+                                if (estoqueEl) {
+                                    estoqueEl.innerHTML = JSON.stringify(estoque, null, 2);
+                                }
+                            })
+                            .catch(() => {
+                                document.getElementById('nome-unidade-estoque').textContent = 'Erro ao buscar estoque';
+                            });
+                        mapa.closePopup();
+                    });
+                });
+            });
 
-    unidades.forEach(function (unidadeObjeto) {
-      const nome = Object.keys(unidadeObjeto)[0];
-      const coords = unidadeObjeto[nome];
-      if (nome && coords && coords.length === 2) {
-        const marker = L.marker(coords, { icon: iconeGota }).addTo(mapa)
-          .bindPopup(`<strong>${nome}</strong>`);
-        unidadesArray.push({ nome, coords, marker });
-      }
-    });
-  }
+            function obterLocalizacao() {
+                if (!('geolocation' in navigator)) {
+                    statusEl.textContent = 'Geolocalização não suportada.';
+                    return;
+                }
+                statusEl.textContent = 'Obtendo localização...';
+                navigator.geolocation.getCurrentPosition(pos => {
+                    const { latitude, longitude } = pos.coords;
+                    statusEl.textContent = 'Localização obtida.';
+                    if (userMarker) {
+                        userMarker.setLatLng([latitude, longitude]);
+                    } else {
+                        userMarker = L.marker([latitude, longitude], {
+                            icon: L.icon({
+                                iconUrl: 'https://maps.gstatic.com/mapfiles/ms2/micons/man.png',
+                                iconSize: [32, 32],
+                                iconAnchor: [16, 32]
+                            })
+                        }).addTo(mapa).bindPopup('Você está aqui.').openPopup();
+                    }
+                    mapa.flyTo([latitude, longitude], 13, { duration: 0.8 });
+                        // Encontrar unidade mais próxima
+                    let unidadeMaisProxima = null;
+                    let menorDistancia = Infinity;
+                    unidades.forEach(u => {
+                        const { cod_unidade, nome, latitude: lat, longitude: lng } = u;
+                        const dist = Math.sqrt(Math.pow(lat - latitude, 2) + Math.pow(lng - longitude, 2));
+                        if (dist < menorDistancia) {
+                            menorDistancia = dist;
+                            unidadeMaisProxima = { cod_unidade, nome, lat, lng };
+                        }
+                    });
+                    if (unidadeMaisProxima) {
+                        // Buscar estoque da unidade mais próxima
+                        fetch(`/api/estoque/${unidadeMaisProxima.cod_unidade}`)
+                            .then(resp => resp.json())
+                            .then(estoque => {
+                                document.getElementById('nome-unidade-estoque').textContent = unidadeMaisProxima.nome;
+                                // Exibir dados do estoque (exemplo)
+                                const estoqueEl = document.getElementById('estoque-atual');
+                                if (estoqueEl) {
+                                    estoqueEl.innerHTML = JSON.stringify(estoque, null, 2);
+                                }
+                            })
+                            .catch(() => {
+                                document.getElementById('nome-unidade-estoque').textContent = 'Erro ao buscar estoque';
+                            });
+                    }
+                }, err => {
+                    statusEl.textContent = 'Erro: ' + err.message;
+                }, { enableHighAccuracy: true, timeout: 10000 });
+            }
 
-  async function atualizarEstoque(codUnidade, nomeUnidade) {
-    try {
-      console.log(`Buscando estoque da unidade ${codUnidade} (${nomeUnidade})`);
+            function criarRota(origem, destino, nome) {
+                if (routingControl) {
+                    mapa.removeControl(routingControl);
+                    routingControl = null;
+                }
+                routingControl = L.Routing.control({
+                    waypoints: [
+                        L.latLng(origem[0], origem[1]),
+                        L.latLng(destino[0], destino[1])
+                    ],
+                    lineOptions: {
+                        styles: [{ color: '#dc3545', weight: 5, opacity: 0.85 }]
+                    },
+                    show: false,
+                    addWaypoints: false,
+                    draggableWaypoints: false,
+                    fitSelectedRoutes: true,
+                    routeWhileDragging: false,
+                    language: 'pt-BR'
+                }).addTo(mapa);
 
-      const response = await fetch(`/api/estoque/${codUnidade}`);
-      if (!response.ok) throw new Error(`Erro ao buscar estoque: ${response.statusText}`);
+                routingControl.on('routesfound', e => {
+                    const r = e.routes[0];
+                    const distKm = (r.summary.totalDistance / 1000).toFixed(2);
+                    const durMin = Math.round(r.summary.totalTime / 60);
+                    infoRota.innerHTML = '<strong>Rota até ' + nome + '</strong><br>Distância: ' + distKm + ' km<br>Tempo estimado: ' + durMin + ' min';
+                    btnClear.disabled = false;
+                });
 
-      const data = await response.json();
-      console.log("Dados do estoque recebidos:", data);
+                routingControl.on('routingerror', () => {
+                    infoRota.innerHTML = 'Falha ao calcular rota.';
+                    btnClear.disabled = false;
+                });
+            }
 
-      if (data.success && data.estoque) {
-        // Atualiza o nome da unidade no título
-        const spanNomeUnidade = document.getElementById("nome-unidade-estoque");
-        if (spanNomeUnidade) {
-          spanNomeUnidade.textContent = `${nomeUnidade} (Unidade mais próxima)`;
-        }
+            btnLocate.addEventListener('click', obterLocalizacao);
+            btnClear.addEventListener('click', () => {
+                if (routingControl) {
+                    mapa.removeControl(routingControl);
+                    routingControl = null;
+                }
+                infoRota.innerHTML = '';
+                btnClear.disabled = true;
+            });
 
-        const tiposSanguineos = ["O+", "A+", "B+", "AB+", "O-", "A-", "B-", "AB-"];
-        tiposSanguineos.forEach(tipo => {
-          const estoqueItem = data.estoque[tipo];
-          if (estoqueItem) {
-            atualizarItemEstoque(tipo, estoqueItem);
-          } else {
-            atualizarItemEstoque(tipo, { status: "Crítico", classe: "bg-danger", porcentagem: 0, quantidade: 0 });
-          }
+            listarUnidades();
+
+            // Auto tentar localização se seguro (localhost ou https)
+            if (location.protocol === 'https:' || location.hostname === 'localhost' || location.hostname === '127.0.0.1') {
+                setTimeout(() => obterLocalizacao(), 600);
+            } else {
+                statusEl.textContent = 'Ative HTTPS ou use localhost para geolocalização automática.';
+            }
+        })
+        .catch(error => {
+            console.error('Erro ao carregar unidades:', error);
         });
-
-        atualizarMensagemAlerta(data.estoque);
-      }
-
-    } catch (error) {
-      console.error("Erro ao buscar estoque:", error);
-    }
-  }
-
-  function atualizarItemEstoque(tipo, dados) {
-    const elementos = document.querySelectorAll(".fw-bold");
-    let elementoTipo = null;
-    elementos.forEach(el => {
-      if (el.textContent.trim() === tipo) elementoTipo = el;
-    });
-    if (elementoTipo) {
-      const container = elementoTipo.closest(".mb-3");
-      if (container) {
-        const badge = container.querySelector(".badge");
-        if (badge) {
-          badge.textContent = dados.status;
-          badge.className = `badge ${dados.classe}`;
-        }
-        const progressBar = container.querySelector(".progress-bar");
-        if (progressBar) {
-          progressBar.style.width = `${dados.porcentagem}%`;
-          progressBar.className = `progress-bar ${dados.classe}`;
-          progressBar.setAttribute("aria-valuenow", dados.porcentagem);
-        }
-      }
-    }
-  }
-
-  function atualizarMensagemAlerta(estoque) {
-    const alertElement = document.querySelector(".alert.alert-danger");
-    if (alertElement) {
-      const tiposCriticos = [];
-      Object.keys(estoque).forEach(tipo => {
-        if (estoque[tipo].status === "Crítico") tiposCriticos.push(tipo);
-      });
-      if (tiposCriticos.length > 0) {
-        alertElement.innerHTML = `<small><i class="fas fa-heart me-1"></i>Sua doação pode salvar vidas! Tipos ${tiposCriticos.join(", ")} são urgentes.</small>`;
-      } else {
-        alertElement.innerHTML = `<small><i class="fas fa-heart me-1"></i>Obrigado por considerar a doação de sangue!</small>`;
-      }
-    }
-  }
-
-  mapa.on("locationfound", function (e) {
-    console.log("Sucesso: Localização do usuário encontrada!", e.latlng);
-    // Adiciona marcador na posição exata
-    const userMarker = L.marker(e.latlng, { icon: iconeUsuario }).addTo(mapa)
-      .bindPopup("<strong>Você está aqui</strong>");
-    userMarker.openPopup();
-    // Centraliza o mapa na localização do usuário com zoom mais alto
-    mapa.setView(e.latlng, 18);
-
-    let unidadeProxima = null;
-    let menorDistancia = Infinity;
-    unidadesArray.forEach(unidade => {
-      const dist = mapa.distance(e.latlng, unidade.coords);
-      if (dist < menorDistancia) {
-        menorDistancia = dist;
-        unidadeProxima = unidade;
-      }
-    });
-
-    if (unidadeProxima) {
-      L.Routing.control({
-        waypoints: [
-          L.latLng(e.latlng.lat, e.latlng.lng),
-          L.latLng(unidadeProxima.coords[0], unidadeProxima.coords[1])
-        ],
-        routeWhileDragging: false,
-        show: false,
-        addWaypoints: false,
-        draggableWaypoints: false,
-        createMarker: function () { return null; }
-      }).on("routesfound", function (ev) {
-        const route = ev.routes[0];
-        const distanciaKm = (route.summary.totalDistance / 1000).toFixed(2);
-        const tempoMin = Math.round(route.summary.totalTime / 60);
-
-        let infoDiv = document.getElementById("info-rota");
-        if (!infoDiv) {
-          infoDiv = document.createElement("div");
-          infoDiv.id = "info-rota";
-          infoDiv.className = "alert alert-info mt-3";
-          document.querySelector(".map-container").appendChild(infoDiv);
-        }
-        infoDiv.innerHTML = `
-          <b>Unidade mais próxima:</b> ${unidadeProxima.nome}<br>
-          <b>Distância:</b> ${distanciaKm} km<br>
-          <b>Tempo estimado:</b> ${tempoMin} min
-        `;
-
-        mapa.fitBounds(route.coordinates);
-        if (unidadeProxima.marker) unidadeProxima.marker.openPopup();
-
-        const codUnidade = obterCodigoUnidade(unidadeProxima.nome);
-        if (codUnidade) {
-          atualizarEstoque(codUnidade, unidadeProxima.nome);
-        }
-      }).addTo(mapa);
-    }
-  });
-
-  function obterCodigoUnidade(nomeUnidade) {
-    const mapeamento = {
-      "Hospital Evangélico": 1,
-      "Santa Casa": 2
-    };
-    return mapeamento[nomeUnidade] || 1;
-  }
-
-  mapa.on("locationerror", function (e) {
-    console.error("Erro ao obter localização:", e.message);
-    alert("Não foi possível obter sua localização. Verifique se você permitiu o acesso à localização no navegador.");
-  });
-
-  // Solicita localização com alta precisão
-  mapa.locate({ setView: false, maxZoom: 18, enableHighAccuracy: true });
-
-});
+})();

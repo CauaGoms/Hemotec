@@ -80,10 +80,15 @@ def obter_por_id(cod_unidade_coleta: int) -> Optional[Unidade_coleta]:
 def obter_coordenada():
     with get_connection() as conn:
         cursor = conn.cursor()
-        cursor.execute("SELECT nome, latitude, longitude FROM unidade_coleta")
+        cursor.execute("SELECT cod_unidade, nome, latitude, longitude FROM unidade_coleta")
         resultados = cursor.fetchall()
         return [
-            {row["nome"]: [row["latitude"], row["longitude"]]}
+            {
+                "cod_unidade": row["cod_unidade"],
+                "nome": row["nome"],
+                "latitude": row["latitude"],
+                "longitude": row["longitude"]
+            }
             for row in resultados
         ]
 
