@@ -124,7 +124,7 @@ async def post_cadastro(
         usuario_id = usuario_repo.inserir(usuario)
         print(f"Usuário inserido, id: {usuario_id}")
 
-        return RedirectResponse("/login", status.HTTP_303_SEE_OTHER)
+        return RedirectResponse("/validar_telefone", status.HTTP_303_SEE_OTHER)
     except Exception as e:
         print(f"Erro ao cadastrar: {e}")
         return templates.TemplateResponse(
