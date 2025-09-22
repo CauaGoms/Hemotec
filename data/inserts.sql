@@ -70,26 +70,23 @@ INSERT INTO notificacao (cod_notificacao, cod_adm, tipo, mensagem, status, data_
 
 INSERT INTO colaborador (cod_colaborador, funcao) VALUES
 (1, 'Enfermeiro'),
-(2, 'Técnico de Laboratório'),
-(3, 'Recepcionista');
+(2, 'Técnico de Laboratório');
 
 INSERT INTO doador (cod_doador, tipo_sanguineo, fator_rh, elegivel, altura, peso, profissao, contato_emergencia, telefone_emergencia) VALUES
 (1, 'O', 'negativo', "elegivel", 1.75, 70.0, 'Estudante', 'Maria Silva', '11988887777'),
-(2, 'A', 'positivo', "elegivel", 1.80, 80.0, 'Engenheiro', 'João Souza', '11977776666'),
-(3, 'B', 'negativo', "elegivel", 1.65, 60.0, 'Professor', 'Ana Lima', '11966665555'),
-(4, 'AB', 'positivo', "elegivel", 1.70, 75.0, 'Médico', 'Carlos Pereira', '11955554444');
+(2, 'A', 'positivo', "elegivel", 1.80, 80.0, 'Engenheiro', 'João Souza', '11977776666');
 
-INSERT INTO agendamento (cod_agendamento, cod_colaborador, cod_doador, data_hora, status, observacoes, tipo_agendamento) VALUES
-(1, 1, 1, '2023-10-05 10:00:00', 1, 'Primeira doação de sangue', 'presencial'),
-(2, 2, 2, '2023-10-06 14:00:00', 1, 'Doação regular', 'presencial'),
-(3, 3, 3, '2023-10-07 09:00:00', 1, 'Primeira doação de sangue', 'presencial'),
-(4, 1, 4, '2023-10-08 11:00:00', 1, 'Doação regular', 'presencial');
+INSERT INTO agendamento (cod_agendamento, cod_colaborador, cod_doador, data_hora, status, observacoes, tipo_agendamento, local_agendamento) VALUES
+(1, 1, 1, '2023-10-05 10:00:00', 1, 'Primeira doação de sangue', 'presencial', 1),
+(2, 2, 2, '2023-10-06 14:00:00', 1, 'Doação regular', 'presencial', 2),
+(3, 2, 1, '2023-10-07 09:00:00', 1, 'Primeira doação de sangue', 'presencial', 1),
+(4, 1, 2, '2023-10-08 11:00:00', 1, 'Doação regular', 'presencial', 2);
 
 INSERT INTO doacao (cod_doacao, cod_doador, data_hora, quantidade, status) VALUES
 (1, 1, '2023-10-05 10:30:00', 450, 1),
 (2, 2, '2023-10-06 14:30:00', 550, 1),
-(3, 3, '2023-10-07 09:30:00', 500, 1),
-(4, 4, '2023-10-08 11:30:00', 490, 1);
+(3, 1, '2023-10-07 09:30:00', 500, 1),
+(4, 2, '2023-10-08 11:30:00', 490, 1);
 
 INSERT INTO exame (cod_exame, cod_doacao, data_exame, tipo_exame, resultado, arquivo) VALUES
 (1, 1, '2023-10-05', 'Hemograma Completo', 'Normal', 'hemograma_123.pdf'),
@@ -100,5 +97,5 @@ INSERT INTO exame (cod_exame, cod_doacao, data_exame, tipo_exame, resultado, arq
 INSERT INTO prontuario (cod_prontuario, cod_doador, data_criacao, data_atualizacao, diabetes, hipertensao, cardiopatia, cancer, nenhuma, outros, medicamentos, fumante, alcool, atividade, jejum, sono, bebida, sintomas_gripais, tatuagem, termos, alerta) VALUES
 (1, 1, '2023-10-01', '2023-10-01', 'nao', 'nao', 'nao', 'nao', 'sim', 'nao', 'nao', 'nao', 'nao', 'nao', 'nao', 'nao', 'nao', 'nao', 'nao', 'sim', 'sim'),
 (2, 2, '2023-10-01', '2023-10-01', 'nao', 'sim', 'nao', 'nao', 'sim', 'nao', 'sim', 'nao', 'sim', 'sim', 'nao', 'sim', 'nao', 'nao', 'nao', 'sim', 'sim'),
-(3, 3, '2023-10-01', '2023-10-01', 'sim', 'nao', 'nao', 'nao', 'nao', 'sim', 'sim', 'sim', 'nao', 'sim', 'sim', 'nao', 'sim', 'nao', 'nao', 'sim', 'sim'),
-(4, 4, '2023-10-01', '2023-10-01', 'nao', 'nao', 'sim', 'nao', 'sim', 'nao', 'nao', 'nao', 'nao', 'nao', 'nao', 'sim', 'nao', 'sim', 'nao', 'sim', 'sim');
+(3, 2, '2023-10-01', '2023-10-01', 'sim', 'nao', 'nao', 'nao', 'nao', 'sim', 'sim', 'sim', 'nao', 'sim', 'sim', 'nao', 'sim', 'nao', 'nao', 'sim', 'sim'),
+(4, 1, '2023-10-01', '2023-10-01', 'nao', 'nao', 'sim', 'nao', 'sim', 'nao', 'nao', 'nao', 'nao', 'nao', 'nao', 'sim', 'nao', 'sim', 'nao', 'sim', 'sim');

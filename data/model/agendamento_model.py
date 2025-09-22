@@ -11,4 +11,5 @@ class Agendamento:
     status: int
     observacoes: str
     tipo_agendamento: str
+    local_agendamento: int
     

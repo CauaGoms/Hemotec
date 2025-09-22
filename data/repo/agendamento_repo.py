@@ -26,7 +26,9 @@ def inserir(agendamento: Agendamento) -> Optional[int]:
             agendamento.data_hora,
             agendamento.status,
             agendamento.observacoes,
-            agendamento.tipo_agendamento))
+            agendamento.tipo_agendamento,
+            agendamento.local_agendamento
+        ))
         return cursor.lastrowid
     
 
@@ -43,8 +45,10 @@ def obter_todos() -> list[Agendamento]:
                 data_hora=datetime.strptime(row["data_hora"], '%Y-%m-%d %H:%M:%S'),
                 status=row["status"],
                 observacoes=row["observacoes"],
-                tipo_agendamento=row["tipo_agendamento"])  
-                for row in rows]
+                tipo_agendamento=row["tipo_agendamento"],
+                local_agendamento=row["local_agendamento"]
+            )
+            for row in rows]
         return agendamento
     
 def obter_por_id(cod_agendamento: int) -> Optional[Agendamento]:
@@ -60,7 +64,8 @@ def obter_por_id(cod_agendamento: int) -> Optional[Agendamento]:
                 data_hora=datetime.strptime(row["data_hora"], '%Y-%m-%d %H:%M:%S'),
                 status=row["status"],
                 observacoes=row["observacoes"],
-                tipo_agendamento=row["tipo_agendamento"]
+                tipo_agendamento=row["tipo_agendamento"],
+                local_agendamento=row["local_agendamento"]
             )
         return None
     

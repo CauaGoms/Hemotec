@@ -9,7 +9,6 @@
 <a href="/doador/agendamento" class="back-arrow">
     <i class="fas fa-arrow-left"></i>
 </a>
-
 <!-- Seção de Cabeçalho -->
 <section class="hero-section-historico">
     <div class="container">
@@ -19,7 +18,6 @@
         </div>
     </div>
 </section>
-
 <!-- Conteúdo Principal -->
 <div class="container mt-n5">
     <div class="history-container">
@@ -27,71 +25,90 @@
         <div class="d-flex justify-content-between align-items-center mb-4 agendamento-header">
             <h3 class="mb-0">Próximos Agendamentos</h3>
             <a href="/doador/agendamento/adicionar" class="btn btn-novo-agendamento">
-                <i class="fas fa-calendar-plus me-2"></i> Novo Agendamento
+                <i class="fas fa-calendar-plus me-2"></i>
+                Novo Agendamento
             </a>
         </div>
-
         <!-- Lista de Agendamentos -->
         <div id="agendamentos-list">
-            <!-- Card de Agendamento Futuro -->
+            {% if agendamentos_agendados %}
+                {% for agendamento, local_agendamento in agendamentos_agendados %}
             <div class="appointment-card upcoming">
                 <div class="card-header">
-                    <span class="status-badge upcoming-badge"><i class="fas fa-clock me-1"></i> Agendado</span>
-                    <strong class="date">Sexta-feira, 27 de Junho de 2025 - 10:30</strong>
+                    <span class="status-badge upcoming-badge">
+                        <i class="fas fa-clock me-1"></i> Agendado
+                    </span>
+                    <strong class="date">{{ agendamento.data_hora.strftime('%A, %d de %B de %Y - %H:%M') }}</strong>
                 </div>
                 <div class="card-body">
                     <div class="location-info">
                         <i class="fas fa-hospital-alt icon"></i>
                         <div>
-                            <h5 class="location-name">Hemocentro Regional de Cachoeiro</h5>
-                            <p class="location-address">Rua Dr. Raulino de Oliveira, 345 - Centro</p>
+                            <h5 class="location-name">{{ local_agendamento.nome }}</h5>
+                            <p class="location-address">{{ local_agendamento.rua_unidade }}, {{ local_agendamento.bairro_unidade }}</p>
                         </div>
                     </div>
                     <div class="actions">
-                        <a href="/doador/agendamento/alterar" class="btn btn-reagendar">
-                            <i class="fas fa-calendar-alt me-1"></i> Reagendar
+                        <a href="/doador/agendamento/alterar/{{ agendamento.id }}" class="btn btn-reagendar">
+                            <i class="fas fa-calendar-alt me-1"></i>
+                            Reagendar
                         </a>
-                        <a href="/doador/agendamento/excluir" class="btn btn-excluir">
-                            <i class="fas fa-times-circle me-1"></i> Excluir
+                        <a href="/doador/agendamento/excluir/{{ agendamento.id }}" class="btn btn-excluir">
+                            <i class="fas fa-times-circle me-1"></i>
+                            Excluir
                         </a>
                     </div>
                 </div>
             </div>
-            
-            <!-- Agendamentos anteriores (concluídos) -->
+            {% endfor %}
+            {% else %}
+            <div class="text-center p-5 no-appointments-message">
+                <i class="fas fa-calendar-plus fa-3x text-muted mb-3"></i>
+                <h4>Nenhum agendamento futuro</h4>
+                <p>Que tal salvar vidas? Sua doação é muito importante.</p>
+                <a href="/doador/agendamento/adicionar" class="btn btn-primary">Agendar uma Doação</a>
+            </div>
+            {% endif %}
             <h3 class="mb-3 mt-5">Agendamentos Anteriores</h3>
+            {% for agendamento in agendamentos_concluidos %}
             <div class="appointment-card completed">
                 <div class="card-header">
-                    <span class="status-badge completed-badge"><i class="fas fa-check-circle me-1"></i> Concluído</span>
-                    <strong class="date">Quarta-feira, 10 de Maio de 2025 - 09:00</strong>
+                    <span class="status-badge completed-badge">
+                        <i class="fas fa-check-circle me-1"></i> Concluído
+                    </span>
+                    <strong class="date">{{ agendamento.data_hora.strftime('%A, %d de %B de %Y - %H:%M') }}</strong>
                 </div>
                 <div class="card-body">
                     <div class="location-info">
                         <i class="fas fa-hospital-alt icon"></i>
                         <div>
-                            <h5 class="location-name">Hemocentro Regional de Cachoeiro</h5>
-                            <p class="location-address">Rua Dr. Raulino de Oliveira, 345 - Centro</p>
+                            <h5 class="location-name">{{ agendamento.local_nome }}</h5>
+                            <p class="location-address">{{ agendamento.local_endereco }}</p>
                         </div>
                     </div>
                 </div>
             </div>
+            {% endfor %}
+            {% for agendamento in agendamentos_atrasados %}
             <div class="appointment-card completed">
                 <div class="card-header">
-                    <span class="status-badge completed-badge"><i class="fas fa-check-circle me-1"></i> Concluído</span>
-                    <strong class="date">Quinta-feira, 20 de Março de 2025 - 15:00</strong>
+                    <span class="status-badge completed-badge">
+                        <i class="fas fa-check-circle me-1"></i> Atrasado
+                    </span>
+                    <strong class="date">{{ agendamento.data_hora.strftime('%A, %d de %B de %Y - %H:%M') }}</strong>
                 </div>
                 <div class="card-body">
                     <div class="location-info">
                         <i class="fas fa-hospital-alt icon"></i>
                         <div>
-                            <h5 class="location-name">Hospital Santa Casa</h5>
-                            <p class="location-address">Av. Beira Rio, 1200 - Independência</p>
+                            <h5 class="location-name">{{ agendamento.local_nome }}</h5>
+                            <p class="location-address">{{ agendamento.local_endereco }}</p>
                         </div>
                     </div>
                 </div>
             </div>
+            {% endfor %}
         </div>
-
         <!-- Mensagem para quando não houver agendamentos -->
         <div class="text-center p-5 no-appointments-message" style="display: none;">
             <i class="fas fa-calendar-plus fa-3x text-muted mb-3"></i>
@@ -101,14 +118,24 @@
         </div>
     </div>
 </div>
-
 <!-- Modal de Confirmação para Cancelar -->
-<div class="modal fade" id="cancelModal" tabindex="-1" aria-labelledby="cancelModalLabel" aria-hidden="true">
+<div
+    class="modal fade"
+    id="cancelModal"
+    tabindex="-1"
+    aria-labelledby="cancelModalLabel"
+    aria-hidden="true"
+>
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="cancelModalLabel">Cancelar Agendamento</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="modal"
+                    aria-label="Close"
+                ></button>
             </div>
             <div class="modal-body">
                 <p>Tem certeza que deseja cancelar este agendamento?</p>
