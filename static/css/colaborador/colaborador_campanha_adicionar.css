@@ -1,0 +1,567 @@
+/* Variáveis CSS herdadas do sistema base */
+:root {
+    --hemotec-red: #e02020;
+    --hemotec-dark-red: #c01010;
+    --hemotec-light-red: #ff4040;
+    --hemotec-bg-light: #f8f9fa;
+    --hemotec-text-dark: #333333;
+    --hemotec-accent: #0066cc;
+    --hemotec-success: #28a745;
+    --hemotec-warning: #ffc107;
+    --hemotec-border: #e9ecef;
+    --hemotec-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    --hemotec-shadow-hover: 0 8px 15px rgba(0, 0, 0, 0.15);
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Layout Principal */
+.main-content {
+    min-height: calc(100vh - 200px);
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    padding-bottom: 2rem;
+}
+
+/* Header da Página */
+.page-header {
+    margin-bottom: 2rem;
+}
+
+.btn-back {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 50px;
+    height: 50px;
+    background: white;
+    border: 2px solid var(--hemotec-border);
+    border-radius: 12px;
+    color: var(--hemotec-text-dark);
+    text-decoration: none;
+    transition: var(--transition-smooth);
+    box-shadow: var(--hemotec-shadow);
+}
+
+.btn-back:hover {
+    background: var(--hemotec-red);
+    color: white;
+    border-color: var(--hemotec-red);
+    transform: translateY(-2px);
+    box-shadow: var(--hemotec-shadow-hover);
+}
+
+.page-title {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    font-size: 2rem;
+    color: var(--hemotec-text-dark);
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.page-subtitle {
+    color: #6c757d;
+    font-size: 1.1rem;
+    margin: 0.5rem 0 0 0;
+    font-weight: 400;
+}
+
+/* Container do Formulário */
+.campaign-form-container {
+    background: white;
+    border-radius: 20px;
+    box-shadow: var(--hemotec-shadow);
+    overflow: hidden;
+    transition: var(--transition-smooth);
+}
+
+.campaign-form-container:hover {
+    box-shadow: var(--hemotec-shadow-hover);
+}
+
+.campaign-form {
+    padding: 2.5rem;
+}
+
+/* Seções do Formulário */
+.form-section {
+    margin-bottom: 3rem;
+    position: relative;
+}
+
+.form-section:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    bottom: -1.5rem;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent 0%, var(--hemotec-border) 50%, transparent 100%);
+}
+
+.section-header {
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+.section-title {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+    font-size: 1.5rem;
+    color: var(--hemotec-text-dark);
+    margin-bottom: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+}
+
+.section-title i {
+    color: var(--hemotec-red);
+    font-size: 1.25rem;
+}
+
+.section-description {
+    color: #6c757d;
+    font-size: 1rem;
+    margin: 0;
+}
+
+/* Grupos de Formulário */
+.form-group {
+    margin-bottom: 2rem;
+    position: relative;
+}
+
+.form-label {
+    font-weight: 600;
+    color: var(--hemotec-text-dark);
+    margin-bottom: 0.75rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 1rem;
+}
+
+.form-label i {
+    color: var(--hemotec-red);
+    width: 16px;
+    text-align: center;
+}
+
+.form-control {
+    border: 2px solid var(--hemotec-border);
+    border-radius: 12px;
+    padding: 0.875rem 1.25rem;
+    font-size: 1rem;
+    transition: var(--transition-smooth);
+    background: #fafbfc;
+}
+
+.form-control:focus {
+    border-color: var(--hemotec-red);
+    box-shadow: 0 0 0 0.2rem rgba(224, 32, 32, 0.15);
+    background: white;
+    outline: none;
+}
+
+.form-control:hover:not(:focus) {
+    border-color: #ced4da;
+    background: white;
+}
+
+textarea.form-control {
+    resize: vertical;
+    min-height: 120px;
+}
+
+.form-feedback {
+    margin-top: 0.5rem;
+}
+
+.form-feedback small {
+    font-size: 0.875rem;
+}
+
+/* Upload de Arquivo */
+.file-upload-area {
+    position: relative;
+    border: 2px dashed var(--hemotec-border);
+    border-radius: 16px;
+    background: #fafbfc;
+    transition: var(--transition-smooth);
+    cursor: pointer;
+    overflow: hidden;
+}
+
+.file-upload-area:hover {
+    border-color: var(--hemotec-red);
+    background: rgba(224, 32, 32, 0.02);
+}
+
+.file-upload-area.dragover {
+    border-color: var(--hemotec-red);
+    background: rgba(224, 32, 32, 0.05);
+    transform: scale(1.02);
+}
+
+.upload-placeholder {
+    padding: 3rem 2rem;
+    text-align: center;
+    transition: var(--transition-smooth);
+}
+
+.upload-icon {
+    font-size: 3rem;
+    color: var(--hemotec-red);
+    margin-bottom: 1rem;
+    display: block;
+}
+
+.upload-text {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--hemotec-text-dark);
+    margin-bottom: 0.5rem;
+}
+
+.upload-hint {
+    color: #6c757d;
+    font-size: 0.9rem;
+}
+
+.image-preview {
+    position: relative;
+    padding: 1rem;
+}
+
+.image-preview img {
+    width: 100%;
+    max-height: 300px;
+    object-fit: cover;
+    border-radius: 12px;
+    box-shadow: var(--hemotec-shadow);
+}
+
+.preview-overlay {
+    position: absolute;
+    top: 1.5rem;
+    right: 1.5rem;
+    opacity: 0;
+    transition: var(--transition-smooth);
+}
+
+.image-preview:hover .preview-overlay {
+    opacity: 1;
+}
+
+.btn-remove-image {
+    background: rgba(220, 53, 69, 0.9);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: var(--transition-smooth);
+    backdrop-filter: blur(10px);
+}
+
+.btn-remove-image:hover {
+    background: #dc3545;
+    transform: scale(1.1);
+}
+
+/* Botões de Ação */
+.form-actions {
+    margin-top: 3rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--hemotec-border);
+}
+
+.action-buttons {
+    display: flex;
+    gap: 1rem;
+}
+
+.btn {
+    padding: 0.875rem 2rem;
+    border-radius: 12px;
+    font-weight: 600;
+    font-size: 1rem;
+    transition: var(--transition-smooth);
+    border: 2px solid transparent;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    text-decoration: none;
+}
+
+.btn-primary {
+    background: var(--hemotec-red);
+    border-color: var(--hemotec-red);
+    color: white;
+}
+
+.btn-primary:hover {
+    background: var(--hemotec-dark-red);
+    border-color: var(--hemotec-dark-red);
+    transform: translateY(-2px);
+    box-shadow: var(--hemotec-shadow-hover);
+}
+
+.btn-outline-primary {
+    background: transparent;
+    border-color: var(--hemotec-red);
+    color: var(--hemotec-red);
+}
+
+.btn-outline-primary:hover {
+    background: var(--hemotec-red);
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: var(--hemotec-shadow-hover);
+}
+
+.btn-outline-secondary {
+    background: transparent;
+    border-color: #6c757d;
+    color: #6c757d;
+}
+
+.btn-outline-secondary:hover {
+    background: #6c757d;
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: var(--hemotec-shadow-hover);
+}
+
+.btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none !important;
+}
+
+/* Modal de Preview */
+.modal-content {
+    border-radius: 20px;
+    border: none;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+}
+
+.modal-header {
+    border-bottom: 1px solid var(--hemotec-border);
+    padding: 1.5rem 2rem;
+    background: var(--hemotec-bg-light);
+    border-radius: 20px 20px 0 0;
+}
+
+.modal-title {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+    color: var(--hemotec-text-dark);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.modal-body {
+    padding: 2rem;
+}
+
+.campaign-preview {
+    text-align: center;
+}
+
+.preview-header h2 {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    color: var(--hemotec-text-dark);
+    margin-bottom: 1.5rem;
+}
+
+.preview-image-container {
+    margin: 1.5rem 0;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: var(--hemotec-shadow);
+}
+
+.preview-image-container img {
+    width: 100%;
+    max-height: 250px;
+    object-fit: cover;
+}
+
+.preview-dates {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    margin-top: 1.5rem;
+    flex-wrap: wrap;
+}
+
+.preview-date {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--hemotec-text-dark);
+    font-weight: 500;
+}
+
+.preview-date i {
+    color: var(--hemotec-red);
+}
+
+/* Animações */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.form-section {
+    animation: fadeInUp 0.6s ease-out;
+}
+
+.form-section:nth-child(2) {
+    animation-delay: 0.1s;
+}
+
+.form-section:nth-child(3) {
+    animation-delay: 0.2s;
+}
+
+.form-section:nth-child(4) {
+    animation-delay: 0.3s;
+}
+
+/* Estados de Validação */
+.form-control.is-valid {
+    border-color: var(--hemotec-success);
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3e%3cpath fill='%2328a745' d='m2.3 6.73.94-.94 1.38 1.38L7.7 4.09l.94.94L4.25 9.41z'/%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+    background-size: 1rem;
+}
+
+.form-control.is-invalid {
+    border-color: #dc3545;
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12' width='12' height='12' fill='none' stroke='%23dc3545'%3e%3ccircle cx='6' cy='6' r='4.5'/%3e%3cpath d='m5.5 5.5 1 1m0-1-1 1'/%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+    background-size: 1rem;
+}
+
+.invalid-feedback {
+    display: block;
+    color: #dc3545;
+    font-size: 0.875rem;
+    margin-top: 0.5rem;
+}
+
+.valid-feedback {
+    display: block;
+    color: var(--hemotec-success);
+    font-size: 0.875rem;
+    margin-top: 0.5rem;
+}
+
+/* Loading States */
+.btn.loading {
+    position: relative;
+    color: transparent !important;
+}
+
+.btn.loading::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 20px;
+    height: 20px;
+    border: 2px solid transparent;
+    border-top: 2px solid currentColor;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    color: white;
+}
+
+@keyframes spin {
+    0% { transform: translate(-50%, -50%) rotate(0deg); }
+    100% { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .campaign-form {
+        padding: 1.5rem;
+    }
+    
+    .page-title {
+        font-size: 1.5rem;
+    }
+    
+    .section-title {
+        font-size: 1.25rem;
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+    
+    .action-buttons {
+        flex-direction: column;
+    }
+    
+    .btn {
+        width: 100%;
+        justify-content: center;
+    }
+    
+    .preview-dates {
+        flex-direction: column;
+        gap: 1rem;
+    }
+    
+    .d-flex.justify-content-between {
+        flex-direction: column;
+        gap: 1rem;
+    }
+    
+    .upload-placeholder {
+        padding: 2rem 1rem;
+    }
+    
+    .upload-icon {
+        font-size: 2rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .main-content {
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+    
+    .campaign-form {
+        padding: 1rem;
+    }
+    
+    .form-section {
+        margin-bottom: 2rem;
+    }
+    
+    .section-header {
+        margin-bottom: 1.5rem;
+    }
+}
+
