@@ -56,19 +56,22 @@
         </div>
     </section>
     
-  <div class="col-md-12 mb-4">
-  <div class="card p-4">
-    <div class="d-flex justify-content-between align-items-center mb-4">
-      <h5 class="section-title mb-0">Estoque de Sangue - Situação Atual</h5>
-      <div class="legend">
-        <span class="badge bg-adequate me-2">Adequado</span>
-        <span class="badge bg-moderate me-2">Moderado</span>
-        <span class="badge bg-low me-2">Baixo</span>
-        <span class="badge bg-critical">Crítico</span>
-      </div>
-    </div>
+  <!-- Seção de Estoque -->
+  <section class="container my-5">
+    <div class="row">
+      <div class="col-md-12 mb-4">
+        <div class="card p-4">
+          <div class="d-flex justify-content-between align-items-center mb-4">
+            <h5 class="section-title mb-0">Estoque de Sangue - Situação Atual</h5>
+            <div class="legend">
+              <span class="badge bg-adequate me-2">Adequado</span>
+              <span class="badge bg-moderate me-2">Moderado</span>
+              <span class="badge bg-low me-2">Baixo</span>
+              <span class="badge bg-critical">Crítico</span>
+            </div>
+          </div>
 
-    <div class="blood-stock-modern">
+          <div class="blood-stock-modern">
       <!-- A+ -->
   <div class="blood-stock-card adequate" onclick="mostrarCompatibilidade('A+')">
         <div class="blood-info">
@@ -191,110 +194,284 @@
     </div>
   </div>
 </div>
+</section>
 
-        <div class="col-lg-4 mb-4">
-            <div class="card p-4">
-                <h5 class="section-title">Notificações Recentes</h5>
-                <div class="notification-item">
-                    <div class="d-flex justify-content-between align-items-start">
-                        <div>
-                            <strong>Estoque Crítico</strong>
-                            <p class="mb-1">Tipo sanguíneo O+ em nível crítico</p>
-                            <span class="time">Há 2 horas</span>
+<section class="container my-5">
+    <div class="row">
+        <!-- Seção de Informações Importantes Modernizada -->
+        <div class="col-md-12 mb-4">
+            <div class="card border-0 shadow-lg" style="border-radius: 20px; background: #fff;">
+                <div class="card-body p-5">
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <h3 class="card-title text-danger mb-0 fw-bold" style="font-size: 1.8rem;">
+                            <i class="fas fa-info-circle me-3" style="color: #e02020;"></i>
+                            Informações Importantes
+                        </h3>
+                        <div class="info-badge">
+                            <span class="badge" style="background: linear-gradient(90deg, #e02020 0%, #ff4040 100%); font-size: 0.9rem; padding: 8px 16px; border-radius: 20px;">Leia com atenção</span>
                         </div>
-                        <i class="fas fa-exclamation-triangle text-danger"></i>
                     </div>
-                </div>
-                <div class="notification-item">
-                    <div class="d-flex justify-content-between align-items-start">
-                        <div>
-                            <strong>Nova Campanha</strong>
-                            <p class="mb-1">Campanha "Junho Vermelho" iniciada</p>
-                            <span class="time">Há 4 horas</span>
+
+                    <div class="row g-4">
+                        <div class="col-md-6">
+                            <div class="info-card h-100" style="background: #fff; border-radius: 15px; padding: 25px; box-shadow: 0 4px 15px rgba(224,32,32,0.08); border-left: 4px solid #e02020; transition: transform 0.3s ease;">
+                                <div class="d-flex align-items-center mb-3">
+                                    <div class="icon-wrapper" style="background: linear-gradient(135deg, #e02020 0%, #ff4040 100%); width: 50px; height: 50px; border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-right: 15px;">
+                                        <i class="fas fa-clock text-white" style="font-size: 1.3rem;"></i>
+                                    </div>
+                                    <h5 class="mb-0 fw-bold" style="color: #2c3e50;">Atenção ao Sono</h5>
+                                </div>
+                                <p class="text-muted mb-0" style="font-size: 1.05rem; line-height: 1.6;">
+                                    Durma pelo menos <strong>6 horas</strong> na noite anterior à doação para garantir seu bem-estar.
+                                </p>
+                            </div>
                         </div>
-                        <i class="fas fa-bullhorn text-success"></i>
+
+                        <div class="col-md-6">
+                            <div class="info-card h-100" style="background: #fff; border-radius: 15px; padding: 25px; box-shadow: 0 4px 15px rgba(224,32,32,0.08); border-left: 4px solid #e02020; transition: transform 0.3s ease;">
+                                <div class="d-flex align-items-center mb-3">
+                                    <div class="icon-wrapper" style="background: linear-gradient(135deg, #e02020 0%, #ff4040 100%); width: 50px; height: 50px; border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-right: 15px;">
+                                        <i class="fas fa-user-check text-white" style="font-size: 1.3rem;"></i>
+                                    </div>
+                                    <h5 class="mb-0 fw-bold" style="color: #2c3e50;">Requisitos Básicos</h5>
+                                </div>
+                                <p class="text-muted mb-0" style="font-size: 1.05rem; line-height: 1.6;">
+                                    <strong>Idade:</strong> 16 a 69 anos<br>
+                                    <strong>Peso mínimo:</strong> 50kg
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="info-card h-100" style="background: #fff; border-radius: 15px; padding: 25px; box-shadow: 0 4px 15px rgba(224,32,32,0.08); border-left: 4px solid #e02020; transition: transform 0.3s ease;">
+                                <div class="d-flex align-items-center mb-3">
+                                    <div class="icon-wrapper" style="background: linear-gradient(135deg, #e02020 0%, #ff4040 100%); width: 50px; height: 50px; border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-right: 15px;">
+                                        <i class="fas fa-calendar-alt text-white" style="font-size: 1.3rem;"></i>
+                                    </div>
+                                    <h5 class="mb-0 fw-bold" style="color: #2c3e50;">Intervalo entre Doações</h5>
+                                </div>
+                                <p class="text-muted mb-0" style="font-size: 1.05rem; line-height: 1.6;">
+                                    <strong>Homens:</strong> 60 dias<br>
+                                    <strong>Mulheres:</strong> 90 dias
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="info-card h-100" style="background: #fff; border-radius: 15px; padding: 25px; box-shadow: 0 4px 15px rgba(224,32,32,0.08); border-left: 4px solid #e02020; transition: transform 0.3s ease;">
+                                <div class="d-flex align-items-center mb-3">
+                                    <div class="icon-wrapper" style="background: linear-gradient(135deg, #e02020 0%, #ff4040 100%); width: 50px; height: 50px; border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-right: 15px;">
+                                        <i class="fas fa-id-card text-white" style="font-size: 1.3rem;"></i>
+                                    </div>
+                                    <h5 class="mb-0 fw-bold" style="color: #2c3e50;">Documentos Necessários</h5>
+                                </div>
+                                <p class="text-muted mb-0" style="font-size: 1.05rem; line-height: 1.6;">
+                                    <strong>RG, CPF ou CNH</strong><br>
+                                    Em boas condições
+                                </p>
+                            </div>
+                        </div>
                     </div>
-                </div>
-                <div class="notification-item">
-                    <div class="d-flex justify-content-between align-items-start">
-                        <div>
-                            <strong>Agendamento</strong>
-                            <p class="mb-1">15 novos agendamentos hoje</p>
-                            <span class="time">Há 6 horas</span>
+
+                    <!-- Adicionar uma dica importante no final -->
+                    <div class="alert alert-info mt-4" style="background: linear-gradient(135deg, #e8f4fd 0%, #f0f8ff 100%); border: none; border-radius: 12px; border-left: 4px solid #0ea5e9;">
+                        <div class="d-flex align-items-center">
+                            <i class="fas fa-lightbulb text-info me-3" style="font-size: 1.4rem;"></i>
+                            <div>
+                                <h6 class="mb-1 fw-bold text-info">Dica Importante</h6>
+                                <p class="mb-0 text-muted">Alimente-se bem antes da doação e evite bebidas alcoólicas nas 12 horas anteriores.</p>
+                            </div>
                         </div>
-                        <i class="fas fa-calendar-check text-info"></i>
                     </div>
                 </div>
             </div>
         </div>
-    </section>
-    <section class="row mb-4"></section>
+    </div>
+</section>
+
+
+<section class="quote-section">
+    <div class="container text-center">
+        <p class="quote-text">Doar sangue não é só um ato de solidariedade, é um compromisso com a vida. Cada gota doada é uma chance de recomeço para alguém.</p>
+        <p class="quote-author">— Campanha Nacional de Doação de Sangue</p>
+    </div>
+</section>
+
+
+<!-- Seção de Notificações e Campanhas -->
+<section class="container my-5">
+    <div class="row">
+        <!-- Seção de Notificações -->
         <div class="col-lg-6 mb-4">
-            <div class="card p-4">
-                <h5 class="section-title">Campanhas Ativas</h5>
-                <div class="mb-3">
-                    <div class="d-flex align-items-center">
-                        <i class="fas fa-tint text-danger fa-2x me-3"></i>
-                        <div class="flex-grow-1">
-                            <p class="mb-1 fw-bold">Junho Vermelho 2025</p>
-                            <p class="mb-1 text-muted">Campanha nacional de conscientização</p>
-                            <div class="progress" style="height: 5px;">
-                                <div
-                                    class="progress-bar"
-                                    role="progressbar"
-                                    style="width: 65%;"
-                                    aria-valuenow="65"
-                                    aria-valuemin="0"
-                                    aria-valuemax="100"
-                                ></div>
-                            </div>
-                            <small class="text-muted">65% da meta atingida</small>
+            <div class="card border-0 shadow-lg" style="border-radius: 20px; background: #fff;">
+                <div class="card-body p-4">
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <h5 class="section-title mb-0 fw-bold" style="color: #2c3e50; font-size: 1.4rem;">
+                            <i class="fas fa-bell me-3" style="color: #e02020;"></i>
+                            Notificações Recentes
+                        </h5>
+                        <div class="notification-badge">
+                            <span class="badge bg-danger" style="border-radius: 20px; padding: 6px 12px;">3 novas</span>
                         </div>
                     </div>
-                </div>
-                <div class="mb-3">
-                    <div class="d-flex align-items-center">
-                        <i class="fas fa-heart text-danger fa-2x me-3"></i>
-                        <div class="flex-grow-1">
-                            <p class="mb-1 fw-bold">Mutirão Comunitário</p>
-                            <p class="mb-1 text-muted">Doação em bairros periféricos</p>
-                            <div class="progress" style="height: 5px;">
-                                <div
-                                    class="progress-bar bg-warning"
-                                    role="progressbar"
-                                    style="width: 40%;"
-                                    aria-valuenow="40"
-                                    aria-valuemin="0"
-                                    aria-valuemax="100"
-                                ></div>
+                    
+                    <div class="notifications-container">
+                        <div class="notification-item modern-notification" style="background: linear-gradient(135deg, #fff5f5 0%, #fff 100%); border-radius: 12px; padding: 20px; margin-bottom: 15px; border-left: 4px solid #e02020; box-shadow: 0 2px 10px rgba(224,32,32,0.05); transition: transform 0.3s ease;">
+                            <div class="d-flex justify-content-between align-items-start">
+                                <div class="flex-grow-1">
+                                    <div class="d-flex align-items-center mb-2">
+                                        <div class="notification-icon" style="background: #fee2e2; width: 40px; height: 40px; border-radius: 10px; display: flex; align-items: center; justify-content: center; margin-right: 12px;">
+                                            <i class="fas fa-exclamation-triangle text-danger"></i>
+                                        </div>
+                                        <div>
+                                            <h6 class="mb-1 fw-bold" style="color: #2c3e50;">Estoque Crítico</h6>
+                                            <small class="text-muted">Há 2 horas</small>
+                                        </div>
+                                    </div>
+                                    <p class="mb-0 text-muted" style="font-size: 0.95rem; line-height: 1.5; margin-left: 52px;">
+                                        Tipo sanguíneo O+ em nível crítico. <strong>Ação urgente necessária.</strong>
+                                    </p>
+                                </div>
                             </div>
-                            <small class="text-muted">40% da meta atingida</small>
+                        </div>
+
+                        <div class="notification-item modern-notification" style="background: linear-gradient(135deg, #f0fdf4 0%, #fff 100%); border-radius: 12px; padding: 20px; margin-bottom: 15px; border-left: 4px solid #22c55e; box-shadow: 0 2px 10px rgba(34,197,94,0.05); transition: transform 0.3s ease;">
+                            <div class="d-flex justify-content-between align-items-start">
+                                <div class="flex-grow-1">
+                                    <div class="d-flex align-items-center mb-2">
+                                        <div class="notification-icon" style="background: #dcfce7; width: 40px; height: 40px; border-radius: 10px; display: flex; align-items: center; justify-content: center; margin-right: 12px;">
+                                            <i class="fas fa-bullhorn text-success"></i>
+                                        </div>
+                                        <div>
+                                            <h6 class="mb-1 fw-bold" style="color: #2c3e50;">Nova Campanha</h6>
+                                            <small class="text-muted">Há 4 horas</small>
+                                        </div>
+                                    </div>
+                                    <p class="mb-0 text-muted" style="font-size: 0.95rem; line-height: 1.5; margin-left: 52px;">
+                                        Campanha <strong>"Junho Vermelho"</strong> foi iniciada com sucesso.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="notification-item modern-notification" style="background: linear-gradient(135deg, #eff6ff 0%, #fff 100%); border-radius: 12px; padding: 20px; margin-bottom: 0; border-left: 4px solid #3b82f6; box-shadow: 0 2px 10px rgba(59,130,246,0.05); transition: transform 0.3s ease;">
+                            <div class="d-flex justify-content-between align-items-start">
+                                <div class="flex-grow-1">
+                                    <div class="d-flex align-items-center mb-2">
+                                        <div class="notification-icon" style="background: #dbeafe; width: 40px; height: 40px; border-radius: 10px; display: flex; align-items: center; justify-content: center; margin-right: 12px;">
+                                            <i class="fas fa-calendar-check text-info"></i>
+                                        </div>
+                                        <div>
+                                            <h6 class="mb-1 fw-bold" style="color: #2c3e50;">Agendamentos</h6>
+                                            <small class="text-muted">Há 6 horas</small>
+                                        </div>
+                                    </div>
+                                    <p class="mb-0 text-muted" style="font-size: 0.95rem; line-height: 1.5; margin-left: 52px;">
+                                        <strong>15 novos agendamentos</strong> foram realizados hoje.
+                                    </p>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="mb-3">
-                    <div class="d-flex align-items-center">
-                        <i class="fas fa-users text-danger fa-2x me-3"></i>
-                        <div class="flex-grow-1">
-                            <p class="mb-1 fw-bold">Doação Empresarial</p>
-                            <p class="mb-1 text-muted">Parceria com empresas locais</p>
-                            <div class="progress" style="height: 5px;">
-                                <div
-                                    class="progress-bar bg-success"
-                                    role="progressbar"
-                                    style="width: 80%;"
-                                    aria-valuenow="80"
-                                    aria-valuemin="0"
-                                    aria-valuemax="100"
-                                ></div>
-                            </div>
-                            <small class="text-muted">80% da meta atingida</small>
-                        </div>
+
+                    <!-- Botão para ver todas as notificações -->
+                    <div class="text-center mt-3">
+                        <button class="btn btn-outline-primary" style="border-radius: 25px; padding: 8px 20px; font-size: 0.9rem;">
+                            <i class="fas fa-eye me-2"></i>Ver todas as notificações
+                        </button>
                     </div>
                 </div>
             </div>
         </div>
-    </section>
+
+        <!-- Seção de Campanhas Ativas -->
+        <div class="col-lg-6 mb-4">
+            <div class="card border-0 shadow-lg" style="border-radius: 20px; background: #fff;">
+                <div class="card-body p-4">
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <h5 class="section-title mb-0 fw-bold" style="color: #2c3e50; font-size: 1.4rem;">
+                            <i class="fas fa-bullhorn me-3" style="color: #e02020;"></i>
+                            Campanhas Ativas
+                        </h5>
+                        <div class="campaign-badge">
+                            <span class="badge bg-success" style="border-radius: 20px; padding: 6px 12px;">3 ativas</span>
+                        </div>
+                    </div>
+
+                    <div class="campaigns-container">
+                        <!-- Campanha 1 -->
+                        <div class="campaign-item" style="background: linear-gradient(135deg, #fef2f2 0%, #fff 100%); border-radius: 15px; padding: 20px; margin-bottom: 20px; border-left: 4px solid #e02020; box-shadow: 0 4px 15px rgba(224,32,32,0.08); transition: transform 0.3s ease;">
+                            <div class="d-flex align-items-center mb-3">
+                                <div class="campaign-icon" style="background: linear-gradient(135deg, #e02020 0%, #ff4040 100%); width: 50px; height: 50px; border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-right: 15px;">
+                                    <i class="fas fa-tint text-white" style="font-size: 1.2rem;"></i>
+                                </div>
+                                <div class="flex-grow-1">
+                                    <h6 class="mb-1 fw-bold" style="color: #2c3e50;">Junho Vermelho 2025</h6>
+                                    <p class="mb-2 text-muted" style="font-size: 0.9rem;">Campanha nacional de conscientização</p>
+                                    <div class="progress" style="height: 8px; border-radius: 10px; background: #f3f4f6;">
+                                        <div class="progress-bar" style="background: linear-gradient(90deg, #e02020 0%, #ff4040 100%); width: 65%; border-radius: 10px;" role="progressbar" aria-valuenow="65" aria-valuemin="0" aria-valuemax="100"></div>
+                                    </div>
+                                    <div class="d-flex justify-content-between align-items-center mt-2">
+                                        <small class="text-muted">65% da meta atingida</small>
+                                        <span class="badge bg-success" style="font-size: 0.75rem; padding: 4px 8px; border-radius: 10px;">Ativa</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Campanha 2 -->
+                        <div class="campaign-item" style="background: linear-gradient(135deg, #fffbeb 0%, #fff 100%); border-radius: 15px; padding: 20px; margin-bottom: 20px; border-left: 4px solid #f59e0b; box-shadow: 0 4px 15px rgba(245,158,11,0.08); transition: transform 0.3s ease;">
+                            <div class="d-flex align-items-center mb-3">
+                                <div class="campaign-icon" style="background: linear-gradient(135deg, #f59e0b 0%, #fbbf24 100%); width: 50px; height: 50px; border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-right: 15px;">
+                                    <i class="fas fa-heart text-white" style="font-size: 1.2rem;"></i>
+                                </div>
+                                <div class="flex-grow-1">
+                                    <h6 class="mb-1 fw-bold" style="color: #2c3e50;">Mutirão Comunitário</h6>
+                                    <p class="mb-2 text-muted" style="font-size: 0.9rem;">Doação em bairros periféricos</p>
+                                    <div class="progress" style="height: 8px; border-radius: 10px; background: #f3f4f6;">
+                                        <div class="progress-bar bg-warning" style="width: 40%; border-radius: 10px;" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"></div>
+                                    </div>
+                                    <div class="d-flex justify-content-between align-items-center mt-2">
+                                        <small class="text-muted">40% da meta atingida</small>
+                                        <span class="badge bg-warning" style="font-size: 0.75rem; padding: 4px 8px; border-radius: 10px;">Em andamento</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Campanha 3 -->
+                        <div class="campaign-item" style="background: linear-gradient(135deg, #f0fdf4 0%, #fff 100%); border-radius: 15px; padding: 20px; margin-bottom: 0; border-left: 4px solid #22c55e; box-shadow: 0 4px 15px rgba(34,197,94,0.08); transition: transform 0.3s ease;">
+                            <div class="d-flex align-items-center mb-3">
+                                <div class="campaign-icon" style="background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%); width: 50px; height: 50px; border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-right: 15px;">
+                                    <i class="fas fa-users text-white" style="font-size: 1.2rem;"></i>
+                                </div>
+                                <div class="flex-grow-1">
+                                    <h6 class="mb-1 fw-bold" style="color: #2c3e50;">Doação Empresarial</h6>
+                                    <p class="mb-2 text-muted" style="font-size: 0.9rem;">Parceria com empresas locais</p>
+                                    <div class="progress" style="height: 8px; border-radius: 10px; background: #f3f4f6;">
+                                        <div class="progress-bar bg-success" style="width: 80%; border-radius: 10px;" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
+                                    </div>
+                                    <div class="d-flex justify-content-between align-items-center mt-2">
+                                        <small class="text-muted">80% da meta atingida</small>
+                                        <span class="badge bg-success" style="font-size: 0.75rem; padding: 4px 8px; border-radius: 10px;">Quase completa</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Botão para gerenciar campanhas -->
+                    <div class="text-center mt-3">
+                        <button class="btn btn-outline-danger" style="border-radius: 25px; padding: 8px 20px; font-size: 0.9rem;">
+                            <i class="fas fa-cog me-2"></i>Gerenciar campanhas
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
 </main>
 
 <!-- Mapa Section (atualizado) -->
