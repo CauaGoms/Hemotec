@@ -496,3 +496,114 @@ body {
         height: 380px;
     }
 }
+
+/* BLOOD STOCK MODERN */
+.blood-stock-modern {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+
+
+.blood-stock-card {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    background: #fff;
+    border-radius: 12px;
+    padding: 1rem 1.2rem;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    min-height: 80px;
+}
+
+.blood-info {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 700;
+    font-size: 1.2rem;
+    color: var(--hemotec-text-dark);
+    min-width: 60px;
+}
+
+.blood-progress {
+    flex: 1;
+    margin: 0 1rem;
+}
+
+.status {
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    min-width: 70px;
+    text-align: right;
+}
+
+.blood-info, .blood-progress, .status {
+    width: 100%;
+    text-align: center;
+}
+
+.blood-stock-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+}
+
+.blood-info {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 700;
+  font-size: 1.2rem;
+  color: var(--hemotec-text-dark);
+}
+
+.blood-info i {
+  color: var(--hemotec-red);
+  font-size: 1.4rem;
+}
+
+.blood-progress {
+    flex: 2 1 0%;
+    margin: 0 2rem 0 2rem;
+    min-width: 360px;
+}
+
+.blood-progress .progress {
+    height: 12px;
+    border-radius: 8px;
+    background-color: #eee;
+    overflow: hidden;
+}
+
+.progress-bar.adequate { background: #28a745; }
+.progress-bar.moderate { background: #ffc107; }
+.progress-bar.low { background: #fd7e14; }
+.progress-bar.critical { background: #dc3545; animation: pulse 1.5s infinite; }
+
+.units {
+    display: block;
+    margin-top: 0.4rem;
+    font-size: 0.85rem;
+    color: #666;
+    text-align: left;
+}
+
+.status {
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.adequate .status { color: #28a745; }
+.moderate .status { color: #ffc107; }
+.low .status { color: #fd7e14; }
+.critical .status { color: #dc3545; }
+
+@keyframes pulse {
+  0%,100% { opacity: 1; }
+  50% { opacity: 0.6; }
+}

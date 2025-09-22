@@ -1,6 +1,8 @@
 {% extends "doador/doador__base.html" %}
 {% block custom_css %}
 <link href="/static/css/doador/doador_inicio.css" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="">
+<link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.css">
 {% endblock %}
 
 {% block conteudo %}
@@ -227,10 +229,6 @@
         </div>
     </section>
     <section class="row mb-4"></section>
-    <div class="map-container fade-in">
-            <div id="mapa" style="height: 500px; width: 100%; border-radius: 8px;"></div>
-            <div id="info-rota" class="info-box"></div>
-        </div>
         <div class="col-lg-6 mb-4">
             <div class="card p-4">
                 <h5 class="section-title">Campanhas Ativas</h5>
@@ -298,10 +296,27 @@
         </div>
     </section>
 </main>
+
+<!-- Mapa Section (atualizado) -->
+<section class="container mb-5">
+    <div class="text-center mb-4">
+        <h2 class="section-title">Unidades de Coleta</h2>
+    </div>
+    <div class="map-tools">
+        <button id="btn-locate" type="button">Minha Localização</button>
+        <button id="btn-clear-route" type="button" disabled>Limpar Rota</button>
+        <span class="geo-status" id="geo-status"></span>
+    </div>
+    <div id="mapa"></div>
+    <div id="info-rota" class="info-box"></div>
+    <ul id="lista-unidades" class="unidade-list"></ul>
+</section>
 {% endblock %}
 
 <!-- Custom JavaScript -->
 {% block custom_js %}
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
+<script src="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.js"></script>
 <script src="/static/js/doador/doador_inicio.js">  
 </script>
 

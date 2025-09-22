@@ -148,107 +148,162 @@
             </div>
         </div>
         <!-- Estoque Atual (original) -->
-        <div class="col-lg-12 mb-4">
-            <!-- ...existing code (estoque) ... -->
-            <div class="card border-0 shadow-sm">
-                <div class="card-body p-4 d-flex flex-column">
-                    <h4 class="card-title text-danger mb-3">
-                        <i class="fas fa-exclamation-triangle me-2"></i>
-                        Estoque Atual -
-                        <span id="nome-unidade-estoque">Carregando...</span>
-                    </h4>
-                    <!-- ...existing code (progress bars) ... -->
-                    <div class="row">
-                        <!-- ...existing progress bars left/right ... -->
-                        <div class="col-md-6">
-                            <div class="mb-3">
-                                <div class="d-flex justify-content-between align-items-center mb-2">
-                                    <span class="fw-bold">O+</span>
-                                    <span class="badge bg-danger">Crítico</span>
-                                </div>
-                                <div class="progress mb-2" style="height:8px;">
-                                    <div class="progress-bar bg-danger" style="width:20%;"></div>
-                                </div>
-                            </div>
-                            <div class="mb-3">
-                                <div class="d-flex justify-content-between align-items-center mb-2">
-                                    <span class="fw-bold">A+</span>
-                                    <span class="badge bg-warning">Baixo</span>
-                                </div>
-                                <div class="progress mb-2" style="height:8px;">
-                                    <div class="progress-bar bg-warning" style="width:35%;"></div>
-                                </div>
-                            </div>
-                            <div class="mb-3">
-                                <div class="d-flex justify-content-between align-items-center mb-2">
-                                    <span class="fw-bold">B+</span>
-                                    <span class="badge bg-success">Adequado</span>
-                                </div>
-                                <div class="progress mb-2" style="height:8px;">
-                                    <div class="progress-bar bg-success" style="width:70%;"></div>
-                                </div>
-                            </div>
-                            <div class="mb-3">
-                                <div class="d-flex justify-content-between align-items-center mb-2">
-                                    <span class="fw-bold">AB+</span>
-                                    <span class="badge bg-warning">Baixo</span>
-                                </div>
-                                <div class="progress mb-2" style="height:8px;">
-                                    <div class="progress-bar bg-warning" style="width:30%;"></div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="mb-3">
-                                <div class="d-flex justify-content-between align-items-center mb-2">
-                                    <span class="fw-bold">O-</span>
-                                    <span class="badge bg-warning">Moderado</span>
-                                </div>
-                                <div class="progress mb-2" style="height:8px;">
-                                    <div class="progress-bar bg-warning" style="width:45%;"></div>
-                                </div>
-                            </div>
-                            <div class="mb-3">
-                                <div class="d-flex justify-content-between align-items-center mb-2">
-                                    <span class="fw-bold">A-</span>
-                                    <span class="badge bg-success">Adequado</span>
-                                </div>
-                                <div class="progress mb-2" style="height:8px;">
-                                    <div class="progress-bar bg-success" style="width:65%;"></div>
-                                </div>
-                            </div>
-                            <div class="mb-3">
-                                <div class="d-flex justify-content-between align-items-center mb-2">
-                                    <span class="fw-bold">B-</span>
-                                    <span class="badge bg-danger">Crítico</span>
-                                </div>
-                                <div class="progress mb-2" style="height:8px;">
-                                    <div class="progress-bar bg-danger" style="width:25%;"></div>
-                                </div>
-                            </div>
-                            <div class="mb-3">
-                                <div class="d-flex justify-content-between align-items-center mb-2">
-                                    <span class="fw-bold">AB-</span>
-                                    <span class="badge bg-success">Adequado</span>
-                                </div>
-                                <div class="progress mb-2" style="height:8px;">
-                                    <div class="progress-bar bg-success" style="width:80%;"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="mt-auto">
-                        <div class="alert alert-danger mb-0" role="alert">
-                            <small>
-                                <i class="fas fa-heart me-1"></i>
-                                Sua doação pode salvar vidas! Tipos O+, A+ e B- são urgentes.
-                            </small>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <div class="col-md-12 mb-4">
+  <div class="card p-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <h5 class="section-title mb-0">Estoque de Sangue - Situação Atual</h5>
+      <div class="legend">
+        <span class="badge bg-adequate me-2">Adequado</span>
+        <span class="badge bg-moderate me-2">Moderado</span>
+        <span class="badge bg-low me-2">Baixo</span>
+        <span class="badge bg-critical">Crítico</span>
+      </div>
     </div>
+
+    <div class="blood-stock-modern">
+      <!-- A+ -->
+  <div class="blood-stock-card adequate" onclick="mostrarCompatibilidade('A+')">
+        <div class="blood-info">
+          <i class="fas fa-tint"></i>
+          <span class="blood-type">A+</span>
+        </div>
+        <div class="blood-progress">
+          <div class="progress">
+            <div class="progress-bar adequate" style="width: 70%"></div>
+          </div>
+          <span class="units">17 unidades</span>
+        </div>
+         <span class="status">Adequado</span>
+      </div>
+
+      <!-- A- -->
+  <div class="blood-stock-card moderate" onclick="mostrarCompatibilidade('A-')">
+        <div class="blood-info">
+          <i class="fas fa-tint"></i>
+          <span class="blood-type">A-</span>
+        </div>
+        <div class="blood-progress">
+          <div class="progress">
+            <div class="progress-bar moderate" style="width: 50%"></div>
+          </div>
+          <span class="units">12 unidades</span>
+        </div>
+         <span class="status">Moderado</span>
+      </div>
+
+      <!-- B+ -->
+  <div class="blood-stock-card moderate" onclick="mostrarCompatibilidade('B+')">
+        <div class="blood-info">
+          <i class="fas fa-tint"></i>
+          <span class="blood-type">B+</span>
+        </div>
+        <div class="blood-progress">
+          <div class="progress">
+            <div class="progress-bar moderate" style="width: 50%"></div>
+          </div>
+          <span class="units">12 unidades</span>
+        </div>
+        <span class="status">Moderado</span>
+      </div>
+
+      <!-- B- -->
+  <div class="blood-stock-card low" onclick="mostrarCompatibilidade('B-')">
+        <div class="blood-info">
+          <i class="fas fa-tint"></i>
+          <span class="blood-type">B-</span>
+        </div>
+        <div class="blood-progress">
+          <div class="progress">
+            <div class="progress-bar low" style="width: 25%"></div>
+          </div>
+          <span class="units">6 unidades</span>
+        </div>
+        <span class="status">Baixo</span>
+      </div>
+
+      <!-- AB+ -->
+  <div class="blood-stock-card low" onclick="mostrarCompatibilidade('AB+')">
+        <div class="blood-info">
+          <i class="fas fa-tint"></i>
+          <span class="blood-type">AB+</span>
+        </div>
+        <div class="blood-progress">
+          <div class="progress">
+            <div class="progress-bar low" style="width: 30%"></div>
+          </div>
+          <span class="units">7 unidades</span>
+        </div>
+        <span class="status">Baixo</span>
+      </div>
+
+      <!-- AB- -->
+  <div class="blood-stock-card critical" onclick="mostrarCompatibilidade('AB-')">
+        <div class="blood-info">
+          <i class="fas fa-tint"></i>
+          <span class="blood-type">AB-</span>
+        </div>
+        <div class="blood-progress">
+          <div class="progress">
+            <div class="progress-bar critical" style="width: 15%"></div>
+          </div>
+          <span class="units">3 unidades</span>
+        </div>
+        <span class="status">Crítico</span>
+      </div>
+
+      <!-- O+ -->
+  <div class="blood-stock-card critical" onclick="mostrarCompatibilidade('O+')">
+        <div class="blood-info">
+          <i class="fas fa-tint"></i>
+          <span class="blood-type">O+</span>
+        </div>
+        <div class="blood-progress">
+          <div class="progress">
+            <div class="progress-bar critical" style="width: 20%"></div>
+          </div>
+          <span class="units">4 unidades</span>
+        </div>
+        <span class="status">Crítico</span>
+      </div>
+
+      <!-- O- -->
+  <div class="blood-stock-card adequate" onclick="mostrarCompatibilidade('O-')">
+        <div class="blood-info">
+          <i class="fas fa-tint"></i>
+          <span class="blood-type">O-</span>
+        </div>
+        <div class="blood-progress">
+          <div class="progress">
+            <div class="progress-bar adequate" style="width: 65%"></div>
+          </div>
+          <span class="units">13 unidades</span>
+        </div>
+        <span class="status">Adequado</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal de Compatibilidade -->
+
+<div class="modal fade" id="compatModal" tabindex="-1" aria-labelledby="compatModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" style="max-width: 370px; height: 200px;">
+    <div class="modal-content" style="border-radius: 22px; box-shadow: 0 8px 32px rgba(224,32,32,0.15); border: none;">
+      <div class="modal-header" style="background: linear-gradient(90deg, #e02020 0%, #ff4040 100%); border-radius: 22px 22px 0 0;">
+        <h5 class="modal-title text-white fw-bold" id="compatModalLabel">Compatibilidade Sanguínea</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Fechar"></button>
+      </div>
+      <div class="modal-body" id="compatModalBody" style="font-size: 1.1rem; color: #333; padding: 2rem 1.5rem; background: #fff; border-radius: 0 0 22px 22px;">
+        <!-- Conteúdo JS -->
+      </div>
+      <div class="modal-footer" style="background: #fff; border-radius: 0 0 22px 22px; border-top: none;">
+        <button type="button" class="btn btn-danger" style="border-radius: 50px; padding: 0.6rem 2.2rem; font-weight: 600; font-size: 1.1rem; box-shadow: 0 2px 8px rgba(224,32,32,0.08);" data-bs-dismiss="modal">Fechar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
 </section>
 <!-- Mapa Section (atualizado) -->
 <section class="container mb-5">
