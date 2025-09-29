@@ -97,21 +97,27 @@ def obter_por_id(cod_doador: int) -> Optional[Doador]:
         cursor.execute(OBTER_POR_ID, (cod_doador,))
         row = cursor.fetchone()
         if row:
-            doador = Doador(
-                cod_doador=row["cod_doador"],
-                cod_usuario=row["cod_doador"],
+            # Criar objeto Usuario primeiro
+            usuario = Usuario(
+                cod_usuario=row["cod_doador"],  # ou row["cod_usuario"] se existir
                 nome=row["nome"],
                 email=row["email"],
                 senha=row["senha"],
                 cpf=row["cpf"],
                 data_nascimento=datetime.strptime(row["data_nascimento"], "%Y-%m-%d").date() if isinstance(row["data_nascimento"], str) else row["data_nascimento"],
                 status=row["status"],
-                data_cadastro=datetime.strptime(row["data_cadastro"], "%Y-%m-%d").date() if isinstance(row["data_cadastro"], str) else row["data_cadastro"],
                 rua_usuario=row["rua_usuario"],
                 bairro_usuario=row["bairro_usuario"],
                 cidade_usuario=row["cidade_usuario"],
                 cep_usuario=row["cep_usuario"],
                 telefone=row["telefone"],
+                data_cadastro=datetime.strptime(row["data_cadastro"], "%Y-%m-%d").date() if isinstance(row["data_cadastro"], str) else row["data_cadastro"]
+            )
+            
+            # Criar objeto Doador com Usuario
+            doador = Doador(
+                cod_doador=row["cod_doador"],
+                usuario=usuario,
                 tipo_sanguineo=row["tipo_sanguineo"],
                 fator_rh=row["fator_rh"],
                 elegivel=row["elegivel"],

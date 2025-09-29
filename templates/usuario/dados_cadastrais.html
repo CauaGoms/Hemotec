@@ -155,7 +155,7 @@
                                 </div>
                                 <div class="profile-info-content">
                                     <div class="profile-info-label">Nome Completo</div>
-                                    <div class="profile-info-value">{{usuario.nome}}</div>
+                                    <div class="profile-info-value">{{doador.usuario.nome if doador and doador.usuario else usuario.nome}}</div>
                                 </div>
                             </div>
                             <div class="profile-info-item">
@@ -164,7 +164,7 @@
                                 </div>
                                 <div class="profile-info-content">
                                     <div class="profile-info-label">E-mail</div>
-                                    <div class="profile-info-value">{{usuario.email}}</div>
+                                    <div class="profile-info-value">{{doador.usuario.email if doador and doador.usuario else usuario.email}}</div>
                                 </div>
                             </div>
                             <div class="profile-info-item">
@@ -336,7 +336,15 @@
                                 </div>
                                 <div class="profile-info-content">
                                     <div class="profile-info-label">Tipo Sanguíneo</div>
-                                    <div class="profile-info-value">{{doador.tipo_sanguineo}}{{'+' if doador.fator_rh == 'positivo' else '-'}}  ({{doador.fator_rh|capitalize}})</div>
+                                    <div class="profile-info-value">
+                                        {% if doador and doador.tipo_sanguineo and doador.fator_rh %}
+                                            {{doador.tipo_sanguineo}}{% if doador.fator_rh == 'positivo' %}+{% else %}-{% endif %} 
+                                        {% elif doador and doador.tipo_sanguineo %}
+                                            {{doador.tipo_sanguineo}}
+                                        {% else %}
+                                            Não informado
+                                        {% endif %}
+                                    </div>
                                 </div>
                             </div>
                             <div class="profile-info-item">
@@ -345,7 +353,7 @@
                                 </div>
                                 <div class="profile-info-content">
                                     <div class="profile-info-label">Altura/Peso</div>
-                                    <div class="profile-info-value">175 cm / 72 kg</div>
+                                    <div class="profile-info-value">{{doador.altura}} cm / {{doador.peso}} kg</div>
                                 </div>
                             </div>
                             <div class="profile-info-item">
