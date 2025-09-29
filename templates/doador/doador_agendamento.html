@@ -5,6 +5,8 @@
 {% endblock %}
 
 {% block conteudo %}
+{% set dias_semana = ['Segunda-feira', 'Terça-feira', 'Quarta-feira', 'Quinta-feira', 'Sexta-feira', 'Sábado', 'Domingo'] %}
+{% set meses = ['janeiro', 'fevereiro', 'março', 'abril', 'maio', 'junho', 'julho', 'agosto', 'setembro', 'outubro', 'novembro', 'dezembro'] %}
 <!-- Botão Voltar -->
 <a href="/doador/agendamento" class="back-arrow">
     <i class="fas fa-arrow-left"></i>
@@ -38,7 +40,9 @@
                     <span class="status-badge upcoming-badge">
                         <i class="fas fa-clock me-1"></i> Agendado
                     </span>
-                    <strong class="date">{{ agendamento.data_hora.strftime('%A, %d de %B de %Y - %H:%M') }}</strong>
+                    <strong class="date">
+                        {{ dias_semana[agendamento.data_hora.weekday()] }}, {{ agendamento.data_hora.day }} de {{ meses[agendamento.data_hora.month - 1] }} de {{ agendamento.data_hora.year }} - {{ agendamento.data_hora.strftime('%H:%M') }}
+                    </strong>
                 </div>
                 <div class="card-body">
                     <div class="location-info">
@@ -60,7 +64,7 @@
                     </div>
                 </div>
             </div>
-            {% endfor %}
+                {% endfor %}
             {% else %}
             <div class="text-center p-5 no-appointments-message">
                 <i class="fas fa-calendar-plus fa-3x text-muted mb-3"></i>
@@ -69,40 +73,46 @@
                 <a href="/doador/agendamento/adicionar" class="btn btn-primary">Agendar uma Doação</a>
             </div>
             {% endif %}
+            
             <h3 class="mb-3 mt-5">Agendamentos Anteriores</h3>
-            {% for agendamento in agendamentos_concluidos %}
+            {% for agendamento, local_agendamento in agendamentos_concluidos %}
             <div class="appointment-card completed">
                 <div class="card-header">
                     <span class="status-badge completed-badge">
                         <i class="fas fa-check-circle me-1"></i> Concluído
                     </span>
-                    <strong class="date">{{ agendamento.data_hora.strftime('%A, %d de %B de %Y - %H:%M') }}</strong>
+                    <strong class="date">
+                        {{ dias_semana[agendamento.data_hora.weekday()] }}, {{ agendamento.data_hora.day }} de {{ meses[agendamento.data_hora.month - 1] }} de {{ agendamento.data_hora.year }} - {{ agendamento.data_hora.strftime('%H:%M') }}
+                    </strong>
                 </div>
                 <div class="card-body">
                     <div class="location-info">
                         <i class="fas fa-hospital-alt icon"></i>
                         <div>
-                            <h5 class="location-name">{{ agendamento.local_nome }}</h5>
-                            <p class="location-address">{{ agendamento.local_endereco }}</p>
+                            <h5 class="location-name">{{ local_agendamento.nome }}</h5>
+                            <p class="location-address">{{ local_agendamento.rua_unidade }}, {{ local_agendamento.bairro_unidade }}</p>
                         </div>
                     </div>
                 </div>
             </div>
             {% endfor %}
-            {% for agendamento in agendamentos_atrasados %}
+            
+            {% for agendamento, local_agendamento in agendamentos_atrasados %}
             <div class="appointment-card completed">
                 <div class="card-header">
                     <span class="status-badge completed-badge">
                         <i class="fas fa-check-circle me-1"></i> Atrasado
                     </span>
-                    <strong class="date">{{ agendamento.data_hora.strftime('%A, %d de %B de %Y - %H:%M') }}</strong>
+                    <strong class="date">
+                        {{ dias_semana[agendamento.data_hora.weekday()] }}, {{ agendamento.data_hora.day }} de {{ meses[agendamento.data_hora.month - 1] }} de {{ agendamento.data_hora.year }} - {{ agendamento.data_hora.strftime('%H:%M') }}
+                    </strong>
                 </div>
                 <div class="card-body">
                     <div class="location-info">
                         <i class="fas fa-hospital-alt icon"></i>
                         <div>
-                            <h5 class="location-name">{{ agendamento.local_nome }}</h5>
-                            <p class="location-address">{{ agendamento.local_endereco }}</p>
+                            <h5 class="location-name">{{ local_agendamento.nome }}</h5>
+                            <p class="location-address">{{ local_agendamento.rua_unidade }}, {{ local_agendamento.bairro_unidade }}</p>
                         </div>
                     </div>
                 </div>

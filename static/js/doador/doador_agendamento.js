@@ -279,7 +279,7 @@ function selectTime(time, element) {
 // Confirmar agendamento
 function confirmAppointment() {
     // Por enquanto, vamos redirecionar diretamente para a página de confirmação
-    window.location.href = "/doador/agendamento/confirmar";
+    window.location.href = "/doador/agendamento/adicionar/confirmacao";
 }
 
 // Inicializar a página
