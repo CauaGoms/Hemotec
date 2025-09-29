@@ -40,7 +40,7 @@ function mostrarCompatibilidade(tipo) {
     compatModalInstance.show();
 }
 
-(function(){
+(function () {
     // Config das unidades será carregado dinamicamente do backend
     fetch('/api/unidades')
         .then(response => {
@@ -55,10 +55,10 @@ function mostrarCompatibilidade(tipo) {
                 return;
             }
 
-            const mapa = L.map('mapa', { zoomControl:true, attributionControl:true })
+            const mapa = L.map('mapa', { zoomControl: true, attributionControl: true })
                 .setView([-20.851136957150032, -41.113483188824155], 11); // Coordenadas iniciais
 
-            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
                 maxZoom: 19,
                 attribution: '© OpenStreetMap'
             }).addTo(mapa);
@@ -72,7 +72,7 @@ function mostrarCompatibilidade(tipo) {
             let userMarker = null;
             let routingControl = null;
 
-            function listarUnidades(){
+            function listarUnidades() {
                 listaUnidades.innerHTML = '';
                 unidades.forEach(u => {
                     const { cod_unidade, nome, latitude: lat, longitude: lng } = u;
@@ -92,11 +92,16 @@ function mostrarCompatibilidade(tipo) {
                         // Buscar estoque da unidade selecionada
                         fetch(`/api/estoque/${cod_unidade}`)
                             .then(resp => resp.json())
-                            .then(estoque => {
+                            .then(resposta => {
                                 document.getElementById('nome-unidade-estoque').textContent = nome;
-                                const estoqueEl = document.getElementById('estoque-atual');
-                                if (estoqueEl) {
-                                    estoqueEl.innerHTML = JSON.stringify(estoque, null, 2);
+                                let estoqueObj = resposta.estoque;
+                                if (typeof estoqueObj === 'string') {
+                                    try { estoqueObj = JSON.parse(estoqueObj); } catch { }
+                                }
+                                if (estoqueObj) {
+                                    renderizarEstoque(normalizarEstoque(estoqueObj));
+                                } else {
+                                    renderizarEstoque({});
                                 }
                             })
                             .catch(() => {
@@ -133,11 +138,16 @@ function mostrarCompatibilidade(tipo) {
                         // Buscar estoque da unidade selecionada
                         fetch(`/api/estoque/${cod_unidade}`)
                             .then(resp => resp.json())
-                            .then(estoque => {
+                            .then(resposta => {
                                 document.getElementById('nome-unidade-estoque').textContent = nome;
-                                const estoqueEl = document.getElementById('estoque-atual');
-                                if (estoqueEl) {
-                                    estoqueEl.innerHTML = JSON.stringify(estoque, null, 2);
+                                let estoqueObj = resposta.estoque;
+                                if (typeof estoqueObj === 'string') {
+                                    try { estoqueObj = JSON.parse(estoqueObj); } catch { }
+                                }
+                                if (estoqueObj) {
+                                    renderizarEstoque(normalizarEstoque(estoqueObj));
+                                } else {
+                                    renderizarEstoque({});
                                 }
                             })
                             .catch(() => {
@@ -169,7 +179,7 @@ function mostrarCompatibilidade(tipo) {
                         }).addTo(mapa).bindPopup('Você está aqui.').openPopup();
                     }
                     mapa.flyTo([latitude, longitude], 13, { duration: 0.8 });
-                        // Encontrar unidade mais próxima
+                    // Encontrar unidade mais próxima
                     let unidadeMaisProxima = null;
                     let menorDistancia = Infinity;
                     unidades.forEach(u => {
@@ -184,12 +194,16 @@ function mostrarCompatibilidade(tipo) {
                         // Buscar estoque da unidade mais próxima
                         fetch(`/api/estoque/${unidadeMaisProxima.cod_unidade}`)
                             .then(resp => resp.json())
-                            .then(estoque => {
+                            .then(resposta => {
                                 document.getElementById('nome-unidade-estoque').textContent = unidadeMaisProxima.nome;
-                                // Exibir dados do estoque (exemplo)
-                                const estoqueEl = document.getElementById('estoque-atual');
-                                if (estoqueEl) {
-                                    estoqueEl.innerHTML = JSON.stringify(estoque, null, 2);
+                                let estoqueObj = resposta.estoque;
+                                if (typeof estoqueObj === 'string') {
+                                    try { estoqueObj = JSON.parse(estoqueObj); } catch { }
+                                }
+                                if (estoqueObj) {
+                                    renderizarEstoque(normalizarEstoque(estoqueObj));
+                                } else {
+                                    renderizarEstoque({});
                                 }
                             })
                             .catch(() => {
@@ -260,11 +274,86 @@ function mostrarCompatibilidade(tipo) {
         });
 })();
 
-// Adiciona evento de clique para todos os cards de sangue
-    document.querySelectorAll('.blood-stock-card').forEach(function(card) {
-        card.addEventListener('click', function() {
+// Função para renderizar o estoque visualmente
+function renderizarEstoque(estoque) {
+    const estoqueEl = document.getElementById('estoque-atual');
+    if (!estoqueEl) return;
+    if (!estoque || Object.keys(estoque).length === 0) {
+        estoqueEl.innerHTML = '';
+        return;
+    }
+    // Estrutura visual igual aos cards antigos
+    let html = '';
+    const statusMap = {
+        'adequado': 'adequate',
+        'moderado': 'moderate',
+        'baixo': 'low',
+        'crítico': 'critical',
+        'critico': 'critical'
+    };
+    const ordemTipos = ['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-'];
+    ordemTipos.forEach(tipo => {
+        if (estoque[tipo]) {
+            const info = estoque[tipo];
+            const status = statusMap[(info.status || '').toLowerCase()] || 'adequate';
+            const percent = info.percent || 0;
+            html += `
+            <div class="blood-stock-card ${status}">
+                <div class="blood-info">
+                    <i class="fas fa-tint"></i>
+                    <span class="blood-type">${tipo}</span>
+                </div>
+                <div class="blood-progress">
+                    <div class="progress">
+                        <div class="progress-bar ${status}" style="width: ${percent}%"></div>
+                    </div>
+                    <span class="units">${info.unidades} unidades</span>
+                </div>
+                <span class="status">${info.status}</span>
+            </div>
+            `;
+        }
+    });
+    estoqueEl.innerHTML = html;
+    // Reaplica evento de compatibilidade
+    estoqueEl.querySelectorAll('.blood-stock-card').forEach(function (card) {
+        card.addEventListener('click', function () {
             const tipo = card.querySelector('.blood-type')?.textContent?.trim();
-            console.log('Card clicado:', tipo);
             if (tipo) mostrarCompatibilidade(tipo);
         });
     });
+}
+
+// Função para normalizar as chaves do estoque
+function normalizarEstoque(estoque) {
+    const mapTipos = {
+        "Anegativo": "A-",
+        "Apositivo": "A+",
+        "Bnegativo": "B-",
+        "Bpositivo": "B+",
+        "ABnegativo": "AB-",
+        "ABpositivo": "AB+",
+        "Onegativo": "O-",
+        "Opositivo": "O+"
+    };
+    const estoqueNormalizado = {};
+    for (const key in estoque) {
+        if (mapTipos[key]) {
+            estoqueNormalizado[mapTipos[key]] = {
+                unidades: estoque[key].quantidade,
+                status: estoque[key].status,
+                percent: Math.round((estoque[key].porcentagem || 0) * 100)
+            };
+        }
+    }
+    return estoqueNormalizado;
+}
+
+// Adiciona evento de clique para todos os cards de sangue
+document.querySelectorAll('.blood-stock-card').forEach(function (card) {
+    card.addEventListener('click', function () {
+        const tipo = card.querySelector('.blood-type')?.textContent?.trim();
+        console.log('Card clicado:', tipo);
+        if (tipo) mostrarCompatibilidade(tipo);
+    });
+});

@@ -149,180 +149,75 @@
         </div>
         <!-- Estoque Atual (original) -->
         <div class="col-md-12 mb-4">
-  <div class="card p-4">
-    <div class="d-flex justify-content-between align-items-center mb-4">
-      <h5 class="section-title mb-0">Estoque de Sangue - Situação Atual</h5>
-      <div class="legend">
-        <span class="badge bg-adequate me-2">Adequado</span>
-        <span class="badge bg-moderate me-2">Moderado</span>
-        <span class="badge bg-low me-2">Baixo</span>
-        <span class="badge bg-critical">Crítico</span>
-      </div>
-    </div>
-
-    <div class="blood-stock-modern">
-      <!-- A+ -->
-  <div class="blood-stock-card adequate" onclick="mostrarCompatibilidade('A+')">
-        <div class="blood-info">
-          <i class="fas fa-tint"></i>
-          <span class="blood-type">A+</span>
+            <div class="card p-4">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <h5 class="section-title mb-0">
+                        Estoque de Sangue -
+                        <span id="nome-unidade-estoque" class="text-danger ms-2"></span>
+                    </h5>
+                    <div class="legend">
+                        <span class="badge bg-adequate me-2">Adequado</span>
+                        <span class="badge bg-moderate me-2">Moderado</span>
+                        <span class="badge bg-low me-2">Baixo</span>
+                        <span class="badge bg-critical">Crítico</span>
+                    </div>
+                </div>
+                <div class="blood-stock-modern">
+                    <div id="estoque-atual" class="row"></div>
+                </div>
+            </div>
         </div>
-        <div class="blood-progress">
-          <div class="progress">
-            <div class="progress-bar adequate" style="width: 70%"></div>
-          </div>
-          <span class="units">17 unidades</span>
+        <!-- Modal de Compatibilidade -->
+        <div
+            class="modal fade"
+            id="compatModal"
+            tabindex="-1"
+            aria-labelledby="compatModalLabel"
+            aria-hidden="true"
+        >
+            <div class="modal-dialog modal-dialog-centered" style="max-width: 370px; height: 200px;">
+                <div class="modal-content" style="border-radius: 22px; box-shadow: 0 8px 32px rgba(224,32,32,0.15); border: none;">
+                    <div class="modal-header" style="background: linear-gradient(90deg, #e02020 0%, #ff4040 100%); border-radius: 22px 22px 0 0;">
+                        <h5 class="modal-title text-white fw-bold" id="compatModalLabel">Compatibilidade Sanguínea</h5>
+                        <button
+                            type="button"
+                            class="btn-close btn-close-white"
+                            data-bs-dismiss="modal"
+                            aria-label="Fechar"
+                        ></button>
+                    </div>
+                    <div class="modal-body" id="compatModalBody" style="font-size: 1.1rem; color: #333; padding: 2rem 1.5rem; background: #fff; border-radius: 0 0 22px 22px;">
+                        <!-- Conteúdo JS --></div>
+                    <div class="modal-footer" style="background: #fff; border-radius: 0 0 22px 22px; border-top: none;">
+                        <button
+                            type="button"
+                            class="btn btn-danger"
+                            style="border-radius: 50px; padding: 0.6rem 2.2rem; font-weight: 600; font-size: 1.1rem; box-shadow: 0 2px 8px rgba(224,32,32,0.08);"
+                            data-bs-dismiss="modal"
+                        >Fechar</button>
+                    </div>
+                </div>
+            </div>
         </div>
-         <span class="status">Adequado</span>
-      </div>
-
-      <!-- A- -->
-  <div class="blood-stock-card moderate" onclick="mostrarCompatibilidade('A-')">
-        <div class="blood-info">
-          <i class="fas fa-tint"></i>
-          <span class="blood-type">A-</span>
+    </section>
+    <!-- Mapa Section (atualizado) -->
+    <section class="container mb-5">
+        <div class="text-center mb-4">
+            <h2 class="section-title">Unidades de Coleta</h2>
         </div>
-        <div class="blood-progress">
-          <div class="progress">
-            <div class="progress-bar moderate" style="width: 50%"></div>
-          </div>
-          <span class="units">12 unidades</span>
+        <div class="map-tools">
+            <button id="btn-locate" type="button">Minha Localização</button>
+            <button id="btn-clear-route" type="button" disabled>Limpar Rota</button>
+            <span class="geo-status" id="geo-status"></span>
         </div>
-         <span class="status">Moderado</span>
-      </div>
-
-      <!-- B+ -->
-  <div class="blood-stock-card moderate" onclick="mostrarCompatibilidade('B+')">
-        <div class="blood-info">
-          <i class="fas fa-tint"></i>
-          <span class="blood-type">B+</span>
-        </div>
-        <div class="blood-progress">
-          <div class="progress">
-            <div class="progress-bar moderate" style="width: 50%"></div>
-          </div>
-          <span class="units">12 unidades</span>
-        </div>
-        <span class="status">Moderado</span>
-      </div>
-
-      <!-- B- -->
-  <div class="blood-stock-card low" onclick="mostrarCompatibilidade('B-')">
-        <div class="blood-info">
-          <i class="fas fa-tint"></i>
-          <span class="blood-type">B-</span>
-        </div>
-        <div class="blood-progress">
-          <div class="progress">
-            <div class="progress-bar low" style="width: 25%"></div>
-          </div>
-          <span class="units">6 unidades</span>
-        </div>
-        <span class="status">Baixo</span>
-      </div>
-
-      <!-- AB+ -->
-  <div class="blood-stock-card low" onclick="mostrarCompatibilidade('AB+')">
-        <div class="blood-info">
-          <i class="fas fa-tint"></i>
-          <span class="blood-type">AB+</span>
-        </div>
-        <div class="blood-progress">
-          <div class="progress">
-            <div class="progress-bar low" style="width: 30%"></div>
-          </div>
-          <span class="units">7 unidades</span>
-        </div>
-        <span class="status">Baixo</span>
-      </div>
-
-      <!-- AB- -->
-  <div class="blood-stock-card critical" onclick="mostrarCompatibilidade('AB-')">
-        <div class="blood-info">
-          <i class="fas fa-tint"></i>
-          <span class="blood-type">AB-</span>
-        </div>
-        <div class="blood-progress">
-          <div class="progress">
-            <div class="progress-bar critical" style="width: 15%"></div>
-          </div>
-          <span class="units">3 unidades</span>
-        </div>
-        <span class="status">Crítico</span>
-      </div>
-
-      <!-- O+ -->
-  <div class="blood-stock-card critical" onclick="mostrarCompatibilidade('O+')">
-        <div class="blood-info">
-          <i class="fas fa-tint"></i>
-          <span class="blood-type">O+</span>
-        </div>
-        <div class="blood-progress">
-          <div class="progress">
-            <div class="progress-bar critical" style="width: 20%"></div>
-          </div>
-          <span class="units">4 unidades</span>
-        </div>
-        <span class="status">Crítico</span>
-      </div>
-
-      <!-- O- -->
-  <div class="blood-stock-card adequate" onclick="mostrarCompatibilidade('O-')">
-        <div class="blood-info">
-          <i class="fas fa-tint"></i>
-          <span class="blood-type">O-</span>
-        </div>
-        <div class="blood-progress">
-          <div class="progress">
-            <div class="progress-bar adequate" style="width: 65%"></div>
-          </div>
-          <span class="units">13 unidades</span>
-        </div>
-        <span class="status">Adequado</span>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- Modal de Compatibilidade -->
-
-<div class="modal fade" id="compatModal" tabindex="-1" aria-labelledby="compatModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered" style="max-width: 370px; height: 200px;">
-    <div class="modal-content" style="border-radius: 22px; box-shadow: 0 8px 32px rgba(224,32,32,0.15); border: none;">
-      <div class="modal-header" style="background: linear-gradient(90deg, #e02020 0%, #ff4040 100%); border-radius: 22px 22px 0 0;">
-        <h5 class="modal-title text-white fw-bold" id="compatModalLabel">Compatibilidade Sanguínea</h5>
-        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Fechar"></button>
-      </div>
-      <div class="modal-body" id="compatModalBody" style="font-size: 1.1rem; color: #333; padding: 2rem 1.5rem; background: #fff; border-radius: 0 0 22px 22px;">
-        <!-- Conteúdo JS -->
-      </div>
-      <div class="modal-footer" style="background: #fff; border-radius: 0 0 22px 22px; border-top: none;">
-        <button type="button" class="btn btn-danger" style="border-radius: 50px; padding: 0.6rem 2.2rem; font-weight: 600; font-size: 1.1rem; box-shadow: 0 2px 8px rgba(224,32,32,0.08);" data-bs-dismiss="modal">Fechar</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-
-</section>
-<!-- Mapa Section (atualizado) -->
-<section class="container mb-5">
-    <div class="text-center mb-4">
-        <h2 class="section-title">Unidades de Coleta</h2>
-    </div>
-    <div class="map-tools">
-        <button id="btn-locate" type="button">Minha Localização</button>
-        <button id="btn-clear-route" type="button" disabled>Limpar Rota</button>
-        <span class="geo-status" id="geo-status"></span>
-    </div>
-    <div id="mapa"></div>
-    <div id="info-rota" class="info-box"></div>
-    <ul id="lista-unidades" class="unidade-list"></ul>
-</section>
-{% endblock %}
+        <div id="mapa"></div>
+        <div id="info-rota" class="info-box"></div>
+        <ul id="lista-unidades" class="unidade-list"></ul>
+    </section>
+    {% endblock %}
 
 {% block custom_js %}
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
-<script src="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.js"></script>
-<script src="/static/js/publico/publico_inicio.js"></script>
-{% endblock %}
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
+    <script src="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.js"></script>
+    <script src="/static/js/publico/publico_inicio.js"></script>
+    {% endblock %}
