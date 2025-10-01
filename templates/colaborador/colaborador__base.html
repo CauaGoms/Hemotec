@@ -18,7 +18,7 @@
         <!-- Navbar -->
         <nav class="navbar navbar-expand-lg navbar-light fixed-top">
             <div class="container">
-                <a class="navbar-brand d-flex align-items-center" href="/doador">
+                <a class="navbar-brand d-flex align-items-center" href="/colaborador">
                     <img src="/static/img/logo_vermelha.svg" alt="Hemotec Logo">
                     <span class="ms-2">Hemotec</span>
                 </a>
@@ -36,22 +36,25 @@
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav ms-auto">
                         <li class="nav-item">
-                            <a class="nav-link {% if active_page == 'home' %}active{% endif %}" href="/doador">Home</a>
+                            <a class="nav-link {% if active_page == 'home' %}active{% endif %}" href="/colaborador">Home</a>
                         </li>
                         <!-- <li class="nav-item">
                             <a class="nav-link" href="#">Doadores</a>
                         </li> -->
                         <li class="nav-item">
-                            <a class="nav-link {% if active_page == 'campanha' %}active{% endif %}" href="/doador/campanha">Campanhas</a>
+                            <a class="nav-link {% if active_page == 'campanha' %}active{% endif %}" href="/colaborador/campanha">Campanhas</a>
                         </li>
                         <!-- <li class="nav-item">
                             <a class="nav-link" href="#">Relatórios</a>
                         </li> -->
                         <li class="nav-item">
-                            <a class="nav-link {% if active_page == 'agendamento' %}active{% endif %}" href="/doador/agendamento">Agendamentos</a>
+                            <a class="nav-link {% if active_page == 'agendamento' %}active{% endif %}" href="/colaborador/agendamento">Agendamentos</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link {% if active_page == 'notificacao' %}active{% endif %}" href="/doador/notificacao">Notificações</a>
+                            <a class="nav-link {% if active_page == 'doacoes' %}active{% endif %}" href="/colaborador/doacoes">Doações</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {% if active_page == 'notificacao' %}active{% endif %}" href="/colaborador/notificacao">Notificações</a>
                         </li>
                         <li class="nav-item dropdown ">
                             <a
@@ -67,19 +70,19 @@
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <li>
-                                    <a class="dropdown-item" href="/doador/meu_perfil">
+                                    <a class="dropdown-item" href="/colaborador/meu_perfil">
                                         <i class="fas fa-user"></i>
                                         Meu Perfil
                                     </a>
                                 </li>
                                 <li>
-                                    <a class="dropdown-item" href="/doador/configuracoes">
+                                    <a class="dropdown-item" href="/colaborador/configuracoes">
                                         <i class="fas fa-cog"></i>
                                         Configurações
                                     </a>
                                 </li>
                                 <li>
-                                    <a class="dropdown-item" href="/doador/carteira">
+                                    <a class="dropdown-item" href="/colaborador/carteira">
                                         <i class="fas fa-wallet"></i>
                                         Carteira
                                     </a>
@@ -88,7 +91,7 @@
                                     <hr class="dropdown-divider">
                                 </li>
                                 <li>
-                                    <a class="dropdown-item" href="/doador/sair">
+                                    <a class="dropdown-item" href="/colaborador/sair">
                                         <i class="fas fa-sign-out-alt"></i>
                                         Sair
                                     </a>

@@ -1,14 +1,9 @@
-"""
-Biblioteca centralizada de validações para DTOs
-"""
-
-class ValidacaoError(ValueError):
-    """Exceção personalizada para erros de validação"""
-    pass
-
 import re
 from typing import Optional
 from decimal import Decimal
+
+class ValidacaoError(ValueError):
+    pass
 
 def validar_texto_obrigatorio(
     texto: str,
@@ -16,21 +11,7 @@ def validar_texto_obrigatorio(
     min_chars: int = 1,
     max_chars: int = 255
 ) -> str:
-    """
-    Valida texto obrigatório com limites de tamanho
-
-    Args:
-        texto: Texto a ser validado
-        campo: Nome do campo (para mensagens de erro)
-        min_chars: Tamanho mínimo
-        max_chars: Tamanho máximo
-
-    Returns:
-        Texto validado e limpo
-
-    Raises:
-        ValidacaoError: Se validação falhar
-    """
+    
     if not texto or not texto.strip():
         raise ValidacaoError(f'{campo} é obrigatório')
 
@@ -49,19 +30,6 @@ def validar_texto_opcional(
     texto: Optional[str],
     max_chars: int = 500
 ) -> Optional[str]:
-    """
-    Valida texto opcional
-
-    Args:
-        texto: Texto a ser validado (pode ser None)
-        max_chars: Tamanho máximo
-
-    Returns:
-        Texto validado ou None
-
-    Raises:
-        ValidacaoError: Se texto exceder tamanho máximo
-    """
     if not texto or not texto.strip():
         return None
 
@@ -74,18 +42,6 @@ def validar_texto_opcional(
 
 
 def validar_cpf(cpf: Optional[str]) -> Optional[str]:
-    """
-    Valida CPF brasileiro com dígitos verificadores
-
-    Args:
-        cpf: CPF a ser validado (pode conter máscaras)
-
-    Returns:
-        CPF limpo (apenas números) ou None se vazio
-
-    Raises:
-        ValidacaoError: Se CPF for inválido
-    """
     if not cpf:
         return None
 
@@ -116,18 +72,6 @@ def validar_cpf(cpf: Optional[str]) -> Optional[str]:
 
 
 def validar_telefone(telefone: str) -> str:
-    """
-    Valida telefone brasileiro (celular ou fixo)
-
-    Args:
-        telefone: Telefone a ser validado
-
-    Returns:
-        Telefone limpo (apenas números)
-
-    Raises:
-        ValidacaoError: Se telefone for inválido
-    """
     if not telefone:
         raise ValidacaoError('Telefone é obrigatório')
 
@@ -152,21 +96,7 @@ def validar_valor_monetario(
     obrigatorio: bool = True,
     min_valor: Optional[Decimal] = None
 ) -> Optional[Decimal]:
-    """
-    Valida valor monetário
-
-    Args:
-        valor: Valor a ser validado
-        campo: Nome do campo
-        obrigatorio: Se o valor é obrigatório
-        min_valor: Valor mínimo permitido
-
-    Returns:
-        Valor validado
-
-    Raises:
-        ValidacaoError: Se validação falhar
-    """
+    
     if valor is None:
         if obrigatorio:
             raise ValidacaoError(f'{campo} é obrigatório')
@@ -185,20 +115,6 @@ def validar_valor_monetario(
 
 
 def validar_enum_valor(valor: any, enum_class, campo: str = "Campo"):
-    """
-    Valida se valor está em um enum
-
-    Args:
-        valor: Valor a ser validado
-        enum_class: Classe do enum
-        campo: Nome do campo
-
-    Returns:
-        Valor do enum validado
-
-    Raises:
-        ValidacaoError: Se valor não estiver no enum
-    """
     if isinstance(valor, str):
         try:
             return enum_class(valor.upper())
@@ -224,22 +140,6 @@ class ValidadorWrapper:
 
     @staticmethod
     def criar_validador(funcao_validacao, campo_nome: str = None, **kwargs):
-        """
-        Cria um validador pronto para usar com @field_validator.
-
-        Args:
-            funcao_validacao: Função de validação a ser chamada
-            campo_nome: Nome do campo para mensagens de erro
-            **kwargs: Argumentos adicionais para a função
-
-        Returns:
-            Função validador pronta para usar
-
-        Exemplo:
-            validar_nome = ValidadorWrapper.criar_validador(
-                validar_texto_obrigatorio, "Nome", min_chars=2, max_chars=100
-            )
-        """
         def validador(valor):
             try:
                 if campo_nome:
