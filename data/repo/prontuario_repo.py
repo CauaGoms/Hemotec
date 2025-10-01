@@ -21,7 +21,7 @@ def inserir(prontuario: Prontuario) -> Optional[int]:
     with get_connection() as conn:
         cursor = conn.cursor()
         cursor.execute(INSERIR, (
-            prontuario.cod_doador,
+            prontuario.cod_doacao,
             prontuario.data_criacao,
             prontuario.data_atualizacao,
             prontuario.diabetes,
@@ -52,7 +52,7 @@ def obter_todos() -> list[Prontuario]:
         prontuario = [
             Prontuario(
                 cod_prontuario=row["cod_prontuario"],
-                cod_doador=row["cod_doador"],
+                cod_doacao=row["cod_doacao"],
                 data_criacao=datetime.strptime(row["data_criacao"], '%Y-%m-%d'),
                 data_atualizacao=datetime.strptime(row["data_atualizacao"], '%Y-%m-%d'),
                 diabetes=row["diabetes"],
@@ -83,7 +83,7 @@ def obter_por_id(cod_prontuario: int) -> Optional[Prontuario]:
         if row:
             return Prontuario(
                 cod_prontuario=row["cod_prontuario"],
-                cod_doador=row["cod_doador"],
+                cod_doacao=row["cod_doacao"],
                 data_criacao=datetime.strptime(row["data_criacao"], '%Y-%m-%d'),
                 data_atualizacao=datetime.strptime(row["data_atualizacao"], '%Y-%m-%d'),
                 diabetes=row["diabetes"],
@@ -112,7 +112,7 @@ def update(prontuario: Prontuario) -> bool:
         cursor.execute(
             UPDATE,
             (
-                prontuario.cod_doador,
+                prontuario.cod_doacao,
                 prontuario.data_criacao,
                 prontuario.data_atualizacao,
                 prontuario.diabetes,

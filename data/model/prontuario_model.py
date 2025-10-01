@@ -5,7 +5,7 @@ from datetime import datetime
 @dataclass
 class Prontuario:
     cod_prontuario: int
-    cod_doador: int
+    cod_doacao: int
     data_criacao: datetime
     data_atualizacao: datetime
     diabetes: bool
