@@ -94,8 +94,6 @@ INSERT INTO exame (cod_exame, cod_doacao, data_exame, tipo_exame, resultado, arq
 (3, 3, '2023-10-07', 'Teste de HIV', 'Negativo', 'HIV_789.pdf'),
 (4, 4, '2023-10-08', 'Teste de Sífilis', 'Negativo', 'sifilis_101.pdf');
 
-INSERT INTO prontuario (cod_prontuario, cod_doacao, data_criacao, data_atualizacao, diabetes, hipertensao, cardiopatia, cancer, nenhuma, outros, medicamentos, fumante, alcool, atividade, jejum, sono, bebida, sintomas_gripais, tatuagem, termos, alerta) VALUES
-(1, 1, '2023-10-01', '2023-10-01', 'nao', 'nao', 'nao', 'nao', 'sim', 'nao', 'nao', 'nao', 'nao', 'nao', 'nao', 'nao', 'nao', 'nao', 'nao', 'sim', 'sim'),
-(2, 2, '2023-10-01', '2023-10-01', 'nao', 'sim', 'nao', 'nao', 'sim', 'nao', 'sim', 'nao', 'sim', 'sim', 'nao', 'sim', 'nao', 'nao', 'nao', 'sim', 'sim'),
-(3, 3, '2023-10-01', '2023-10-01', 'sim', 'nao', 'nao', 'nao', 'nao', 'sim', 'sim', 'sim', 'nao', 'sim', 'sim', 'nao', 'sim', 'nao', 'nao', 'sim', 'sim'),
-(4, 4, '2023-10-01', '2023-10-01', 'nao', 'nao', 'sim', 'nao', 'sim', 'nao', 'nao', 'nao', 'nao', 'nao', 'nao', 'sim', 'nao', 'sim', 'nao', 'sim', 'sim');
+INSERT INTO prontuario (cod_prontuario, cod_doacao, data_criacao, data_atualizacao, jejum, diabetes, hipertensao, cardiopatia, cancer, hepatite, outros, detalhes_outros, sintomas_gripais, medicamentos, detalhes_medicamentos, fumante, alcool, droga, ist, atividade, sono, tatuagem_e_outros) VALUES
+(1,1, '2023-10-05', '2023-10-05', False, False, False, False, False, False, False, '', False, False, '', False, False, False, False, False, True, False),
+(2,2, '2023-10-06', '2023-10-06', True, False, True, False, False, True, True, 'Hepatite A', True, True, 'Paracetamol', False, True, False, False, True, False, False);
