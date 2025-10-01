@@ -96,6 +96,7 @@ from routes.colaborador.colaborador_doacao_adicionar import router as colaborado
 from routes.colaborador.colaborador_doacao_alterar import router as colaborador_doacao_alterar_router
 from routes.colaborador.colaborador_doacao_excluir import router as colaborador_doacao_excluir_router
 from routes.colaborador.colaborador_doacao_detalhe import router as colaborador_doacao_detalhe_router
+from routes.colaborador.colaborador_doacao_triagem import router as colaborador_doacao_triagem_router
 from routes.colaborador.colaborador_doacao_anexar_resultado import router as colaborador_doacao_anexar_resultado_router
 from routes.colaborador.colaborador_disponibilidade_coleta import router as colaborador_disponibilidade_coleta_router
 
@@ -215,6 +216,7 @@ app.include_router(colaborador_doacao_adicionar_router)
 app.include_router(colaborador_doacao_alterar_router)
 app.include_router(colaborador_doacao_excluir_router)
 app.include_router(colaborador_doacao_detalhe_router)
+app.include_router(colaborador_doacao_triagem_router)
 app.include_router(colaborador_doacao_anexar_resultado_router)
 app.include_router(colaborador_disponibilidade_coleta_router)
 
