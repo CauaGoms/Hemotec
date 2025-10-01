@@ -1,12 +1,411 @@
 {% extends "colaborador/colaborador__base.html" %}
 {% block custom_css %}
-<!-- <link href="/static/css" rel="stylesheet"> -->
+<link href="/static/css/colaborador/colaborador_doacao.css" rel="stylesheet">
 {% endblock %}
 
 {% block conteudo %}
-<h1>colaborador_doacao</h1>
+<!-- Conteúdo Principal -->
+        <div class="main-content" style="padding-top: 80px;">
+            <!-- Seção de Cabeçalho -->
+            <section class="hero-section">
+                <div class="container">
+                    <div class="hero-content">
+                        <h1 class="hero-title">
+                            <i class="fas fa-tint"></i>
+                            Gestão de Doações
+                        </h1>
+                        <p class="hero-subtitle">Gerencie e acompanhe todas as doações de sangue do hemocentro</p>
+                    </div>
+                </div>
+            </section>
+
+            <div class="container mt-n5">
+                <div class="donations-container">
+                    <!-- Header com Filtros Modernos -->
+                    <div class="donations-header">
+                        <div class="header-content">
+                            <div class="header-title-section">
+                                <h2 class="header-title">
+                                    <i class="fas fa-filter"></i>
+                                    Filtros de Doações
+                                </h2>
+                                <p class="header-subtitle">Filtre e encontre doações rapidamente</p>
+                            </div>
+                            
+                            <div class="filters-and-search">
+                                <div class="filters-container">
+                                    <div class="filter-buttons-modern">
+                                        <button class="filter-btn-modern active" data-status="all">
+                                            <div class="btn-icon">
+                                                <i class="fas fa-list"></i>
+                                            </div>
+                                            <div class="btn-content">
+                                                <span class="btn-label">Todos</span>
+                                                <small class="btn-count">70</small>
+                                            </div>
+                                        </button>
+                                        
+                                        <button class="filter-btn-modern triagem" data-status="aguardando_triagem">
+                                            <div class="btn-icon">
+                                                <i class="fas fa-clipboard-check"></i>
+                                            </div>
+                                            <div class="btn-content">
+                                                <span class="btn-label">Aguardando Triagem</span>
+                                                <small class="btn-count">8</small>
+                                            </div>
+                                        </button>
+                                        
+                                        <button class="filter-btn-modern coleta" data-status="aguardando_doacao">
+                                            <div class="btn-icon">
+                                                <i class="fas fa-hand-holding-heart"></i>
+                                            </div>
+                                            <div class="btn-content">
+                                                <span class="btn-label">Aguardando Coleta</span>
+                                                <small class="btn-count">5</small>
+                                            </div>
+                                        </button>
+                                        
+                                        <button class="filter-btn-modern exames" data-status="aguardando_exames">
+                                            <div class="btn-icon">
+                                                <i class="fas fa-vial"></i>
+                                            </div>
+                                            <div class="btn-content">
+                                                <span class="btn-label">Aguardando Exames</span>
+                                                <small class="btn-count">12</small>
+                                            </div>
+                                        </button>
+                                        
+                                        <button class="filter-btn-modern concluidas" data-status="concluida">
+                                            <div class="btn-icon">
+                                                <i class="fas fa-check-circle"></i>
+                                            </div>
+                                            <div class="btn-content">
+                                                <span class="btn-label">Concluídas</span>
+                                                <small class="btn-count">45</small>
+                                            </div>
+                                        </button>
+                                    </div>
+                                </div>
+                                
+                                <div class="search-container">
+                                    <div class="search-box-modern">
+                                        <div class="search-icon">
+                                            <i class="fas fa-search"></i>
+                                        </div>
+                                        <input type="text" id="searchInput" placeholder="Buscar por nome, CPF ou telefone..." class="search-input">
+                                        <div class="search-actions">
+                                            <button type="button" class="clear-search" id="clearSearch">
+                                                <i class="fas fa-times"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="search-suggestions" id="searchSuggestions" style="display: none;">
+                                        <!-- Sugestões de busca aparecerão aqui -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Lista de Doações -->
+                    <div class="donations-list" id="donationsList">
+                        
+                        <!-- Doação Aguardando Triagem -->
+                        <div class="donation-card aguardando_triagem" data-status="aguardando_triagem" data-donor="João Silva">
+                            <div class="card-header">
+                                <div class="donor-info">
+                                    <div class="donor-avatar">
+                                        <i class="fas fa-user"></i>
+                                    </div>
+                                    <div class="donor-details">
+                                        <h4 class="donor-name">João Silva</h4>
+                                        <p class="donor-info-text">
+                                            <span><i class="fas fa-id-card"></i> CPF: 123.456.789-00</span>
+                                            <span><i class="fas fa-tint"></i> Tipo: O+</span>
+                                            <span><i class="fas fa-calendar"></i> Agendado: 15/01/2025 - 09:00</span>
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="status-badge triagem">
+                                    <i class="fas fa-clipboard-check"></i>
+                                    Aguardando Triagem
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="donation-details">
+                                    <div class="detail-item">
+                                        <i class="fas fa-phone"></i>
+                                        <span>(28) 99999-9999</span>
+                                    </div>
+                                    <div class="detail-item">
+                                        <i class="fas fa-birthday-cake"></i>
+                                        <span>25 anos</span>
+                                    </div>
+                                    <div class="detail-item">
+                                        <i class="fas fa-map-marker-alt"></i>
+                                        <span>Cachoeiro de Itapemirim, ES</span>
+                                    </div>
+                                    <div class="detail-item">
+                                        <i class="fas fa-clock"></i>
+                                        <span>Primeira doação</span>
+                                    </div>
+                                </div>
+                                <div class="card-actions">
+                                    <button class="btn btn-primary action-btn" onclick="fazerTriagem('1')">
+                                        <i class="fas fa-clipboard-check"></i>
+                                        Fazer Triagem
+                                    </button>
+                                    <button class="btn btn-outline-secondary" onclick="verDetalhes('1')">
+                                        <i class="fas fa-eye"></i>
+                                        Ver Detalhes
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Doação Aguardando Doação -->
+                        <div class="donation-card aguardando_doacao" data-status="aguardando_doacao" data-donor="Maria Santos">
+                            <div class="card-header">
+                                <div class="donor-info">
+                                    <div class="donor-avatar">
+                                        <i class="fas fa-user"></i>
+                                    </div>
+                                    <div class="donor-details">
+                                        <h4 class="donor-name">Maria Santos</h4>
+                                        <p class="donor-info-text">
+                                            <span><i class="fas fa-id-card"></i> CPF: 987.654.321-00</span>
+                                            <span><i class="fas fa-tint"></i> Tipo: A-</span>
+                                            <span><i class="fas fa-calendar"></i> Triagem: 14/01/2025 - 14:30</span>
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="status-badge doacao">
+                                    <i class="fas fa-hand-holding-heart"></i>
+                                    Aguardando Coleta
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="donation-details">
+                                    <div class="detail-item">
+                                        <i class="fas fa-phone"></i>
+                                        <span>(28) 98888-8888</span>
+                                    </div>
+                                    <div class="detail-item">
+                                        <i class="fas fa-birthday-cake"></i>
+                                        <span>32 anos</span>
+                                    </div>
+                                    <div class="detail-item">
+                                        <i class="fas fa-check-circle text-success"></i>
+                                        <span>Triagem aprovada</span>
+                                    </div>
+                                    <div class="detail-item">
+                                        <i class="fas fa-weight"></i>
+                                        <span>65kg - 1,68m</span>
+                                    </div>
+                                </div>
+                                <div class="card-actions">
+                                    <button class="btn btn-success action-btn" onclick="inserirDoacao('2')">
+                                        <i class="fas fa-tint"></i>
+                                        Inserir Coleta
+                                    </button>
+                                    <button class="btn btn-outline-secondary" onclick="verTriagem('2')">
+                                        <i class="fas fa-clipboard-list"></i>
+                                        Ver Triagem
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Doação Aguardando Exames -->
+                        <div class="donation-card aguardando_exames" data-status="aguardando_exames" data-donor="Carlos Oliveira">
+                            <div class="card-header">
+                                <div class="donor-info">
+                                    <div class="donor-avatar">
+                                        <i class="fas fa-user"></i>
+                                    </div>
+                                    <div class="donor-details">
+                                        <h4 class="donor-name">Carlos Oliveira</h4>
+                                        <p class="donor-info-text">
+                                            <span><i class="fas fa-id-card"></i> CPF: 456.789.123-00</span>
+                                            <span><i class="fas fa-tint"></i> Tipo: B+</span>
+                                            <span><i class="fas fa-calendar"></i> Doação: 13/01/2025 - 10:15</span>
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="status-badge exames">
+                                    <i class="fas fa-vial"></i>
+                                    Aguardando Exames
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="donation-details">
+                                    <div class="detail-item">
+                                        <i class="fas fa-phone"></i>
+                                        <span>(28) 97777-7777</span>
+                                    </div>
+                                    <div class="detail-item">
+                                        <i class="fas fa-birthday-cake"></i>
+                                        <span>28 anos</span>
+                                    </div>
+                                    <div class="detail-item">
+                                        <i class="fas fa-flask"></i>
+                                        <span>450ml coletados</span>
+                                    </div>
+                                    <div class="detail-item">
+                                        <i class="fas fa-user-md"></i>
+                                        <span>Dr. João Mendes</span>
+                                    </div>
+                                </div>
+                                <div class="card-actions">
+                                    <button class="btn btn-warning action-btn" onclick="inserirExame('3')">
+                                        <i class="fas fa-vial"></i>
+                                        Inserir Exame
+                                    </button>
+                                    <button class="btn btn-outline-secondary" onclick="verDoacao('3')">
+                                        <i class="fas fa-tint"></i>
+                                        Ver Doação
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Doação Concluída -->
+                        <div class="donation-card concluida" data-status="concluida" data-donor="Ana Costa">
+                            <div class="card-header">
+                                <div class="donor-info">
+                                    <div class="donor-avatar">
+                                        <i class="fas fa-user"></i>
+                                    </div>
+                                    <div class="donor-details">
+                                        <h4 class="donor-name">Ana Costa</h4>
+                                        <p class="donor-info-text">
+                                            <span><i class="fas fa-id-card"></i> CPF: 789.123.456-00</span>
+                                            <span><i class="fas fa-tint"></i> Tipo: AB+</span>
+                                            <span><i class="fas fa-calendar"></i> Concluída: 12/01/2025 - 16:45</span>
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="status-badge concluida">
+                                    <i class="fas fa-check-circle"></i>
+                                    Concluída
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="donation-details">
+                                    <div class="detail-item">
+                                        <i class="fas fa-phone"></i>
+                                        <span>(28) 96666-6666</span>
+                                    </div>
+                                    <div class="detail-item">
+                                        <i class="fas fa-birthday-cake"></i>
+                                        <span>35 anos</span>
+                                    </div>
+                                    <div class="detail-item">
+                                        <i class="fas fa-check-circle text-success"></i>
+                                        <span>Exames aprovados</span>
+                                    </div>
+                                    <div class="detail-item">
+                                        <i class="fas fa-box"></i>
+                                        <span>Estoque atualizado</span>
+                                    </div>
+                                </div>
+                                <div class="card-actions">
+                                    <button class="btn btn-info action-btn" onclick="gerarComprovante('4')">
+                                        <i class="fas fa-certificate"></i>
+                                        Gerar Comprovante
+                                    </button>
+                                    <button class="btn btn-outline-secondary" onclick="verHistorico('4')">
+                                        <i class="fas fa-history"></i>
+                                        Ver Histórico
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Mais doações seriam listadas aqui -->
+                    </div>
+
+                    <!-- Paginação -->
+                    <div class="pagination-container">
+                        <nav aria-label="Navegação de páginas">
+                            <ul class="pagination justify-content-center">
+                                <li class="page-item disabled">
+                                    <a class="page-link" href="#" tabindex="-1">
+                                        <i class="fas fa-chevron-left"></i>
+                                    </a>
+                                </li>
+                                <li class="page-item active">
+                                    <a class="page-link" href="#">1</a>
+                                </li>
+                                <li class="page-item">
+                                    <a class="page-link" href="#">2</a>
+                                </li>
+                                <li class="page-item">
+                                    <a class="page-link" href="#">3</a>
+                                </li>
+                                <li class="page-item">
+                                    <a class="page-link" href="#">
+                                        <i class="fas fa-chevron-right"></i>
+                                    </a>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
+
+                    <!-- Mensagem quando não há doações -->
+                    <div class="no-donations-message" id="noDonationsMessage" style="display: none;">
+                        <div class="text-center p-5">
+                            <i class="fas fa-search fa-3x text-muted mb-3"></i>
+                            <h4>Nenhuma doação encontrada</h4>
+                            <p>Não há doações que correspondam aos filtros selecionados.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal de Detalhes -->
+        <div class="modal fade" id="detailsModal" tabindex="-1" aria-labelledby="detailsModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="detailsModalLabel">
+                            <i class="fas fa-info-circle"></i>
+                            Detalhes da Doação
+                        </h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body" id="modalDetailsContent">
+                        <!-- Conteúdo será preenchido dinamicamente -->
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal de Confirmação -->
+        <div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="confirmModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="confirmModalLabel">Confirmar Ação</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body" id="confirmModalBody">
+                        <!-- Conteúdo será preenchido dinamicamente -->
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="button" class="btn btn-primary" id="confirmActionBtn">Confirmar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
 {% endblock %}
 
 {% block custom_js %}
-<!-- <script src="/static/js"></script> -->
+<script src="/static/js/colaborador/colaborador_doacao.js"></script>
 {% endblock %}
