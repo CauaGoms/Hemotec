@@ -8,7 +8,7 @@ from util.validacoes_dto import (
 class CriarUsuarioDTO(BaseDTO):
     nome: str = Field(
         ...,
-        min_length=2,
+        min_length=3,
         max_length=100,
         description="Nome completo do usuário"
     )
@@ -65,7 +65,12 @@ class CriarUsuarioDTO(BaseDTO):
         max_length=100,
         description="Senha do usuário"
     )
-    
+    confirmar_senha: str = Field(
+        ...,
+        min_length=6,
+        max_length=100,
+        description="Confirmação da senha do usuário"
+    )
 
     @field_validator('nome')
     @classmethod
@@ -80,9 +85,7 @@ class CriarUsuarioDTO(BaseDTO):
 
     @field_validator('cpf')
     @classmethod
-    def validar_cpf_campo(cls, v: Optional[str]) -> Optional[str]:
-        if not v:
-            return v
+    def validar_cpf_campo(cls, v: str) -> str:
         validador = cls.validar_campo_wrapper(
             lambda valor, campo: validar_cpf(valor),
             "CPF"
@@ -97,6 +100,45 @@ class CriarUsuarioDTO(BaseDTO):
             "Telefone"
         )
         return validador(v)
+
+    @field_validator('data_nascimento')
+    @classmethod
+    def validar_data_nascimento(cls, v: str) -> str:
+        import re
+        from datetime import datetime
+        
+        # Verifica formato AAAA-MM-DD
+        if not re.match(r'^\d{4}-\d{2}-\d{2}$', v):
+            raise ValueError('Data deve estar no formato AAAA-MM-DD')
+        
+        try:
+            data = datetime.strptime(v, '%Y-%m-%d')
+            
+            # Verifica se não é uma data futura
+            if data.date() > datetime.now().date():
+                raise ValueError('Data de nascimento não pode ser futura')
+            
+            # Verifica se não é uma data muito antiga (antes de 1900)
+            if data.year < 1900:
+                raise ValueError('Data de nascimento deve ser posterior a 1900')
+            
+            # Verifica idade mínima (16 anos para doação de sangue)
+            idade = (datetime.now().date() - data.date()).days // 365
+            if idade < 16:
+                raise ValueError('Idade mínima para doação é 16 anos')
+                
+        except ValueError as e:
+            if 'time data' in str(e):
+                raise ValueError('Data inválida')
+            raise e
+        
+        return v
+
+    @field_validator('email')
+    @classmethod
+    def validar_email_campo(cls, v: str) -> str:
+        # EmailStr já faz a validação básica, apenas retornamos
+        return v
 
     @field_validator('cep_usuario')
     @classmethod
@@ -156,13 +198,18 @@ class CriarUsuarioDTO(BaseDTO):
     @field_validator('senha')
     @classmethod
     def validar_senha(cls, v: str) -> str:
-        validador = cls.validar_campo_wrapper(
-            lambda valor, campo: validar_texto_obrigatorio(
-                valor, campo, min_chars=6, max_chars=100
-            ),
-            "Senha"
-        )
-        return validador(v)
+        if len(v) < 6:
+            raise ValueError('Senha deve ter no mínimo 6 caracteres')
+        if not any(c.isdigit() for c in v):
+            raise ValueError('Senha deve conter pelo menos um número')
+        return v
+    
+    @field_validator('confirmar_senha')
+    @classmethod
+    def senhas_devem_coincidir(cls, v: str, info) -> str:
+        if 'senha' in info.data and v != info.data['senha']:
+            raise ValueError('As senhas não coincidem')
+        return v
 
     @classmethod
     def criar_exemplo_json(cls, **overrides) -> dict:

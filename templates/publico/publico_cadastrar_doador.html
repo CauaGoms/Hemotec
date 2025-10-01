@@ -32,52 +32,72 @@
                     <div class="mb-3">
                         <input
                             type="text"
-                            class="form-control"
+                            class="form-control {% if erro and 'nome' in erro.lower() %}is-invalid{% endif %}"
                             id="name"
                             placeholder="Nome Completo"
                             required
                             name="nome"
+                            value="{{ dados.nome if dados else '' }}"
                         >
+                        {% if erro and 'nome' in erro.lower() %}
+                        <div class="invalid-feedback">{{ erro }}</div>
+                        {% endif %}
                     </div>
                     <div class="mb-3">
                         <input
                             type="text"
-                            class="form-control"
+                            class="form-control {% if erro and 'cpf' in erro.lower() %}is-invalid{% endif %}"
                             id="cpf"
                             placeholder="CPF"
                             required
                             name="cpf"
+                            value="{{ dados.cpf if dados else '' }}"
                         >
+                        {% if erro and 'cpf' in erro.lower() %}
+                        <div class="invalid-feedback">{{ erro }}</div>
+                        {% endif %}
                     </div>
                     <div class="mb-3">
                         <input
                             type="date"
-                            class="form-control"
+                            class="form-control {% if erro and 'data_nascimento' in erro.lower() %}is-invalid{% endif %}"
                             id="birthdate"
                             placeholder="Data de Nascimento"
                             required
+                            value="{{ dados.data_nascimento if dados else '' }}"
                             name="data_nascimento"
                         >
+                        {% if erro and 'data_nascimento' in erro.lower() %}
+                        <div class="invalid-feedback">{{ erro }}</div>
+                        {% endif %}
                     </div>
                     <div class="mb-3">
                         <input
                             type="email"
-                            class="form-control"
+                            class="form-control {% if erro and 'email' in erro.lower() %}is-invalid{% endif %}"
                             id="email"
                             placeholder="Email"
                             required
                             name="email"
+                            value="{{ dados.email if dados else '' }}"
                         >
+                        {% if erro and 'email' in erro.lower() %}
+                        <div class="invalid-feedback">{{ erro }}</div>
+                        {% endif %}
                     </div>
                     <div class="mb-3">
                         <input
                             type="tel"
-                            class="form-control"
+                            class="form-control {% if erro and 'telefone' in erro.lower() %}is-invalid{% endif %}"
                             id="telefone"
                             placeholder="Telefone"
                             required
+                            value="{{ dados.telefone if dados else '' }}"
                             name="telefone"
                         >
+                        {% if erro and 'telefone' in erro.lower() %}
+                        <div class="invalid-feedback">{{ erro }}</div>
+                        {% endif %}
                     </div>
                 </div>
                 <!-- Seção 2: Endereço -->
@@ -86,54 +106,74 @@
                     <div class="mb-3">
                         <input
                             type="text"
-                            class="form-control"
+                            class="form-control {% if erro and 'cep' in erro.lower() %}is-invalid{% endif %}"
                             id="cep"
                             placeholder="CEP"
                             maxlength="9"
                             required
                             name="cep_usuario"
+                            value="{{ dados.cep_usuario if dados else '' }}"
                         >
+                        {% if erro and 'cep' in erro.lower() %}
+                        <div class="invalid-feedback">{{ erro }}</div>
+                        {% endif %}
                     </div>
                     <div class="mb-3">
                         <input
                             type="text"
-                            class="form-control"
+                            class="form-control {% if erro and 'rua' in erro.lower() %}is-invalid{% endif %}"
                             id="rua"
                             placeholder="Rua"
                             required
                             name="rua_usuario"
+                            value="{{ dados.rua_usuario if dados else '' }}"
                         >
+                        {% if erro and 'rua' in erro.lower() %}
+                        <div class="invalid-feedback">{{ erro }}</div>
+                        {% endif %}
                     </div>
                     <div class="mb-3">
                         <input
                             type="text"
-                            class="form-control"
+                            class="form-control {% if erro and 'bairro' in erro.lower() %}is-invalid{% endif %}"
                             id="bairro"
                             placeholder="Bairro"
                             required
                             name="bairro_usuario"
+                            value="{{ dados.bairro_usuario if dados else '' }}"
                         >
+                        {% if erro and 'bairro' in erro.lower() %}
+                        <div class="invalid-feedback">{{ erro }}</div>
+                        {% endif %}
                     </div>
                     <div class="mb-3">
                         <input
                             type="text"
-                            class="form-control"
+                            class="form-control {% if erro and 'cidade' in erro.lower() %}is-invalid{% endif %}"
                             id="cidade"
                             placeholder="Cidade"
                             required
                             name="cidade_usuario"
+                            value="{{ dados.cidade_usuario if dados else '' }}"
                         >
+                        {% if erro and 'cidade' in erro.lower() %}
+                        <div class="invalid-feedback">{{ erro }}</div>
+                        {% endif %}
                     </div>
                         <div class="mb-3">
                             <input
                                 type="text"
-                                class="form-control"
+                                class="form-control {% if erro and 'uf' in erro.lower() %}is-invalid{% endif %}"
                                 id="uf"
                                 placeholder="UF"
                                 required
                                 name="estado_usuario"
                                 maxlength="2"
+                                value="{{ dados.estado_usuario if dados else '' }}"
                             >
+                            {% if erro and 'uf' in erro.lower() %}
+                            <div class="invalid-feedback">{{ erro }}</div>
+                            {% endif %}
                         </div>
                 </div>
                 <!-- Seção 3: Senha -->
@@ -142,21 +182,29 @@
                     <div class="mb-3">
                         <input
                             type="password"
-                            class="form-control"
+                            class="form-control {% if erro and 'senha' in erro.lower() %}is-invalid{% endif %}"
                             id="password"
                             placeholder="Crie uma senha"
                             required
                             name="senha"
                         >
+                        <small class="form-text text-muted">Mínimo 6 caracteres com pelo menos um número</small>
+                        {% if erro and 'senha' in erro.lower() %}
+                        <div class="invalid-feedback">{{ erro }}</div>
+                        {% endif %}
                     </div>
                     <div class="mb-3">
                         <input
                             type="password"
-                            class="form-control"
+                            class="form-control {% if erro and 'confirmar senha' in erro.lower() %}is-invalid{% endif %}"
                             id="confirm-password"
+                            name="confirmar_senha"
                             placeholder="Confirme sua senha"
                             required
                         >
+                        {% if erro and 'confirmar' in erro.lower() %}
+                        <div class="invalid-feedback">{{ erro }}</div>
+                        {% endif %}
                     </div>
                 </div>
                 <!-- Botões de navegação -->

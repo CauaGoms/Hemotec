@@ -2,10 +2,13 @@ from datetime import datetime
 from fastapi import APIRouter, Form, Request, status
 from fastapi.responses import RedirectResponse
 from fastapi.templating import Jinja2Templates
+from pydantic_core import ValidationError
 from data.model.cidade_model import Cidade
 from data.model.usuario_model import Usuario
 from data.repo import cidade_repo, usuario_repo
+from dtos.usuario_dtos import CriarUsuarioDTO
 from util.auth_decorator import criar_sessao, requer_autenticacao
+from util.flash_messages import informar_sucesso
 from util.security import criar_hash_senha, verificar_senha
 
 router = APIRouter()
@@ -83,14 +86,30 @@ async def post_cadastro(
     bairro_usuario: str = Form(...),
     cidade_usuario: str = Form(...),
     estado_usuario: str = Form(...),
-    senha: str = Form(...)
+    senha: str = Form(...),
+    confirmar_senha: str = Form(...),
 ):
+    dados_formulario = {
+        "nome": nome,
+        "cpf": cpf,
+        "data_nascimento": data_nascimento,
+        "email": email,
+        "telefone": telefone,
+        "cep_usuario": cep_usuario,
+        "rua_usuario": rua_usuario,
+        "bairro_usuario": bairro_usuario,
+        "cidade_usuario": cidade_usuario,
+        "estado_usuario": estado_usuario
+    }
+
     try:
-        if usuario_repo.obter_por_email(email):
-            return templates.TemplateResponse(
-                "publico/publico_cadastrar_doador.html",
-                {"request": request, "erro": "Email já cadastrado"}
-            )
+        dados = CriarUsuarioDTO(**dados_formulario, senha=senha, confirmar_senha=confirmar_senha)
+        
+        # if usuario_repo.obter_por_email(email):
+        #     return templates.TemplateResponse(
+        #         "publico/publico_cadastrar_doador.html",
+        #         {"request": request, "erro": "Email já cadastrado"}
+        #     )
 
         cidade = cidade_repo.obter_por_nome_estado(cidade_usuario, estado_usuario)
         if not cidade:
@@ -100,37 +119,57 @@ async def post_cadastro(
             cidade_id = cidade.cod_cidade
             print(f"Cidade já existe, id: {cidade_id}")
 
-        data_nascimento_conv = data_nascimento
-        senha_hash = criar_hash_senha(senha)
+        senha_hash = criar_hash_senha(dados.senha)
 
         usuario = Usuario(
             cod_usuario=0,
-            nome=nome,
-            email=email,
+            nome=dados.nome,
+            email=dados.email,
             senha=senha_hash,
-            cpf=cpf,
-            data_nascimento=data_nascimento_conv,
+            cpf=dados.cpf,
+            data_nascimento=dados.data_nascimento,
             status=1,
-            rua_usuario=rua_usuario,
-            bairro_usuario=bairro_usuario,
+            rua_usuario=dados.rua_usuario,
+            bairro_usuario=dados.bairro_usuario,
             cidade_usuario=cidade_id,
-            cep_usuario=cep_usuario,
-            telefone=telefone,
+            cep_usuario=dados.cep_usuario,
+            telefone=dados.telefone,
             perfil="doador",
             data_cadastro=None,
-            estado_usuario=estado_usuario
+            estado_usuario=dados.estado_usuario
         )
         print(f"Tentando inserir usuario: {usuario}")
         usuario_id = usuario_repo.inserir(usuario)
         print(f"Usuário inserido, id: {usuario_id}")
 
+        informar_sucesso(request, f"Cadastro realizado com sucesso! Bem-vindo(a), {dados.nome}!")
         return RedirectResponse("/validar_telefone", status.HTTP_303_SEE_OTHER)
+    
+    except ValidationError as e:
+        erros = []
+        for erro in e.errors():
+            campo = erro['loc'][0] if erro['loc'] else 'campo'
+            mensagem = erro['msg']
+            erros.append(f"{campo.capitalize()}: {mensagem}")
+
+        erro_msg = " | ".join(erros)
+        # logger.warning(f"Erro de validação no cadastro: {erro_msg}")
+
+        # Retornar template com dados preservados e erro
+        return templates.TemplateResponse("publico/publico_cadastrar_doador.html", {
+            "request": request,
+            "erro": erro_msg,
+            "dados": dados_formulario  # Preservar dados digitados
+        })
+
     except Exception as e:
-        print(f"Erro ao cadastrar: {e}")
-        return templates.TemplateResponse(
-            "publico/publico_cadastrar_doador.html",
-            {"request": request, "erro": f"Erro ao cadastrar: {e}"}
-        )
+        # logger.error(f"Erro ao processar cadastro: {e}")
+
+        return templates.TemplateResponse("publico/publico_cadastrar_doador.html", {
+            "request": request,
+            "erro": "Erro ao processar cadastro. Tente novamente.",
+            "dados": dados_formulario
+        })
 
 # Rota acessível apenas para usuários logados
 @router.get("/dados_cadastrais")
