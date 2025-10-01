@@ -34,31 +34,10 @@ class BaseDTO(BaseModel):
 
     @classmethod
     def criar_exemplo_json(cls, **overrides) -> Dict[str, Any]:
-        """
-        Cria um exemplo JSON para documentação da API.
-        Pode ser sobrescrito nas classes filhas.
-
-        Args:
-            **overrides: Valores específicos para sobrescrever no exemplo
-
-        Returns:
-            Dict com exemplo de dados para este DTO
-        """
         return {"exemplo": "Sobrescrever na classe filha", **overrides}
 
     @classmethod
     def validar_campo_wrapper(cls, validador_func, campo_nome: str = ""):
-        """
-        Wrapper para padronizar o tratamento de erros de validação.
-        Evita repetir try/except em cada field_validator.
-
-        Args:
-            validador_func: Função de validação a ser envolvida
-            campo_nome: Nome do campo para mensagens de erro
-
-        Returns:
-            Função wrapper que trata os erros automaticamente
-        """
         def wrapper(valor, **kwargs):
             try:
                 if campo_nome:
@@ -70,36 +49,13 @@ class BaseDTO(BaseModel):
         return wrapper
 
     def to_dict(self) -> dict:
-        """
-        Converte DTO para dicionário simples.
-        Remove campos None para limpar o retorno.
-
-        Returns:
-            Dicionário com os dados do DTO
-        """
         return self.model_dump(exclude_none=True)
 
     def to_json(self) -> str:
-        """
-        Converte DTO para JSON.
-        Remove campos None para limpar o retorno.
-
-        Returns:
-            String JSON com os dados do DTO
-        """
         return self.model_dump_json(exclude_none=True)
 
     @classmethod
     def from_dict(cls, data: dict):
-        """
-        Cria DTO a partir de dicionário.
-
-        Args:
-            data: Dicionário com os dados
-
-        Returns:
-            Instância do DTO
-        """
         return cls(**data)
 
     def __str__(self) -> str:
