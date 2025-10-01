@@ -1,0 +1,614 @@
+{% extends "colaborador/colaborador__base.html" %}
+{% block custom_css %}
+<link href="/static/css/colaborador/colaborador_doacao_triagem.css" rel="stylesheet">
+{% endblock %}
+
+{% block conteudo %}
+<!-- Conteúdo Principal -->
+        <div class="main-content" style="padding-top: 80px;">
+            <div class="container">
+                <!-- Header da Página -->
+                <div class="page-header">
+                    <div class="d-flex align-items-center mb-4">
+                        <a href="/colaborador/doacao" class="btn-back">
+                            <i class="fas fa-arrow-left"></i>
+                        </a>
+                        <div class="ms-3">
+                            <h1 class="page-title mt-3">
+                                Triagem de Doação
+                            </h1>
+                            <p class="page-subtitle">Responda às perguntas para verificar sua aptidão para doação</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Barra de Progresso -->
+                <div class="progress-container mb-4">
+                    <div class="progress-header">
+                        <span class="progress-text">Progresso da Triagem</span>
+                        <span class="progress-percentage" id="progressPercentage">0%</span>
+                    </div>
+                    <div class="progress">
+                        <div class="progress-bar" id="progressBar" role="progressbar" style="width: 0%"></div>
+                    </div>
+                    <div class="progress-steps">
+                        <div class="step active" data-step="1">
+                            <i class="fas fa-user"></i>
+                            <span>Dados Pessoais</span>
+                        </div>
+                        <div class="step" data-step="2">
+                            <i class="fas fa-heartbeat"></i>
+                            <span>Saúde</span>
+                        </div>
+                        <div class="step" data-step="3">
+                            <i class="fas fa-pills"></i>
+                            <span>Medicamentos</span>
+                        </div>
+                        <div class="step" data-step="4">
+                            <i class="fas fa-running"></i>
+                            <span>Estilo de Vida</span>
+                        </div>
+                        <div class="step" data-step="5">
+                            <i class="fas fa-check-circle"></i>
+                            <span>Finalizar</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Formulário de Triagem -->
+                <div class="triagem-form-container">
+                    <form id="triagemForm" class="triagem-form">
+                        
+                        <!-- Seção 1: Dados Pessoais e Físicos -->
+                        <div class="form-section active" id="section1">
+                            <div class="section-header">
+                                <h3 class="section-title">
+                                    <i class="fas fa-user"></i>
+                                    Dados Pessoais e Físicos
+                                </h3>
+                                <p class="section-description">Informações básicas sobre você</p>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="altura" class="form-label">
+                                            <i class="fas fa-ruler-vertical"></i>
+                                            Altura (cm) *
+                                        </label>
+                                        <input 
+                                            type="number" 
+                                            class="form-control" 
+                                            id="altura" 
+                                            name="altura" 
+                                            placeholder="Ex: 175"
+                                            min="140"
+                                            max="220"
+                                            required
+                                        >
+                                        <small class="form-text text-muted">Altura mínima: 140cm</small>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="peso" class="form-label">
+                                            <i class="fas fa-weight"></i>
+                                            Peso (kg) *
+                                        </label>
+                                        <input 
+                                            type="number" 
+                                            class="form-control" 
+                                            id="peso" 
+                                            name="peso" 
+                                            placeholder="Ex: 70"
+                                            min="50"
+                                            max="200"
+                                            step="0.1"
+                                            required
+                                        >
+                                        <small class="form-text text-muted">Peso mínimo: 50kg</small>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label for="profissao" class="form-label">
+                                            <i class="fas fa-briefcase"></i>
+                                            Profissão *
+                                        </label>
+                                        <input 
+                                            type="text" 
+                                            class="form-control" 
+                                            id="profissao" 
+                                            name="profissao" 
+                                            placeholder="Ex: Engenheiro, Professor, Estudante..."
+                                            required
+                                        >
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="contato_emergencia" class="form-label">
+                                            <i class="fas fa-user-friends"></i>
+                                            Contato de Emergência *
+                                        </label>
+                                        <input 
+                                            type="text" 
+                                            class="form-control" 
+                                            id="contato_emergencia" 
+                                            name="contato_emergencia" 
+                                            placeholder="Nome completo"
+                                            required
+                                        >
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="telefone_emergencia" class="form-label">
+                                            <i class="fas fa-phone"></i>
+                                            Telefone de Emergência *
+                                        </label>
+                                        <input 
+                                            type="tel" 
+                                            class="form-control" 
+                                            id="telefone_emergencia" 
+                                            name="telefone_emergencia" 
+                                            placeholder="(00) 00000-0000"
+                                            required
+                                        >
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Seção 2: Condições de Saúde -->
+                        <div class="form-section" id="section2">
+                            <div class="section-header">
+                                <h3 class="section-title">
+                                    <i class="fas fa-heartbeat"></i>
+                                    Condições de Saúde
+                                </h3>
+                                <p class="section-description">Informações sobre seu estado de saúde atual</p>
+                            </div>
+
+                            <div class="question-group">
+                                <div class="question-card">
+                                    <label class="question-label">
+                                        <i class="fas fa-utensils"></i>
+                                        Você está em jejum? *
+                                    </label>
+                                    <div class="radio-group">
+                                        <label class="radio-option">
+                                            <input type="radio" name="jejum" value="sim" required>
+                                            <span class="radio-custom"></span>
+                                            <span class="radio-text">Sim</span>
+                                        </label>
+                                        <label class="radio-option">
+                                            <input type="radio" name="jejum" value="nao" required>
+                                            <span class="radio-custom"></span>
+                                            <span class="radio-text">Não</span>
+                                        </label>
+                                    </div>
+                                    <small class="form-text text-muted">NÃO é necessário estar em jejum para doação de sangue</small>
+                                </div>
+
+                                <div class="question-card">
+                                    <label class="question-label">
+                                        <i class="fas fa-tint"></i>
+                                        Possui diabetes? *
+                                    </label>
+                                    <div class="radio-group">
+                                        <label class="radio-option">
+                                            <input type="radio" name="diabetes" value="sim" required>
+                                            <span class="radio-custom"></span>
+                                            <span class="radio-text">Sim</span>
+                                        </label>
+                                        <label class="radio-option">
+                                            <input type="radio" name="diabetes" value="nao" required>
+                                            <span class="radio-custom"></span>
+                                            <span class="radio-text">Não</span>
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <div class="question-card">
+                                    <label class="question-label">
+                                        <i class="fas fa-heart"></i>
+                                        Possui hipertensão (pressão alta)? *
+                                    </label>
+                                    <div class="radio-group">
+                                        <label class="radio-option">
+                                            <input type="radio" name="hipertensao" value="sim" required>
+                                            <span class="radio-custom"></span>
+                                            <span class="radio-text">Sim</span>
+                                        </label>
+                                        <label class="radio-option">
+                                            <input type="radio" name="hipertensao" value="nao" required>
+                                            <span class="radio-custom"></span>
+                                            <span class="radio-text">Não</span>
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <div class="question-card">
+                                    <label class="question-label">
+                                        <i class="fas fa-heartbeat"></i>
+                                        Possui cardiopatia (problemas cardíacos)? *
+                                    </label>
+                                    <div class="radio-group">
+                                        <label class="radio-option">
+                                            <input type="radio" name="cardiopatia" value="sim" required>
+                                            <span class="radio-custom"></span>
+                                            <span class="radio-text">Sim</span>
+                                        </label>
+                                        <label class="radio-option">
+                                            <input type="radio" name="cardiopatia" value="nao" required>
+                                            <span class="radio-custom"></span>
+                                            <span class="radio-text">Não</span>
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <div class="question-card">
+                                    <label class="question-label">
+                                        <i class="fas fa-ribbon"></i>
+                                        Possui câncer ou histórico de câncer? *
+                                    </label>
+                                    <div class="radio-group">
+                                        <label class="radio-option">
+                                            <input type="radio" name="cancer" value="sim" required>
+                                            <span class="radio-custom"></span>
+                                            <span class="radio-text">Sim</span>
+                                        </label>
+                                        <label class="radio-option">
+                                            <input type="radio" name="cancer" value="nao" required>
+                                            <span class="radio-custom"></span>
+                                            <span class="radio-text">Não</span>
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <div class="question-card">
+                                    <label class="question-label">
+                                        <i class="fas fa-virus"></i>
+                                        Possui hepatite? *
+                                    </label>
+                                    <div class="radio-group">
+                                        <label class="radio-option">
+                                            <input type="radio" name="hepatite" value="sim" required>
+                                            <span class="radio-custom"></span>
+                                            <span class="radio-text">Sim</span>
+                                        </label>
+                                        <label class="radio-option">
+                                            <input type="radio" name="hepatite" value="nao" required>
+                                            <span class="radio-custom"></span>
+                                            <span class="radio-text">Não</span>
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <div class="question-card">
+                                    <label class="question-label">
+                                        <i class="fas fa-plus-circle"></i>
+                                        Possui alguma outra condição médica? *
+                                    </label>
+                                    <div class="radio-group">
+                                        <label class="radio-option">
+                                            <input type="radio" name="outras_condicoes" value="sim" required>
+                                            <span class="radio-custom"></span>
+                                            <span class="radio-text">Sim</span>
+                                        </label>
+                                        <label class="radio-option">
+                                            <input type="radio" name="outras_condicoes" value="nao" required>
+                                            <span class="radio-custom"></span>
+                                            <span class="radio-text">Não</span>
+                                        </label>
+                                    </div>
+                                    <div class="conditional-field" id="outras_condicoes_detalhes" style="display: none;">
+                                        <textarea 
+                                            class="form-control mt-3" 
+                                            name="outras_condicoes_texto" 
+                                            placeholder="Descreva as condições médicas..."
+                                            rows="3"
+                                        ></textarea>
+                                    </div>
+                                </div>
+
+                                <div class="question-card">
+                                    <label class="question-label">
+                                        <i class="fas fa-thermometer-three-quarters"></i>
+                                        Possui sintomas gripais (febre, tosse, dor de garganta)? *
+                                    </label>
+                                    <div class="radio-group">
+                                        <label class="radio-option">
+                                            <input type="radio" name="sintomas_gripais" value="sim" required>
+                                            <span class="radio-custom"></span>
+                                            <span class="radio-text">Sim</span>
+                                        </label>
+                                        <label class="radio-option">
+                                            <input type="radio" name="sintomas_gripais" value="nao" required>
+                                            <span class="radio-custom"></span>
+                                            <span class="radio-text">Não</span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Seção 3: Medicamentos -->
+                        <div class="form-section" id="section3">
+                            <div class="section-header">
+                                <h3 class="section-title">
+                                    <i class="fas fa-pills"></i>
+                                    Medicamentos
+                                </h3>
+                                <p class="section-description">Informações sobre medicamentos em uso</p>
+                            </div>
+
+                            <div class="question-group">
+                                <div class="question-card">
+                                    <label class="question-label">
+                                        <i class="fas fa-prescription-bottle-alt"></i>
+                                        Faz uso de algum medicamento? *
+                                    </label>
+                                    <div class="radio-group">
+                                        <label class="radio-option">
+                                            <input type="radio" name="medicamentos" value="sim" required>
+                                            <span class="radio-custom"></span>
+                                            <span class="radio-text">Sim</span>
+                                        </label>
+                                        <label class="radio-option">
+                                            <input type="radio" name="medicamentos" value="nao" required>
+                                            <span class="radio-custom"></span>
+                                            <span class="radio-text">Não</span>
+                                        </label>
+                                    </div>
+                                    <div class="conditional-field" id="medicamentos_detalhes" style="display: none;">
+                                        <textarea 
+                                            class="form-control mt-3" 
+                                            name="medicamentos_texto" 
+                                            placeholder="Liste os medicamentos que você usa..."
+                                            rows="3"
+                                        ></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Seção 4: Estilo de Vida -->
+                        <div class="form-section" id="section4">
+                            <div class="section-header">
+                                <h3 class="section-title">
+                                    <i class="fas fa-running"></i>
+                                    Estilo de Vida
+                                </h3>
+                                <p class="section-description">Perguntas sobre seus hábitos e atividades recentes</p>
+                            </div>
+
+                            <div class="question-group">
+                                <div class="question-card">
+                                    <label class="question-label">
+                                        <i class="fas fa-smoking"></i>
+                                        É fumante? *
+                                    </label>
+                                    <div class="radio-group">
+                                        <label class="radio-option">
+                                            <input type="radio" name="fumante" value="sim" required>
+                                            <span class="radio-custom"></span>
+                                            <span class="radio-text">Sim</span>
+                                        </label>
+                                        <label class="radio-option">
+                                            <input type="radio" name="fumante" value="nao" required>
+                                            <span class="radio-custom"></span>
+                                            <span class="radio-text">Não</span>
+                                        </label>
+                                        <label class="radio-option">
+                                            <input type="radio" name="fumante" value="ex-fumante" required>
+                                            <span class="radio-custom"></span>
+                                            <span class="radio-text">Ex-fumante</span>
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <div class="question-card">
+                                    <label class="question-label">
+                                        <i class="fas fa-wine-glass-alt"></i>
+                                        Consumiu álcool nas últimas 12 horas? *
+                                    </label>
+                                    <div class="radio-group">
+                                        <label class="radio-option">
+                                            <input type="radio" name="alcool_12h" value="sim" required>
+                                            <span class="radio-custom"></span>
+                                            <span class="radio-text">Sim</span>
+                                        </label>
+                                        <label class="radio-option">
+                                            <input type="radio" name="alcool_12h" value="nao" required>
+                                            <span class="radio-custom"></span>
+                                            <span class="radio-text">Não</span>
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <div class="question-card">
+                                    <label class="question-label">
+                                        <i class="fas fa-cannabis"></i>
+                                        Faz ou fez uso de drogas ilícitas? *
+                                    </label>
+                                    <div class="radio-group">
+                                        <label class="radio-option">
+                                            <input type="radio" name="drogas_ilicitas" value="sim" required>
+                                            <span class="radio-custom"></span>
+                                            <span class="radio-text">Sim</span>
+                                        </label>
+                                        <label class="radio-option">
+                                            <input type="radio" name="drogas_ilicitas" value="nao" required>
+                                            <span class="radio-custom"></span>
+                                            <span class="radio-text">Não</span>
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <div class="question-card">
+                                    <label class="question-label">
+                                        <i class="fas fa-exclamation-triangle"></i>
+                                        Vivenciou situações que levem a risco para infecções sexualmente transmissíveis? *
+                                    </label>
+                                    <div class="radio-group">
+                                        <label class="radio-option">
+                                            <input type="radio" name="risco_ist" value="sim" required>
+                                            <span class="radio-custom"></span>
+                                            <span class="radio-text">Sim</span>
+                                        </label>
+                                        <label class="radio-option">
+                                            <input type="radio" name="risco_ist" value="nao" required>
+                                            <span class="radio-custom"></span>
+                                            <span class="radio-text">Não</span>
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <div class="question-card">
+                                    <label class="question-label">
+                                        <i class="fas fa-dumbbell"></i>
+                                        Fez atividade física de grande esforço nas últimas 12 horas? *
+                                    </label>
+                                    <div class="radio-group">
+                                        <label class="radio-option">
+                                            <input type="radio" name="atividade_fisica_12h" value="sim" required>
+                                            <span class="radio-custom"></span>
+                                            <span class="radio-text">Sim</span>
+                                        </label>
+                                        <label class="radio-option">
+                                            <input type="radio" name="atividade_fisica_12h" value="nao" required>
+                                            <span class="radio-custom"></span>
+                                            <span class="radio-text">Não</span>
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <div class="question-card">
+                                    <label class="question-label">
+                                        <i class="fas fa-bed"></i>
+                                        Dormiu no mínimo 6 horas de sono? *
+                                    </label>
+                                    <div class="radio-group">
+                                        <label class="radio-option">
+                                            <input type="radio" name="sono_6h" value="sim" required>
+                                            <span class="radio-custom"></span>
+                                            <span class="radio-text">Sim</span>
+                                        </label>
+                                        <label class="radio-option">
+                                            <input type="radio" name="sono_6h" value="nao" required>
+                                            <span class="radio-custom"></span>
+                                            <span class="radio-text">Não</span>
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <div class="question-card">
+                                    <label class="question-label">
+                                        <i class="fas fa-syringe"></i>
+                                        Nos últimos 6 meses fez tatuagem, piercing, colonoscopia ou endoscopia? *
+                                    </label>
+                                    <div class="radio-group">
+                                        <label class="radio-option">
+                                            <input type="radio" name="procedimentos_6m" value="sim" required>
+                                            <span class="radio-custom"></span>
+                                            <span class="radio-text">Sim</span>
+                                        </label>
+                                        <label class="radio-option">
+                                            <input type="radio" name="procedimentos_6m" value="nao" required>
+                                            <span class="radio-custom"></span>
+                                            <span class="radio-text">Não</span>
+                                        </label>
+                                    </div>
+                                    <div class="conditional-field" id="procedimentos_detalhes" style="display: none;">
+                                        <textarea 
+                                            class="form-control mt-3" 
+                                            name="procedimentos_texto" 
+                                            placeholder="Descreva quais procedimentos foram realizados..."
+                                            rows="3"
+                                        ></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Seção 5: Resumo e Finalização -->
+                        <div class="form-section" id="section5">
+                            <div class="section-header">
+                                <h3 class="section-title">
+                                    <i class="fas fa-check-circle"></i>
+                                    Resumo da Triagem
+                                </h3>
+                                <p class="section-description">Revise suas respostas antes de finalizar</p>
+                            </div>
+
+                            <div class="summary-container" id="summaryContainer">
+                                <!-- Resumo será preenchido dinamicamente -->
+                            </div>
+
+                            <div class="terms-container">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="termos" name="termos" required>
+                                    <label class="form-check-label" for="termos">
+                                        Declaro que todas as informações fornecidas são verdadeiras e estou ciente de que a omissão ou falsidade de dados pode comprometer a segurança da doação.
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Navegação entre seções -->
+                        <div class="form-navigation">
+                            <button type="button" class="btn btn-outline-secondary" id="prevBtn" style="display: none;">
+                                <i class="fas fa-arrow-left"></i>
+                                Anterior
+                            </button>
+                            <button type="button" class="btn btn-primary" id="nextBtn">
+                                Próximo
+                                <i class="fas fa-arrow-right"></i>
+                            </button>
+                            <button type="submit" class="btn btn-success" id="submitBtn" style="display: none;">
+                                <i class="fas fa-check"></i>
+                                Finalizar Triagem
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal de Resultado -->
+        <div class="modal fade" id="resultModal" tabindex="-1" aria-labelledby="resultModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header" id="resultHeader">
+                        <h5 class="modal-title" id="resultModalLabel">
+                            <i class="fas fa-clipboard-check"></i>
+                            Resultado da Triagem
+                        </h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body" id="resultBody">
+                        <!-- Conteúdo será preenchido dinamicamente -->
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                        <button type="button" class="btn btn-primary" id="continueBtn" style="display: none;">
+                            Continuar Agendamento
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+{% endblock %}
+
+{% block custom_js %}
+<script src="/static/js/colaborador/colaborador_doacao_triagem.js"></script>
+{% endblock %}
