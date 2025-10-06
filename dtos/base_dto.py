@@ -1,24 +1,10 @@
-"""
-Classe base para todos os DTOs do sistema.
-Fornece configurações padrão e métodos de validação comuns.
-"""
-
+# base_dto.py
 from pydantic import BaseModel, ConfigDict
 from typing import Dict, Any
 from util.validacoes_dto import ValidacaoError
 
 
 class BaseDTO(BaseModel):
-    """
-    Classe base para todos os DTOs do sistema.
-    Fornece configurações padrão e métodos de validação comuns.
-
-    Esta classe implementa:
-    - Configurações padrão do Pydantic
-    - Wrapper para tratamento de erros de validação
-    - Métodos auxiliares para conversão de dados
-    """
-
     model_config = ConfigDict(
         # Remover espaços em branco automaticamente
         str_strip_whitespace=True,
@@ -59,10 +45,8 @@ class BaseDTO(BaseModel):
         return cls(**data)
 
     def __str__(self) -> str:
-        """Representação string melhorada do DTO"""
         campos = ', '.join([f"{k}={v}" for k, v in self.to_dict().items()])
         return f"{self.__class__.__name__}({campos})"
 
     def __repr__(self) -> str:
-        """Representação técnica do DTO"""
         return self.__str__()

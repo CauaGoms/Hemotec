@@ -1,15 +1,15 @@
-from pydantic import EmailStr, Field, field_validator
-from typing import Optional
-from .base_dto import BaseDTO
+from pydantic import Field, field_validator, EmailStr
+from dtos.base_dto import BaseDTO
 from util.validacoes_dto import (
-    validar_texto_obrigatorio, validar_cpf, validar_telefone
+    validar_texto_obrigatorio,
+    validar_cpf,
+    validar_telefone,
+    validar_estado_brasileiro,
 )
 
 class CriarUsuarioDTO(BaseDTO):
     nome: str = Field(
         ...,
-        min_length=3,
-        max_length=100,
         description="Nome completo do usuário"
     )
     cpf: str = Field(
@@ -26,74 +26,53 @@ class CriarUsuarioDTO(BaseDTO):
     )
     telefone: str = Field(
         ...,
-        min_length=10,
         description="Telefone com DDD"
     )
     cep_usuario: str = Field(
         ...,
-        min_length=8,
-        max_length=10,
         description="CEP do usuário"
     )
     rua_usuario: str = Field(
         ...,
-        min_length=2,
-        max_length=200,
         description="Rua/Logradouro do usuário"
     )
     bairro_usuario: str = Field(
         ...,
-        min_length=2,
-        max_length=100,
         description="Bairro do usuário"
     )
     cidade_usuario: str = Field(
         ...,
-        min_length=2,
-        max_length=100,
         description="Cidade do usuário"
     )
     estado_usuario: str = Field(
         ...,
-        min_length=2,
-        max_length=2,
         description="Estado (UF) do usuário"
     )
     senha: str = Field(
         ...,
-        min_length=6,
-        max_length=100,
         description="Senha do usuário"
     )
     confirmar_senha: str = Field(
         ...,
-        min_length=6,
-        max_length=100,
         description="Confirmação da senha do usuário"
     )
 
-    @field_validator('nome')
-    @classmethod
-    def validar_nome(cls, v: str) -> str:
-        validador = cls.validar_campo_wrapper(
-            lambda valor, campo: validar_texto_obrigatorio(
-                valor, campo, min_chars=2, max_chars=100
-            ),
-            "Nome"
-        )
-        return validador(v)
+    @field_validator("nome")
+    def validar_nome(cls, valor):
+        # Usar validação de texto obrigatório com limites consistentes ao Field
+        validar_texto_obrigatorio(valor, "Nome", min_chars=3, max_chars=100)
+        return valor
 
     @field_validator('cpf')
-    @classmethod
     def validar_cpf_campo(cls, v: str) -> str:
+        # lambda aceita 'campo' opcional para compatibilidade com validar_campo_wrapper
         validador = cls.validar_campo_wrapper(
-            lambda valor, campo: validar_cpf(valor),
+            lambda valor, campo=None: validar_cpf(valor),
             "CPF"
         )
         return validador(v)
 
     @field_validator('telefone')
-    @classmethod
     def validar_telefone_campo(cls, v: str) -> str:
         validador = cls.validar_campo_wrapper(
             lambda valor, campo: validar_telefone(valor),
@@ -102,7 +81,6 @@ class CriarUsuarioDTO(BaseDTO):
         return validador(v)
 
     @field_validator('data_nascimento')
-    @classmethod
     def validar_data_nascimento(cls, v: str) -> str:
         import re
         from datetime import datetime
@@ -135,13 +113,11 @@ class CriarUsuarioDTO(BaseDTO):
         return v
 
     @field_validator('email')
-    @classmethod
     def validar_email_campo(cls, v: str) -> str:
         # EmailStr já faz a validação básica, apenas retornamos
         return v
 
     @field_validator('cep_usuario')
-    @classmethod
     def validar_cep(cls, v: str) -> str:
         validador = cls.validar_campo_wrapper(
             lambda valor, campo: validar_texto_obrigatorio(
@@ -152,7 +128,6 @@ class CriarUsuarioDTO(BaseDTO):
         return validador(v)
 
     @field_validator('rua_usuario')
-    @classmethod
     def validar_rua(cls, v: str) -> str:
         validador = cls.validar_campo_wrapper(
             lambda valor, campo: validar_texto_obrigatorio(
@@ -163,7 +138,6 @@ class CriarUsuarioDTO(BaseDTO):
         return validador(v)
 
     @field_validator('bairro_usuario')
-    @classmethod
     def validar_bairro(cls, v: str) -> str:
         validador = cls.validar_campo_wrapper(
             lambda valor, campo: validar_texto_obrigatorio(
@@ -174,7 +148,6 @@ class CriarUsuarioDTO(BaseDTO):
         return validador(v)
 
     @field_validator('cidade_usuario')
-    @classmethod
     def validar_cidade(cls, v: str) -> str:
         validador = cls.validar_campo_wrapper(
             lambda valor, campo: validar_texto_obrigatorio(
@@ -185,18 +158,15 @@ class CriarUsuarioDTO(BaseDTO):
         return validador(v)
 
     @field_validator('estado_usuario')
-    @classmethod
     def validar_estado(cls, v: str) -> str:
+        # aceitar 'campo' para manter compatibilidade com o wrapper
         validador = cls.validar_campo_wrapper(
-            lambda valor, campo: validar_texto_obrigatorio(
-                valor, campo, min_chars=2, max_chars=2
-            ),
+            lambda valor, campo=None: validar_estado_brasileiro(valor), 
             "Estado"
         )
-        return validador(v.upper())  # Garante que o estado seja sempre maiúsculo
+        return validador(v.upper())  # Garante que o estado seja sempre maisculo
 
     @field_validator('senha')
-    @classmethod
     def validar_senha(cls, v: str) -> str:
         if len(v) < 6:
             raise ValueError('Senha deve ter no mínimo 6 caracteres')
@@ -205,7 +175,6 @@ class CriarUsuarioDTO(BaseDTO):
         return v
     
     @field_validator('confirmar_senha')
-    @classmethod
     def senhas_devem_coincidir(cls, v: str, info) -> str:
         if 'senha' in info.data and v != info.data['senha']:
             raise ValueError('As senhas não coincidem')
@@ -226,6 +195,7 @@ class CriarUsuarioDTO(BaseDTO):
             "cidade_usuario": "São Paulo",
             "estado_usuario": "SP",
             "senha": "minhasenha123"
+            ,"confirmar_senha": "minhasenha123"
         }
         exemplo.update(overrides)
         return exemplo

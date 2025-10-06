@@ -42,11 +42,25 @@ function cadastroValidateCurrentStep() {
         const senha = document.getElementById('senha').value;
         const confirmar = document.getElementById('confirmar_senha').value;
         if (senha !== confirmar) {
-            alert('As senhas não coincidem!');
+            const confirmField = document.getElementById('confirmar_senha');
+            if (confirmField) {
+                confirmField.classList.add('is-invalid');
+                let fb = confirmField.parentElement.querySelector('.invalid-feedback');
+                if (!fb) { fb = document.createElement('div'); fb.className = 'invalid-feedback'; confirmField.parentElement.appendChild(fb); }
+                fb.textContent = 'As senhas não coincidem';
+            }
+            if (window.showError) window.showError('As senhas não coincidem!');
             return false;
         }
         if (senha.length < 6) {
-            alert('A senha deve ter pelo menos 6 caracteres.');
+            const senhaField = document.getElementById('senha');
+            if (senhaField) {
+                senhaField.classList.add('is-invalid');
+                let fb = senhaField.parentElement.querySelector('.invalid-feedback');
+                if (!fb) { fb = document.createElement('div'); fb.className = 'invalid-feedback'; senhaField.parentElement.appendChild(fb); }
+                fb.textContent = 'A senha deve ter pelo menos 6 caracteres.';
+            }
+            if (window.showWarning) window.showWarning('A senha deve ter pelo menos 6 caracteres.');
             return false;
         }
     }
@@ -84,11 +98,13 @@ document.querySelector('form').addEventListener('submit', function (e) {
     const senha = document.getElementById('senha').value;
 
     if (!nome || !cpf || !email || !razao || !cnpj || !senha) {
-        alert('Por favor, preencha todos os campos obrigatórios.');
+        if (window.showWarning) window.showWarning('Por favor, preencha todos os campos obrigatórios.');
         return;
     }
 
-    alert('Cadastro de Gestor realizado com sucesso!');
+    if (document && document.querySelector('form')) {
+        document.querySelector('form').submit();
+    }
 });
 
 // Preenchimento automático de endereço pelo CEP
@@ -106,11 +122,11 @@ document.getElementById('cep_instituicao').addEventListener('blur', function (e)
                     document.getElementById('rua_instituicao').value = '';
                     document.getElementById('bairro_instituicao').value = '';
                     document.getElementById('cidade_instituicao').value = '';
-                    alert('CEP não encontrado.');
+                    if (window.showWarning) window.showWarning('CEP não encontrado.');
                 }
             })
             .catch(() => {
-                alert('Erro ao buscar o CEP.');
+                if (window.showError) window.showError('Erro ao buscar o CEP.');
             });
     }
 });

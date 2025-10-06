@@ -3,12 +3,13 @@ from fastapi import APIRouter, Form, Request, status
 from fastapi.responses import RedirectResponse
 from fastapi.templating import Jinja2Templates
 from pydantic_core import ValidationError
+import sqlite3
 from data.model.cidade_model import Cidade
 from data.model.usuario_model import Usuario
 from data.repo import cidade_repo, usuario_repo
 from dtos.usuario_dtos import CriarUsuarioDTO
 from util.auth_decorator import criar_sessao, requer_autenticacao
-from util.flash_messages import informar_sucesso
+from util.flash_messages import informar_sucesso, informar_erro
 from util.security import criar_hash_senha, verificar_senha
 
 router = APIRouter()
@@ -139,35 +140,75 @@ async def post_cadastro(
             estado_usuario=dados.estado_usuario
         )
         print(f"Tentando inserir usuario: {usuario}")
-        usuario_id = usuario_repo.inserir(usuario)
-        print(f"Usuário inserido, id: {usuario_id}")
+        try:
+            usuario_id = usuario_repo.inserir(usuario)
+            print(f"Usuário inserido, id: {usuario_id}")
 
-        informar_sucesso(request, f"Cadastro realizado com sucesso! Bem-vindo(a), {dados.nome}!")
-        return RedirectResponse("/validar_telefone", status.HTTP_303_SEE_OTHER)
+            informar_sucesso(request, f"Cadastro realizado com sucesso! Bem-vindo(a), {dados.nome}!")
+            return RedirectResponse("/validar_telefone", status.HTTP_303_SEE_OTHER)
+        except sqlite3.IntegrityError as ie:
+            # Tratamento comum: e-mail já existe (constraint UNIQUE)
+            msg = str(ie)
+            import traceback
+            traceback.print_exc()
+            if 'UNIQUE constraint failed' in msg and 'usuario.email' in msg:
+                informar_erro(request, 'Email já cadastrado')
+                return templates.TemplateResponse("publico/publico_cadastrar_doador.html", {
+                    "request": request,
+                    "erro": 'Email já cadastrado',
+                    "erros": {},
+                    "dados": dados_formulario
+                })
+            else:
+                # outro erro de integridade
+                informar_erro(request, 'Erro ao salvar usuário. Tente novamente.')
+                return templates.TemplateResponse("publico/publico_cadastrar_doador.html", {
+                    "request": request,
+                    "erro": f"Erro ao salvar usuário: {msg}",
+                    "erros": {},
+                    "dados": dados_formulario
+                })
     
     except ValidationError as e:
-        erros = []
+        # Mapear erros para cada campo usando os loc retornados pelo Pydantic
+        erros_por_campo: dict = {}
         for erro in e.errors():
-            campo = erro['loc'][0] if erro['loc'] else 'campo'
-            mensagem = erro['msg']
-            erros.append(f"{campo.capitalize()}: {mensagem}")
+            loc = erro.get('loc') or []
+            campo = loc[0] if loc else 'campo'
+            mensagem = erro.get('msg', '')
+            if isinstance(mensagem, str) and mensagem.startswith("Value error, "):
+                mensagem = mensagem.replace("Value error, ", "")
+            # Agrupa múltiplas mensagens por campo
+            erros_por_campo.setdefault(campo, []).append(mensagem)
 
-        erro_msg = " | ".join(erros)
-        # logger.warning(f"Erro de validação no cadastro: {erro_msg}")
+        # Construir mensagem resumida para flash
+        resumo_erros = [f"{campo}: {', '.join(msgs)}" for campo, msgs in erros_por_campo.items()]
+        erro_msg = " | ".join(resumo_erros)
 
-        # Retornar template com dados preservados e erro
+        # Registrar/mostrar erro e retornar template com dados preservados e erros por campo
+        informar_erro(request, "Há erros no formulário.")
+        # Transformar listas em strings para facilitar uso no template
+        erros_por_campo = {k: ' '.join(v) for k, v in erros_por_campo.items()}
         return templates.TemplateResponse("publico/publico_cadastrar_doador.html", {
             "request": request,
             "erro": erro_msg,
+            "erros": erros_por_campo,
             "dados": dados_formulario  # Preservar dados digitados
         })
 
     except Exception as e:
-        # logger.error(f"Erro ao processar cadastro: {e}")
-
+        import traceback
+        tb = traceback.format_exc()
+        # Log completo no servidor (ajuda a debugar em dev)
+        print("Erro ao processar cadastro:")
+        print(tb)
+        # Retornar mensagem com detalhe mínimo para desenvolvimento
+        detalhado = str(e)
+        informar_erro(request, "Erro ao processar cadastro. Tente novamente.")
         return templates.TemplateResponse("publico/publico_cadastrar_doador.html", {
             "request": request,
-            "erro": "Erro ao processar cadastro. Tente novamente.",
+            "erro": f"Erro ao processar cadastro: {detalhado}",
+            "erros": {},
             "dados": dados_formulario
         })
 

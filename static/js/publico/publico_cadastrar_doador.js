@@ -40,29 +40,19 @@ function cadastroValidateCurrentStep() {
     }
     // Validação extra para senha
     if (cadastroStep === 3) {
-        const senha = document.getElementById('senha').value;
-        const confirmar = document.getElementById('confirmarSenha').value;
+        const senhaEl = document.getElementById('password');
+        const confirmarEl = document.getElementById('confirm-password');
+        const senha = senhaEl ? senhaEl.value : '';
+        const confirmar = confirmarEl ? confirmarEl.value : '';
         if (senha !== confirmar) {
-            alert('As senhas não coincidem!');
+            // feedback inline + toast
+            if (confirmarEl) markInvalid(confirmarEl, 'As senhas não coincidem');
+            if (window.showError) window.showError('As senhas não coincidem');
             return false;
         }
     }
     return true;
 }
-document.getElementById('cpf').addEventListener('input', function (e) {
-    let value = e.target.value.replace(/\D/g, '');
-    value = value.replace(/(\d{3})(\d)/, '$1.$2');
-    value = value.replace(/(\d{3})(\d)/, '$1.$2');
-    value = value.replace(/(\d{3})(\d{1,2})$/, '$1-$2');
-    e.target.value = value;
-});
-
-// Máscara para CEP
-document.getElementById('cep').addEventListener('input', function (e) {
-    let value = e.target.value.replace(/\D/g, '');
-    value = value.replace(/(\d{5})(\d)/, '$1-$2');
-    e.target.value = value;
-});
 
 // Função para mostrar loading no campo CEP
 function showCepLoading(show) {
@@ -89,72 +79,220 @@ function animateFilledField(fieldId) {
 }
 
 // Função para buscar endereço pelo CEP
-document.getElementById('cep').addEventListener('blur', function () {
-    const cep = this.value.replace(/\D/g, '');
+// Inicialização segura quando o DOM estiver carregado
+document.addEventListener('DOMContentLoaded', function () {
+    // Máscara CPF
+    const cpfEl = document.getElementById('cpf');
+    if (cpfEl) {
+        cpfEl.addEventListener('input', function (e) {
+            let value = e.target.value.replace(/\D/g, '');
+            value = value.replace(/(\d{3})(\d)/, '$1.$2');
+            value = value.replace(/(\d{3})(\d)/, '$1.$2');
+            value = value.replace(/(\d{3})(\d{1,2})$/, '$1-$2');
+            e.target.value = value;
+        });
+    }
 
-    if (cep.length === 8) {
-        showCepLoading(true);
+    // Máscara CEP
+    const cepEl = document.getElementById('cep');
+    if (cepEl) {
+        cepEl.addEventListener('input', function (e) {
+            let value = e.target.value.replace(/\D/g, '');
+            value = value.replace(/(\d{5})(\d)/, '$1-$2');
+            e.target.value = value;
+        });
 
-        // Limpa os campos antes de preencher
-        const ruaField = document.getElementById('rua');
-        const bairroField = document.getElementById('bairro');
-        const cidadeField = document.getElementById('cidade');
+        // Busca endereço ao perder foco
+        cepEl.addEventListener('blur', function () {
+            const self = this;
+            const cep = self.value.replace(/\D/g, '');
 
-        ruaField.value = '';
-        bairroField.value = '';
-        cidadeField.value = '';
+            if (cep.length === 8) {
+                showCepLoading(true);
 
-        // Faz a requisição para a API ViaCEP
-        fetch(`https://viacep.com.br/ws/${cep}/json/`)
-            .then(response => response.json())
-            .then(data => {
-                showCepLoading(false);
-                if (!data.erro) {
-                    if (data.logradouro) {
-                        ruaField.value = data.logradouro;
-                        animateFilledField('rua');
-                    }
-                    if (data.bairro) {
-                        bairroField.value = data.bairro;
-                        animateFilledField('bairro');
-                    }
-                    if (data.localidade) {
-                        cidadeField.value = data.localidade;
-                        animateFilledField('cidade');
-                    }
-                    // Preenche o campo UF
-                    var ufField = document.getElementById('uf');
-                    if (data.uf && ufField) {
-                        ufField.value = data.uf;
-                        animateFilledField('uf');
-                    }
-                    if (!data.logradouro) {
-                        ruaField.focus();
-                    }
-                } else {
-                    this.style.borderColor = '#dc3545';
-                    alert('CEP não encontrado! Verifique o número digitado.');
-                    setTimeout(() => {
-                        this.style.borderColor = '#ced4da';
-                    }, 3000);
-                }
-            })
-            .catch(error => {
-                showCepLoading(false);
-                console.error('Erro ao buscar CEP:', error);
-                this.style.borderColor = '#dc3545';
-                alert('Erro ao buscar CEP. Verifique sua conexão e tente novamente.');
+                // Limpa os campos antes de preencher
+                const ruaField = document.getElementById('rua');
+                const bairroField = document.getElementById('bairro');
+                const cidadeField = document.getElementById('cidade');
+
+                if (ruaField) ruaField.value = '';
+                if (bairroField) bairroField.value = '';
+                if (cidadeField) cidadeField.value = '';
+
+                fetch(`https://viacep.com.br/ws/${cep}/json/`)
+                    .then(response => response.json())
+                    .then(data => {
+                        showCepLoading(false);
+                        if (!data.erro) {
+                            if (data.logradouro && ruaField) {
+                                ruaField.value = data.logradouro;
+                                animateFilledField('rua');
+                            }
+                            if (data.bairro && bairroField) {
+                                bairroField.value = data.bairro;
+                                animateFilledField('bairro');
+                            }
+                            if (data.localidade && cidadeField) {
+                                cidadeField.value = data.localidade;
+                                animateFilledField('cidade');
+                            }
+                            // Preenche o campo UF
+                            var ufField = document.getElementById('uf');
+                            if (data.uf && ufField) {
+                                ufField.value = data.uf;
+                                animateFilledField('uf');
+                            }
+                            if (!data.logradouro && ruaField) {
+                                ruaField.focus();
+                            }
+                        } else {
+                            self.style.borderColor = '#dc3545';
+                            if (window.showWarning) window.showWarning('CEP não encontrado! Verifique o número digitado.');
+                            if (cepEl) markInvalid(cepEl, 'CEP não encontrado');
+                            setTimeout(() => {
+                                self.style.borderColor = '#ced4da';
+                                if (cepEl) clearInvalid(cepEl);
+                            }, 3000);
+                        }
+                    })
+                    .catch(error => {
+                        showCepLoading(false);
+                        console.error('Erro ao buscar CEP:', error);
+                        self.style.borderColor = '#dc3545';
+                        if (window.showError) window.showError('Erro ao buscar CEP. Verifique sua conexão e tente novamente.');
+                        if (cepEl) markInvalid(cepEl, 'Erro ao buscar CEP');
+                        setTimeout(() => {
+                            self.style.borderColor = '#ced4da';
+                            if (cepEl) clearInvalid(cepEl);
+                        }, 3000);
+                    });
+            } else if (cep.length > 0) {
+                self.style.borderColor = '#dc3545';
                 setTimeout(() => {
-                    this.style.borderColor = '#ced4da';
+                    self.style.borderColor = '#ced4da';
                 }, 3000);
-            });
-    } else if (cep.length > 0) {
-        this.style.borderColor = '#dc3545';
-        setTimeout(() => {
-            this.style.borderColor = '#ced4da';
-        }, 3000);
+            }
+        });
+    }
+
+    // Validação do formulário (evento submit)
+    const form = document.getElementById('cadastroForm') || document.querySelector('form[action="/cadastrar"]');
+    if (form) {
+        form.addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            const nameEl = document.getElementById('name');
+            const emailEl = document.getElementById('email');
+            const cpfEl2 = document.getElementById('cpf');
+            const birthdateEl = document.getElementById('birthdate');
+            const cepEl2 = document.getElementById('cep');
+            const ruaEl = document.getElementById('rua');
+            const bairroEl = document.getElementById('bairro');
+            const cidadeEl = document.getElementById('cidade');
+            const passwordEl = document.getElementById('password');
+            const confirmEl = document.getElementById('confirm-password');
+
+            const name = nameEl ? nameEl.value.trim() : '';
+            const email = emailEl ? emailEl.value.trim() : '';
+            const cpf = cpfEl2 ? cpfEl2.value : '';
+            const birthdate = birthdateEl ? birthdateEl.value : '';
+            const cep = cepEl2 ? cepEl2.value : '';
+            const rua = ruaEl ? ruaEl.value.trim() : '';
+            const bairro = bairroEl ? bairroEl.value.trim() : '';
+            const cidade = cidadeEl ? cidadeEl.value.trim() : '';
+            const password = passwordEl ? passwordEl.value : '';
+            const confirmPassword = confirmEl ? confirmEl.value : '';
+
+            // Validações (feedback inline + toasts)
+            if (!name) {
+                if (nameEl) markInvalid(nameEl, 'Por favor, preencha seu nome completo.');
+                if (window.showWarning) window.showWarning('Por favor, preencha seu nome completo.');
+                if (nameEl) nameEl.focus();
+                return;
+            } else if (nameEl) clearInvalid(nameEl);
+
+            if (!email) {
+                if (emailEl) markInvalid(emailEl, 'Por favor, preencha seu e-mail.');
+                if (window.showWarning) window.showWarning('Por favor, preencha seu e-mail.');
+                if (emailEl) emailEl.focus();
+                return;
+            } else if (emailEl) clearInvalid(emailEl);
+
+            if (!validarCPF(cpf)) {
+                if (cpfEl2) markInvalid(cpfEl2, 'CPF inválido');
+                if (window.showError) window.showError('CPF inválido! Verifique os números digitados.');
+                if (cpfEl2) cpfEl2.focus();
+                return;
+            } else if (cpfEl2) clearInvalid(cpfEl2);
+
+            if (!birthdate) {
+                if (birthdateEl) markInvalid(birthdateEl, 'Informe sua data de nascimento');
+                if (window.showWarning) window.showWarning('Por favor, informe sua data de nascimento.');
+                if (birthdateEl) birthdateEl.focus();
+                return;
+            } else if (birthdateEl) clearInvalid(birthdateEl);
+
+            if (!cepEl2 || cep.replace(/\D/g, '').length !== 8) {
+                if (cepEl2) markInvalid(cepEl2, 'CEP inválido');
+                if (window.showWarning) window.showWarning('CEP inválido! Digite um CEP válido.');
+                if (cepEl2) cepEl2.focus();
+                return;
+            } else if (cepEl2) clearInvalid(cepEl2);
+
+            if (!rua || !bairro || !cidade) {
+                if (window.showWarning) window.showWarning('Por favor, preencha todos os campos de endereço.');
+                return;
+            }
+
+            if (password.length < 6) {
+                if (passwordEl) markInvalid(passwordEl, 'A senha deve ter pelo menos 6 caracteres.');
+                if (window.showWarning) window.showWarning('A senha deve ter pelo menos 6 caracteres.');
+                if (passwordEl) passwordEl.focus();
+                return;
+            } else if (passwordEl) clearInvalid(passwordEl);
+
+            if (password !== confirmPassword) {
+                if (confirmEl) markInvalid(confirmEl, 'As senhas não coincidem');
+                if (window.showError) window.showError('As senhas não coincidem!');
+                if (confirmEl) confirmEl.focus();
+                return;
+            } else if (confirmEl) clearInvalid(confirmEl);
+
+            // Submeter o formulário ao servidor (validação do servidor também ocorrerá lá)
+            if (form) {
+                // Submete o formulário programaticamente (form.submit() não dispara o event listener novamente)
+                form.submit();
+            }
+        });
     }
 });
+
+// Helper: marcar campo como inválido e mostrar mensagem inline
+function markInvalid(field, message) {
+    try {
+        field.classList.add('is-invalid');
+        // procurar ou criar .invalid-feedback
+        let fb = field.parentElement.querySelector('.invalid-feedback');
+        if (!fb) {
+            fb = document.createElement('div');
+            fb.className = 'invalid-feedback';
+            field.parentElement.appendChild(fb);
+        }
+        fb.textContent = message;
+    } catch (e) {
+        console.warn('markInvalid error', e);
+    }
+}
+
+function clearInvalid(field) {
+    try {
+        field.classList.remove('is-invalid');
+        const fb = field.parentElement.querySelector('.invalid-feedback');
+        if (fb) fb.textContent = '';
+    } catch (e) {
+        console.warn('clearInvalid error', e);
+    }
+}
 
 // Validação de CPF
 function validarCPF(cpf) {
@@ -177,73 +315,6 @@ function validarCPF(cpf) {
     if (resto === 10 || resto === 11) resto = 0;
     return resto === parseInt(cpf.charAt(10));
 }
-
-// Validação do formulário
-document.getElementById('cadastroForm').addEventListener('submit', function (e) {
-    e.preventDefault();
-
-    const name = document.getElementById('name').value.trim();
-    const email = document.getElementById('email').value.trim();
-    const cpf = document.getElementById('cpf').value;
-    const birthdate = document.getElementById('birthdate').value;
-    const cep = document.getElementById('cep').value;
-    const rua = document.getElementById('rua').value.trim();
-    const bairro = document.getElementById('bairro').value.trim();
-    const cidade = document.getElementById('cidade').value.trim();
-    const password = document.getElementById('password').value;
-    const confirmPassword = document.getElementById('confirm-password').value;
-
-    // Validações
-    if (!name) {
-        alert('Por favor, preencha seu nome completo.');
-        document.getElementById('name').focus();
-        return;
-    }
-
-    if (!email) {
-        alert('Por favor, preencha seu e-mail.');
-        document.getElementById('email').focus();
-        return;
-    }
-
-    if (!validarCPF(cpf)) {
-        alert('CPF inválido! Verifique os números digitados.');
-        document.getElementById('cpf').focus();
-        return;
-    }
-
-    if (!birthdate) {
-        alert('Por favor, informe sua data de nascimento.');
-        document.getElementById('birthdate').focus();
-        return;
-    }
-
-    if (cep.replace(/\D/g, '').length !== 8) {
-        alert('CEP inválido! Digite um CEP válido.');
-        document.getElementById('cep').focus();
-        return;
-    }
-
-    if (!rua || !bairro || !cidade) {
-        alert('Por favor, preencha todos os campos de endereço.');
-        return;
-    }
-
-    if (password.length < 6) {
-        alert('A senha deve ter pelo menos 6 caracteres.');
-        document.getElementById('password').focus();
-        return;
-    }
-
-    if (password !== confirmPassword) {
-        alert('As senhas não coincidem!');
-        document.getElementById('confirm-password').focus();
-        return;
-    }
-
-    // Aqui você pode adicionar a lógica para enviar os dados
-    alert('Cadastro realizado com sucesso!');
-});
 
 // Adiciona animação de loading CSS
 const style = document.createElement('style');
