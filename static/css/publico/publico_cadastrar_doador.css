@@ -160,3 +160,25 @@ body {
     box-shadow: 0 0 0 0.15rem rgba(224, 32, 32, 0.12);
     outline: none;
 }
+
+/* Remove o ícone nativo de mostrar/ocultar senha do navegador */
+input[type="password"]::-ms-reveal,
+input[type="password"]::-ms-clear {
+    display: none;
+}
+
+input[type="password"]::-webkit-password-toggle {
+    display: none;
+}
+
+/* Para Edge e outros navegadores baseados em Chromium */
+input[type="password"]::-webkit-credentials-auto-fill-button {
+    display: none !important;
+}
+
+/* Garante que apenas nosso botão personalizado seja exibido */
+.input-group input[type="password"] {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+}
