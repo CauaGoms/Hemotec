@@ -73,6 +73,7 @@ function mostrarCompatibilidade(tipo) {
             let routingControl = null;
 
             function listarUnidades() {
+                if (!listaUnidades) return;
                 listaUnidades.innerHTML = '';
                 unidades.forEach(u => {
                     const { cod_unidade, nome, latitude: lat, longitude: lng } = u;
@@ -122,20 +123,75 @@ function mostrarCompatibilidade(tipo) {
                 shadowSize: [41, 41]
             });
 
+            // We'll compute the two nearest units (by distance to the user if available,
+            // otherwise relative to the map center) and show only them as options for
+            // 'Rota' and 'Ver Estoque'. Markers will still be placed for all units but
+            // only the nearest two will have the action button.
+            const defaultCenter = { latitude: -20.851136957150032, longitude: -41.113483188824155 };
+
+            function computeNearestUnitsByCoords(coords, list, n = 2) {
+                const arr = list.map(u => {
+                    const lat = Number(u.latitude);
+                    const lng = Number(u.longitude);
+                    // Euclidean approx; sufficient for nearby sorting
+                    const dLat = lat - coords.latitude;
+                    const dLng = lng - coords.longitude;
+                    return { u, dist: Math.hypot(dLat, dLng) };
+                });
+                arr.sort((a, b) => a.dist - b.dist);
+                return arr.slice(0, n).map(x => x.u);
+            }
+
+            function getPositionPromise(timeout = 4000) {
+                return new Promise((resolve, reject) => {
+                    if (!('geolocation' in navigator)) return reject(new Error('Geolocation unsupported'));
+                    let done = false;
+                    const timer = setTimeout(() => {
+                        if (done) return;
+                        done = true;
+                        reject(new Error('timeout'));
+                    }, timeout);
+                    navigator.geolocation.getCurrentPosition(pos => {
+                        if (done) return;
+                        done = true;
+                        clearTimeout(timer);
+                        resolve({ latitude: pos.coords.latitude, longitude: pos.coords.longitude });
+                    }, err => {
+                        if (done) return;
+                        done = true;
+                        clearTimeout(timer);
+                        reject(err);
+                    }, { enableHighAccuracy: true, timeout });
+                });
+            }
+
+            // Create markers for all units, but keep references so we can update popups later
+            const markers = [];
+
             unidades.forEach(u => {
                 const { cod_unidade, nome, latitude: lat, longitude: lng } = u;
-
                 const m = L.marker([lat, lng], { icon: unidadeIcon }).addTo(mapa);
-                m.bindPopup('<strong>' + nome + '</strong><br>Coordenadas: ' + lat + ', ' + lng + '<br><button type="button" class="btn-rota" data-id="' + cod_unidade + '">Traçar rota</button>');
+                // Initial popup without action button; we'll bind proper popup after computing nearest
+                const basePopup = '<strong>' + nome + '</strong><br>Coordenadas: ' + lat + ', ' + lng;
+                m.bindPopup(basePopup);
+                markers.push({ cod_unidade, nome, lat, lng, marker: m });
+
+                // Ensure popup buttons get a click handler when popup opens
                 m.on('popupopen', (e) => {
-                    const btn = e.popup._contentNode.querySelector('.btn-rota');
+                    const popupNode = e.popup && e.popup._contentNode;
+                    if (!popupNode) return;
+                    const btn = popupNode.querySelector('.btn-rota');
+                    if (!btn) return;
+                    // avoid adding duplicate listener
+                    if (btn.__hasHandler) return;
+                    btn.__hasHandler = true;
                     btn.addEventListener('click', () => {
+                        // Use cod_unidade and lat/lng from this scope
                         if (!userMarker) {
-                            statusEl.textContent = 'Obtenha sua localização primeiro.';
+                            if (statusEl) statusEl.textContent = 'Obtenha sua localização primeiro.';
                             return;
                         }
                         criarRota([userMarker.getLatLng().lat, userMarker.getLatLng().lng], [lat, lng], nome);
-                        // Buscar estoque da unidade selecionada
                         fetch(`/api/estoque/${cod_unidade}`)
                             .then(resp => resp.json())
                             .then(resposta => {
@@ -153,10 +209,112 @@ function mostrarCompatibilidade(tipo) {
                             .catch(() => {
                                 document.getElementById('nome-unidade-estoque').textContent = 'Erro ao buscar estoque';
                             });
-                        mapa.closePopup();
                     });
                 });
             });
+
+            // Compute nearest units (try user position, fallback to map center)
+            getPositionPromise().catch(() => Promise.resolve(defaultCenter))
+                .then(coords => {
+                    const nearest = computeNearestUnitsByCoords(coords, unidades, 2);
+                    const nearestSet = new Set(nearest.map(u => Number(u.cod_unidade)));
+
+                    // Update list to show only the nearest units
+                    function listarUnidadesFiltered() {
+                        if (!listaUnidades) return;
+                        listaUnidades.innerHTML = '';
+                        nearest.forEach(u => {
+                            const { cod_unidade, nome, latitude: lat, longitude: lng } = u;
+                            const li = document.createElement('li');
+                            li.innerHTML = '<strong>' + nome + '</strong><span>Coordenadas: ' + lat + ', ' + lng + '</span>';
+                            const btn = document.createElement('button');
+                            btn.type = 'button';
+                            btn.textContent = 'Rota';
+                            btn.classList.add('btn-rota');
+                            btn.addEventListener('click', () => {
+                                if (!userMarker) {
+                                    statusEl.textContent = 'Obtenha sua localização primeiro.';
+                                    return;
+                                }
+                                criarRota([userMarker.getLatLng().lat, userMarker.getLatLng().lng], [lat, lng], nome);
+                                // Buscar estoque da unidade selecionada
+                                fetch(`/api/estoque/${cod_unidade}`)
+                                    .then(resp => resp.json())
+                                    .then(resposta => {
+                                        document.getElementById('nome-unidade-estoque').textContent = nome;
+                                        let estoqueObj = resposta.estoque;
+                                        if (typeof estoqueObj === 'string') {
+                                            try { estoqueObj = JSON.parse(estoqueObj); } catch { }
+                                        }
+                                        if (estoqueObj) {
+                                            renderizarEstoque(normalizarEstoque(estoqueObj));
+                                        } else {
+                                            renderizarEstoque({});
+                                        }
+                                    })
+                                    .catch(() => {
+                                        document.getElementById('nome-unidade-estoque').textContent = 'Erro ao buscar estoque';
+                                    });
+                            });
+                            li.appendChild(btn);
+                            listaUnidades.appendChild(li);
+                        });
+                    }
+
+                    // Update popups: only nearest units get the Traçar rota button
+                    markers.forEach(entry => {
+                        const { cod_unidade, nome, lat, lng, marker } = entry;
+                        let popupContent = '<strong>' + nome + '</strong><br>Coordenadas: ' + lat + ', ' + lng;
+                        if (nearestSet.has(Number(cod_unidade))) {
+                            popupContent += '<br><button type="button" class="btn-rota" data-id="' + cod_unidade + '">Traçar rota</button>';
+                        }
+                        marker.bindPopup(popupContent);
+                        // popupopen handler will attach click when popup is opened
+                    });
+
+                    if (listaUnidades) listarUnidadesFiltered();
+                })
+                .catch(err => {
+                    console.error('Erro ao determinar unidades próximas:', err);
+                    // Fallback: show two first units if something fails
+                    const fallback = unidades.slice(0, 2);
+                    if (listaUnidades) listaUnidades.innerHTML = '';
+                    fallback.forEach(u => {
+                        const { cod_unidade, nome, latitude: lat, longitude: lng } = u;
+                        const li = document.createElement('li');
+                        li.innerHTML = '<strong>' + nome + '</strong><span>Coordenadas: ' + lat + ', ' + lng + '</span>';
+                        const btn = document.createElement('button');
+                        btn.type = 'button';
+                        btn.textContent = 'Rota';
+                        btn.classList.add('btn-rota');
+                        btn.addEventListener('click', () => {
+                            if (!userMarker) {
+                                statusEl.textContent = 'Obtenha sua localização primeiro.';
+                                return;
+                            }
+                            criarRota([userMarker.getLatLng().lat, userMarker.getLatLng().lng], [lat, lng], nome);
+                            fetch(`/api/estoque/${cod_unidade}`)
+                                .then(resp => resp.json())
+                                .then(resposta => {
+                                    document.getElementById('nome-unidade-estoque').textContent = nome;
+                                    let estoqueObj = resposta.estoque;
+                                    if (typeof estoqueObj === 'string') {
+                                        try { estoqueObj = JSON.parse(estoqueObj); } catch { }
+                                    }
+                                    if (estoqueObj) {
+                                        renderizarEstoque(normalizarEstoque(estoqueObj));
+                                    } else {
+                                        renderizarEstoque({});
+                                    }
+                                })
+                                .catch(() => {
+                                    document.getElementById('nome-unidade-estoque').textContent = 'Erro ao buscar estoque';
+                                });
+                        });
+                        li.appendChild(btn);
+                        if (listaUnidades) listaUnidades.appendChild(li);
+                    });
+                });
 
             function obterLocalizacao() {
                 if (!('geolocation' in navigator)) {
@@ -250,8 +408,8 @@ function mostrarCompatibilidade(tipo) {
                 });
             }
 
-            btnLocate.addEventListener('click', obterLocalizacao);
-            btnClear.addEventListener('click', () => {
+            if (btnLocate) btnLocate.addEventListener('click', obterLocalizacao);
+            if (btnClear) btnClear.addEventListener('click', () => {
                 if (routingControl) {
                     mapa.removeControl(routingControl);
                     routingControl = null;
@@ -274,6 +432,8 @@ function mostrarCompatibilidade(tipo) {
         });
 })();
 
+// Note: delegated handler moved into the fetch scope where criarRota and userMarker exist
+
 // Função para renderizar o estoque visualmente
 function renderizarEstoque(estoque) {
     const estoqueEl = document.getElementById('estoque-atual');
@@ -295,8 +455,26 @@ function renderizarEstoque(estoque) {
     ordemTipos.forEach(tipo => {
         if (estoque[tipo]) {
             const info = estoque[tipo];
-            const status = statusMap[(info.status || '').toLowerCase()] || 'adequate';
+            // Ensure we compute status from unidades (bolsas) using authoritative thresholds
+            // <=59 -> crítico, 60-99 -> baixo, 100-149 -> moderado, >=150 -> adequado
+            const unidades = Number(info.unidades) || 0;
+            let statusKey = 'adequado';
+            if (unidades <= 59) statusKey = 'critico';
+            else if (unidades <= 99) statusKey = 'baixo';
+            else if (unidades <= 149) statusKey = 'moderado';
+            else statusKey = 'adequado';
+
+            // Map Portuguese statusKey to CSS class used by frontend
+            const status = statusMap[statusKey] || 'adequate';
             const percent = info.percent || 0;
+            // Display label based on computed statusKey (capitalized Portuguese)
+            const statusLabelMap = {
+                'critico': 'Crítico',
+                'baixo': 'Baixo',
+                'moderado': 'Moderado',
+                'adequado': 'Adequado'
+            };
+            const statusLabel = statusLabelMap[statusKey] || (info.status || 'Adequado');
             html += `
             <div class="blood-stock-card ${status}">
                 <div class="blood-info">
@@ -309,7 +487,7 @@ function renderizarEstoque(estoque) {
                     </div>
                     <span class="units">${info.unidades} unidades</span>
                 </div>
-                <span class="status">${info.status}</span>
+                <span class="status">${statusLabel}</span>
             </div>
             `;
         }
@@ -341,7 +519,9 @@ function normalizarEstoque(estoque) {
         if (mapTipos[key]) {
             estoqueNormalizado[mapTipos[key]] = {
                 unidades: estoque[key].quantidade,
-                status: estoque[key].status,
+                // Normalize status to a lowercase Portuguese term for consistent mapping
+                status: (estoque[key].status || '').toString(),
+                // Server returns 'porcentagem' as fraction (0..1). Convert to 0..100
                 percent: Math.round((estoque[key].porcentagem || 0) * 100)
             };
         }

@@ -6,12 +6,20 @@ from typing import Dict, Any
 from data.repo import estoque_repo
 
 def calcular_nivel_estoque(quantidade: int) -> Dict[str, Any]:
-    maximo_ideal = 10000
-    porcentagem = min((quantidade / maximo_ideal) * 100, 100)
-    if quantidade <= 2000:
+    # Use thresholds defined per bags (bolsas):
+    # <= 59 -> Crítico
+    # 60 - 99 -> Baixo
+    # 100 - 149 -> Moderado
+    # >= 150 -> Adequado
+    # porcentagem is a fraction between 0 and 1 relative to an ideal maximum (170 bolsas)
+    maximo_ideal = 170
+    porcentagem = min(quantidade / maximo_ideal, 1)
+    if quantidade <= 59:
         return {"status": "Crítico", "classe": "bg-danger", "porcentagem": porcentagem}
-    elif quantidade <= 5000:
+    elif quantidade <= 99:
         return {"status": "Baixo", "classe": "bg-warning", "porcentagem": porcentagem}
+    elif quantidade <= 149:
+        return {"status": "Moderado", "classe": "bg-info", "porcentagem": porcentagem}
     else:
         return {"status": "Adequado", "classe": "bg-success", "porcentagem": porcentagem}
 

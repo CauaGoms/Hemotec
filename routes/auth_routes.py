@@ -249,15 +249,6 @@ async def get_colaborador_dashboard(request: Request, usuario_logado: dict = Non
         {"request": request, "usuario": usuario_logado}
     )
 
-# Rota apenas para doadores
-@router.get("/doador")
-@requer_autenticacao(["doador"])
-async def get_doador_dashboard(request: Request, usuario_logado: dict = None):
-    return templates.TemplateResponse(
-        "doador_inicio.html",
-        {"request": request, "usuario": usuario_logado}
-    )
-
 # # Rota para múltiplos perfis
 # @router.get("/relatorios")
 # @requer_autenticacao(["admin", "gerente"])
