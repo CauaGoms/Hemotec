@@ -249,11 +249,30 @@ def validar_senha(senha: Optional[str], min_chars: int = 6, max_chars: int = 128
             raise ValidacaoError('Senha é obrigatória')
         return None
 
-    if len(senha) < min_chars:
-        raise ValidacaoError(f'Senha deve ter pelo menos {min_chars} caracteres')
+    # Regras mínimas de segurança: força mínimo de 8 caracteres e complexidade
+    MIN_CHARS_DEFAULT = max(min_chars, 8)
+    if len(senha) < MIN_CHARS_DEFAULT:
+        raise ValidacaoError(f'Senha deve ter pelo menos {MIN_CHARS_DEFAULT} caracteres')
 
     if len(senha) > max_chars:
         raise ValidacaoError(f'Senha deve ter no máximo {max_chars} caracteres')
+
+    # Checar presença de maiúscula, minúscula, número e símbolo
+    if not re.search(r'[A-Z]', senha):
+        raise ValidacaoError('Senha deve conter ao menos uma letra maiúscula')
+    if not re.search(r'[a-z]', senha):
+        raise ValidacaoError('Senha deve conter ao menos uma letra minúscula')
+    if not re.search(r'\d', senha):
+        raise ValidacaoError('Senha deve conter ao menos um número')
+    if not re.search(r'[^A-Za-z0-9]', senha):
+        raise ValidacaoError('Senha deve conter ao menos um símbolo (ex: @, #, $)')
+
+    # Lista curta de senhas comuns proibidas
+    COMMON_PASSWORDS = {
+        '123456', '12345678', '123456789', 'password', 'senha', 'senha123', 'admin', 'abcd1234', 'qwerty', '111111'
+    }
+    if senha.lower() in COMMON_PASSWORDS:
+        raise ValidacaoError('Senha muito comum. Escolha uma senha mais forte.')
 
     return senha
 

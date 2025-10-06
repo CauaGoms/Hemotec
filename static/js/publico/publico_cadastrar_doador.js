@@ -44,6 +44,23 @@ function cadastroValidateCurrentStep() {
         const confirmarEl = document.getElementById('confirm-password');
         const senha = senhaEl ? senhaEl.value : '';
         const confirmar = confirmarEl ? confirmarEl.value : '';
+        // Regras de senha forte no cliente
+        const pwdRules = {
+            min: 8,
+            upper: /[A-Z]/,
+            lower: /[a-z]/,
+            digit: /\d/,
+            symbol: /[^A-Za-z0-9]/
+        };
+        const common = ['123456', '12345678', '123456789', 'password', 'senha', 'senha123', 'admin', 'abcd1234', 'qwerty', '111111'];
+
+        if (senha.length < pwdRules.min || !pwdRules.upper.test(senha) || !pwdRules.lower.test(senha) || !pwdRules.digit.test(senha) || !pwdRules.symbol.test(senha) || common.includes(senha.toLowerCase())) {
+            if (senhaEl) markInvalid(senhaEl, 'Senha fraca. Use ≥8 chars, 1 maiúscula, 1 minúscula, 1 número e 1 símbolo.');
+            if (window.showWarning) window.showWarning('Senha fraca. Use pelo menos 8 caracteres, incluindo maiúscula, minúscula, número e símbolo.');
+            if (senhaEl) senhaEl.focus();
+            return false;
+        }
+
         if (senha !== confirmar) {
             // feedback inline + toast
             if (confirmarEl) markInvalid(confirmarEl, 'As senhas não coincidem');
@@ -318,9 +335,17 @@ document.addEventListener('DOMContentLoaded', function () {
                 return;
             }
 
-            if (password.length < 6) {
-                if (passwordEl) markInvalid(passwordEl, 'A senha deve ter pelo menos 6 caracteres.');
-                if (window.showWarning) window.showWarning('A senha deve ter pelo menos 6 caracteres.');
+            // Validação forte de senha no cliente
+            const pwdMin = 8;
+            const hasUpper = /[A-Z]/.test(password);
+            const hasLower = /[a-z]/.test(password);
+            const hasDigit = /\d/.test(password);
+            const hasSymbol = /[^A-Za-z0-9]/.test(password);
+            const blacklist = ['123456', '12345678', '123456789', 'password', 'senha', 'senha123', 'admin', 'abcd1234', 'qwerty', '111111'];
+
+            if (password.length < pwdMin || !hasUpper || !hasLower || !hasDigit || !hasSymbol || blacklist.includes(password.toLowerCase())) {
+                if (passwordEl) markInvalid(passwordEl, 'Senha inválida: mínimo 8 caracteres, 1 maiúscula, 1 minúscula, 1 número e 1 símbolo; evite senhas comuns.');
+                if (window.showWarning) window.showWarning('Senha inválida. Verifique os requisitos de complexidade.');
                 if (passwordEl) passwordEl.focus();
                 return;
             } else if (passwordEl) clearInvalid(passwordEl);
@@ -339,7 +364,87 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         });
     }
+
+    // Toggle para mostrar/ocultar senhas
+    document.querySelectorAll('.btn-toggle-password').forEach(btn => {
+        // tornar a 'caixinha' do olhinho menor/mais compacta via estilos inline
+        try {
+            btn.style.padding = '0 0.5rem';
+            btn.style.minWidth = '33px';
+            btn.style.height = '51px';
+            btn.style.borderRadius = '0 28px 28px 0';
+            btn.style.display = 'flex';
+            btn.style.alignItems = 'center';
+            btn.style.justifyContent = 'center';
+            const ic = btn.querySelector('i');
+            if (ic) ic.style.fontSize = '0.95rem';
+        } catch (e) {
+            // ignore style failures
+        }
+
+        btn.addEventListener('click', function () {
+            const targetId = this.getAttribute('data-target');
+            const input = document.getElementById(targetId);
+            if (!input) return;
+            const icon = this.querySelector('i');
+            if (input.type === 'password') {
+                input.type = 'text';
+                if (icon) {
+                    icon.classList.remove('fa-eye');
+                    icon.classList.add('fa-eye-slash');
+                }
+                this.setAttribute('aria-label', 'Ocultar senha');
+            } else {
+                input.type = 'password';
+                if (icon) {
+                    icon.classList.remove('fa-eye-slash');
+                    icon.classList.add('fa-eye');
+                }
+                this.setAttribute('aria-label', 'Mostrar senha');
+            }
+        });
+    });
 });
+
+// Validação de senha em tempo real
+function validatePasswordRealtime() {
+    const pwdEl = document.getElementById('password');
+    const confEl = document.getElementById('confirm-password');
+    if (!pwdEl) return;
+
+    const check = () => {
+        const pwd = pwdEl.value || '';
+        const conf = confEl ? confEl.value || '' : '';
+        const pwdMin = 8;
+        const hasUpper = /[A-Z]/.test(pwd);
+        const hasLower = /[a-z]/.test(pwd);
+        const hasDigit = /\d/.test(pwd);
+        const hasSymbol = /[^A-Za-z0-9]/.test(pwd);
+        const blacklist = ['123456', '12345678', '123456789', 'password', 'senha', 'senha123', 'admin', 'abcd1234', 'qwerty', '111111'];
+
+        // senha fraca
+        if (pwd.length > 0 && (pwd.length < pwdMin || !hasUpper || !hasLower || !hasDigit || !hasSymbol || blacklist.includes(pwd.toLowerCase()))) {
+            markInvalid(pwdEl, 'Senha fraca. Sua senha deve ter no mínimo 8 caracteres, 1 maiúscula, 1 minúscula, 1 número e 1 símbolo');
+        } else {
+            clearInvalid(pwdEl);
+        }
+
+        // confirmação
+        if (confEl && conf.length > 0) {
+            if (pwd !== conf) {
+                markInvalid(confEl, 'As senhas não coincidem');
+            } else {
+                clearInvalid(confEl);
+            }
+        }
+    };
+
+    pwdEl.addEventListener('input', check);
+    if (confEl) confEl.addEventListener('input', check);
+}
+
+// Inicializa validação em tempo real quando o script carregar
+try { validatePasswordRealtime(); } catch (e) { /* ignore */ }
 
 // Helper: marcar campo como inválido e mostrar mensagem inline
 function markInvalid(field, message) {

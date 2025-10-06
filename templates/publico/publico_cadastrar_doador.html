@@ -203,15 +203,24 @@
                 <div class="form-section" id="cadastroSection3" style="display: none;">
                     <h3>Senha de Acesso</h3>
                     <div class="mb-3">
-                        <small class="form-text text-muted">Mínimo 6 caracteres com pelo menos um número</small>
-                        <input
-                            type="password"
-                            class="form-control {% if erros and erros.get('senha') %}is-invalid{% elif erro and 'senha' in erro.lower() %}is-invalid{% endif %}"
-                            id="password"
-                            placeholder="Crie uma senha"
-                            required
-                            name="senha"
-                        >
+                        <div class="input-group">
+                            <input
+                                type="password"
+                                class="form-control {% if erros and erros.get('senha') %}is-invalid{% elif erro and 'senha' in erro.lower() %}is-invalid{% endif %}"
+                                id="password"
+                                placeholder="Crie uma senha"
+                                required
+                                name="senha"
+                            >
+                            <button
+                                type="button"
+                                class="btn btn-outline-secondary btn-toggle-password"
+                                data-target="password"
+                                aria-label="Mostrar senha"
+                            >
+                                <i class="fa fa-eye"></i>
+                            </button>
+                        </div>
                         {% if erros and erros.get('senha') %}
                         <div class="invalid-feedback">{{ erros.get('senha') }}</div>
                         {% elif erro and 'senha' in erro.lower() and 'confirmar' not in erro.lower() and 'não coincidem' not in erro.lower() and 'nao coincidem' not in erro.lower() %}
@@ -219,14 +228,24 @@
                         {% endif %}
                     </div>
                     <div class="mb-3">
-                        <input
-                            type="password"
-                            class="form-control {% if erros and erros.get('confirmar_senha') %}is-invalid{% elif erro and 'confirmar' in erro.lower() %}is-invalid{% endif %}"
-                            id="confirm-password"
-                            name="confirmar_senha"
-                            placeholder="Confirme sua senha"
-                            required
-                        >
+                        <div class="input-group">
+                            <input
+                                type="password"
+                                class="form-control {% if erros and erros.get('confirmar_senha') %}is-invalid{% elif erro and 'confirmar' in erro.lower() %}is-invalid{% endif %}"
+                                id="confirm-password"
+                                name="confirmar_senha"
+                                placeholder="Confirme sua senha"
+                                required
+                            >
+                            <button
+                                type="button"
+                                class="btn btn-outline-secondary btn-toggle-password"
+                                data-target="confirm-password"
+                                aria-label="Mostrar senha"
+                            >
+                                <i class="fa fa-eye"></i>
+                            </button>
+                        </div>
                         {% if erros and erros.get('confirmar_senha') %}
                         <div class="invalid-feedback">{{ erros.get('confirmar_senha') }}</div>
                         {% elif erro and 'confirmar' in erro.lower() %}

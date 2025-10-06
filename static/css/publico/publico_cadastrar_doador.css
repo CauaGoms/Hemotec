@@ -121,3 +121,42 @@ body {
     font-size: 0.95rem;
     width: 50%;
 }
+
+/* Estilos para o botão de mostrar/ocultar senha (olhinho) */
+.input-group .btn-toggle-password {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    border-top-right-radius: 50px;
+    border-bottom-right-radius: 50px;
+    border-left: none;
+    padding: 0 0.9rem;
+    min-width: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--hemotec-red);
+    background: transparent;
+    border: 1px solid #ced4da;
+    transition: background 0.15s ease, color 0.15s ease, transform 0.12s ease;
+}
+
+.input-group .btn-toggle-password i {
+    font-size: 1rem;
+}
+
+.input-group .btn-toggle-password:hover {
+    background: rgba(224, 32, 32, 0.06);
+    color: var(--hemotec-dark-red);
+    transform: translateY(-1px);
+}
+
+.input-group .btn-toggle-password:active {
+    transform: translateY(0);
+}
+
+/* Ajuste quando o input estiver com foco para destacar o botão */
+.form-control:focus+.btn-toggle-password,
+.btn-toggle-password:focus {
+    box-shadow: 0 0 0 0.15rem rgba(224, 32, 32, 0.12);
+    outline: none;
+}

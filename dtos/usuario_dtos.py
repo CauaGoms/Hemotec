@@ -4,6 +4,7 @@ from util.validacoes_dto import (
     validar_texto_obrigatorio,
     validar_cpf,
     validar_telefone,
+    validar_senha,
     validar_estado_brasileiro,
 )
 
@@ -168,11 +169,9 @@ class CriarUsuarioDTO(BaseDTO):
 
     @field_validator('senha')
     def validar_senha(cls, v: str) -> str:
-        if len(v) < 6:
-            raise ValueError('Senha deve ter no mínimo 6 caracteres')
-        if not any(c.isdigit() for c in v):
-            raise ValueError('Senha deve conter pelo menos um número')
-        return v
+        # Usa validação centralizada (lança ValueError contendo a mensagem apropriada)
+        validador = cls.validar_campo_wrapper(lambda valor, campo=None: validar_senha(valor), 'Senha')
+        return validador(v)
     
     @field_validator('confirmar_senha')
     def senhas_devem_coincidir(cls, v: str, info) -> str:
