@@ -96,6 +96,9 @@
                     <div class="mb-3">
                         <input
                             type="tel"
+                            inputmode="numeric"
+                            pattern="\d{10,11}"
+                            maxlength="15"
                             class="form-control {% if erros and erros.get('telefone') %}is-invalid{% elif erro and 'telefone' in erro.lower() %}is-invalid{% endif %}"
                             id="telefone"
                             placeholder="Telefone"

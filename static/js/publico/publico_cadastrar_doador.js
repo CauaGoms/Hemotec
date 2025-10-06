@@ -175,9 +175,50 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
+    // Telefone: manter raw digits em dataset e aplicar máscara de exibição (ex: (28) 99933-3417)
+    const telefoneEl = document.getElementById('telefone');
+    function formatPhone(digits) {
+        if (!digits) return '';
+        const d = digits.slice(0, 11);
+        if (d.length <= 2) return `(${d}`;
+        if (d.length <= 6) return `(${d.slice(0, 2)}) ${d.slice(2)}`;
+        if (d.length <= 10) return `(${d.slice(0, 2)}) ${d.slice(2, 6)}-${d.slice(6)}`;
+        // 11 digits
+        return `(${d.slice(0, 2)}) ${d.slice(2, 7)}-${d.slice(7, 11)}`;
+    }
+    if (telefoneEl) {
+        // garantir maxlength suficiente para a máscara (ex: '(11) 99999-9999' -> 15 chars)
+        try { telefoneEl.maxLength = 15; } catch (e) { }
+        // inicializar dataset.raw com value existente (apenas dígitos)
+        telefoneEl.dataset.raw = (telefoneEl.value || '').replace(/\D/g, '').slice(0, 11);
+        telefoneEl.value = formatPhone(telefoneEl.dataset.raw);
+
+        telefoneEl.addEventListener('input', function (e) {
+            // extrair dígitos do valor atual (pode conter máscara)
+            const onlyDigits = e.target.value.replace(/\D/g, '').slice(0, 11);
+            e.target.dataset.raw = onlyDigits;
+            e.target.value = formatPhone(onlyDigits);
+        });
+
+        telefoneEl.addEventListener('paste', function (e) {
+            e.preventDefault();
+            const paste = (e.clipboardData || window.clipboardData).getData('text') || '';
+            const onlyDigits = paste.replace(/\D/g, '').slice(0, 11);
+            // substituir seleção atual pelo pasted digits
+            const start = this.selectionStart || 0;
+            const end = this.selectionEnd || 0;
+            const currentDigits = (this.dataset.raw || '').toString();
+            const newDigits = (currentDigits.slice(0, start) + onlyDigits + currentDigits.slice(end)).replace(/\D/g, '').slice(0, 11);
+            this.dataset.raw = newDigits;
+            this.value = formatPhone(newDigits);
+        });
+    }
+
     // Validação do formulário (evento submit)
     const form = document.getElementById('cadastroForm') || document.querySelector('form[action="/cadastrar"]');
     if (form) {
+        // Desativa a validação nativa do navegador para controlar via JS
+        try { form.noValidate = true; } catch (e) { /* ignore */ }
         form.addEventListener('submit', function (e) {
             e.preventDefault();
 
@@ -218,6 +259,24 @@ document.addEventListener('DOMContentLoaded', function () {
                 return;
             } else if (emailEl) clearInvalid(emailEl);
 
+            // Validação de formato do email (evita depender da validação nativa do browser)
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (email && !emailRegex.test(email)) {
+                if (emailEl) markInvalid(emailEl, 'E-mail inválido');
+                if (window.showWarning) window.showWarning('E-mail inválido. Verifique o formato.');
+                // foco seguro
+                if (emailEl) {
+                    try {
+                        const hidden = emailEl.disabled || emailEl.offsetParent === null;
+                        if (!hidden && typeof emailEl.focus === 'function') emailEl.focus();
+                        else emailEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    } catch (ex) {
+                        try { emailEl.scrollIntoView({ behavior: 'smooth', block: 'center' }); } catch (_) { }
+                    }
+                }
+                return;
+            } else if (emailEl) clearInvalid(emailEl);
+
             if (!validarCPF(cpf)) {
                 if (cpfEl2) markInvalid(cpfEl2, 'CPF inválido');
                 if (window.showError) window.showError('CPF inválido! Verifique os números digitados.');
@@ -238,6 +297,21 @@ document.addEventListener('DOMContentLoaded', function () {
                 if (cepEl2) cepEl2.focus();
                 return;
             } else if (cepEl2) clearInvalid(cepEl2);
+
+            // Validação do telefone: apenas dígitos e 10 ou 11 caracteres (DDD + número)
+            const telefoneDigits = (telefoneEl && telefoneEl.dataset && telefoneEl.dataset.raw) ? telefoneEl.dataset.raw.replace(/\D/g, '') : '';
+            if (!telefoneDigits || (telefoneDigits.length !== 10 && telefoneDigits.length !== 11)) {
+                if (telefoneEl) markInvalid(telefoneEl, 'Telefone deve conter 10 ou 11 dígitos');
+                if (window.showWarning) window.showWarning('Telefone inválido. Informe DDD + número (10 ou 11 dígitos).');
+                if (telefoneEl) {
+                    try {
+                        const hidden = telefoneEl.disabled || telefoneEl.offsetParent === null;
+                        if (!hidden && typeof telefoneEl.focus === 'function') telefoneEl.focus();
+                        else telefoneEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    } catch (ex) { try { telefoneEl.scrollIntoView({ behavior: 'smooth', block: 'center' }); } catch (_) { } }
+                }
+                return;
+            } else if (telefoneEl) clearInvalid(telefoneEl);
 
             if (!rua || !bairro || !cidade) {
                 if (window.showWarning) window.showWarning('Por favor, preencha todos os campos de endereço.');
