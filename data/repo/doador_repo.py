@@ -132,21 +132,31 @@ def obter_por_id(cod_doador: int) -> Optional[Doador]:
 def update(doador: Doador) -> bool:
     with get_connection() as conn:
         cursor = conn.cursor()
-        usuario = Usuario(
-            doador.cod_doador, 
-            doador.nome, 
-            doador.email, 
-            doador.senha,
-            doador.cpf,
-            doador.data_nascimento,
-            doador.status,
-            doador.data_cadastro,
-            doador.rua_usuario,
-            doador.bairro_usuario,
-            doador.cidade_usuario,
-            doador.cep_usuario,
-            doador.telefone)
-        usuario_repo.update(usuario, cursor)
+        # Atualizar dados do usuário (se houver)
+        if doador.usuario:
+            usuario = Usuario(
+                cod_usuario=doador.cod_doador,
+                nome=doador.usuario.nome,
+                email=doador.usuario.email,
+                senha=doador.usuario.senha,
+                cpf=doador.usuario.cpf,
+                data_nascimento=doador.usuario.data_nascimento,
+                status=doador.usuario.status,
+                rua_usuario=doador.usuario.rua_usuario,
+                bairro_usuario=doador.usuario.bairro_usuario,
+                cidade_usuario=doador.usuario.cidade_usuario,
+                cep_usuario=doador.usuario.cep_usuario,
+                telefone=doador.usuario.telefone,
+                perfil=doador.usuario.perfil,
+                data_cadastro=doador.usuario.data_cadastro,
+                foto=doador.usuario.foto,
+                token_redefinicao=getattr(doador.usuario, 'token_redefinicao', None),
+                data_token=getattr(doador.usuario, 'data_token', None),
+                estado_usuario=doador.usuario.estado_usuario
+            )
+            usuario_repo.update(usuario, cursor)
+        
+        # Atualizar dados específicos do doador
         cursor.execute(UPDATE, (
             doador.tipo_sanguineo,
             doador.fator_rh,

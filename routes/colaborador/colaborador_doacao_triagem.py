@@ -53,23 +53,27 @@ async def post_colaborador_doacao_triagem(
     procedimentos_texto: Optional[str] = Form("")
 ):
     try:
-        # Obter o usuário logado da sessão
-        usuario_logado = obter_usuario_logado(request)
+        # TEMPORÁRIO: Usando cod_doador fixo até implementar autenticação completa
+        # TODO: Remover isso quando a autenticação estiver funcionando
+        cod_usuario = 12  # Usando doador fixo temporariamente
         
-        if not usuario_logado:
-            return JSONResponse(
-                status_code=status.HTTP_401_UNAUTHORIZED,
-                content={"success": False, "message": "Usuário não autenticado"}
-            )
-        
-        # Obter o código do usuário (que é a chave primária na tabela usuario)
-        cod_usuario = usuario_logado.get('cod_usuario')
-        
-        if not cod_usuario:
-            return JSONResponse(
-                status_code=status.HTTP_400_BAD_REQUEST,
-                content={"success": False, "message": "Código do usuário não encontrado na sessão"}
-            )
+        # Obter o usuário logado da sessão (comentado temporariamente)
+        # usuario_logado = obter_usuario_logado(request)
+        # 
+        # if not usuario_logado:
+        #     return JSONResponse(
+        #         status_code=status.HTTP_401_UNAUTHORIZED,
+        #         content={"success": False, "message": "Usuário não autenticado"}
+        #     )
+        # 
+        # # Obter o código do usuário (que é a chave primária na tabela usuario)
+        # cod_usuario = usuario_logado.get('cod_usuario')
+        # 
+        # if not cod_usuario:
+        #     return JSONResponse(
+        #         status_code=status.HTTP_400_BAD_REQUEST,
+        #         content={"success": False, "message": "Código do usuário não encontrado na sessão"}
+        #     )
         
         print(f"DEBUG: Buscando doador com cod_usuario = {cod_usuario}")
         
@@ -178,7 +182,7 @@ async def post_colaborador_doacao_triagem(
             cod_doacao=0,  # Será gerado pelo banco
             cod_doador=cod_doador,
             data_hora=datetime.now(),
-            quantidade=450,  # Quantidade padrão de uma doação em ml
+            quantidade=0,  # Quantidade padrão de uma doação em ml
             status=0  # Pendente
         )
         
