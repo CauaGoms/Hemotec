@@ -88,8 +88,8 @@ document.addEventListener('DOMContentLoaded', () => {
     console.log('JS doador_inicio carregado!');
     handleNavbarScroll();
     // Adiciona evento de clique para todos os cards de sangue
-    document.querySelectorAll('.blood-stock-card').forEach(function(card) {
-        card.addEventListener('click', function() {
+    document.querySelectorAll('.blood-stock-card').forEach(function (card) {
+        card.addEventListener('click', function () {
             const tipo = card.querySelector('.blood-type')?.textContent?.trim();
             console.log('Card clicado:', tipo);
             if (tipo) mostrarCompatibilidade(tipo);
@@ -97,7 +97,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
-(function(){
+(function () {
     // Config das unidades será carregado dinamicamente do backend
     fetch('/api/unidades')
         .then(response => {
@@ -112,10 +112,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 return;
             }
 
-            const mapa = L.map('mapa', { zoomControl:true, attributionControl:true })
+            const mapa = L.map('mapa', { zoomControl: true, attributionControl: true })
                 .setView([-20.851136957150032, -41.113483188824155], 11); // Coordenadas iniciais
 
-            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
                 maxZoom: 19,
                 attribution: '© OpenStreetMap'
             }).addTo(mapa);
@@ -129,7 +129,7 @@ document.addEventListener('DOMContentLoaded', () => {
             let userMarker = null;
             let routingControl = null;
 
-            function listarUnidades(){
+            function listarUnidades() {
                 listaUnidades.innerHTML = '';
                 unidades.forEach(u => {
                     const { cod_unidade, nome, latitude: lat, longitude: lng } = u;
@@ -174,36 +174,183 @@ document.addEventListener('DOMContentLoaded', () => {
                 shadowSize: [41, 41]
             });
 
+            // Create markers for all units and keep references
+            const markers = [];
+
+            function computeNearestUnitsByCoords(coords, list, n = 2) {
+                const arr = list.map(u => {
+                    const lat = Number(u.latitude);
+                    const lng = Number(u.longitude);
+                    const dLat = lat - coords.latitude;
+                    const dLng = lng - coords.longitude;
+                    return { u, dist: Math.hypot(dLat, dLng) };
+                });
+                arr.sort((a, b) => a.dist - b.dist);
+                return arr.slice(0, n).map(x => x.u);
+            }
+
+            function getPositionPromise(timeout = 4000) {
+                return new Promise((resolve, reject) => {
+                    if (!('geolocation' in navigator)) return reject(new Error('Geolocation unsupported'));
+                    let done = false;
+                    const timer = setTimeout(() => {
+                        if (done) return;
+                        done = true;
+                        reject(new Error('timeout'));
+                    }, timeout);
+                    navigator.geolocation.getCurrentPosition(pos => {
+                        if (done) return;
+                        done = true;
+                        clearTimeout(timer);
+                        resolve({ latitude: pos.coords.latitude, longitude: pos.coords.longitude });
+                    }, err => {
+                        if (done) return;
+                        done = true;
+                        clearTimeout(timer);
+                        reject(err);
+                    }, { enableHighAccuracy: true, timeout });
+                });
+            }
+
+            const defaultCenter = { latitude: -20.851136957150032, longitude: -41.113483188824155 };
+
             unidades.forEach(u => {
                 const { cod_unidade, nome, latitude: lat, longitude: lng } = u;
-
                 const m = L.marker([lat, lng], { icon: unidadeIcon }).addTo(mapa);
-                m.bindPopup('<strong>' + nome + '</strong><br>Coordenadas: ' + lat + ', ' + lng + '<br><button type="button" class="btn-rota" data-id="' + cod_unidade + '">Traçar rota</button>');
+                const basePopup = '<strong>' + nome + '</strong><br>Coordenadas: ' + lat + ', ' + lng;
+                m.bindPopup(basePopup);
+                markers.push({ cod_unidade, nome, lat, lng, marker: m });
+
+                // Attach popupopen handler so Traçar rota button works when present
                 m.on('popupopen', (e) => {
-                    const btn = e.popup._contentNode.querySelector('.btn-rota');
+                    const popupNode = e.popup && e.popup._contentNode;
+                    if (!popupNode) return;
+                    const btn = popupNode.querySelector('.btn-rota');
+                    if (!btn) return;
+                    if (btn.__hasHandler) return;
+                    btn.__hasHandler = true;
                     btn.addEventListener('click', () => {
                         if (!userMarker) {
-                            statusEl.textContent = 'Obtenha sua localização primeiro.';
+                            if (statusEl) statusEl.textContent = 'Obtenha sua localização primeiro.';
                             return;
                         }
                         criarRota([userMarker.getLatLng().lat, userMarker.getLatLng().lng], [lat, lng], nome);
-                        // Buscar estoque da unidade selecionada
                         fetch(`/api/estoque/${cod_unidade}`)
                             .then(resp => resp.json())
-                            .then(estoque => {
-                                document.getElementById('nome-unidade-estoque').textContent = nome;
-                                const estoqueEl = document.getElementById('estoque-atual');
-                                if (estoqueEl) {
-                                    estoqueEl.innerHTML = JSON.stringify(estoque, null, 2);
+                            .then(resposta => {
+                                const nomeEl = document.getElementById('nome-unidade-estoque');
+                                if (nomeEl) nomeEl.textContent = nome;
+                                let estoqueObj = resposta.estoque;
+                                if (typeof estoqueObj === 'string') {
+                                    try { estoqueObj = JSON.parse(estoqueObj); } catch { }
+                                }
+                                if (estoqueObj && typeof normalizarEstoque === 'function' && typeof renderizarEstoque === 'function') {
+                                    renderizarEstoque(normalizarEstoque(estoqueObj));
+                                } else {
+                                    const estoqueEl = document.getElementById('estoque-atual');
+                                    if (estoqueEl) estoqueEl.innerHTML = JSON.stringify(resposta, null, 2);
                                 }
                             })
                             .catch(() => {
-                                document.getElementById('nome-unidade-estoque').textContent = 'Erro ao buscar estoque';
+                                const nomeEl = document.getElementById('nome-unidade-estoque');
+                                if (nomeEl) nomeEl.textContent = 'Erro ao buscar estoque';
                             });
-                        mapa.closePopup();
                     });
                 });
             });
+
+            // Compute nearest units and show only them in the list
+            getPositionPromise().catch(() => Promise.resolve(defaultCenter))
+                .then(coords => {
+                    const nearest = computeNearestUnitsByCoords(coords, unidades, 2);
+                    const nearestSet = new Set(nearest.map(u => Number(u.cod_unidade)));
+
+                    if (listaUnidades) listaUnidades.innerHTML = '';
+                    nearest.forEach(u => {
+                        const { cod_unidade, nome, latitude: lat, longitude: lng } = u;
+                        const li = document.createElement('li');
+                        li.innerHTML = '<strong>' + nome + '</strong><span>Coordenadas: ' + lat + ', ' + lng + '</span>';
+                        const btn = document.createElement('button');
+                        btn.type = 'button';
+                        btn.textContent = 'Rota';
+                        btn.classList.add('btn-rota');
+                        btn.addEventListener('click', () => {
+                            if (!userMarker) {
+                                if (statusEl) statusEl.textContent = 'Obtenha sua localização primeiro.';
+                                return;
+                            }
+                            criarRota([userMarker.getLatLng().lat, userMarker.getLatLng().lng], [lat, lng], nome);
+                            fetch(`/api/estoque/${cod_unidade}`)
+                                .then(resp => resp.json())
+                                .then(resposta => {
+                                    const nomeEl = document.getElementById('nome-unidade-estoque');
+                                    if (nomeEl) nomeEl.textContent = nome;
+                                    let estoqueObj = resposta.estoque;
+                                    if (typeof estoqueObj === 'string') {
+                                        try { estoqueObj = JSON.parse(estoqueObj); } catch { }
+                                    }
+                                    if (estoqueObj && typeof normalizarEstoque === 'function' && typeof renderizarEstoque === 'function') {
+                                        renderizarEstoque(normalizarEstoque(estoqueObj));
+                                    } else {
+                                        const estoqueEl = document.getElementById('estoque-atual');
+                                        if (estoqueEl) estoqueEl.innerHTML = JSON.stringify(resposta, null, 2);
+                                    }
+                                })
+                                .catch(() => {
+                                    const nomeEl = document.getElementById('nome-unidade-estoque');
+                                    if (nomeEl) nomeEl.textContent = 'Erro ao buscar estoque';
+                                });
+                        });
+                        li.appendChild(btn);
+                        if (listaUnidades) listaUnidades.appendChild(li);
+                    });
+
+                    // Update markers' popups to include Traçar rota only for nearest
+                    markers.forEach(entry => {
+                        const { cod_unidade, nome, lat, lng, marker } = entry;
+                        let popupContent = '<strong>' + nome + '</strong><br>Coordenadas: ' + lat + ', ' + lng;
+                        if (nearestSet.has(Number(cod_unidade))) {
+                            popupContent += '<br><button type="button" class="btn-rota" data-id="' + cod_unidade + '">Traçar rota</button>';
+                        }
+                        marker.bindPopup(popupContent);
+                    });
+                })
+                .catch(err => {
+                    console.error('Erro ao determinar unidades próximas:', err);
+                    // fallback: list first two
+                    const fallback = unidades.slice(0, 2);
+                    if (listaUnidades) listaUnidades.innerHTML = '';
+                    fallback.forEach(u => {
+                        const { cod_unidade, nome, latitude: lat, longitude: lng } = u;
+                        const li = document.createElement('li');
+                        li.innerHTML = '<strong>' + nome + '</strong><span>Coordenadas: ' + lat + ', ' + lng + '</span>';
+                        const btn = document.createElement('button');
+                        btn.type = 'button';
+                        btn.textContent = 'Rota';
+                        btn.classList.add('btn-rota');
+                        btn.addEventListener('click', () => {
+                            if (!userMarker) {
+                                if (statusEl) statusEl.textContent = 'Obtenha sua localização primeiro.';
+                                return;
+                            }
+                            criarRota([userMarker.getLatLng().lat, userMarker.getLatLng().lng], [lat, lng], nome);
+                            fetch(`/api/estoque/${cod_unidade}`)
+                                .then(resp => resp.json())
+                                .then(resposta => {
+                                    const nomeEl = document.getElementById('nome-unidade-estoque');
+                                    if (nomeEl) nomeEl.textContent = nome;
+                                    const estoqueEl = document.getElementById('estoque-atual');
+                                    if (estoqueEl) estoqueEl.innerHTML = JSON.stringify(resposta, null, 2);
+                                })
+                                .catch(() => {
+                                    const nomeEl = document.getElementById('nome-unidade-estoque');
+                                    if (nomeEl) nomeEl.textContent = 'Erro ao buscar estoque';
+                                });
+                        });
+                        li.appendChild(btn);
+                        if (listaUnidades) listaUnidades.appendChild(li);
+                    });
+                });
 
             function obterLocalizacao() {
                 if (!('geolocation' in navigator)) {
@@ -226,7 +373,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         }).addTo(mapa).bindPopup('Você está aqui.').openPopup();
                     }
                     mapa.flyTo([latitude, longitude], 13, { duration: 0.8 });
-                        // Encontrar unidade mais próxima
+                    // Encontrar unidade mais próxima
                     let unidadeMaisProxima = null;
                     let menorDistancia = Infinity;
                     unidades.forEach(u => {
@@ -318,10 +465,10 @@ document.addEventListener('DOMContentLoaded', () => {
 })();
 
 // Adiciona evento de clique para todos os cards de sangue
-    document.querySelectorAll('.blood-stock-card').forEach(function(card) {
-        card.addEventListener('click', function() {
-            const tipo = card.querySelector('.blood-type')?.textContent?.trim();
-            console.log('Card clicado:', tipo);
-            if (tipo) mostrarCompatibilidade(tipo);
-        });
+document.querySelectorAll('.blood-stock-card').forEach(function (card) {
+    card.addEventListener('click', function () {
+        const tipo = card.querySelector('.blood-type')?.textContent?.trim();
+        console.log('Card clicado:', tipo);
+        if (tipo) mostrarCompatibilidade(tipo);
     });
+});
