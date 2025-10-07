@@ -2,9 +2,9 @@ CRIAR_TABELA = """
 CREATE TABLE IF NOT EXISTS doacao (
 cod_doacao INTEGER PRIMARY KEY AUTOINCREMENT,
 cod_doador INTEGER NOT NULL,
-data_hora TEXT NOT NULL,
-quantidade INTEGER NOT NULL,
-status INTEGER NOT NULL,
+data_hora TEXT,
+quantidade INTEGER,
+status INTEGER,
 FOREIGN KEY (cod_doador) REFERENCES doador(cod_doador)
 )
 """

@@ -1,5 +1,6 @@
 from dataclasses import dataclass
 import datetime
+from typing import Optional
 
 
 @dataclass
@@ -10,3 +11,4 @@ class Campanha:
     data_inicio: datetime
     data_fim: datetime
     status: str
+    foto: Optional[str] = None
