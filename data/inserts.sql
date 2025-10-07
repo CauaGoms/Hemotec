@@ -8,8 +8,8 @@ INSERT INTO usuario (cod_usuario, nome, email, senha, cpf, data_nascimento, stat
 (2, 'caua', 'caua@gmail.com', '123456', '12345678900', '2000-01-01', 1, 'Rua Projetada', 'Timbo I', 2, '29345000', '11999999999', 'doador', '2023-10-01', '', '', '');
 
 INSERT INTO campanha (cod_campanha, titulo, descricao, data_inicio, data_fim, status, foto) VALUES
-(1, 'Campanha de Doação de Sangue', 'Doe sangue e salve vidas!', '2023-10-01', '2023-12-31', 1, ''),
-(2, 'Campanha de Conscientização sobre Doação', 'Participe da nossa campanha para conscientizar sobre a importância da doação de sangue.', '2023-11-01', '2024-01-31', 1, '');
+(1, 'Campanha de Doação de Sangue', 'Doe sangue e salve vidas!', '2023-10-01', '2023-12-31', 1, '/static/uploads/campanhas/campanha1.jpg'),
+(2, 'Campanha de Conscientização sobre Doação', 'Participe da nossa campanha para conscientizar sobre a importância da doação de sangue.', '2023-11-01', '2024-01-31', 1, '/static/uploads/campanhas/campanha2.jpg');
 
 INSERT INTO plano (cod_plano, qtd_licenca, nome, valor, validade) VALUES
 (1, 1, 'Plano Básico', 399.0, 10),
