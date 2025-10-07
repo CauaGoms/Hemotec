@@ -4,10 +4,22 @@ Módulo de segurança para gerenciar senhas e tokens
 import secrets
 import string
 from datetime import datetime, timedelta
-from passlib.context import CryptContext
+import bcrypt
+import hashlib
 
-# Contexto para hash de senhas usando bcrypt
-pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+
+def _prepare_password_for_bcrypt(senha: str) -> bytes:
+        """
+        Prepara a senha para consumo pelo bcrypt:
+        - Se a senha em bytes tiver <=72 bytes, retorna os bytes da senha.
+        - Se for maior, retorna o SHA-256 hexdigest em ASCII bytes (64 bytes),
+            que é seguro para passar ao bcrypt.
+        """
+        senha_bytes = senha.encode("utf-8")
+        if len(senha_bytes) <= 72:
+                return senha_bytes
+        # hexdigest -> ASCII str de 64 chars -> encode para bytes (64 bytes)
+        return hashlib.sha256(senha_bytes).hexdigest().encode("ascii")
 
 
 def criar_hash_senha(senha: str) -> str:
@@ -20,7 +32,10 @@ def criar_hash_senha(senha: str) -> str:
     Returns:
         Hash da senha
     """
-    return pwd_context.hash(senha)
+    dado = _prepare_password_for_bcrypt(senha)
+    hashed = bcrypt.hashpw(dado, bcrypt.gensalt())
+    # Armazenamos como string utf-8
+    return hashed.decode("utf-8")
 
 
 def verificar_senha(senha_plana: str, senha_hash: str) -> bool:
@@ -35,8 +50,9 @@ def verificar_senha(senha_plana: str, senha_hash: str) -> bool:
         True se a senha está correta, False caso contrário
     """
     try:
-        return pwd_context.verify(senha_plana, senha_hash)
-    except:
+        dado = _prepare_password_for_bcrypt(senha_plana)
+        return bcrypt.checkpw(dado, senha_hash.encode("utf-8"))
+    except Exception:
         return False
 
 
