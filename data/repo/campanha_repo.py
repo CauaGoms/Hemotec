@@ -24,7 +24,8 @@ def inserir(campanha: Campanha, cursor=None) -> Optional[int]:
             campanha.descricao, 
             campanha.data_inicio, 
             campanha.data_fim,
-            campanha.status))
+            campanha.status,
+            campanha.foto))
         return cursor.lastrowid
     else:
         with get_connection() as conn:
@@ -34,7 +35,8 @@ def inserir(campanha: Campanha, cursor=None) -> Optional[int]:
                 campanha.descricao, 
                 campanha.data_inicio, 
                 campanha.data_fim,
-                campanha.status))
+                campanha.status,
+                campanha.foto))
             return cursor.lastrowid
     
 
@@ -50,7 +52,8 @@ def obter_todos() -> list[Campanha]:
                 descricao=row["descricao"],
                 data_inicio=datetime.strptime(row["data_inicio"], "%Y-%m-%d").date(),
                 data_fim=datetime.strptime(row["data_fim"], "%Y-%m-%d").date(),
-                status=row["status"])  
+                status=row["status"],
+                foto=row["foto"])
                 for row in rows]
         return campanha
     
@@ -67,7 +70,8 @@ def obter_por_id(cod_campanha: int) -> Optional[Campanha]:
                 descricao=row["descricao"],
                 data_inicio=datetime.strptime(row["data_inicio"], "%Y-%m-%d").date(),
                 data_fim=datetime.strptime(row["data_fim"], "%Y-%m-%d").date(),
-                status=row["status"]
+                status=row["status"],
+                foto=row.get("foto")
             )
         return None
 
@@ -114,6 +118,7 @@ def update(campanha: Campanha) -> bool:
                 campanha.data_inicio,
                 campanha.data_fim,
                 campanha.status,
+                campanha.foto,
                 campanha.cod_campanha
             ),
         )

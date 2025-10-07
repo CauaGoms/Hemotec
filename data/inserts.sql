@@ -7,9 +7,9 @@ INSERT INTO usuario (cod_usuario, nome, email, senha, cpf, data_nascimento, stat
 (1, 'lucas', 'lucas@gmail.com', '123456', '12345678900', '2000-01-01', 1, 'Rua Horacio Leandro de Souza', 'Basileia', 1, '29302875', '11999999999', 'doador', '2023-10-01', '', '', ''),
 (2, 'caua', 'caua@gmail.com', '123456', '12345678900', '2000-01-01', 1, 'Rua Projetada', 'Timbo I', 2, '29345000', '11999999999', 'doador', '2023-10-01', '', '', '');
 
-INSERT INTO campanha (cod_campanha, titulo, descricao, data_inicio, data_fim, status) VALUES
-(1, 'Campanha de Doação de Sangue', 'Doe sangue e salve vidas!', '2023-10-01', '2023-12-31', 1),
-(2, 'Campanha de Conscientização sobre Doação', 'Participe da nossa campanha para conscientizar sobre a importância da doação de sangue.', '2023-11-01', '2024-01-31', 1);
+INSERT INTO campanha (cod_campanha, titulo, descricao, data_inicio, data_fim, status, foto) VALUES
+(1, 'Campanha de Doação de Sangue', 'Doe sangue e salve vidas!', '2023-10-01', '2023-12-31', 1, ''),
+(2, 'Campanha de Conscientização sobre Doação', 'Participe da nossa campanha para conscientizar sobre a importância da doação de sangue.', '2023-11-01', '2024-01-31', 1, '');
 
 INSERT INTO plano (cod_plano, qtd_licenca, nome, valor, validade) VALUES
 (1, 1, 'Plano Básico', 399.0, 10),
@@ -83,10 +83,10 @@ INSERT INTO agendamento (cod_agendamento, cod_colaborador, cod_doador, data_hora
 (4, 1, 2, '2023-10-08 11:00:00', 1, 'Doação regular', 'presencial', 2);
 
 INSERT INTO doacao (cod_doacao, cod_doador, data_hora, quantidade, status) VALUES
-(1, 1, '2023-10-05 10:30:00', 450, 1),
-(2, 2, '2023-10-06 14:30:00', 550, 1),
-(3, 1, '2023-10-07 09:30:00', 500, 1),
-(4, 2, '2023-10-08 11:30:00', 490, 1);
+(1, 1, '', '', ''),
+(2, 2, '', '', ''),
+(3, 1, '', '', ''),
+(4, 2, '', '', '');
 
 INSERT INTO exame (cod_exame, cod_doacao, data_exame, tipo_exame, resultado, arquivo) VALUES
 (1, 1, '2023-10-05', 'Hemograma Completo', 'Normal', 'hemograma_123.pdf'),
