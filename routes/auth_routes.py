@@ -7,7 +7,7 @@ import sqlite3
 from data.model.cidade_model import Cidade
 from data.model.usuario_model import Usuario
 from data.repo import cidade_repo, usuario_repo
-from dtos.usuario_dtos import CriarUsuarioDTO, LoginUsuarioDTO
+from dtos.usuario_dtos import CriarUsuarioDTO
 from util.auth_decorator import criar_sessao, requer_autenticacao
 from util.flash_messages import informar_sucesso, informar_erro
 from util.security import criar_hash_senha, verificar_senha
@@ -23,83 +23,51 @@ async def post_login(
     senha: str = Form(...),
     redirect: str = Form(None)
 ):
-    dados_formulario = {
-        "email": email
-    }
+    usuario = usuario_repo.obter_por_email(email)
 
-    try:
-        # Validar dados com Pydantic DTO
-        dados = LoginUsuarioDTO(email=email, senha=senha)
-        usuario = usuario_repo.obter_por_email(dados.email)
-
-        if not usuario or not verificar_senha(dados.senha, usuario.senha):
-            informar_erro(request, "Email ou senha inválidos")
-            return templates.TemplateResponse(
-                "publico/publico_login.html",
-                {
-                    "request": request, 
-                    "erro": "Email ou senha inválidos",
-                    "erros": {},
-                    "dados": dados_formulario
-                }
-            )
-
-        # Criar sessão
-        usuario_dict = {
-            "cod_usuario": usuario.cod_usuario,
-            "nome": usuario.nome,
-            "email": usuario.email,
-            "cpf": usuario.cpf,
-            "data_nascimento": str(usuario.data_nascimento),
-            "status": usuario.status,
-            "rua_usuario": usuario.rua_usuario,
-            "bairro_usuario": usuario.bairro_usuario,
-            "cidade_usuario": usuario.cidade_usuario,
-            "cep_usuario": usuario.cep_usuario,
-            "telefone": usuario.telefone,
-            "perfil": usuario.perfil,
-            "foto": usuario.foto,
-            "estado_usuario": usuario.estado_usuario
-        }
-        criar_sessao(request, usuario_dict)
-        print(usuario_dict)
-
-        # Redirecionar
-        if redirect:
-            return RedirectResponse(redirect, status.HTTP_303_SEE_OTHER)
-
-        if usuario.perfil and usuario.perfil.strip().lower() == "doador":
-            return RedirectResponse("/doador", status.HTTP_303_SEE_OTHER)
-
-        if usuario.perfil and usuario.perfil.strip().lower() == "gestor":
-            return RedirectResponse("/gestor", status.HTTP_303_SEE_OTHER)
-
-        if usuario.perfil and usuario.perfil.strip().lower() == "administrador":
-            return RedirectResponse("/administrador", status.HTTP_303_SEE_OTHER)
-
-        if usuario.perfil and usuario.perfil.strip().lower() == "colaborador":
-            return RedirectResponse("/colaborador", status.HTTP_303_SEE_OTHER)
-
-        return RedirectResponse("/", status.HTTP_303_SEE_OTHER)
-        
-    except ValidationError as e:
-        erros = {}
-        for error in e.errors():
-            campo = error['loc'][0] if error['loc'] else 'geral'
-            erros[campo] = error['msg']
-        
-        # Informar erro geral para o usuário
-        informar_erro(request, "Dados inválidos. Verifique os campos destacados.")
-        
+    if not usuario or not verificar_senha(senha, usuario.senha):
         return templates.TemplateResponse(
             "publico/publico_login.html",
-            {
-                "request": request,
-                "erro": "Dados inválidos. Verifique os campos destacados.",
-                "erros": erros,
-                "dados": dados_formulario
-            }
+            {"request": request, "erro": "Email ou senha inválidos"}
         )
+
+    # Criar sessão
+    usuario_dict = {
+        "cod_usuario": usuario.cod_usuario,
+        "nome": usuario.nome,
+        "email": usuario.email,
+        "cpf": usuario.cpf,
+        "data_nascimento": str(usuario.data_nascimento),
+        "status": usuario.status,
+        "rua_usuario": usuario.rua_usuario,
+        "bairro_usuario": usuario.bairro_usuario,
+        "cidade_usuario": usuario.cidade_usuario,
+        "cep_usuario": usuario.cep_usuario,
+        "telefone": usuario.telefone,
+        "perfil": usuario.perfil,
+        "foto": usuario.foto,
+        "estado_usuario": usuario.estado_usuario
+    }
+    criar_sessao(request, usuario_dict)
+    print(usuario_dict)
+
+    # Redirecionar
+    if redirect:
+        return RedirectResponse(redirect, status.HTTP_303_SEE_OTHER)
+
+    if usuario.perfil and usuario.perfil.strip().lower() == "doador":
+        return RedirectResponse("/doador", status.HTTP_303_SEE_OTHER)
+
+    if usuario.perfil and usuario.perfil.strip().lower() == "gestor":
+        return RedirectResponse("/gestor", status.HTTP_303_SEE_OTHER)
+
+    if usuario.perfil and usuario.perfil.strip().lower() == "administrador":
+        return RedirectResponse("/administrador", status.HTTP_303_SEE_OTHER)
+
+    if usuario.perfil and usuario.perfil.strip().lower() == "colaborador":
+        return RedirectResponse("/colaborador", status.HTTP_303_SEE_OTHER)
+
+    return RedirectResponse("/", status.HTTP_303_SEE_OTHER)
 
 @router.get("/usuario/sair")
 async def logout(request: Request):

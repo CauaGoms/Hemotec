@@ -71,8 +71,8 @@ def obter_por_id(cod_campanha: int) -> Optional[Campanha]:
                 data_inicio=datetime.strptime(row["data_inicio"], "%Y-%m-%d").date(),
                 data_fim=datetime.strptime(row["data_fim"], "%Y-%m-%d").date(),
                 status=row["status"],
-                foto=row.get("foto")
-            )
+                foto=row["foto"]
+            )   
         return None
 
 # def obter_todos() -> list[Campanha]:

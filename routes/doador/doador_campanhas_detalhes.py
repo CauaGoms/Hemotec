@@ -10,7 +10,7 @@ templates = Jinja2Templates(directory="templates")
 #     response = templates.TemplateResponse("doador/doador_campanha_detalhes.html", {"request": request, "active_page": "campanha"})
 #     return response
 
-@router.get("/doador/campanha/detalhes/{id}")
+@router.get("/campanha/detalhes/{id}")
 async def get_doador_campanha_detalhes(request: Request, id: int):
     campanha = campanha_repo.obter_por_id(id)
     if campanha:

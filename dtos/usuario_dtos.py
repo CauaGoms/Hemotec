@@ -8,30 +8,6 @@ from util.validacoes_dto import (
     validar_estado_brasileiro,
 )
 
-class LoginUsuarioDTO(BaseDTO):
-    """DTO para validação de dados de login"""
-    email: EmailStr = Field(
-        ...,
-        description="E-mail válido do usuário"
-    )
-    senha: str = Field(
-        ...,
-        description="Senha do usuário"
-    )
-
-    @field_validator('email')
-    def validar_email_campo(cls, v: str) -> str:
-        # EmailStr já faz a validação básica, apenas retornamos
-        return v
-
-    @field_validator('senha')
-    def validar_senha_campo(cls, v: str) -> str:
-        # Para login, validamos se a senha foi fornecida mas sem critérios de complexidade
-        # pois a senha já foi validada no cadastro
-        if not v or not v.strip():
-            raise ValueError('Senha é obrigatória')
-        return v
-
 class CriarUsuarioDTO(BaseDTO):
     nome: str = Field(
         ...,
@@ -189,7 +165,7 @@ class CriarUsuarioDTO(BaseDTO):
             lambda valor, campo=None: validar_estado_brasileiro(valor), 
             "Estado"
         )
-        return validador(v.upper())  # Garante que o estado seja sempre maiúsculo
+        return validador(v.upper())  # Garante que o estado seja sempre maisculo
 
     @field_validator('senha')
     def validar_senha(cls, v: str) -> str:
