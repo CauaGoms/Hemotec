@@ -1,26 +1,26 @@
 // JavaScript específico para a página de gestão de agendamentos do colaborador
 document.addEventListener('DOMContentLoaded', function() {
-    // Função para filtrar agendamentos por status
-    const filtroItems = document.querySelectorAll('.dropdown-item[data-status]');
+    // Função para filtrar agendamentos por horário
+    const filtroItems = document.querySelectorAll('.dropdown-item[data-horario]');
     filtroItems.forEach(item => {
         item.addEventListener('click', function(e) {
             e.preventDefault();
-            const status = this.getAttribute('data-status');
-            filtrarAgendamentos(status);
+            const horario = this.getAttribute('data-horario');
+            filtrarAgendamentos(horario);
             
             // Atualizar texto do botão
-            const botaoFiltro = document.getElementById('statusFilter');
-            botaoFiltro.innerHTML = `<i class="fas fa-filter me-2"></i>${this.textContent}`;
+            const botaoFiltro = document.getElementById('horarioFilter');
+            botaoFiltro.innerHTML = `<i class="fas fa-clock me-2"></i>${this.textContent}`;
         });
     });
 
-    // Função para filtrar agendamentos
-    function filtrarAgendamentos(status) {
+    // Função para filtrar agendamentos por período do dia
+    function filtrarAgendamentos(horario) {
         const cards = document.querySelectorAll('.appointment-card');
         let visibleCount = 0;
 
         cards.forEach(card => {
-            if (status === 'all' || card.getAttribute('data-status') === status) {
+            if (horario === 'all' || card.getAttribute('data-horario') === horario) {
                 card.style.display = 'block';
                 visibleCount++;
             } else {
@@ -43,6 +43,15 @@ document.addEventListener('DOMContentLoaded', function() {
         botao.addEventListener('click', function() {
             const agendamentoId = this.getAttribute('data-id');
             mostrarModalConfirmarPresenca(agendamentoId);
+        });
+    });
+
+    // Função para cancelar agendamento
+    const botoesCancelar = document.querySelectorAll('.btn-cancelar');
+    botoesCancelar.forEach(botao => {
+        botao.addEventListener('click', function() {
+            const agendamentoId = this.getAttribute('data-id');
+            mostrarModalCancelarAgendamento(agendamentoId);
         });
     });
 
@@ -95,50 +104,94 @@ document.addEventListener('DOMContentLoaded', function() {
         // Mostrar toast de sucesso
         mostrarToast('Presença confirmada com sucesso!', 'success');
         
-        // Atualizar visualmente o card (simulação)
+        // Remover o card da lista após confirmação (simulação)
         const card = document.querySelector(`.btn-confirmar[data-id="${agendamentoId}"]`).closest('.appointment-card');
         
-        // Alterar badge
-        const badge = card.querySelector('.status-badge');
-        badge.className = 'status-badge confirmado-badge';
-        badge.innerHTML = '<i class="fas fa-check-circle me-1"></i> Presença Confirmada';
+        // Animação de fade out
+        card.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+        card.style.opacity = '0';
+        card.style.transform = 'scale(0.9)';
         
-        // Alterar borda
-        card.className = 'appointment-card confirmado';
-        card.setAttribute('data-status', 'confirmado');
+        setTimeout(() => {
+            card.remove();
+            
+            // Verificar se ainda há agendamentos
+            const totalCards = document.querySelectorAll('.appointment-card').length;
+            if (totalCards === 0) {
+                document.querySelector('.no-agendamentos-message').style.display = 'block';
+            }
+        }, 500);
+    }
+
+    // Função para mostrar modal de cancelamento
+    function mostrarModalCancelarAgendamento(agendamentoId) {
+        const modalContent = document.getElementById('modalCancelarContent');
         
-        // Alterar botões de ação
-        const actions = card.querySelector('.actions');
-        actions.innerHTML = `
-            <button class="btn btn-iniciar-doacao" data-id="${agendamentoId}">
-                <i class="fas fa-play me-1"></i> Iniciar Doação
-            </button>
-            <button class="btn btn-detalhes" data-id="${agendamentoId}">
-                <i class="fas fa-eye me-1"></i> Ver Detalhes
-            </button>
+        // Buscar informações do card
+        const card = document.querySelector(`.btn-cancelar[data-id="${agendamentoId}"]`).closest('.appointment-card');
+        const doadorNome = card.querySelector('.doador-name').textContent;
+        const dataHora = card.querySelector('.date').textContent.replace('📅', '').trim();
+        
+        modalContent.innerHTML = `
+            <div class="alert alert-warning">
+                <i class="fas fa-exclamation-triangle me-2"></i>
+                <strong>Atenção!</strong> Esta ação não pode ser desfeita.
+            </div>
+            <div class="mb-3">
+                <p class="mb-2"><strong>Doador:</strong> ${doadorNome}</p>
+                <p class="mb-2"><strong>Data/Hora:</strong> ${dataHora}</p>
+            </div>
+            <div class="mb-3">
+                <label for="motivoCancelamento" class="form-label"><strong>Motivo do Cancelamento:</strong></label>
+                <textarea class="form-control" id="motivoCancelamento" rows="3" placeholder="Descreva o motivo do cancelamento..."></textarea>
+            </div>
+            <p class="text-muted mb-0">
+                <i class="fas fa-info-circle me-1"></i>
+                O doador será notificado sobre o cancelamento.
+            </p>
         `;
         
-        // Re-anexar eventos aos novos botões
-        anexarEventos();
-    }
-
-    // Função para iniciar doação
-    function iniciarDoacao(agendamentoId) {
-        // Em produção, redirecionar para página de doação ou iniciar fluxo
-        console.log('Iniciando doação do agendamento:', agendamentoId);
-        mostrarToast('Redirecionando para o processo de doação...', 'info');
+        const modal = new bootstrap.Modal(document.getElementById('cancelarAgendamentoModal'));
+        modal.show();
         
-        // Simulação: redirecionar após 1 segundo
-        setTimeout(() => {
-            window.location.href = `/colaborador/doacoes/adicionar?agendamento_id=${agendamentoId}`;
-        }, 1000);
+        // Configurar ação do botão de confirmação
+        const btnConfirmarCancelamento = document.getElementById('btnConfirmarCancelamento');
+        btnConfirmarCancelamento.onclick = function() {
+            const motivo = document.getElementById('motivoCancelamento').value;
+            if (!motivo.trim()) {
+                mostrarToast('Por favor, informe o motivo do cancelamento', 'warning');
+                return;
+            }
+            cancelarAgendamento(agendamentoId, motivo);
+            modal.hide();
+        };
     }
 
-    // Função para ver doação
-    function verDoacao(agendamentoId) {
-        // Em produção, redirecionar para detalhes da doação
-        console.log('Visualizando doação do agendamento:', agendamentoId);
-        window.location.href = `/colaborador/doacoes/detalhes/${agendamentoId}`;
+    // Função para cancelar agendamento (simulação)
+    function cancelarAgendamento(agendamentoId, motivo) {
+        // Em produção, fazer requisição AJAX para cancelar no backend
+        console.log('Cancelando agendamento:', agendamentoId, 'Motivo:', motivo);
+        
+        // Mostrar toast de sucesso
+        mostrarToast('Agendamento cancelado com sucesso!', 'success');
+        
+        // Remover o card da lista após cancelamento
+        const card = document.querySelector(`.btn-cancelar[data-id="${agendamentoId}"]`).closest('.appointment-card');
+        
+        // Animação de fade out
+        card.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+        card.style.opacity = '0';
+        card.style.transform = 'scale(0.9)';
+        
+        setTimeout(() => {
+            card.remove();
+            
+            // Verificar se ainda há agendamentos
+            const totalCards = document.querySelectorAll('.appointment-card').length;
+            if (totalCards === 0) {
+                document.querySelector('.no-agendamentos-message').style.display = 'block';
+            }
+        }, 500);
     }
 
     // Função para ver detalhes
@@ -218,27 +271,19 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Função para anexar eventos dinamicamente
     function anexarEventos() {
-        // Re-anexar eventos para botões de iniciar doação
-        document.querySelectorAll('.btn-iniciar-doacao').forEach(botao => {
-            botao.addEventListener('click', function() {
-                const agendamentoId = this.getAttribute('data-id');
-                iniciarDoacao(agendamentoId);
-            });
-        });
-
-        // Re-anexar eventos para botões de ver doação
-        document.querySelectorAll('.btn-ver-doacao').forEach(botao => {
-            botao.addEventListener('click', function() {
-                const agendamentoId = this.getAttribute('data-id');
-                verDoacao(agendamentoId);
-            });
-        });
-
         // Re-anexar eventos para botões de detalhes
         document.querySelectorAll('.btn-detalhes').forEach(botao => {
             botao.addEventListener('click', function() {
                 const agendamentoId = this.getAttribute('data-id');
                 mostrarDetalhesAgendamento(agendamentoId);
+            });
+        });
+        
+        // Re-anexar eventos para botões de cancelar
+        document.querySelectorAll('.btn-cancelar').forEach(botao => {
+            botao.addEventListener('click', function() {
+                const agendamentoId = this.getAttribute('data-id');
+                mostrarModalCancelarAgendamento(agendamentoId);
             });
         });
     }

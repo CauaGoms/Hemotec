@@ -10,12 +10,16 @@
     <i class="fas fa-arrow-left"></i>
 </a>
 
-<!-- Seção de Cabeçalho -->
-<section class="hero-section-agendamentos">
+<!-- Hero Section -->
+<section class="hero-section">
     <div class="container">
-        <div class="hero-content">
-            <h1 class="hero-title">Gestão de Agendamentos</h1>
-            <p class="hero-subtitle">Confirme a presença dos doadores e gerencie os agendamentos.</p>
+        <div class="hero-header">
+            <div class="hero-content">
+                <h1 class="hero-title">
+                    Gestão de Agendamentos
+                </h1>
+                <p class="hero-subtitle">Confirme a presença dos doadores e gerencie os agendamentos.</p>
+            </div>
         </div>
     </div>
 </section>
@@ -23,30 +27,28 @@
 <!-- Conteúdo Principal -->
 <div class="container mt-n5">
     <div class="agendamentos-container">
-        <!-- Filtros de Status -->
+        <!-- Filtros de Horário -->
         <div class="d-flex justify-content-between align-items-center mb-4">
             <h3 class="mb-0">Lista de Agendamentos</h3>
             <div class="dropdown">
-                <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="statusFilter" data-bs-toggle="dropdown" aria-expanded="false">
-                    <i class="fas fa-filter me-2"></i>Filtrar por Status
+                <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="horarioFilter" data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="fas fa-clock me-2"></i>Filtrar por Horário
                 </button>
-                <ul class="dropdown-menu" aria-labelledby="statusFilter">
-                    <li><a class="dropdown-item" href="#" data-status="all">Todos</a></li>
-                    <li><a class="dropdown-item" href="#" data-status="confirmado">Confirmado</a></li>
-                    <li><a class="dropdown-item" href="#" data-status="pendente">Pendente</a></li>
-                    <li><a class="dropdown-item" href="#" data-status="cancelado">Cancelado</a></li>
-                    <li><a class="dropdown-item" href="#" data-status="concluido">Concluído</a></li>
+                <ul class="dropdown-menu" aria-labelledby="horarioFilter">
+                    <li><a class="dropdown-item" href="#" data-horario="all">Todos os Horários</a></li>
+                    <li><a class="dropdown-item" href="#" data-horario="manha">Manhã (06:00 - 12:00)</a></li>
+                    <li><a class="dropdown-item" href="#" data-horario="tarde">Tarde (12:00 - 18:00)</a></li>
+                    <li><a class="dropdown-item" href="#" data-horario="noite">Noite (18:00 - 23:00)</a></li>
                 </ul>
             </div>
         </div>
 
         <!-- Lista de Agendamentos -->
         <div id="agendamentos-list">
-            <!-- Card de Agendamento Pendente -->
-            <div class="appointment-card pendente" data-status="pendente">
+            <!-- Card de Agendamento - Manhã -->
+            <div class="appointment-card" data-horario="manha" data-hora="09:00">
                 <div class="card-header">
-                    <span class="status-badge pendente-badge"><i class="fas fa-clock me-1"></i> Pendente Confirmação</span>
-                    <strong class="date">Terça-feira, 15 de Outubro de 2025 - 09:00</strong>
+                    <strong class="date"><i class="fas fa-calendar-day me-2"></i>Terça-feira, 15 de Outubro de 2025 - 09:00</strong>
                 </div>
                 <div class="card-body">
                     <div class="doador-info">
@@ -65,20 +67,22 @@
                     </div>
                     <div class="actions">
                         <button class="btn btn-confirmar" data-id="1">
-                            <i class="fas fa-check-circle me-1"></i> Confirmar Presença
+                            <i class="fas fa-check-circle me-2"></i> Confirmar Presença
+                        </button>
+                        <button class="btn btn-cancelar" data-id="1">
+                            <i class="fas fa-times-circle me-2"></i> Cancelar
                         </button>
                         <button class="btn btn-detalhes" data-id="1">
-                            <i class="fas fa-eye me-1"></i> Ver Detalhes
+                            <i class="fas fa-eye me-2"></i> Ver Detalhes
                         </button>
                     </div>
                 </div>
             </div>
 
-            <!-- Card de Agendamento Confirmado -->
-            <div class="appointment-card confirmado" data-status="confirmado">
+            <!-- Card de Agendamento - Manhã -->
+            <div class="appointment-card" data-horario="manha" data-hora="10:30">
                 <div class="card-header">
-                    <span class="status-badge confirmado-badge"><i class="fas fa-check-circle me-1"></i> Presença Confirmada</span>
-                    <strong class="date">Quarta-feira, 16 de Outubro de 2025 - 10:30</strong>
+                    <strong class="date"><i class="fas fa-calendar-day me-2"></i>Terça-feira, 15 de Outubro de 2025 - 10:30</strong>
                 </div>
                 <div class="card-body">
                     <div class="doador-info">
@@ -96,21 +100,23 @@
                         </div>
                     </div>
                     <div class="actions">
-                        <button class="btn btn-iniciar-doacao" data-id="2">
-                            <i class="fas fa-play me-1"></i> Iniciar Doação
+                        <button class="btn btn-confirmar" data-id="2">
+                            <i class="fas fa-check-circle me-2"></i> Confirmar Presença
+                        </button>
+                        <button class="btn btn-cancelar" data-id="2">
+                            <i class="fas fa-times-circle me-2"></i> Cancelar
                         </button>
                         <button class="btn btn-detalhes" data-id="2">
-                            <i class="fas fa-eye me-1"></i> Ver Detalhes
+                            <i class="fas fa-eye me-2"></i> Ver Detalhes
                         </button>
                     </div>
                 </div>
             </div>
 
-            <!-- Card de Agendamento Concluído -->
-            <div class="appointment-card concluido" data-status="concluido">
+            <!-- Card de Agendamento - Tarde -->
+            <div class="appointment-card" data-horario="tarde" data-hora="14:00">
                 <div class="card-header">
-                    <span class="status-badge concluido-badge"><i class="fas fa-check-double me-1"></i> Doação Concluída</span>
-                    <strong class="date">Segunda-feira, 14 de Outubro de 2025 - 08:00</strong>
+                    <strong class="date"><i class="fas fa-calendar-day me-2"></i>Terça-feira, 15 de Outubro de 2025 - 14:00</strong>
                 </div>
                 <div class="card-body">
                     <div class="doador-info">
@@ -122,27 +128,29 @@
                                 <span class="me-3"><i class="fas fa-phone me-1"></i> (28) 98777-6666</span>
                                 <span><i class="fas fa-envelope me-1"></i> ana.ferreira@email.com</span>
                             </p>
-                            <small class="text-success">
-                                <i class="fas fa-check-circle me-1"></i> Doação realizada com sucesso - 450ml coletados
+                            <small class="text-muted">
+                                <i class="fas fa-hospital me-1"></i> Hemocentro Regional - Rua Principal, 100
                             </small>
                         </div>
                     </div>
                     <div class="actions">
-                        <button class="btn btn-ver-doacao" data-id="3">
-                            <i class="fas fa-file-medical me-1"></i> Ver Doação
+                        <button class="btn btn-confirmar" data-id="3">
+                            <i class="fas fa-check-circle me-2"></i> Confirmar Presença
+                        </button>
+                        <button class="btn btn-cancelar" data-id="3">
+                            <i class="fas fa-times-circle me-2"></i> Cancelar
                         </button>
                         <button class="btn btn-detalhes" data-id="3">
-                            <i class="fas fa-eye me-1"></i> Ver Detalhes
+                            <i class="fas fa-eye me-2"></i> Ver Detalhes
                         </button>
                     </div>
                 </div>
             </div>
 
-            <!-- Card de Agendamento Cancelado -->
-            <div class="appointment-card cancelado" data-status="cancelado">
+            <!-- Card de Agendamento - Tarde -->
+            <div class="appointment-card" data-horario="tarde" data-hora="16:30">
                 <div class="card-header">
-                    <span class="status-badge cancelado-badge"><i class="fas fa-times-circle me-1"></i> Cancelado</span>
-                    <strong class="date">Sexta-feira, 11 de Outubro de 2025 - 14:00</strong>
+                    <strong class="date"><i class="fas fa-calendar-day me-2"></i>Terça-feira, 15 de Outubro de 2025 - 16:30</strong>
                 </div>
                 <div class="card-body">
                     <div class="doador-info">
@@ -155,13 +163,53 @@
                                 <span><i class="fas fa-envelope me-1"></i> carlos.souza@email.com</span>
                             </p>
                             <small class="text-muted">
-                                <i class="fas fa-info-circle me-1"></i> Motivo: Doador solicitou cancelamento por imprevisto
+                                <i class="fas fa-hospital me-1"></i> Unidade Móvel - Shopping Center
                             </small>
                         </div>
                     </div>
                     <div class="actions">
+                        <button class="btn btn-confirmar" data-id="4">
+                            <i class="fas fa-check-circle me-2"></i> Confirmar Presença
+                        </button>
+                        <button class="btn btn-cancelar" data-id="4">
+                            <i class="fas fa-times-circle me-2"></i> Cancelar
+                        </button>
                         <button class="btn btn-detalhes" data-id="4">
-                            <i class="fas fa-eye me-1"></i> Ver Detalhes
+                            <i class="fas fa-eye me-2"></i> Ver Detalhes
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card de Agendamento - Noite -->
+            <div class="appointment-card" data-horario="noite" data-hora="19:00">
+                <div class="card-header">
+                    <strong class="date"><i class="fas fa-calendar-day me-2"></i>Terça-feira, 15 de Outubro de 2025 - 19:00</strong>
+                </div>
+                <div class="card-body">
+                    <div class="doador-info">
+                        <i class="fas fa-user-circle icon"></i>
+                        <div>
+                            <h5 class="doador-name">Patricia Lima Santos</h5>
+                            <p class="doador-details">
+                                <span class="me-3"><i class="fas fa-tint me-1"></i> Tipo: O+</span>
+                                <span class="me-3"><i class="fas fa-phone me-1"></i> (28) 96555-4444</span>
+                                <span><i class="fas fa-envelope me-1"></i> patricia.lima@email.com</span>
+                            </p>
+                            <small class="text-muted">
+                                <i class="fas fa-hospital me-1"></i> Hemocentro Regional - Rua Principal, 100
+                            </small>
+                        </div>
+                    </div>
+                    <div class="actions">
+                        <button class="btn btn-confirmar" data-id="5">
+                            <i class="fas fa-check-circle me-2"></i> Confirmar Presença
+                        </button>
+                        <button class="btn btn-cancelar" data-id="5">
+                            <i class="fas fa-times-circle me-2"></i> Cancelar
+                        </button>
+                        <button class="btn btn-detalhes" data-id="5">
+                            <i class="fas fa-eye me-2"></i> Ver Detalhes
                         </button>
                     </div>
                 </div>
@@ -210,6 +258,29 @@
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
                 <button type="button" class="btn btn-success" id="btnConfirmarPresenca">
                     <i class="fas fa-check me-1"></i> Confirmar
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal de Cancelamento -->
+<div class="modal fade" id="cancelarAgendamentoModal" tabindex="-1" aria-labelledby="cancelarAgendamentoModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header bg-danger text-white">
+                <h5 class="modal-title" id="cancelarAgendamentoModalLabel">
+                    <i class="fas fa-exclamation-triangle me-2"></i>Cancelar Agendamento
+                </h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" id="modalCancelarContent">
+                <!-- Conteúdo será preenchido dinamicamente -->
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Não, Manter</button>
+                <button type="button" class="btn btn-danger" id="btnConfirmarCancelamento">
+                    <i class="fas fa-times me-1"></i> Sim, Cancelar
                 </button>
             </div>
         </div>

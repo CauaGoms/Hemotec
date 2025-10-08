@@ -1,14 +1,6 @@
 :root {
     --hemotec-red: #C41515;
     --hemotec-gray: #23282F;
-    --status-confirmado: #198754; /* Verde */
-    --status-cancelado: #6c757d;  /* Cinza */
-    --status-pendente: #fd7e14;   /* Laranja */
-    --status-concluido: #0d6efd;  /* Azul */
-    --status-confirmado-bg: #e8f5e9;
-    --status-cancelado-bg: #f8f9fa;
-    --status-pendente-bg: #fff3cd;
-    --status-concluido-bg: #e9f5ff;
 }
 
 /* Botão Voltar */
@@ -39,24 +31,39 @@
     text-decoration: none;
 }
 
-/* Seção Hero Específica para Agendamentos */
-.hero-section-agendamentos {
-    background: linear-gradient(135deg, rgba(196, 21, 21, 0.85), rgba(140, 15, 15, 0.75)), url('https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop') no-repeat center center;
+/* Seção Hero */
+.hero-section {
+    background: linear-gradient(135deg, rgba(35, 40, 47, 0.8), rgba(80, 80, 90, 0.7)), 
+                url('https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop') no-repeat center center;
     background-size: cover;
     color: white;
-    padding: 6rem 0 5rem;
+    padding: 8rem 0 6rem;
     text-align: center;
-    border-radius: 0 0 50px 50px;
-    min-height: 400px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.hero-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(circle at 30% 50%, rgba(255, 255, 255, 0.1) 0%, transparent 50%);
+    pointer-events: none;
+}
+
+.hero-header {
+    position: relative;
+    z-index: 2;
 }
 
 .hero-content {
     max-width: 800px;
     margin: 0 auto;
     padding: 0 2rem;
+    animation: fadeInUp 0.8s ease-out;
 }
 
 .hero-title {
@@ -64,7 +71,8 @@
     font-weight: 700;
     font-size: 3.5rem;
     margin-bottom: 1.5rem;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    text-shadow: 2px 4px 8px rgba(0, 0, 0, 0.3);
+    line-height: 1.2;
 }
 
 .hero-subtitle {
@@ -72,7 +80,19 @@
     font-weight: 300;
     opacity: 0.95;
     line-height: 1.6;
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+    text-shadow: 1px 2px 4px rgba(0, 0, 0, 0.2);
+    margin-bottom: 0;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 /* Container Principal */
@@ -83,11 +103,13 @@
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
     position: relative;
     z-index: 5;
+    margin-top: -3rem;
 }
 
 /* Card de Agendamento */
 .appointment-card {
     border: 1px solid #e9ecef;
+    border-left: 4px solid var(--hemotec-red);
     border-radius: 12px;
     margin-bottom: 1.5rem;
     overflow: hidden;
@@ -97,14 +119,15 @@
 .appointment-card:hover {
     transform: translateY(-5px);
     box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+    border-left-color: #8b0000;
 }
 
 .appointment-card .card-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0.8rem 1.2rem;
-    font-size: 0.9rem;
+    padding: 1rem 1.5rem;
+    font-size: 0.95rem;
     background-color: #f8f9fa;
 }
 
@@ -151,136 +174,95 @@
 .actions {
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
-    min-width: 200px;
+    gap: 0.75rem;
+    min-width: 220px;
 }
 
 .actions .btn {
-    font-weight: 500;
+    font-weight: 600;
     white-space: nowrap;
 }
 
-/* Badges de Status */
-.status-badge {
-    padding: 0.4rem 0.8rem;
-    border-radius: 20px;
-    font-weight: 600;
-    font-size: 0.8rem;
-}
-
-.pendente-badge {
-    background-color: var(--status-pendente-bg);
-    color: var(--status-pendente);
-}
-
-.confirmado-badge {
-    background-color: var(--status-confirmado-bg);
-    color: var(--status-confirmado);
-}
-
-.cancelado-badge {
-    background-color: var(--status-cancelado-bg);
-    color: var(--status-cancelado);
-}
-
-.concluido-badge {
-    background-color: var(--status-concluido-bg);
-    color: var(--status-concluido);
-}
-
-/* Cores da Borda Esquerda por Status */
-.appointment-card.pendente { border-left: 5px solid var(--status-pendente); }
-.appointment-card.confirmado { border-left: 5px solid var(--status-confirmado); }
-.appointment-card.cancelado { border-left: 5px solid var(--status-cancelado); }
-.appointment-card.concluido { border-left: 5px solid var(--status-concluido); }
-
-/* Botões Personalizados */
+/* Botão Confirmar Presença - DESTAQUE PRINCIPAL */
 .btn-confirmar {
-    background: #e8f5e9;
-    color: var(--status-confirmado);
+    background: linear-gradient(135deg, #198754, #146c43);
+    color: #fff;
     border-radius: 10px;
-    font-weight: 600;
+    font-weight: 700;
     border: none;
-    padding: 0.5rem 1rem;
+    padding: 0.65rem 1.2rem;
     font-size: 0.95rem;
-    transition: all 0.2s;
+    transition: all 0.3s ease;
     display: inline-flex;
     align-items: center;
-    gap: 0.3rem;
+    justify-content: center;
+    gap: 0.4rem;
+    box-shadow: 0 3px 12px rgba(25, 135, 84, 0.25);
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
 }
 
 .btn-confirmar:hover {
-    background: var(--status-confirmado);
+    background: linear-gradient(135deg, #146c43, #0f5132);
     color: #fff;
-    transform: translateY(-2px) scale(1.04);
+    transform: translateY(-2px) scale(1.03);
+    box-shadow: 0 6px 20px rgba(25, 135, 84, 0.35);
 }
 
-.btn-iniciar-doacao {
-    background: var(--status-confirmado);
-    color: #fff;
-    border-radius: 10px;
-    font-weight: 600;
-    border: none;
-    padding: 0.5rem 1rem;
-    font-size: 0.95rem;
-    transition: all 0.2s;
-    display: inline-flex;
-    align-items: center;
-    gap: 0.3rem;
-}
-
-.btn-iniciar-doacao:hover {
-    background: #146c43;
-    color: #fff;
-    transform: translateY(-2px) scale(1.04);
-}
-
-.btn-ver-doacao {
-    background: #e9f5ff;
-    color: var(--status-concluido);
-    border-radius: 10px;
-    font-weight: 600;
-    border: none;
-    padding: 0.5rem 1rem;
-    font-size: 0.95rem;
-    transition: all 0.2s;
-    display: inline-flex;
-    align-items: center;
-    gap: 0.3rem;
-}
-
-.btn-ver-doacao:hover {
-    background: var(--status-concluido);
-    color: #fff;
-    transform: translateY(-2px) scale(1.04);
+.btn-confirmar:active {
+    transform: translateY(-1px) scale(1.01);
 }
 
 .btn-detalhes {
-    background: #f8f9fa;
+    background: #fff;
     color: var(--hemotec-gray);
-    border-radius: 10px;
+    border-radius: 8px;
     font-weight: 600;
-    border: 1px solid #dee2e6;
-    padding: 0.5rem 1rem;
-    font-size: 0.95rem;
-    transition: all 0.2s;
+    border: 2px solid #dee2e6;
+    padding: 0.55rem 1rem;
+    font-size: 0.9rem;
+    transition: all 0.3s;
     display: inline-flex;
     align-items: center;
+    justify-content: center;
     gap: 0.3rem;
 }
 
 .btn-detalhes:hover {
-    background: var(--hemotec-gray);
+    background: #f8f9fa;
+    color: var(--hemotec-red);
+    border-color: var(--hemotec-red);
+    transform: translateY(-2px);
+}
+
+/* Botão Cancelar */
+.btn-cancelar {
+    background: #fff;
+    color: #dc3545;
+    border-radius: 8px;
+    font-weight: 600;
+    border: 2px solid #dc3545;
+    padding: 0.55rem 1rem;
+    font-size: 0.9rem;
+    transition: all 0.3s;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.3rem;
+}
+
+.btn-cancelar:hover {
+    background: #dc3545;
     color: #fff;
-    border-color: var(--hemotec-gray);
-    transform: translateY(-2px) scale(1.04);
+    border-color: #dc3545;
+    transform: translateY(-2px);
+    box-shadow: 0 3px 10px rgba(220, 53, 69, 0.25);
 }
 
 /* Responsividade da Hero Section */
 @media (max-width: 768px) {
-    .hero-section-agendamentos {
-        padding: 4rem 0 3rem;
-        min-height: 300px;
+    .hero-section {
+        padding: 6rem 0 4rem;
     }
     
     .hero-title {
@@ -298,6 +280,10 @@
 }
 
 @media (max-width: 480px) {
+    .hero-section {
+        padding: 5rem 0 3rem;
+    }
+    
     .hero-title {
         font-size: 2rem;
     }
@@ -354,4 +340,8 @@
 /* Utility Classes */
 .mt-n5 {
     margin-top: -3rem;
+}
+
+.container .agendamentos-container {
+    margin-top: 0;
 }
