@@ -1,5 +1,6 @@
 from fastapi import APIRouter, Request
 from fastapi.templating import Jinja2Templates
+from data.repo import doador_repo
 from util.auth_decorator import requer_autenticacao
 
 router = APIRouter()
