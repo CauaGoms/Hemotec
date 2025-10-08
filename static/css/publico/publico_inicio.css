@@ -110,7 +110,7 @@ body {
 }
 
 .card {
-    border: none;
+    border: 1px solid rgba(0, 0, 0, 0.06);
     border-radius: 15px;
     overflow: hidden;
     transition: all 0.3s ease;
@@ -618,6 +618,7 @@ body {
     text-align: right;
     min-width: 100px;
     flex-shrink: 0;
+    white-space: nowrap;
 }
 
 .blood-stock-card:hover {

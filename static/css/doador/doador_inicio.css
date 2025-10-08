@@ -110,7 +110,7 @@ body {
 }
 
 .card {
-    border: none;
+    border: 1px solid rgba(0, 0, 0, 0.06);
     border-radius: 15px;
     overflow: hidden;
     transition: all 0.3s ease;
@@ -354,8 +354,9 @@ main {
     font-size: 0.85rem;
     font-weight: 600;
     text-transform: uppercase;
-    min-width: 70px;
+    min-width: 90px;
     text-align: right;
+    white-space: nowrap;
 }
 
 .blood-info,

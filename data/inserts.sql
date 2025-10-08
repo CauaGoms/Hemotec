@@ -88,17 +88,15 @@ INSERT INTO adm_campanha (cod_adm, cod_campanha, papel) VALUES
 (2, 2, 'gestor'),
 (1, 2, 'gestor');
 
-INSERT INTO notificacao (cod_notificacao, cod_adm, tipo, mensagem, status, data_envio) VALUES
-(1, 1, 'Estoque baixo', 'O estoque de sangue tipo O negativo está baixo. Por favor, faça uma doação.', 1, '2025-10-01'),
-(2, 2, 'Lembrete de agendamento', 'Você tem um agendamento de doação de sangue amanhã às 10:00.', 1, '2025-10-01')
-(3, 1, 'Nova campanha', 'Participe da nova campanha de doação de sangue "Doe Sangue, Salve Vidas".', 1, '2025-10-01'),
-(4, 2, 'Agradecimento', 'Obrigado por sua doação de sangue! Sua contribuição é muito importante.', 1, '2025-10-01');
+INSERT INTO notificacao (cod_notificacao, cod_adm, tipo, mensagem, status, data_envio, titulo) VALUES
+(1, 1, 'Estoque', 'O estoque de sangue tipo O negativo está baixo. Por favor, faça uma doação.', 1, '2025-10-01', 'Estoque Baixo'),
+(2, 2, 'Agendamento', 'Você tem um agendamento de doação de sangue amanhã às 10:00.', 1, '2025-10-01', 'Agendamento de Doação'),
+(3, 1, 'Campanha', 'Participe da nova campanha de doação de sangue "Doe Sangue, Salve Vidas".', 1, '2025-10-01', 'Doe Sangue'),
+(4, 2, 'Agradecimento', 'Obrigado por sua doação de sangue! Sua contribuição é muito importante.', 1, '2025-10-01', 'Sua Doação é Importante');
 
 INSERT INTO colaborador (cod_colaborador, funcao) VALUES
 (1, 'Enfermeiro'),
-(2, 'Técnico de Laboratório'),
-(3, 'Recepcionista'),
-(4, 'Médico');
+(2, 'Técnico de Laboratório');
 
 INSERT INTO doador (cod_doador, tipo_sanguineo, fator_rh, elegivel, altura, peso, profissao, contato_emergencia, telefone_emergencia) VALUES
 (1, 'O', 'negativo', "elegivel", 1.75, 70.0, 'Estudante', 'Maria Silva', '11988887777'),

@@ -24,7 +24,8 @@ def inserir(notificacao: Notificacao, cursor=None) -> Optional[int]:
             notificacao.tipo,
             notificacao.mensagem,
             notificacao.status,
-            notificacao.data_envio
+            notificacao.data_envio,
+            notificacao.titulo
         ))
         return cursor.lastrowid
     else:
@@ -35,7 +36,8 @@ def inserir(notificacao: Notificacao, cursor=None) -> Optional[int]:
                 notificacao.tipo,
                 notificacao.mensagem,
                 notificacao.status,
-                notificacao.data_envio
+                notificacao.data_envio,
+                notificacao.titulo
             ))
             return cursor.lastrowid
     
@@ -52,8 +54,9 @@ def obter_todos() -> list[Notificacao]:
                 tipo=row["tipo"],
                 mensagem=row["mensagem"],
                 status=row["status"],
-                data_envio=datetime.strptime(row["data_envio"], '%Y-%m-%d')) 
-                for row in rows]
+                data_envio=datetime.strptime(row["data_envio"], '%Y-%m-%d %H:%M:%S') if ' ' in row["data_envio"] else datetime.strptime(row["data_envio"], '%Y-%m-%d'),
+                titulo=row["titulo"]
+            ) for row in rows]
         return notificacao
     
 def obter_por_id(cod_notificacao: int) -> Optional[Notificacao]:
@@ -73,8 +76,9 @@ def obter_por_id(cod_notificacao: int) -> Optional[Notificacao]:
                 tipo=row["tipo"],
                 mensagem=row["mensagem"],
                 status=row["status"],
-                data_envio=data_envio
-                ) 
+                data_envio=data_envio,
+                titulo=row["titulo"]
+            )
         return None
     
 def update(notificacao: Notificacao) -> bool:
@@ -88,6 +92,7 @@ def update(notificacao: Notificacao) -> bool:
                 notificacao.mensagem,
                 notificacao.status,
                 notificacao.data_envio,
+                notificacao.titulo,
                 notificacao.cod_notificacao
             ),
         )

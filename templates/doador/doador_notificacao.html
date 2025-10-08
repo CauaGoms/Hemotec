@@ -4,7 +4,6 @@
 {% endblock %}
 
 {% block conteudo %}
-
 <!-- Hero Section -->
 <section class="hero-section">
     <div class="container">
@@ -17,7 +16,6 @@
         </div>
     </div>
 </section>
-
 <div class="container">
     <!-- Filtros e Ações -->
     <div class="notification-controls fade-in">
@@ -25,32 +23,37 @@
             <div class="col-md-6">
                 <div class="filter-buttons">
                     <button class="filter-btn active" data-filter="all" onclick="filterNotifications('all')">
-                        <i class="fas fa-list me-2"></i>Todas
+                        <i class="fas fa-list me-2"></i>
+                        Todas
                     </button>
                     <button class="filter-btn" data-filter="unread" onclick="filterNotifications('unread')">
-                        <i class="fas fa-envelope me-2"></i>Não Lidas
+                        <i class="fas fa-envelope me-2"></i>
+                        Não Lidas
                     </button>
                     <button class="filter-btn" data-filter="important" onclick="filterNotifications('important')">
-                        <i class="fas fa-exclamation-triangle me-2"></i>Importantes
+                        <i class="fas fa-exclamation-triangle me-2"></i>
+                        Importantes
                     </button>
                     <button class="filter-btn" data-filter="campaigns" onclick="filterNotifications('campaigns')">
-                        <i class="fas fa-bullhorn me-2"></i>Campanhas
+                        <i class="fas fa-bullhorn me-2"></i>
+                        Campanhas
                     </button>
                 </div>
             </div>
             <div class="col-md-6 text-end">
                 <div class="action-buttons">
                     <button class="btn btn-outline-secondary" onclick="markAllAsRead()">
-                        <i class="fas fa-check-double me-2"></i>Marcar Todas como Lidas
+                        <i class="fas fa-check-double me-2"></i>
+                        Marcar Todas como Lidas
                     </button>
                     <button class="btn btn-outline-danger" onclick="clearAllNotifications()">
-                        <i class="fas fa-trash me-2"></i>Limpar Todas
+                        <i class="fas fa-trash me-2"></i>
+                        Limpar Todas
                     </button>
                 </div>
             </div>
         </div>
     </div>
-
     <!-- Estatísticas de Notificações -->
     <div class="notification-stats fade-in">
         <div class="row mb-4">
@@ -100,37 +103,18 @@
             </div>
         </div>
     </div>
-
     <!-- Lista de Notificações -->
     <div class="notifications-container fade-in">
         <div class="row">
             <div class="col-12">
-                <div class="notifications-list">
-                    <!-- Notificação Crítica -->
-                    {% for notificacao in notificacao:%}
-                        <div class="notification-item critical unread" data-type="important" data-id="1">
-                            <div class="notification-icon">
-                                <i class="fas fa-exclamation-triangle"></i>
-                            </div>
-                            <div class="notification-content">
-                                <div class="notification-header">
-                                    <h5>{{notificacao.tipo}}</h5>
-                                    <div class="notification-meta">
-                                        <span class="time">{{notificacao.data_envio.strftime('%d/%m/%Y')}}</span>
-                                    </div>
-                                </div>
-                                <p>{{notificacao.mensagem}}</p>
-                                <div class="notification-actions">
-                                    <button class="btn btn-sm btn-outline-secondary" onclick="markAsRead(1)">Marcar como Lida</button>
-                                </div>
-                            </div>
-                            <div class="notification-status">
-                                <div class="unread-indicator"></div>
-                            </div>
-                        </div>
-                    {% endfor  %}                    
+                <div class="notifications-list" id="notifications-list">
+                    <!-- Notificações serão carregadas via JavaScript --></div>
+                <!-- Mensagem quando não há notificações -->
+                <div id="no-notifications" class="text-center py-5" style="display: none;">
+                    <i class="fas fa-bell-slash fa-3x text-muted mb-3"></i>
+                    <h5 class="text-muted">Nenhuma notificação encontrada</h5>
+                    <p class="text-muted">Você não possui notificações no momento.</p>
                 </div>
-
                 <!-- Paginação -->
                 <div class="pagination-container">
                     <nav aria-label="Navegação de notificações">
@@ -157,7 +141,6 @@
         </div>
     </div>
 </div>
-
 <!-- Modal de Detalhes -->
 <div class="modal fade" id="detailsModal" tabindex="-1">
     <div class="modal-dialog modal-lg">
@@ -167,8 +150,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
             <div class="modal-body" id="modalBody">
-                <!-- Conteúdo será preenchido via JavaScript -->
-            </div>
+                <!-- Conteúdo será preenchido via JavaScript --></div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
                 <button type="button" class="btn btn-primary" id="modalAction">Ação Principal</button>
@@ -176,7 +158,6 @@
         </div>
     </div>
 </div>
-
 <!-- Floating Action Button -->
 <div class="floating-action">
     <button class="floating-btn" onclick="refreshNotifications()">
@@ -186,6 +167,5 @@
 {% endblock %}
 
 {% block custom_js %}
-<script src="/static/js/doador/doador_notificacao.js">  
-</script>
+<script src="/static/js/doador/doador_notificacao.js"></script>
 {% endblock %}

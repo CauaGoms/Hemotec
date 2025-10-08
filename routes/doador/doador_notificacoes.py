@@ -1,7 +1,9 @@
 from fastapi import APIRouter, Request
 from fastapi.templating import Jinja2Templates
+from fastapi.responses import JSONResponse
 from data.repo import notificacao_repo
 from util.auth_decorator import requer_autenticacao
+from datetime import datetime
 
 router = APIRouter()
 templates = Jinja2Templates(directory="templates")
@@ -9,8 +11,70 @@ templates = Jinja2Templates(directory="templates")
 @router.get("/doador/notificacao")
 @requer_autenticacao(["doador"])
 async def get_doador_notificacao(request: Request, usuario_logado: dict = None):
-    notificacao = notificacao_repo.obter_todos()
+    notificacoes = notificacao_repo.obter_todos()
+    response = templates.TemplateResponse("doador/doador_notificacao.html",
+        {"request": request, "active_page": "notificacao", "usuario": usuario_logado, "notificacoes": notificacoes})
+    return response
+
+@router.get("/api/notificacoes")
+@requer_autenticacao(["doador"])
+async def get_notificacoes_api(request: Request, usuario_logado: dict = None):
+    """Retorna todas as notificações em formato JSON"""
+    notificacoes = notificacao_repo.obter_todos()
+    return JSONResponse(content={
+        "notificacoes": [
+            {
+                "cod_notificacao": n.cod_notificacao,
+                "tipo": n.tipo,
+                "titulo": n.titulo,
+                "mensagem": n.mensagem,
+                "status": n.status,
+                "data_envio": n.data_envio.strftime('%Y-%m-%d %H:%M:%S') if isinstance(n.data_envio, datetime) else str(n.data_envio)
+            }
+            for n in notificacoes
+        ]
+    })
+
+@router.post("/api/notificacoes/{cod_notificacao}/marcar-lida")
+@requer_autenticacao(["doador"])
+async def marcar_notificacao_lida(cod_notificacao: int, request: Request, usuario_logado: dict = None):
+    """Marca uma notificação como lida (status = 0)"""
+    notificacao = notificacao_repo.obter_por_id(cod_notificacao)
     if notificacao:
-        response = templates.TemplateResponse("doador/doador_notificacao.html",
-            {"request": request, "active_page": "notificacao", "usuario": usuario_logado, "notificacao": notificacao})
-        return response
+        notificacao.status = 0
+        sucesso = notificacao_repo.update(notificacao)
+        return JSONResponse(content={"success": sucesso})
+    return JSONResponse(content={"success": False, "error": "Notificação não encontrada"}, status_code=404)
+
+@router.post("/api/notificacoes/marcar-todas-lidas")
+@requer_autenticacao(["doador"])
+async def marcar_todas_lidas(request: Request, usuario_logado: dict = None):
+    """Marca todas as notificações como lidas"""
+    notificacoes = notificacao_repo.obter_todos()
+    sucesso_total = True
+    for notificacao in notificacoes:
+        if notificacao.status == 1:
+            notificacao.status = 0
+            sucesso = notificacao_repo.update(notificacao)
+            if not sucesso:
+                sucesso_total = False
+    return JSONResponse(content={"success": sucesso_total})
+
+@router.delete("/api/notificacoes/{cod_notificacao}")
+@requer_autenticacao(["doador"])
+async def deletar_notificacao(cod_notificacao: int, request: Request, usuario_logado: dict = None):
+    """Deleta uma notificação"""
+    sucesso = notificacao_repo.delete(cod_notificacao)
+    return JSONResponse(content={"success": sucesso})
+
+@router.delete("/api/notificacoes/limpar-todas")
+@requer_autenticacao(["doador"])
+async def limpar_todas_notificacoes(request: Request, usuario_logado: dict = None):
+    """Deleta todas as notificações"""
+    notificacoes = notificacao_repo.obter_todos()
+    sucesso_total = True
+    for notificacao in notificacoes:
+        sucesso = notificacao_repo.delete(notificacao.cod_notificacao)
+        if not sucesso:
+            sucesso_total = False
+    return JSONResponse(content={"success": sucesso_total})

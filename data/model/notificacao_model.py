@@ -10,3 +10,4 @@ class Notificacao:
     mensagem: str
     status: int
     data_envio: datetime
+    titulo: str
