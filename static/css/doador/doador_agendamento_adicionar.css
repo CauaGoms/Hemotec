@@ -34,7 +34,8 @@ body {
     overflow: hidden;
 }
 
-.hero-section::before {
+/* Removido o overlay vermelho para manter a mesma cor da home */
+/* .hero-section::before {
     content: '';
     position: absolute;
     top: 0;
@@ -48,7 +49,7 @@ body {
 @keyframes pulse {
     0%, 100% { opacity: 0.8; }
     50% { opacity: 1; }
-}
+} */
 
 .floating-elements {
     position: absolute;
