@@ -1,12 +1,222 @@
 {% extends "colaborador/colaborador__base.html" %}
+
 {% block custom_css %}
-<!-- <link href="/static/css" rel="stylesheet"> -->
+<link href="/static/css/colaborador/colaborador_agendamento.css" rel="stylesheet">
 {% endblock %}
 
 {% block conteudo %}
-<h1>colaborador_agendamento</h1>
+<!-- Botão Voltar -->
+<a href="/colaborador" class="back-arrow">
+    <i class="fas fa-arrow-left"></i>
+</a>
+
+<!-- Seção de Cabeçalho -->
+<section class="hero-section-agendamentos">
+    <div class="container">
+        <div class="hero-content">
+            <h1 class="hero-title">Gestão de Agendamentos</h1>
+            <p class="hero-subtitle">Confirme a presença dos doadores e gerencie os agendamentos.</p>
+        </div>
+    </div>
+</section>
+
+<!-- Conteúdo Principal -->
+<div class="container mt-n5">
+    <div class="agendamentos-container">
+        <!-- Filtros de Status -->
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h3 class="mb-0">Lista de Agendamentos</h3>
+            <div class="dropdown">
+                <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="statusFilter" data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="fas fa-filter me-2"></i>Filtrar por Status
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="statusFilter">
+                    <li><a class="dropdown-item" href="#" data-status="all">Todos</a></li>
+                    <li><a class="dropdown-item" href="#" data-status="confirmado">Confirmado</a></li>
+                    <li><a class="dropdown-item" href="#" data-status="pendente">Pendente</a></li>
+                    <li><a class="dropdown-item" href="#" data-status="cancelado">Cancelado</a></li>
+                    <li><a class="dropdown-item" href="#" data-status="concluido">Concluído</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Lista de Agendamentos -->
+        <div id="agendamentos-list">
+            <!-- Card de Agendamento Pendente -->
+            <div class="appointment-card pendente" data-status="pendente">
+                <div class="card-header">
+                    <span class="status-badge pendente-badge"><i class="fas fa-clock me-1"></i> Pendente Confirmação</span>
+                    <strong class="date">Terça-feira, 15 de Outubro de 2025 - 09:00</strong>
+                </div>
+                <div class="card-body">
+                    <div class="doador-info">
+                        <i class="fas fa-user-circle icon"></i>
+                        <div>
+                            <h5 class="doador-name">Maria Santos Silva</h5>
+                            <p class="doador-details">
+                                <span class="me-3"><i class="fas fa-tint me-1"></i> Tipo: A+</span>
+                                <span class="me-3"><i class="fas fa-phone me-1"></i> (28) 99999-8888</span>
+                                <span><i class="fas fa-envelope me-1"></i> maria.santos@email.com</span>
+                            </p>
+                            <small class="text-muted">
+                                <i class="fas fa-hospital me-1"></i> Hemocentro Regional - Rua Principal, 100
+                            </small>
+                        </div>
+                    </div>
+                    <div class="actions">
+                        <button class="btn btn-confirmar" data-id="1">
+                            <i class="fas fa-check-circle me-1"></i> Confirmar Presença
+                        </button>
+                        <button class="btn btn-detalhes" data-id="1">
+                            <i class="fas fa-eye me-1"></i> Ver Detalhes
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card de Agendamento Confirmado -->
+            <div class="appointment-card confirmado" data-status="confirmado">
+                <div class="card-header">
+                    <span class="status-badge confirmado-badge"><i class="fas fa-check-circle me-1"></i> Presença Confirmada</span>
+                    <strong class="date">Quarta-feira, 16 de Outubro de 2025 - 10:30</strong>
+                </div>
+                <div class="card-body">
+                    <div class="doador-info">
+                        <i class="fas fa-user-circle icon"></i>
+                        <div>
+                            <h5 class="doador-name">João Pedro Oliveira</h5>
+                            <p class="doador-details">
+                                <span class="me-3"><i class="fas fa-tint me-1"></i> Tipo: O-</span>
+                                <span class="me-3"><i class="fas fa-phone me-1"></i> (28) 99888-7777</span>
+                                <span><i class="fas fa-envelope me-1"></i> joao.pedro@email.com</span>
+                            </p>
+                            <small class="text-muted">
+                                <i class="fas fa-hospital me-1"></i> Unidade Móvel - Shopping Center
+                            </small>
+                        </div>
+                    </div>
+                    <div class="actions">
+                        <button class="btn btn-iniciar-doacao" data-id="2">
+                            <i class="fas fa-play me-1"></i> Iniciar Doação
+                        </button>
+                        <button class="btn btn-detalhes" data-id="2">
+                            <i class="fas fa-eye me-1"></i> Ver Detalhes
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card de Agendamento Concluído -->
+            <div class="appointment-card concluido" data-status="concluido">
+                <div class="card-header">
+                    <span class="status-badge concluido-badge"><i class="fas fa-check-double me-1"></i> Doação Concluída</span>
+                    <strong class="date">Segunda-feira, 14 de Outubro de 2025 - 08:00</strong>
+                </div>
+                <div class="card-body">
+                    <div class="doador-info">
+                        <i class="fas fa-user-circle icon"></i>
+                        <div>
+                            <h5 class="doador-name">Ana Carolina Ferreira</h5>
+                            <p class="doador-details">
+                                <span class="me-3"><i class="fas fa-tint me-1"></i> Tipo: B+</span>
+                                <span class="me-3"><i class="fas fa-phone me-1"></i> (28) 98777-6666</span>
+                                <span><i class="fas fa-envelope me-1"></i> ana.ferreira@email.com</span>
+                            </p>
+                            <small class="text-success">
+                                <i class="fas fa-check-circle me-1"></i> Doação realizada com sucesso - 450ml coletados
+                            </small>
+                        </div>
+                    </div>
+                    <div class="actions">
+                        <button class="btn btn-ver-doacao" data-id="3">
+                            <i class="fas fa-file-medical me-1"></i> Ver Doação
+                        </button>
+                        <button class="btn btn-detalhes" data-id="3">
+                            <i class="fas fa-eye me-1"></i> Ver Detalhes
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card de Agendamento Cancelado -->
+            <div class="appointment-card cancelado" data-status="cancelado">
+                <div class="card-header">
+                    <span class="status-badge cancelado-badge"><i class="fas fa-times-circle me-1"></i> Cancelado</span>
+                    <strong class="date">Sexta-feira, 11 de Outubro de 2025 - 14:00</strong>
+                </div>
+                <div class="card-body">
+                    <div class="doador-info">
+                        <i class="fas fa-user-circle icon"></i>
+                        <div>
+                            <h5 class="doador-name">Carlos Eduardo Souza</h5>
+                            <p class="doador-details">
+                                <span class="me-3"><i class="fas fa-tint me-1"></i> Tipo: AB+</span>
+                                <span class="me-3"><i class="fas fa-phone me-1"></i> (28) 97666-5555</span>
+                                <span><i class="fas fa-envelope me-1"></i> carlos.souza@email.com</span>
+                            </p>
+                            <small class="text-muted">
+                                <i class="fas fa-info-circle me-1"></i> Motivo: Doador solicitou cancelamento por imprevisto
+                            </small>
+                        </div>
+                    </div>
+                    <div class="actions">
+                        <button class="btn btn-detalhes" data-id="4">
+                            <i class="fas fa-eye me-1"></i> Ver Detalhes
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mensagem para quando não houver agendamentos -->
+        <div class="text-center p-5 no-agendamentos-message" style="display: none;">
+            <i class="fas fa-calendar-times fa-3x text-muted mb-3"></i>
+            <h4>Nenhum agendamento encontrado</h4>
+            <p>Não há agendamentos com o filtro selecionado.</p>
+        </div>
+    </div>
+</div>
+
+<!-- Modal de Detalhes do Agendamento -->
+<div class="modal fade" id="detailsModal" tabindex="-1" aria-labelledby="detailsModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="detailsModalLabel">Detalhes do Agendamento</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" id="modalDetailsContent">
+                <!-- Conteúdo será preenchido dinamicamente -->
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal de Confirmação de Presença -->
+<div class="modal fade" id="confirmarPresencaModal" tabindex="-1" aria-labelledby="confirmarPresencaModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="confirmarPresencaModalLabel">Confirmar Presença</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" id="modalConfirmarContent">
+                <!-- Conteúdo será preenchido dinamicamente -->
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-success" id="btnConfirmarPresenca">
+                    <i class="fas fa-check me-1"></i> Confirmar
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}
 
 {% block custom_js %}
-<!-- <script src="/static/js"></script> -->
+<script src="/static/js/colaborador/colaborador_agendamento.js"></script>
 {% endblock %}

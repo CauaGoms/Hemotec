@@ -1,0 +1,357 @@
+:root {
+    --hemotec-red: #C41515;
+    --hemotec-gray: #23282F;
+    --status-confirmado: #198754; /* Verde */
+    --status-cancelado: #6c757d;  /* Cinza */
+    --status-pendente: #fd7e14;   /* Laranja */
+    --status-concluido: #0d6efd;  /* Azul */
+    --status-confirmado-bg: #e8f5e9;
+    --status-cancelado-bg: #f8f9fa;
+    --status-pendente-bg: #fff3cd;
+    --status-concluido-bg: #e9f5ff;
+}
+
+/* Botão Voltar */
+.back-arrow {
+    position: fixed;
+    top: 100px;
+    left: 20px;
+    background: rgba(255, 255, 255, 0.9);
+    color: var(--hemotec-red);
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    font-size: 1.2rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+}
+
+.back-arrow:hover {
+    background: var(--hemotec-red);
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+    text-decoration: none;
+}
+
+/* Seção Hero Específica para Agendamentos */
+.hero-section-agendamentos {
+    background: linear-gradient(135deg, rgba(196, 21, 21, 0.85), rgba(140, 15, 15, 0.75)), url('https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop') no-repeat center center;
+    background-size: cover;
+    color: white;
+    padding: 6rem 0 5rem;
+    text-align: center;
+    border-radius: 0 0 50px 50px;
+    min-height: 400px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.hero-content {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 0 2rem;
+}
+
+.hero-title {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    font-size: 3.5rem;
+    margin-bottom: 1.5rem;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.hero-subtitle {
+    font-size: 1.3rem;
+    font-weight: 300;
+    opacity: 0.95;
+    line-height: 1.6;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+/* Container Principal */
+.agendamentos-container {
+    background-color: white;
+    border-radius: 15px;
+    padding: 2rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    position: relative;
+    z-index: 5;
+}
+
+/* Card de Agendamento */
+.appointment-card {
+    border: 1px solid #e9ecef;
+    border-radius: 12px;
+    margin-bottom: 1.5rem;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.appointment-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+}
+
+.appointment-card .card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.8rem 1.2rem;
+    font-size: 0.9rem;
+    background-color: #f8f9fa;
+}
+
+.appointment-card .date {
+    font-family: 'Montserrat', sans-serif;
+    color: var(--hemotec-gray);
+}
+
+/* Corpo do Card */
+.appointment-card .card-body {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem;
+}
+
+.doador-info {
+    display: flex;
+    align-items: flex-start;
+    gap: 1.5rem;
+    flex: 1;
+}
+
+.doador-info .icon {
+    font-size: 3rem;
+    color: var(--hemotec-red);
+    min-width: 50px;
+}
+
+.doador-name {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+    color: var(--hemotec-gray);
+    margin-bottom: 0.5rem;
+    font-size: 1.2rem;
+}
+
+.doador-details {
+    color: #6c757d;
+    margin-bottom: 0.5rem;
+    font-size: 0.95rem;
+}
+
+.actions {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    min-width: 200px;
+}
+
+.actions .btn {
+    font-weight: 500;
+    white-space: nowrap;
+}
+
+/* Badges de Status */
+.status-badge {
+    padding: 0.4rem 0.8rem;
+    border-radius: 20px;
+    font-weight: 600;
+    font-size: 0.8rem;
+}
+
+.pendente-badge {
+    background-color: var(--status-pendente-bg);
+    color: var(--status-pendente);
+}
+
+.confirmado-badge {
+    background-color: var(--status-confirmado-bg);
+    color: var(--status-confirmado);
+}
+
+.cancelado-badge {
+    background-color: var(--status-cancelado-bg);
+    color: var(--status-cancelado);
+}
+
+.concluido-badge {
+    background-color: var(--status-concluido-bg);
+    color: var(--status-concluido);
+}
+
+/* Cores da Borda Esquerda por Status */
+.appointment-card.pendente { border-left: 5px solid var(--status-pendente); }
+.appointment-card.confirmado { border-left: 5px solid var(--status-confirmado); }
+.appointment-card.cancelado { border-left: 5px solid var(--status-cancelado); }
+.appointment-card.concluido { border-left: 5px solid var(--status-concluido); }
+
+/* Botões Personalizados */
+.btn-confirmar {
+    background: #e8f5e9;
+    color: var(--status-confirmado);
+    border-radius: 10px;
+    font-weight: 600;
+    border: none;
+    padding: 0.5rem 1rem;
+    font-size: 0.95rem;
+    transition: all 0.2s;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+}
+
+.btn-confirmar:hover {
+    background: var(--status-confirmado);
+    color: #fff;
+    transform: translateY(-2px) scale(1.04);
+}
+
+.btn-iniciar-doacao {
+    background: var(--status-confirmado);
+    color: #fff;
+    border-radius: 10px;
+    font-weight: 600;
+    border: none;
+    padding: 0.5rem 1rem;
+    font-size: 0.95rem;
+    transition: all 0.2s;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+}
+
+.btn-iniciar-doacao:hover {
+    background: #146c43;
+    color: #fff;
+    transform: translateY(-2px) scale(1.04);
+}
+
+.btn-ver-doacao {
+    background: #e9f5ff;
+    color: var(--status-concluido);
+    border-radius: 10px;
+    font-weight: 600;
+    border: none;
+    padding: 0.5rem 1rem;
+    font-size: 0.95rem;
+    transition: all 0.2s;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+}
+
+.btn-ver-doacao:hover {
+    background: var(--status-concluido);
+    color: #fff;
+    transform: translateY(-2px) scale(1.04);
+}
+
+.btn-detalhes {
+    background: #f8f9fa;
+    color: var(--hemotec-gray);
+    border-radius: 10px;
+    font-weight: 600;
+    border: 1px solid #dee2e6;
+    padding: 0.5rem 1rem;
+    font-size: 0.95rem;
+    transition: all 0.2s;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+}
+
+.btn-detalhes:hover {
+    background: var(--hemotec-gray);
+    color: #fff;
+    border-color: var(--hemotec-gray);
+    transform: translateY(-2px) scale(1.04);
+}
+
+/* Responsividade da Hero Section */
+@media (max-width: 768px) {
+    .hero-section-agendamentos {
+        padding: 4rem 0 3rem;
+        min-height: 300px;
+    }
+    
+    .hero-title {
+        font-size: 2.5rem;
+        margin-bottom: 1rem;
+    }
+    
+    .hero-subtitle {
+        font-size: 1.1rem;
+    }
+    
+    .hero-content {
+        padding: 0 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero-title {
+        font-size: 2rem;
+    }
+    
+    .hero-subtitle {
+        font-size: 1rem;
+    }
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .agendamentos-container { 
+        padding: 1.5rem; 
+    }
+    
+    .appointment-card .card-body {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1.5rem;
+    }
+
+    .doador-info {
+        width: 100%;
+    }
+
+    .actions {
+        width: 100%;
+        min-width: auto;
+    }
+    
+    .actions .btn { 
+        width: 100%;
+        justify-content: center;
+    }
+
+    .appointment-card .card-header {
+        flex-direction: column;
+        gap: 0.5rem;
+        align-items: flex-start;
+    }
+
+    .doador-details {
+        display: flex;
+        flex-direction: column;
+        gap: 0.25rem;
+    }
+
+    .doador-details span {
+        display: block;
+        margin: 0 !important;
+    }
+}
+
+/* Utility Classes */
+.mt-n5 {
+    margin-top: -3rem;
+}
