@@ -500,36 +500,35 @@ body {
 /* BLOOD STOCK MODERN */
 .blood-stock-modern {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 0.75rem;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1rem;
+    width: 100%;
 }
 
 /* JS injeta os cards dentro de #estoque-atual; torne-o grid também */
 #estoque-atual {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 0.75rem;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1rem;
+    width: 100%;
 }
 
-/* Em telas maiores queremos 2 colunas e 4 linhas (dois grupos de 4 cards) */
-@media (min-width: 992px) {
-    .blood-stock-modern {
-        grid-auto-flow: column;
-        grid-template-columns: repeat(2, 1fr);
-        grid-template-rows: repeat(4, auto);
-        gap: 1rem 1.25rem;
-    }
+/* Em telas maiores queremos apenas 2 colunas */
+@media (min-width: 768px) {
 
-    .blood-stock-card {
-        width: 100%;
-    }
-
-    /* e para o container real onde os cards são inseridos */
+    .blood-stock-modern,
     #estoque-atual {
-        grid-auto-flow: column;
         grid-template-columns: repeat(2, 1fr);
-        grid-template-rows: repeat(4, auto);
-        gap: 1rem 1.25rem;
+        gap: 1.25rem;
+    }
+}
+
+@media (min-width: 1200px) {
+
+    .blood-stock-modern,
+    #estoque-atual {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1.5rem;
     }
 }
 
@@ -539,48 +538,13 @@ body {
     display: flex;
     flex-direction: row;
     align-items: center;
-    justify-content: space-between;
+    gap: 1rem;
     background: #fff;
-    border-radius: 10px;
-    padding: 0.6rem 0.8rem;
-    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.06);
+    border-radius: 12px;
+    padding: 1.25rem 1.5rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
     transition: transform 0.18s ease, box-shadow 0.18s ease;
-    min-height: 64px;
-}
-
-.blood-info {
-    display: flex;
-    align-items: center;
-    gap: 0.4rem;
-    font-weight: 700;
-    font-size: 1rem;
-    color: var(--hemotec-text-dark);
-    min-width: 48px;
-}
-
-.blood-progress {
-    flex: 1;
-    margin: 0 1rem;
-}
-
-.status {
-    font-size: 0.85rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    min-width: 70px;
-    text-align: right;
-}
-
-.blood-info,
-.blood-progress,
-.status {
-    width: 100%;
-    text-align: center;
-}
-
-.blood-stock-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
+    cursor: pointer;
 }
 
 .blood-info {
@@ -588,25 +552,28 @@ body {
     align-items: center;
     gap: 0.5rem;
     font-weight: 700;
-    font-size: 1.2rem;
+    font-size: 1.4rem;
     color: var(--hemotec-text-dark);
+    min-width: 80px;
+    flex-shrink: 0;
 }
 
 .blood-info i {
     color: var(--hemotec-red);
-    font-size: 1.1rem;
+    font-size: 1.2rem;
 }
 
 .blood-progress {
-    flex: 1 1 auto;
-    margin: 0 1rem;
-    min-width: 120px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
 }
 
 .blood-progress .progress {
     height: 12px;
     border-radius: 8px;
-    background-color: #eee;
+    background-color: #e9ecef;
     overflow: hidden;
 }
 
@@ -629,16 +596,23 @@ body {
 
 .units {
     display: block;
-    margin-top: 0.25rem;
-    font-size: 0.78rem;
-    color: #666;
-    text-align: left;
+    font-size: 0.85rem;
+    color: #6c757d;
+    font-weight: 500;
 }
 
 .status {
     font-size: 0.85rem;
-    font-weight: 600;
+    font-weight: 700;
     text-transform: uppercase;
+    text-align: right;
+    min-width: 100px;
+    flex-shrink: 0;
+}
+
+.blood-stock-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
 }
 
 .adequate .status {
@@ -646,11 +620,11 @@ body {
 }
 
 .moderate .status {
-    color: #ffc107;
+    color: #ff9800;
 }
 
 .low .status {
-    color: #fd7e14;
+    color: #ff5722;
 }
 
 .critical .status {

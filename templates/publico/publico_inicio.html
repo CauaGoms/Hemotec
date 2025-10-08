@@ -29,26 +29,26 @@
     <div class="row">
         {% if campanhas %}
             {% for campanha in campanhas %}
-            <div class="col-md-4">
-                <div class="card">
-                    <img src="{{campanha.foto}}" class="card-img-top" alt="{{ campanha.titulo }}">
-                    <div class="card-body">
-                        <h5 class="card-title">{{ campanha.titulo }}</h5>
-                        <p class="card-text">{{ campanha.descricao[:120] }}{% if campanha.descricao|length > 120 %}...{% endif %}</p>
-                    </div>
-                    <div class="card-footer">
-                        <small class="text-muted">
-                            {% if campanha.data_inicio and campanha.data_fim %}
+        <div class="col-md-4">
+            <div class="card">
+                <img src="{{campanha.foto}}" class="card-img-top" alt="{{ campanha.titulo }}">
+                <div class="card-body">
+                    <h5 class="card-title">{{ campanha.titulo }}</h5>
+                    <p class="card-text">{{ campanha.descricao[:120] }}{% if campanha.descricao|length > 120 %}...{% endif %}</p>
+                </div>
+                <div class="card-footer">
+                    <small class="text-muted">
+                        {% if campanha.data_inicio and campanha.data_fim %}
                                 {{ campanha.data_inicio.strftime('%d/%m/%Y') }} - {{ campanha.data_fim.strftime('%d/%m/%Y') }}
                             {% elif campanha.data_inicio %}
                                 Início: {{ campanha.data_inicio.strftime('%d/%m/%Y') }}
                             {% endif %}
-                        </small>
-                        <a href="/campanha" class="btn btn-outline-danger float-end">Saiba mais</a>
-                    </div>
+                    </small>
+                    <a href="/campanha" class="btn btn-outline-danger float-end">Saiba mais</a>
                 </div>
             </div>
-            {% endfor %}
+        </div>
+        {% endfor %}
         {% endif %}
     </div>
 </section>
@@ -73,7 +73,7 @@
                     </h3>
                     <div class="row">
                         <!-- ...existing info items... -->
-                        <div class="col-md-6 mb-3">
+                        <div class="col-lg-6 mb-3">
                             <div class="d-flex align-items-start">
                                 <i class="fas fa-clock text-danger me-3 mt-1"></i>
                                 <div>
@@ -86,7 +86,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-6 mb-3">
+                        <div class="col-lg-6 mb-3">
                             <div class="d-flex align-items-start">
                                 <i class="fas fa-user-check text-danger me-3 mt-1"></i>
                                 <div>
@@ -99,7 +99,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-6 mb-3">
+                        <div class="col-lg-6 mb-3">
                             <div class="d-flex align-items-start">
                                 <i class="fas fa-calendar-alt text-danger me-3 mt-1"></i>
                                 <div>
@@ -112,7 +112,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-6 mb-3">
+                        <div class="col-lg-6 mb-3">
                             <div class="d-flex align-items-start">
                                 <i class="fas fa-id-card text-danger me-3 mt-1"></i>
                                 <div>
@@ -134,19 +134,17 @@
             <div class="card p-4">
                 <div class="d-flex justify-content-between align-items-center mb-4">
                     <h5 class="section-title mb-0">
-                        Estoque de Sangue -
-                        <span id="nome-unidade-estoque" class="text-danger ms-2"></span>
+                        Estoque de Sangue - Situação Atual
+                        <span id="nome-unidade-estoque" class="text-danger ms-2" style="display: none;"></span>
                     </h5>
-                    <div class="legend">
+                    <div class="legend" style="display: none;">
                         <span class="badge bg-adequate me-2">Adequado</span>
                         <span class="badge bg-moderate me-2">Moderado</span>
                         <span class="badge bg-low me-2">Baixo</span>
                         <span class="badge bg-critical">Crítico</span>
                     </div>
                 </div>
-                <div class="blood-stock-modern">
-                    <div id="estoque-atual" class="row"></div>
-                </div>
+                <div id="estoque-atual" class="blood-stock-modern"></div>
             </div>
         </div>
         <!-- Modal de Compatibilidade -->

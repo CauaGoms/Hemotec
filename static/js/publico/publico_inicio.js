@@ -316,9 +316,66 @@ function mostrarCompatibilidade(tipo) {
                     });
                 });
 
+            // Função para buscar unidade com estoque mais crítico
+            async function buscarUnidadeMaisCritica() {
+                try {
+                    // Buscar estoque de todas as unidades
+                    const promessas = unidades.map(u =>
+                        fetch(`/api/estoque/${u.cod_unidade}`)
+                            .then(resp => resp.json())
+                            .then(resposta => ({
+                                ...u,
+                                estoque: resposta.estoque
+                            }))
+                            .catch(() => ({ ...u, estoque: {} }))
+                    );
+
+                    const unidadesComEstoque = await Promise.all(promessas);
+
+                    // Calcular criticidade de cada unidade (soma de tipos críticos e baixos)
+                    let unidadeMaisCritica = null;
+                    let maiorCriticidade = -1;
+
+                    unidadesComEstoque.forEach(unidade => {
+                        let pontosCriticidade = 0;
+                        const estoque = unidade.estoque || {};
+
+                        // Pontuar baseado na quantidade de cada tipo sanguíneo
+                        Object.values(estoque).forEach(item => {
+                            const qtd = item.quantidade || 0;
+                            if (qtd <= 59) pontosCriticidade += 10; // Crítico
+                            else if (qtd <= 99) pontosCriticidade += 5; // Baixo
+                            else if (qtd <= 149) pontosCriticidade += 2; // Moderado
+                        });
+
+                        if (pontosCriticidade > maiorCriticidade) {
+                            maiorCriticidade = pontosCriticidade;
+                            unidadeMaisCritica = unidade;
+                        }
+                    });
+
+                    return unidadeMaisCritica;
+                } catch (error) {
+                    console.error('Erro ao buscar unidade mais crítica:', error);
+                    return unidades[0]; // Fallback para primeira unidade
+                }
+            }
+
             function obterLocalizacao() {
                 if (!('geolocation' in navigator)) {
-                    statusEl.textContent = 'Geolocalização não suportada.';
+                    statusEl.textContent = 'Geolocalização não suportada. Buscando unidade com estoque mais crítico...';
+                    buscarUnidadeMaisCritica().then(unidade => {
+                        if (unidade) {
+                            document.getElementById('nome-unidade-estoque').textContent = unidade.nome + ' (Estoque Crítico)';
+                            let estoqueObj = unidade.estoque;
+                            if (typeof estoqueObj === 'string') {
+                                try { estoqueObj = JSON.parse(estoqueObj); } catch { }
+                            }
+                            if (estoqueObj) {
+                                renderizarEstoque(normalizarEstoque(estoqueObj));
+                            }
+                        }
+                    });
                     return;
                 }
                 statusEl.textContent = 'Obtendo localização...';
@@ -369,7 +426,20 @@ function mostrarCompatibilidade(tipo) {
                             });
                     }
                 }, err => {
-                    statusEl.textContent = 'Erro: ' + err.message;
+                    statusEl.textContent = 'Localização não disponível. Buscando unidade com estoque mais crítico...';
+                    // Se falhar a localização, buscar unidade mais crítica
+                    buscarUnidadeMaisCritica().then(unidade => {
+                        if (unidade) {
+                            document.getElementById('nome-unidade-estoque').textContent = unidade.nome + ' (Estoque Crítico)';
+                            let estoqueObj = unidade.estoque;
+                            if (typeof estoqueObj === 'string') {
+                                try { estoqueObj = JSON.parse(estoqueObj); } catch { }
+                            }
+                            if (estoqueObj) {
+                                renderizarEstoque(normalizarEstoque(estoqueObj));
+                            }
+                        }
+                    });
                 }, { enableHighAccuracy: true, timeout: 10000 });
             }
 
@@ -424,7 +494,21 @@ function mostrarCompatibilidade(tipo) {
             if (location.protocol === 'https:' || location.hostname === 'localhost' || location.hostname === '127.0.0.1') {
                 setTimeout(() => obterLocalizacao(), 600);
             } else {
-                statusEl.textContent = 'Ative HTTPS ou use localhost para geolocalização automática.';
+                statusEl.textContent = 'Buscando unidade com estoque mais crítico...';
+                // Se não puder usar geolocalização, buscar unidade mais crítica
+                buscarUnidadeMaisCritica().then(unidade => {
+                    if (unidade) {
+                        document.getElementById('nome-unidade-estoque').textContent = unidade.nome + ' (Estoque Crítico)';
+                        let estoqueObj = unidade.estoque;
+                        if (typeof estoqueObj === 'string') {
+                            try { estoqueObj = JSON.parse(estoqueObj); } catch { }
+                        }
+                        if (estoqueObj) {
+                            renderizarEstoque(normalizarEstoque(estoqueObj));
+                        }
+                        statusEl.textContent = 'Exibindo unidade com maior necessidade de doações.';
+                    }
+                });
             }
         })
         .catch(error => {
@@ -469,12 +553,12 @@ function renderizarEstoque(estoque) {
             const percent = info.percent || 0;
             // Display label based on computed statusKey (capitalized Portuguese)
             const statusLabelMap = {
-                'critico': 'Crítico',
-                'baixo': 'Baixo',
-                'moderado': 'Moderado',
-                'adequado': 'Adequado'
+                'critico': 'CRÍTICO',
+                'baixo': 'BAIXO',
+                'moderado': 'MODERADO',
+                'adequado': 'ADEQUADO'
             };
-            const statusLabel = statusLabelMap[statusKey] || (info.status || 'Adequado');
+            const statusLabel = statusLabelMap[statusKey] || (info.status || 'ADEQUADO');
             html += `
             <div class="blood-stock-card ${status}">
                 <div class="blood-info">
