@@ -304,12 +304,22 @@ body {
 }
 
 .info-box {
-    background-color: #fff;
-    padding: 10px;
-    border-radius: 6px;
-    margin-top: 10px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, .15);
-    font-size: .9rem;
+    background: linear-gradient(135deg, #fff 0%, #f8f9fa 100%);
+    padding: 15px 20px;
+    border-radius: 10px;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, .1);
+    font-size: .95rem;
+    border-left: 4px solid var(--hemotec-red);
+    min-height: 0;
+    transition: all 0.3s ease;
+}
+
+.info-box:empty {
+    display: none;
+    margin: 0;
+    padding: 0;
 }
 
 .map-tools {
@@ -732,7 +742,7 @@ body {
         flex-direction: column;
         align-items: stretch;
     }
-    
+
     .unidade-estoque-item {
         min-width: 100%;
     }
