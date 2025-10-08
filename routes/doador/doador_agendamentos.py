@@ -2,12 +2,14 @@ import datetime
 from fastapi import APIRouter, Request
 from fastapi.templating import Jinja2Templates
 from data.repo import agendamento_repo, unidade_coleta_repo
+from util.auth_decorator import requer_autenticacao
 
 router = APIRouter()
 templates = Jinja2Templates(directory="templates")
 
 @router.get("/doador/agendamento")
-async def get_doador_agendamento(request: Request):
+@requer_autenticacao(["doador"])
+async def get_doador_agendamento(request: Request, usuario_logado: dict = None):
     agendamentos_concluidos = []
     agendamentos_agendados = []
     agendamentos_atrasados = []
@@ -25,5 +27,5 @@ async def get_doador_agendamento(request: Request):
 
     
 
-    response = templates.TemplateResponse("doador/doador_agendamento.html", {"request": request, "active_page": "agendamento", "agendamentos_concluidos": agendamentos_concluidos, "agendamentos_agendados": agendamentos_agendados, "agendamentos_atrasados": agendamentos_atrasados})
+    response = templates.TemplateResponse("doador/doador_agendamento.html", {"request": request, "active_page": "agendamento", "usuario": usuario_logado, "agendamentos_concluidos": agendamentos_concluidos, "agendamentos_agendados": agendamentos_agendados, "agendamentos_atrasados": agendamentos_atrasados})
     return response
