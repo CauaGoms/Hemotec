@@ -72,14 +72,23 @@ function mostrarCompatibilidade(tipo) {
             let userMarker = null;
             let routingControl = null;
 
-            function listarUnidades() {
+            function listarUnidades(unidadesParaMostrar = null) {
                 if (!listaUnidades) return;
                 listaUnidades.innerHTML = '';
-                unidades.forEach(u => {
-                    const { cod_unidade, nome, latitude: lat, longitude: lng } = u;
+
+                const unidadesAMostrar = unidadesParaMostrar || unidades;
+
+                unidadesAMostrar.forEach(u => {
+                    const { cod_unidade, nome, latitude: lat, longitude: lng, isCritica } = u;
 
                     const li = document.createElement('li');
-                    li.innerHTML = '<strong>' + nome + '</strong><span>Coordenadas: ' + lat + ', ' + lng + '</span>';
+
+                    let nomeExibicao = nome;
+                    if (isCritica) {
+                        nomeExibicao += ' ⚠️';
+                    }
+
+                    li.innerHTML = '<strong>' + nomeExibicao + '</strong><span>Coordenadas: ' + lat + ', ' + lng + '</span>';
                     const btn = document.createElement('button');
                     btn.type = 'button';
                     btn.textContent = 'Rota';
@@ -94,7 +103,11 @@ function mostrarCompatibilidade(tipo) {
                         fetch(`/api/estoque/${cod_unidade}`)
                             .then(resp => resp.json())
                             .then(resposta => {
-                                document.getElementById('nome-unidade-estoque').textContent = nome;
+                                const nomeUnidadeEl = document.getElementById('nome-unidade-estoque');
+                                nomeUnidadeEl.textContent = `- ${nome}`;
+                                nomeUnidadeEl.classList.remove('text-muted');
+                                nomeUnidadeEl.classList.add('text-danger');
+
                                 let estoqueObj = resposta.estoque;
                                 if (typeof estoqueObj === 'string') {
                                     try { estoqueObj = JSON.parse(estoqueObj); } catch { }
@@ -106,11 +119,78 @@ function mostrarCompatibilidade(tipo) {
                                 }
                             })
                             .catch(() => {
-                                document.getElementById('nome-unidade-estoque').textContent = 'Erro ao buscar estoque';
+                                document.getElementById('nome-unidade-estoque').textContent = '- Erro ao buscar estoque';
                             });
                     });
                     li.appendChild(btn);
                     listaUnidades.appendChild(li);
+                });
+            }
+
+            // Função para listar unidades na seção de estoque
+            function listarUnidadesEstoque(unidadesParaMostrar = null) {
+                const listaEstoque = document.getElementById('lista-unidades-estoque');
+                if (!listaEstoque) return;
+
+                const unidadesAMostrar = unidadesParaMostrar || unidades;
+
+                listaEstoque.innerHTML = '';
+                unidadesAMostrar.forEach(u => {
+                    const { cod_unidade, nome, isCritica } = u;
+
+                    const li = document.createElement('li');
+                    li.className = 'unidade-estoque-item';
+
+                    let nomeExibicao = nome;
+                    if (isCritica) {
+                        nomeExibicao += ' ⚠️';
+                    }
+
+                    li.innerHTML = `
+                        <div class="unidade-estoque-nome">${nomeExibicao}</div>
+                    `;
+
+                    li.addEventListener('click', () => {
+                        // Remove active de todos os items
+                        document.querySelectorAll('.unidade-estoque-item').forEach(item => {
+                            item.classList.remove('active');
+                        });
+                        // Adiciona active no item clicado
+                        li.classList.add('active');
+
+                        // Buscar estoque da unidade selecionada
+                        fetch(`/api/estoque/${cod_unidade}`)
+                            .then(resp => resp.json())
+                            .then(resposta => {
+                                const nomeUnidadeEl = document.getElementById('nome-unidade-estoque');
+                                nomeUnidadeEl.textContent = `- ${nome}`;
+                                nomeUnidadeEl.classList.remove('text-muted');
+                                nomeUnidadeEl.classList.add('text-danger');
+
+                                let estoqueObj = resposta.estoque;
+                                if (typeof estoqueObj === 'string') {
+                                    try { estoqueObj = JSON.parse(estoqueObj); } catch { }
+                                }
+                                if (estoqueObj) {
+                                    renderizarEstoque(normalizarEstoque(estoqueObj));
+                                } else {
+                                    renderizarEstoque({});
+                                }
+
+                                // Scroll suave para o estoque
+                                document.getElementById('estoque-atual').scrollIntoView({
+                                    behavior: 'smooth',
+                                    block: 'nearest'
+                                });
+                            })
+                            .catch(() => {
+                                const nomeUnidadeEl = document.getElementById('nome-unidade-estoque');
+                                nomeUnidadeEl.textContent = '- Erro ao buscar estoque';
+                                nomeUnidadeEl.style.display = 'inline';
+                            });
+                    });
+
+                    listaEstoque.appendChild(li);
                 });
             }
 
@@ -316,8 +396,8 @@ function mostrarCompatibilidade(tipo) {
                     });
                 });
 
-            // Função para buscar unidade com estoque mais crítico
-            async function buscarUnidadeMaisCritica() {
+            // Função para buscar as 2 unidades com estoque mais crítico
+            async function buscarUnidadesMaisCriticas(quantidade = 2) {
                 try {
                     // Buscar estoque de todas as unidades
                     const promessas = unidades.map(u =>
@@ -333,40 +413,57 @@ function mostrarCompatibilidade(tipo) {
                     const unidadesComEstoque = await Promise.all(promessas);
 
                     // Calcular criticidade de cada unidade (soma de tipos críticos e baixos)
-                    let unidadeMaisCritica = null;
-                    let maiorCriticidade = -1;
-
-                    unidadesComEstoque.forEach(unidade => {
+                    const unidadesComCriticidade = unidadesComEstoque.map(unidade => {
                         let pontosCriticidade = 0;
-                        const estoque = unidade.estoque || {};
+                        let estoqueObj = unidade.estoque || {};
+
+                        // Normalizar se for string
+                        if (typeof estoqueObj === 'string') {
+                            try { estoqueObj = JSON.parse(estoqueObj); } catch { estoqueObj = {}; }
+                        }
 
                         // Pontuar baseado na quantidade de cada tipo sanguíneo
-                        Object.values(estoque).forEach(item => {
+                        Object.values(estoqueObj).forEach(item => {
                             const qtd = item.quantidade || 0;
                             if (qtd <= 59) pontosCriticidade += 10; // Crítico
                             else if (qtd <= 99) pontosCriticidade += 5; // Baixo
                             else if (qtd <= 149) pontosCriticidade += 2; // Moderado
                         });
 
-                        if (pontosCriticidade > maiorCriticidade) {
-                            maiorCriticidade = pontosCriticidade;
-                            unidadeMaisCritica = unidade;
-                        }
+                        return {
+                            ...unidade,
+                            criticidade: pontosCriticidade,
+                            isCritica: pontosCriticidade > 0
+                        };
                     });
 
-                    return unidadeMaisCritica;
+                    // Ordenar por criticidade (maior primeiro)
+                    unidadesComCriticidade.sort((a, b) => b.criticidade - a.criticidade);
+
+                    // Retornar as N mais críticas
+                    return unidadesComCriticidade.slice(0, quantidade);
                 } catch (error) {
-                    console.error('Erro ao buscar unidade mais crítica:', error);
-                    return unidades[0]; // Fallback para primeira unidade
+                    console.error('Erro ao buscar unidades mais críticas:', error);
+                    return unidades.slice(0, quantidade); // Fallback
                 }
             }
 
             function obterLocalizacao() {
                 if (!('geolocation' in navigator)) {
-                    statusEl.textContent = 'Geolocalização não suportada. Buscando unidade com estoque mais crítico...';
-                    buscarUnidadeMaisCritica().then(unidade => {
-                        if (unidade) {
-                            document.getElementById('nome-unidade-estoque').textContent = unidade.nome + ' (Estoque Crítico)';
+                    statusEl.textContent = 'Geolocalização não suportada. Exibindo unidades com estoque mais crítico...';
+                    buscarUnidadesMaisCriticas(2).then(unidadesCriticas => {
+                        if (unidadesCriticas && unidadesCriticas.length > 0) {
+                            // Atualizar ambas as listas com unidades críticas
+                            listarUnidades(unidadesCriticas);
+                            listarUnidadesEstoque(unidadesCriticas);
+
+                            // Mostrar estoque da primeira unidade mais crítica
+                            const unidade = unidadesCriticas[0];
+                            const nomeUnidadeEl = document.getElementById('nome-unidade-estoque');
+                            nomeUnidadeEl.textContent = `- ${unidade.nome} (Estoque Crítico)`;
+                            nomeUnidadeEl.classList.remove('text-muted');
+                            nomeUnidadeEl.classList.add('text-danger');
+
                             let estoqueObj = unidade.estoque;
                             if (typeof estoqueObj === 'string') {
                                 try { estoqueObj = JSON.parse(estoqueObj); } catch { }
@@ -374,6 +471,8 @@ function mostrarCompatibilidade(tipo) {
                             if (estoqueObj) {
                                 renderizarEstoque(normalizarEstoque(estoqueObj));
                             }
+
+                            statusEl.textContent = 'Exibindo unidades com maior necessidade de doações.';
                         }
                     });
                     return;
@@ -394,23 +493,33 @@ function mostrarCompatibilidade(tipo) {
                         }).addTo(mapa).bindPopup('Você está aqui.').openPopup();
                     }
                     mapa.flyTo([latitude, longitude], 13, { duration: 0.8 });
-                    // Encontrar unidade mais próxima
-                    let unidadeMaisProxima = null;
-                    let menorDistancia = Infinity;
-                    unidades.forEach(u => {
+
+                    // Encontrar as 2 unidades mais próximas
+                    const unidadesComDistancia = unidades.map(u => {
                         const { cod_unidade, nome, latitude: lat, longitude: lng } = u;
                         const dist = Math.sqrt(Math.pow(lat - latitude, 2) + Math.pow(lng - longitude, 2));
-                        if (dist < menorDistancia) {
-                            menorDistancia = dist;
-                            unidadeMaisProxima = { cod_unidade, nome, lat, lng };
-                        }
+                        return { ...u, distancia: dist };
                     });
-                    if (unidadeMaisProxima) {
-                        // Buscar estoque da unidade mais próxima
+
+                    // Ordenar por distância e pegar as 2 mais próximas
+                    unidadesComDistancia.sort((a, b) => a.distancia - b.distancia);
+                    const duasMaisProximas = unidadesComDistancia.slice(0, 2);
+
+                    // Atualizar ambas as listas com as 2 mais próximas
+                    listarUnidades(duasMaisProximas);
+                    listarUnidadesEstoque(duasMaisProximas);
+
+                    // Buscar e mostrar estoque da unidade mais próxima
+                    if (duasMaisProximas.length > 0) {
+                        const unidadeMaisProxima = duasMaisProximas[0];
                         fetch(`/api/estoque/${unidadeMaisProxima.cod_unidade}`)
                             .then(resp => resp.json())
                             .then(resposta => {
-                                document.getElementById('nome-unidade-estoque').textContent = unidadeMaisProxima.nome;
+                                const nomeUnidadeEl = document.getElementById('nome-unidade-estoque');
+                                nomeUnidadeEl.textContent = `- ${unidadeMaisProxima.nome}`;
+                                nomeUnidadeEl.classList.remove('text-muted');
+                                nomeUnidadeEl.classList.add('text-danger');
+
                                 let estoqueObj = resposta.estoque;
                                 if (typeof estoqueObj === 'string') {
                                     try { estoqueObj = JSON.parse(estoqueObj); } catch { }
@@ -422,15 +531,25 @@ function mostrarCompatibilidade(tipo) {
                                 }
                             })
                             .catch(() => {
-                                document.getElementById('nome-unidade-estoque').textContent = 'Erro ao buscar estoque';
+                                document.getElementById('nome-unidade-estoque').textContent = '- Erro ao buscar estoque';
                             });
                     }
                 }, err => {
-                    statusEl.textContent = 'Localização não disponível. Buscando unidade com estoque mais crítico...';
-                    // Se falhar a localização, buscar unidade mais crítica
-                    buscarUnidadeMaisCritica().then(unidade => {
-                        if (unidade) {
-                            document.getElementById('nome-unidade-estoque').textContent = unidade.nome + ' (Estoque Crítico)';
+                    statusEl.textContent = 'Localização não disponível. Exibindo unidades com estoque mais crítico...';
+                    // Se falhar a localização, buscar as 2 unidades mais críticas
+                    buscarUnidadesMaisCriticas(2).then(unidadesCriticas => {
+                        if (unidadesCriticas && unidadesCriticas.length > 0) {
+                            // Atualizar ambas as listas com unidades críticas
+                            listarUnidades(unidadesCriticas);
+                            listarUnidadesEstoque(unidadesCriticas);
+
+                            // Mostrar estoque da primeira unidade mais crítica
+                            const unidade = unidadesCriticas[0];
+                            const nomeUnidadeEl = document.getElementById('nome-unidade-estoque');
+                            nomeUnidadeEl.textContent = `- ${unidade.nome} (Estoque Crítico)`;
+                            nomeUnidadeEl.classList.remove('text-muted');
+                            nomeUnidadeEl.classList.add('text-danger');
+
                             let estoqueObj = unidade.estoque;
                             if (typeof estoqueObj === 'string') {
                                 try { estoqueObj = JSON.parse(estoqueObj); } catch { }
@@ -438,6 +557,8 @@ function mostrarCompatibilidade(tipo) {
                             if (estoqueObj) {
                                 renderizarEstoque(normalizarEstoque(estoqueObj));
                             }
+
+                            statusEl.textContent = 'Exibindo unidades com maior necessidade de doações.';
                         }
                     });
                 }, { enableHighAccuracy: true, timeout: 10000 });
@@ -488,17 +609,27 @@ function mostrarCompatibilidade(tipo) {
                 btnClear.disabled = true;
             });
 
-            listarUnidades();
+            // Não chamar listarUnidades() aqui, será chamado dentro de obterLocalizacao()
 
             // Auto tentar localização se seguro (localhost ou https)
             if (location.protocol === 'https:' || location.hostname === 'localhost' || location.hostname === '127.0.0.1') {
                 setTimeout(() => obterLocalizacao(), 600);
             } else {
-                statusEl.textContent = 'Buscando unidade com estoque mais crítico...';
-                // Se não puder usar geolocalização, buscar unidade mais crítica
-                buscarUnidadeMaisCritica().then(unidade => {
-                    if (unidade) {
-                        document.getElementById('nome-unidade-estoque').textContent = unidade.nome + ' (Estoque Crítico)';
+                statusEl.textContent = 'Buscando unidades com estoque mais crítico...';
+                // Se não puder usar geolocalização, buscar as 2 unidades mais críticas
+                buscarUnidadesMaisCriticas(2).then(unidadesCriticas => {
+                    if (unidadesCriticas && unidadesCriticas.length > 0) {
+                        // Atualizar ambas as listas com unidades críticas
+                        listarUnidades(unidadesCriticas);
+                        listarUnidadesEstoque(unidadesCriticas);
+
+                        // Mostrar estoque da primeira unidade mais crítica
+                        const unidade = unidadesCriticas[0];
+                        const nomeUnidadeEl = document.getElementById('nome-unidade-estoque');
+                        nomeUnidadeEl.textContent = `- ${unidade.nome} (Estoque Crítico)`;
+                        nomeUnidadeEl.classList.remove('text-muted');
+                        nomeUnidadeEl.classList.add('text-danger');
+
                         let estoqueObj = unidade.estoque;
                         if (typeof estoqueObj === 'string') {
                             try { estoqueObj = JSON.parse(estoqueObj); } catch { }
@@ -506,7 +637,7 @@ function mostrarCompatibilidade(tipo) {
                         if (estoqueObj) {
                             renderizarEstoque(normalizarEstoque(estoqueObj));
                         }
-                        statusEl.textContent = 'Exibindo unidade com maior necessidade de doações.';
+                        statusEl.textContent = 'Exibindo unidades com maior necessidade de doações.';
                     }
                 });
             }
