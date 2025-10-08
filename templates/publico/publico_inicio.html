@@ -129,22 +129,22 @@
                 </div>
             </div>
         </div>
-        <!-- Estoque Atual (original) -->
+        <!-- Estoque Atual (simplificado) -->
         <div class="col-md-12 mb-4">
             <div class="card p-4">
-                <div class="d-flex justify-content-between align-items-center mb-4">
-                    <h5 class="section-title mb-0">
-                        Estoque de Sangue - Situação Atual
-                        <span id="nome-unidade-estoque" class="text-danger ms-2" style="display: none;"></span>
-                    </h5>
-                    <div class="legend" style="display: none;">
-                        <span class="badge bg-adequate me-2">Adequado</span>
-                        <span class="badge bg-moderate me-2">Moderado</span>
-                        <span class="badge bg-low me-2">Baixo</span>
-                        <span class="badge bg-critical">Crítico</span>
-                    </div>
+                <div class="text-center mb-4">
+                    <h3 class="section-title">
+                        Estoque de Sangue
+                        <span id="nome-unidade-estoque" class="text-muted" style="font-size: 0.85em;"></span>
+                    </h3>
+                    <p class="text-muted small">Selecione uma unidade para visualizar o estoque</p>
                 </div>
-                <div id="estoque-atual" class="blood-stock-modern"></div>
+                <!-- Visualização do Estoque -->
+                <div id="estoque-atual" class="blood-stock-modern mb-4"></div>
+                <!-- Botões de Unidades -->
+                <div class="unidade-selector">
+                    <ul id="lista-unidades-estoque" class="unidade-buttons-grid"></ul>
+                </div>
             </div>
         </div>
         <!-- Modal de Compatibilidade -->

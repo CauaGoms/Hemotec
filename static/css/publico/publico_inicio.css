@@ -642,3 +642,98 @@ body {
         opacity: 0.6;
     }
 }
+
+/* Lista de unidades para seleção de estoque - Design Simplificado */
+.unidade-selector {
+    width: 100%;
+}
+
+.unidade-buttons-grid {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    justify-content: center;
+}
+
+.unidade-estoque-item {
+    background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+    border: 2px solid #e9ecef;
+    border-radius: 12px;
+    padding: 0.9rem 1.8rem;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    min-width: 180px;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.unidade-estoque-item::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(224, 32, 32, 0.1), transparent);
+    transition: left 0.5s ease;
+}
+
+.unidade-estoque-item:hover::before {
+    left: 100%;
+}
+
+.unidade-estoque-item:hover {
+    border-color: var(--hemotec-red);
+    box-shadow: 0 8px 20px rgba(224, 32, 32, 0.2);
+    transform: translateY(-3px);
+}
+
+.unidade-estoque-item.active {
+    border-color: #dc3545;
+    background: linear-gradient(135deg, #dc3545 0%, #dc3545 100%);
+    color: white;
+    box-shadow: 0 8px 20px rgba(255, 107, 107, 0.25);
+    transform: translateY(-3px);
+}
+
+.unidade-estoque-nome {
+    font-weight: 600;
+    color: var(--hemotec-text-dark);
+    font-size: 1rem;
+    margin: 0;
+    transition: color 0.3s ease;
+    position: relative;
+    z-index: 1;
+}
+
+.unidade-estoque-item.active .unidade-estoque-nome {
+    color: white;
+}
+
+.unidade-estoque-item:hover .unidade-estoque-nome {
+    color: var(--hemotec-red);
+}
+
+.unidade-estoque-item.active:hover .unidade-estoque-nome {
+    color: white;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .unidade-buttons-grid {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .unidade-estoque-item {
+        min-width: 100%;
+    }
+}
