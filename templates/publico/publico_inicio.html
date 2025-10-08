@@ -49,66 +49,6 @@
                 </div>
             </div>
             {% endfor %}
-            
-            <!-- {# Se há menos de 3 campanhas, preencher com campanhas fictícias #}
-            {% if campanhas|length < 3 %}
-                {% for i in range(3 - campanhas|length) %}
-                <div class="col-md-4">
-                    <div class="card">
-                        <img src="/static/img/imagem_laboratorio.avif" class="card-img-top" alt="Campanha em Breve">
-                        <div class="card-body">
-                            <h5 class="card-title">Campanha em Breve</h5>
-                            <p class="card-text">Novas campanhas de doação de sangue em desenvolvimento. Fique atento às próximas novidades!</p>
-                        </div>
-                        <div class="card-footer">
-                            <small class="text-muted">Em breve</small>
-                            <a href="/campanha" class="btn btn-outline-danger float-end">Saiba mais</a>
-                        </div>
-                    </div>
-                </div>
-                {% endfor %}
-            {% endif %} -->
-        {% else %}
-            <!-- Fallback para quando não há campanhas no banco -->
-            <div class="col-md-4">
-                <div class="card">
-                    <img src="/static/img/imagem_doacao.avif" class="card-img-top" alt="Campanha de Doação">
-                    <div class="card-body">
-                        <h5 class="card-title">Junho Vermelho</h5>
-                        <p class="card-text">Participe da nossa campanha de conscientização sobre a importância da doação de sangue. Cada doação pode salvar até 4 vidas!</p>
-                    </div>
-                    <div class="card-footer">
-                        <small class="text-muted">Publicado em 01/06/2025</small>
-                        <a href="/campanha" class="btn btn-outline-danger float-end">Saiba mais</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="card">
-                    <img src="/static/img/imagem_laboratorio.avif" class="card-img-top" alt="Doação Coletiva">
-                    <div class="card-body">
-                        <h5 class="card-title">Doação Coletiva Empresarial</h5>
-                        <p class="card-text">Empresas parceiras estão organizando doações coletivas. Veja como sua empresa pode participar desta iniciativa solidária.</p>
-                    </div>
-                    <div class="card-footer">
-                        <small class="text-muted">Publicado em 15/05/2025</small>
-                        <a href="/campanha" class="btn btn-outline-danger float-end">Saiba mais</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="card">
-                    <img src="/static/img/imagem_imunoglobulina.avif" class="card-img-top" alt="Aplicativo Hemotec">
-                    <div class="card-body">
-                        <h5 class="card-title">Novo Aplicativo Hemotec</h5>
-                        <p class="card-text">Lançamos nosso aplicativo para facilitar o agendamento de doações e acompanhamento do histórico de doações. Baixe agora!</p>
-                    </div>
-                    <div class="card-footer">
-                        <small class="text-muted">Publicado em 10/05/2025</small>
-                        <a href="/campanha" class="btn btn-outline-danger float-end">Saiba mais</a>
-                    </div>
-                </div>
-            </div>
         {% endif %}
     </div>
 </section>
