@@ -67,19 +67,6 @@ def obter_todos() -> list[Doador]:
         doador = [
             Doador(
                 cod_doador=row["cod_doador"],
-                cod_usuario=row["cod_doador"],
-                nome=row["nome"],
-                email=row["email"],
-                senha=row["senha"],
-                cpf=row["cpf"],
-                data_nascimento=datetime.strptime(row["data_nascimento"], "%Y-%m-%d").date() if isinstance(row["data_nascimento"], str) else row["data_nascimento"],
-                status=row["status"],
-                data_cadastro=datetime.strptime(row["data_cadastro"], "%Y-%m-%d").date() if isinstance(row["data_cadastro"], str) else row["data_cadastro"],
-                rua_usuario=row["rua_usuario"],
-                bairro_usuario=row["bairro_usuario"],
-                cidade_usuario=row["cidade_usuario"],
-                cep_usuario=row["cep_usuario"],
-                telefone=row["telefone"],
                 tipo_sanguineo=row["tipo_sanguineo"],
                 fator_rh=row["fator_rh"],
                 elegivel=row["elegivel"],
@@ -96,28 +83,10 @@ def obter_por_id(cod_doador: int) -> Optional[Doador]:
         cursor = conn.cursor()
         cursor.execute(OBTER_POR_ID, (cod_doador,))
         row = cursor.fetchone()
-        if row:
-            # Criar objeto Usuario primeiro
-            usuario = Usuario(
-                cod_usuario=row["cod_doador"],  # ou row["cod_usuario"] se existir
-                nome=row["nome"],
-                email=row["email"],
-                senha=row["senha"],
-                cpf=row["cpf"],
-                data_nascimento=datetime.strptime(row["data_nascimento"], "%Y-%m-%d").date() if isinstance(row["data_nascimento"], str) else row["data_nascimento"],
-                status=row["status"],
-                rua_usuario=row["rua_usuario"],
-                bairro_usuario=row["bairro_usuario"],
-                cidade_usuario=row["cidade_usuario"],
-                cep_usuario=row["cep_usuario"],
-                telefone=row["telefone"],
-                data_cadastro=datetime.strptime(row["data_cadastro"], "%Y-%m-%d").date() if isinstance(row["data_cadastro"], str) else row["data_cadastro"]
-            )
-            
+        if row:            
             # Criar objeto Doador com Usuario
             doador = Doador(
                 cod_doador=row["cod_doador"],
-                usuario=usuario,
                 tipo_sanguineo=row["tipo_sanguineo"],
                 fator_rh=row["fator_rh"],
                 elegivel=row["elegivel"],
@@ -131,31 +100,7 @@ def obter_por_id(cod_doador: int) -> Optional[Doador]:
     
 def update(doador: Doador) -> bool:
     with get_connection() as conn:
-        cursor = conn.cursor()
-        # Atualizar dados do usuário (se houver)
-        if doador.usuario:
-            usuario = Usuario(
-                cod_usuario=doador.cod_doador,
-                nome=doador.usuario.nome,
-                email=doador.usuario.email,
-                senha=doador.usuario.senha,
-                cpf=doador.usuario.cpf,
-                data_nascimento=doador.usuario.data_nascimento,
-                status=doador.usuario.status,
-                rua_usuario=doador.usuario.rua_usuario,
-                bairro_usuario=doador.usuario.bairro_usuario,
-                cidade_usuario=doador.usuario.cidade_usuario,
-                cep_usuario=doador.usuario.cep_usuario,
-                telefone=doador.usuario.telefone,
-                perfil=doador.usuario.perfil,
-                data_cadastro=doador.usuario.data_cadastro,
-                foto=doador.usuario.foto,
-                token_redefinicao=getattr(doador.usuario, 'token_redefinicao', None),
-                data_token=getattr(doador.usuario, 'data_token', None),
-                estado_usuario=doador.usuario.estado_usuario
-            )
-            usuario_repo.update(usuario, cursor)
-        
+        cursor = conn.cursor()        
         # Atualizar dados específicos do doador
         cursor.execute(UPDATE, (
             doador.tipo_sanguineo,
