@@ -138,6 +138,13 @@
     left: 0;
 }
 
+/* Não mostrar o tracinho/underline para o item de dropdown do usuário (ex.: nome no canto) */
+.nav-link.dropdown-toggle::after,
+.nav-item.dropdown .nav-link::after {
+    display: none;
+    content: none;
+}
+
 /* Responsive adjustments */
 @media (max-width: 768px) {
     .footer .row>div {
