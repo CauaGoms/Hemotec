@@ -10,15 +10,11 @@
         <!-- Header Moderno da Campanha -->
         <div class="campaign-header-modern">
             <h1 class="campaign-title-modern">{{ campanha.titulo }}</h1>
-            {% if campanha.imagem %}
-                <img src="{{ campanha.imagem }}" alt="Imagem da campanha" class="campaign-image" />
-            {% else %}
-                <img src="https://images.unsplash.com/photo-1559757148-5c350d0d3c56?w=900&h=350&fit=crop" alt="Imagem padrão campanha" class="campaign-image" />
-            {% endif %}
+            <img src="{{ campanha.foto }}" alt="Imagem da campanha" class="campaign-image" />
             <p class="campaign-description-modern">{{ campanha.descricao | replace('\n', '<br>') | safe }}</p>
                 <div class="campaign-info-footer">
-                    <span class="info-footer-item"><i class="fas fa-calendar-day"></i> {{ campanha.data_inicio }}</span>
-                    <span class="info-footer-item"><i class="fas fa-calendar-check"></i> {{ campanha.data_fim }}</span>
+                    <span class="info-footer-item"><i class="fas fa-calendar-day"></i> {{ campanha.data_inicio.strftime('%d/%m/%Y') }}</span>
+                    <span class="info-footer-item"><i class="fas fa-calendar-check"></i> {{ campanha.data_fim.strftime('%d/%m/%Y') }}</span>
                     <span class="info-footer-item"><i class="fas fa-info-circle"></i> {{ campanha.status }}</span>
                 </div>
                     <!-- Chamada para Doação -->
