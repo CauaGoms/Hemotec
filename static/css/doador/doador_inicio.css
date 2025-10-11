@@ -388,7 +388,8 @@ main {
 .blood-progress {
     flex: 2 1 0%;
     margin: 0 2rem 0 2rem;
-    min-width: 360px;
+    min-width: 200px;
+    max-width: 100%;
 }
 
 .blood-progress .progress {
@@ -461,6 +462,50 @@ main {
 @media (max-width: 768px) {
     .blood-stock-modern {
         grid-template-columns: 1fr;
+    }
+    
+    .blood-progress {
+        min-width: 150px;
+        margin: 0 1rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .blood-stock-card {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.8rem;
+        padding: 0.8rem;
+    }
+    
+    .blood-info {
+        width: 100%;
+        justify-content: flex-start;
+        font-size: 1.1rem;
+    }
+    
+    .blood-info i {
+        font-size: 1.2rem;
+    }
+    
+    .blood-progress {
+        width: 100%;
+        min-width: 0;
+        margin: 0;
+    }
+    
+    .blood-progress .progress {
+        height: 10px;
+    }
+    
+    .units {
+        font-size: 0.8rem;
+    }
+    
+    .status {
+        width: 100%;
+        text-align: left;
+        font-size: 0.75rem;
     }
 }
 
@@ -801,9 +846,15 @@ main {
 .quote-section {
     background-color: var(--hemotec-red);
     color: white;
-    padding: 4rem 0;
+    padding: 4rem 2rem;
     margin: 4rem 0;
-    border-radius: 20px;
+    text-align: center;
+    width: 100vw;
+    position: relative;
+    left: 50%;
+    right: 50%;
+    margin-left: -50vw;
+    margin-right: -50vw;
 }
 
 .quote-text {
@@ -892,10 +943,10 @@ main {
 }
 
 .unidade-estoque-item.active {
-    border-color: #dc3545;
-    background: linear-gradient(135deg, #dc3545 0%, #dc3545 100%);
+    border-color: rgb(243, 30, 30);
+    background: rgb(243, 30, 30);
     color: white;
-    box-shadow: 0 8px 20px rgba(255, 107, 107, 0.25);
+    box-shadow: 0 8px 20px rgba(243, 30, 30, 0.35);
     transform: translateY(-3px);
 }
 
