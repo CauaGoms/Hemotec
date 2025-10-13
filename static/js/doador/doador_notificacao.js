@@ -1,6 +1,8 @@
 // Variáveis globais
 let currentFilter = 'all';
 let allNotifications = [];
+let currentPage = 1;
+const itemsPerPage = 10;
 
 // Inicializar página
 document.addEventListener('DOMContentLoaded', function () {
@@ -54,13 +56,20 @@ function renderNotifications() {
     if (filteredNotifications.length === 0) {
         container.innerHTML = '';
         noNotifications.style.display = 'block';
+        document.querySelector('.pagination-container').style.display = 'none';
         return;
     }
 
     noNotifications.style.display = 'none';
 
+    // Calcular paginação
+    const totalPages = Math.ceil(filteredNotifications.length / itemsPerPage);
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    const endIndex = startIndex + itemsPerPage;
+    const paginatedNotifications = filteredNotifications.slice(startIndex, endIndex);
+
     // Renderizar cada notificação
-    container.innerHTML = filteredNotifications.map(notif => {
+    container.innerHTML = paginatedNotifications.map(notif => {
         const isUnread = notif.status === 1;
         const tipoLower = notif.tipo.toLowerCase();
         const isImportant = tipoLower === 'estoque';
@@ -112,6 +121,9 @@ function renderNotifications() {
             </div>
         `;
     }).join('');
+
+    // Renderizar paginação
+    renderPagination(totalPages);
 }
 
 // Formatar data
@@ -138,6 +150,7 @@ function formatarData(dataStr) {
 // Filtrar notificações
 function filterNotifications(filter) {
     currentFilter = filter;
+    currentPage = 1; // Resetar para primeira página ao filtrar
 
     // Atualizar botões de filtro
     document.querySelectorAll('.filter-btn').forEach(btn => {
@@ -146,6 +159,103 @@ function filterNotifications(filter) {
     document.querySelector(`[data-filter="${filter}"]`).classList.add('active');
 
     renderNotifications();
+}
+
+// Renderizar paginação
+function renderPagination(totalPages) {
+    const paginationContainer = document.querySelector('.pagination ul');
+
+    if (totalPages <= 1) {
+        document.querySelector('.pagination-container').style.display = 'none';
+        return;
+    }
+
+    document.querySelector('.pagination-container').style.display = 'block';
+
+    let paginationHTML = '';
+
+    // Botão Anterior
+    if (currentPage > 1) {
+        paginationHTML += `
+            <li class="page-item">
+                <a class="page-link" href="#" onclick="goToPage(${currentPage - 1}); return false;">Anterior</a>
+            </li>
+        `;
+    }
+
+    // Números das páginas
+    const maxVisiblePages = 5;
+    let startPage = Math.max(1, currentPage - Math.floor(maxVisiblePages / 2));
+    let endPage = Math.min(totalPages, startPage + maxVisiblePages - 1);
+
+    // Ajustar startPage se estiver no final
+    if (endPage - startPage < maxVisiblePages - 1) {
+        startPage = Math.max(1, endPage - maxVisiblePages + 1);
+    }
+
+    // Primeira página se não estiver visível
+    if (startPage > 1) {
+        paginationHTML += `
+            <li class="page-item">
+                <a class="page-link" href="#" onclick="goToPage(1); return false;">1</a>
+            </li>
+        `;
+        if (startPage > 2) {
+            paginationHTML += `
+                <li class="page-item disabled">
+                    <span class="page-link">...</span>
+                </li>
+            `;
+        }
+    }
+
+    // Páginas numeradas
+    for (let i = startPage; i <= endPage; i++) {
+        paginationHTML += `
+            <li class="page-item ${i === currentPage ? 'active' : ''}">
+                <a class="page-link" href="#" onclick="goToPage(${i}); return false;">${i}</a>
+            </li>
+        `;
+    }
+
+    // Última página se não estiver visível
+    if (endPage < totalPages) {
+        if (endPage < totalPages - 1) {
+            paginationHTML += `
+                <li class="page-item disabled">
+                    <span class="page-link">...</span>
+                </li>
+            `;
+        }
+        paginationHTML += `
+            <li class="page-item">
+                <a class="page-link" href="#" onclick="goToPage(${totalPages}); return false;">${totalPages}</a>
+            </li>
+        `;
+    }
+
+    // Botão Próximo
+    if (currentPage < totalPages) {
+        paginationHTML += `
+            <li class="page-item">
+                <a class="page-link" href="#" onclick="goToPage(${currentPage + 1}); return false;">Próximo</a>
+            </li>
+        `;
+    }
+
+    paginationContainer.innerHTML = paginationHTML;
+}
+
+// Ir para página específica
+function goToPage(page) {
+    currentPage = page;
+    renderNotifications();
+
+    // Scroll suave para o topo das notificações
+    document.querySelector('.notifications-container').scrollIntoView({
+        behavior: 'smooth',
+        block: 'start'
+    });
 }
 
 // Marcar como lida

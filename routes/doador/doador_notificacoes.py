@@ -39,8 +39,9 @@ async def get_notificacoes_api(request: Request, usuario_logado: dict = None):
 @requer_autenticacao(["doador"])
 async def get_notificacoes_nao_lidas(request: Request, usuario_logado: dict = None):
     """Retorna as últimas 2 notificações não lidas e o contador total"""
-    notificacoes = notificacao_repo.obter_ultimas_nao_lidas(2)
-    total_nao_lidas = notificacao_repo.contar_nao_lidas()
+    cod_usuario = usuario_logado["cod_usuario"]
+    notificacoes = notificacao_repo.obter_ultimas_nao_lidas(cod_usuario, 2)
+    total_nao_lidas = notificacao_repo.contar_nao_lidas(cod_usuario)
     return JSONResponse(content={
         "total": total_nao_lidas,
         "notificacoes": [
