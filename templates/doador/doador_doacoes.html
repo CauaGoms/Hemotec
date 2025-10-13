@@ -42,107 +42,80 @@
 
         <!-- Lista de Doações -->
         <div id="doacoes-list">
-            <!-- Exemplo de Card de Doação Concluída -->
-            <div class="appointment-card completed" data-status="completed">
-                <div class="card-header">
-                    <span class="status-badge completed-badge"><i class="fas fa-check-circle me-1"></i> Concluída</span>
-                    <strong class="date">Terça-feira, 15 de Abril de 2025 - 09:00</strong>
-                </div>
-                <div class="card-body">
-                    <div class="location-info">
-                        <i class="fas fa-hospital-alt icon"></i>
-                        <div>
-                            <h5 class="location-name">Hospital Santa Casa</h5>
-                            <p class="location-address">Av. Beira Rio, 1200 - Independência</p>
-                            <small class="text-muted">Tipo sanguíneo coletado: O+</small>
+            {% if doacoes %}
+                {% for doacao in doacoes %}
+                <!-- Card de Doação -->
+                <div class="appointment-card {{ doacao.status_classe }}" data-status="{{ doacao.status_classe }}">
+                    <div class="card-header">
+                        <span class="status-badge {{ doacao.status_badge }}">
+                            <i class="fas {{ doacao.status_icone }} me-1"></i> {{ doacao.status_nome }}
+                        </span>
+                        <strong class="date">{{ doacao.data_formatada }}</strong>
+                    </div>
+                    <div class="card-body">
+                        <div class="location-info">
+                            <i class="fas fa-hospital-alt icon"></i>
+                            <div>
+                                <h5 class="location-name">{{ doacao.nome_unidade or 'Unidade não especificada' }}</h5>
+                                <p class="location-address">{{ doacao.endereco_completo or 'Endereço não disponível' }}</p>
+                                <small class="text-muted">
+                                    {% if doacao.tipo_sanguineo_completo %}
+                                        Tipo sanguíneo coletado: {{ doacao.tipo_sanguineo_completo }}
+                                    {% endif %}
+                                    {% if doacao.quantidade %}
+                                        - {{ doacao.quantidade }}ml
+                                    {% endif %}
+                                </small>
+                                {% if doacao.observacoes and doacao.status == 1 %}
+                                <small class="text-muted d-block mt-1">Motivo: {{ doacao.observacoes }}</small>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="actions">
+                            {% if doacao.status == 3 %}
+                                <!-- Concluída -->
+                                <button class="btn btn-comprovante" data-id="{{ doacao.cod_doacao }}">
+                                    <i class="fas fa-receipt me-1"></i> Ver Comprovante
+                                </button>
+                            {% elif doacao.status == 2 %}
+                                <!-- Aguardando Exame -->
+                                <button class="btn btn-status" data-id="{{ doacao.cod_doacao }}">
+                                    <i class="fas fa-info-circle me-1"></i> Acompanhar Status
+                                </button>
+                            {% elif doacao.status == 1 %}
+                                <!-- Recusada -->
+                                <button class="btn btn-detalhes" data-id="{{ doacao.cod_doacao }}">
+                                    <i class="fas fa-eye me-1"></i> Ver Detalhes
+                                </button>
+                                <a href="/doador/agendamento/adicionar" class="btn btn-reagendar">
+                                    <i class="fas fa-calendar-plus me-1"></i> Tentar Novamente
+                                </a>
+                            {% elif doacao.status == 0 %}
+                                <!-- Cancelada -->
+                                <a href="/doador/agendamento/adicionar" class="btn btn-reagendar">
+                                    <i class="fas fa-calendar-plus me-1"></i> Agendar Novamente
+                                </a>
+                            {% endif %}
                         </div>
                     </div>
-                    <div class="actions">
-                        <button class="btn btn-comprovante" data-id="1">
-                            <i class="fas fa-receipt me-1"></i> Ver Comprovante
-                        </button>
-                    </div>
                 </div>
-            </div>
-
-            <!-- Exemplo de Card de Doação Aguardando Exame -->
-            <div class="appointment-card pending" data-status="pending">
-                <div class="card-header">
-                    <span class="status-badge pending-badge"><i class="fas fa-hourglass-half me-1"></i> Aguardando Exame</span>
-                    <strong class="date">Segunda-feira, 20 de Maio de 2025 - 08:30</strong>
+                {% endfor %}
+            {% else %}
+                <!-- Mensagem quando não houver doações -->
+                <div class="text-center p-5">
+                    <i class="fas fa-heart fa-3x text-muted mb-3"></i>
+                    <h4>Nenhuma doação encontrada</h4>
+                    <p>Você ainda não realizou nenhuma doação.</p>
+                    <a href="/doador/agendamento/adicionar" class="btn btn-primary">Fazer Primeira Doação</a>
                 </div>
-                <div class="card-body">
-                    <div class="location-info">
-                        <i class="fas fa-hospital-alt icon"></i>
-                        <div>
-                            <h5 class="location-name">Hemocentro Regional de Cachoeiro</h5>
-                            <p class="location-address">Rua Dr. Raulino de Oliveira, 345 - Centro</p>
-                            <small class="text-muted">Aguardando resultados dos exames laboratoriais</small>
-                        </div>
-                    </div>
-                    <div class="actions">
-                        <button class="btn btn-status" data-id="2">
-                            <i class="fas fa-info-circle me-1"></i> Acompanhar Status
-                        </button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Exemplo de Card de Doação Recusada -->
-            <div class="appointment-card refused" data-status="refused">
-                <div class="card-header">
-                    <span class="status-badge refused-badge"><i class="fas fa-exclamation-triangle me-1"></i> Recusada</span>
-                    <strong class="date">Sexta-feira, 8 de Março de 2025 - 15:45</strong>
-                </div>
-                <div class="card-body">
-                    <div class="location-info">
-                        <i class="fas fa-hospital-alt icon"></i>
-                        <div>
-                            <h5 class="location-name">Unidade Móvel - Shopping Center</h5>
-                            <p class="location-address">Av. Coronel Borges, 101 - Aquidaban</p>
-                            <small class="text-muted">Motivo: Hemoglobina baixa detectada no teste</small>
-                        </div>
-                    </div>
-                    <div class="actions">
-                        <button class="btn btn-detalhes" data-id="3">
-                            <i class="fas fa-eye me-1"></i> Ver Detalhes
-                        </button>
-                        <a href="/doador/agendamento/adicionar" class="btn btn-reagendar">
-                            <i class="fas fa-calendar-plus me-1"></i> Tentar Novamente
-                        </a>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Exemplo de Card de Doação Cancelada -->
-            <div class="appointment-card canceled" data-status="canceled">
-                <div class="card-header">
-                    <span class="status-badge canceled-badge"><i class="fas fa-times-circle me-1"></i> Cancelada</span>
-                    <strong class="date">Segunda-feira, 10 de Fevereiro de 2025 - 14:00</strong>
-                </div>
-                <div class="card-body">
-                    <div class="location-info">
-                        <i class="fas fa-hospital-alt icon"></i>
-                        <div>
-                            <h5 class="location-name">Unidade Móvel - Praça Jerônimo Monteiro</h5>
-                            <p class="location-address">Praça Jerônimo Monteiro - Centro</p>
-                            <small class="text-muted">Cancelada pelo doador</small>
-                        </div>
-                    </div>
-                    <div class="actions">
-                         <a href="/doador/agendamento/adicionar" class="btn btn-reagendar">
-                             <i class="fas fa-calendar-plus me-1"></i> Agendar Novamente
-                         </a>
-                    </div>
-                </div>
-            </div>
+            {% endif %}
         </div>
 
-        <!-- Mensagem para quando não houver doações -->
+        <!-- Mensagem para quando não houver doações (usada pelo filtro JS) -->
         <div class="text-center p-5 no-donations-message" style="display: none;">
             <i class="fas fa-heart fa-3x text-muted mb-3"></i>
             <h4>Nenhuma doação encontrada</h4>
-            <p>Você ainda não realizou nenhuma doação ou não há doações com o filtro selecionado.</p>
+            <p>Não há doações com o filtro selecionado.</p>
             <a href="/doador/agendamento/adicionar" class="btn btn-primary">Fazer Primeira Doação</a>
         </div>
     </div>
