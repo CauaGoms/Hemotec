@@ -10,3 +10,4 @@ class Doacao:
     quantidade: int
     status: int
     
+    
