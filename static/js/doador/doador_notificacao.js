@@ -62,13 +62,28 @@ function renderNotifications() {
     // Renderizar cada notificação
     container.innerHTML = filteredNotifications.map(notif => {
         const isUnread = notif.status === 1;
-        const isImportant = notif.tipo.toLowerCase() === 'estoque';
-        const typeClass = isImportant ? 'critical' :
-            notif.tipo.toLowerCase() === 'campanha' ? 'campaign' :
-                notif.tipo.toLowerCase() === 'agendamento' ? 'success' : 'info';
-        const icon = isImportant ? 'exclamation-triangle' :
-            notif.tipo.toLowerCase() === 'campanha' ? 'bullhorn' :
-                notif.tipo.toLowerCase() === 'agendamento' ? 'calendar-check' : 'bell';
+        const tipoLower = notif.tipo.toLowerCase();
+        const isImportant = tipoLower === 'estoque';
+
+        // Definir classe e ícone baseado no tipo
+        let typeClass, icon;
+
+        if (isImportant) {
+            typeClass = 'critical';
+            icon = 'exclamation-triangle';
+        } else if (tipoLower === 'campanha') {
+            typeClass = 'campaign';
+            icon = 'bullhorn';
+        } else if (tipoLower === 'agendamento') {
+            typeClass = 'appointment';
+            icon = 'calendar-alt';
+        } else if (tipoLower === 'agradecimento') {
+            typeClass = 'thanks';
+            icon = 'heart';
+        } else {
+            typeClass = 'info';
+            icon = 'bell';
+        }
 
         const dataFormatada = formatarData(notif.data_envio);
 
@@ -166,7 +181,13 @@ async function markAsRead(notificationId) {
 
 // Marcar todas como lidas
 async function markAllAsRead() {
-    if (!confirm('Deseja marcar todas as notificações como lidas?')) {
+    const confirmed = await showConfirmDialog(
+        'Marcar todas como lidas?',
+        'Todas as notificações não lidas serão marcadas como lidas.',
+        'Confirmar'
+    );
+
+    if (!confirmed) {
         return;
     }
 
@@ -198,7 +219,13 @@ async function markAllAsRead() {
 
 // Deletar notificação
 async function deleteNotification(notificationId) {
-    if (!confirm('Deseja excluir esta notificação?')) {
+    const confirmed = await showConfirmDialog(
+        'Excluir notificação?',
+        'Esta ação não pode ser desfeita.',
+        'Excluir'
+    );
+
+    if (!confirmed) {
         return;
     }
 
@@ -230,7 +257,13 @@ async function deleteNotification(notificationId) {
 
 // Limpar todas as notificações
 async function clearAllNotifications() {
-    if (!confirm('Deseja limpar todas as notificações? Esta ação não pode ser desfeita.')) {
+    const confirmed = await showConfirmDialog(
+        'Limpar todas as notificações?',
+        'Todas as notificações serão removidas permanentemente. Esta ação não pode ser desfeita.',
+        'Limpar Tudo'
+    );
+
+    if (!confirmed) {
         return;
     }
 
@@ -429,4 +462,207 @@ function showToast(message, type = 'info') {
             document.body.removeChild(toast);
         }, 300);
     }, 3000);
+}
+
+// Mostrar dialog de confirmação personalizado
+function showConfirmDialog(title, message, confirmText = 'Confirmar') {
+    return new Promise((resolve) => {
+        // Remover dialog anterior se existir
+        const existingDialog = document.getElementById('custom-confirm-dialog');
+        if (existingDialog) {
+            existingDialog.remove();
+        }
+
+        // Criar dialog
+        const dialog = document.createElement('div');
+        dialog.id = 'custom-confirm-dialog';
+        dialog.className = 'custom-confirm-dialog';
+        dialog.innerHTML = `
+            <div class="confirm-dialog-content">
+                <div class="confirm-dialog-icon">
+                    <i class="fas fa-question-circle"></i>
+                </div>
+                <div class="confirm-dialog-body">
+                    <h5>${title}</h5>
+                    <p>${message}</p>
+                </div>
+                <div class="confirm-dialog-actions">
+                    <button class="btn-cancel">
+                        <i class="fas fa-times me-2"></i>Cancelar
+                    </button>
+                    <button class="btn-confirm">
+                        <i class="fas fa-check me-2"></i>${confirmText}
+                    </button>
+                </div>
+            </div>
+        `;
+
+        // Adicionar estilos
+        if (!document.getElementById('confirm-dialog-styles')) {
+            const styles = document.createElement('style');
+            styles.id = 'confirm-dialog-styles';
+            styles.textContent = `
+                .custom-confirm-dialog {
+                    position: fixed;
+                    top: 20px;
+                    right: 20px;
+                    z-index: 10000;
+                    animation: slideInRight 0.4s ease-out;
+                }
+
+                @keyframes slideInRight {
+                    from {
+                        transform: translateX(100%);
+                        opacity: 0;
+                    }
+                    to {
+                        transform: translateX(0);
+                        opacity: 1;
+                    }
+                }
+
+                @keyframes slideOutRight {
+                    from {
+                        transform: translateX(0);
+                        opacity: 1;
+                    }
+                    to {
+                        transform: translateX(100%);
+                        opacity: 0;
+                    }
+                }
+
+                .custom-confirm-dialog.closing {
+                    animation: slideOutRight 0.3s ease-in forwards;
+                }
+
+                .confirm-dialog-content {
+                    background: white;
+                    border-radius: 12px;
+                    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+                    padding: 25px;
+                    min-width: 380px;
+                    max-width: 450px;
+                    border-top: 4px solid #dc3545;
+                }
+
+                .confirm-dialog-icon {
+                    text-align: center;
+                    margin-bottom: 15px;
+                }
+
+                .confirm-dialog-icon i {
+                    font-size: 48px;
+                    color: #dc3545;
+                    animation: pulse 2s infinite;
+                }
+
+                @keyframes pulse {
+                    0%, 100% { transform: scale(1); }
+                    50% { transform: scale(1.1); }
+                }
+
+                .confirm-dialog-body {
+                    text-align: center;
+                    margin-bottom: 20px;
+                }
+
+                .confirm-dialog-body h5 {
+                    color: #333;
+                    font-weight: 600;
+                    font-size: 20px;
+                    margin-bottom: 10px;
+                }
+
+                .confirm-dialog-body p {
+                    color: #666;
+                    font-size: 15px;
+                    margin: 0;
+                    line-height: 1.5;
+                }
+
+                .confirm-dialog-actions {
+                    display: flex;
+                    gap: 12px;
+                    justify-content: center;
+                }
+
+                .confirm-dialog-actions button {
+                    padding: 10px 24px;
+                    border: none;
+                    border-radius: 8px;
+                    font-weight: 600;
+                    font-size: 14px;
+                    cursor: pointer;
+                    transition: all 0.3s;
+                    display: inline-flex;
+                    align-items: center;
+                    justify-content: center;
+                }
+
+                .confirm-dialog-actions .btn-cancel {
+                    background: #6c757d;
+                    color: white;
+                }
+
+                .confirm-dialog-actions .btn-cancel:hover {
+                    background: #5a6268;
+                    transform: translateY(-2px);
+                    box-shadow: 0 4px 12px rgba(108, 117, 125, 0.3);
+                }
+
+                .confirm-dialog-actions .btn-confirm {
+                    background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
+                    color: white;
+                }
+
+                .confirm-dialog-actions .btn-confirm:hover {
+                    background: linear-gradient(135deg, #c82333 0%, #bd2130 100%);
+                    transform: translateY(-2px);
+                    box-shadow: 0 4px 12px rgba(220, 53, 69, 0.4);
+                }
+
+                @media (max-width: 768px) {
+                    .custom-confirm-dialog {
+                        left: 20px;
+                        right: 20px;
+                        top: 20px;
+                    }
+                    
+                    .confirm-dialog-content {
+                        min-width: auto;
+                        max-width: none;
+                    }
+                }
+            `;
+            document.head.appendChild(styles);
+        }
+
+        // Adicionar ao body
+        document.body.appendChild(dialog);
+
+        // Event listeners
+        const btnCancel = dialog.querySelector('.btn-cancel');
+        const btnConfirm = dialog.querySelector('.btn-confirm');
+
+        const closeDialog = (confirmed) => {
+            dialog.classList.add('closing');
+            setTimeout(() => {
+                dialog.remove();
+                resolve(confirmed);
+            }, 300);
+        };
+
+        btnCancel.onclick = () => closeDialog(false);
+        btnConfirm.onclick = () => closeDialog(true);
+
+        // Fechar com ESC
+        const escHandler = (e) => {
+            if (e.key === 'Escape') {
+                closeDialog(false);
+                document.removeEventListener('keydown', escHandler);
+            }
+        };
+        document.addEventListener('keydown', escHandler);
+    });
 }

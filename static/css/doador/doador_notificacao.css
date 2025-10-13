@@ -48,8 +48,15 @@ body {
 }
 
 @keyframes pulse {
-    0%, 100% { opacity: 0.8; }
-    50% { opacity: 1; }
+
+    0%,
+    100% {
+        opacity: 0.8;
+    }
+
+    50% {
+        opacity: 1;
+    }
 }
 
 .hero-content {
@@ -82,6 +89,7 @@ body {
         opacity: 0;
         transform: translateY(30px);
     }
+
     to {
         opacity: 1;
         transform: translateY(0);
@@ -98,8 +106,10 @@ body {
     display: flex;
     flex-direction: row;
     align-items: center;
-    gap: 1rem; /* Espaçamento horizontal entre os botões */
-    justify-content: flex-start; /* Alinha à esquerda, use center para centralizar */
+    gap: 1rem;
+    /* Espaçamento horizontal entre os botões */
+    justify-content: flex-start;
+    /* Alinha à esquerda, use center para centralizar */
     margin-bottom: 0;
 }
 
@@ -225,7 +235,7 @@ body {
 }
 
 .notification-item.appointment {
-    border-left-color: var(--hemotec-success);
+    border-left-color: #007bff;
 }
 
 .notification-item.system {
@@ -270,7 +280,7 @@ body {
 }
 
 .appointment .notification-icon {
-    background: var(--hemotec-success);
+    background: #007bff;
 }
 
 .system .notification-icon {
@@ -362,10 +372,12 @@ body {
         transform: scale(1);
         opacity: 1;
     }
+
     50% {
         transform: scale(1.2);
         opacity: 0.7;
     }
+
     100% {
         transform: scale(1);
         opacity: 1;
@@ -429,7 +441,8 @@ body {
 .pagination .page-item.active .page-link {
     background: var(--hemotec-red);
     border-color: var(--hemotec-red);
-    color: #fff !important; /* Garante que o número fique branco */
+    color: #fff !important;
+    /* Garante que o número fique branco */
     font-weight: 700;
 }
 
@@ -511,35 +524,35 @@ body {
     .hero-title {
         font-size: 2.5rem;
     }
-    
+
     .filter-buttons {
         justify-content: center;
         margin-bottom: 1rem;
     }
-    
+
     .action-buttons {
         text-align: center !important;
     }
-    
+
     .action-buttons .btn {
         margin: 0.25rem;
         font-size: 0.85rem;
     }
-    
+
     .notification-header {
         flex-direction: column;
         align-items: flex-start;
     }
-    
+
     .notification-meta {
         margin-left: 0;
         margin-top: 0.5rem;
     }
-    
+
     .stats-card {
         margin-bottom: 1rem;
     }
-    
+
     .back-arrow {
         left: 10px;
         top: 80px;
@@ -553,30 +566,29 @@ body {
         padding: 1rem;
         margin: 0 0.5rem;
     }
-    
+
     .notification-item {
         padding: 1rem;
         flex-direction: column;
         text-align: center;
     }
-    
+
     .notification-icon {
         align-self: center;
     }
-    
+
     .notification-header {
         text-align: center;
     }
-    
+
     .floating-action {
         bottom: 20px;
         right: 20px;
     }
-    
+
     .floating-btn {
         width: 50px;
         height: 50px;
         font-size: 1.2rem;
     }
 }
-
