@@ -103,6 +103,32 @@ def delete(cod_notificacao: int) -> bool:
         cursor = conn.cursor()
         cursor.execute(DELETE, (cod_notificacao,))
         return cursor.rowcount > 0
+
+def contar_nao_lidas() -> int:
+    """Conta o número de notificações não lidas (status = 1)"""
+    with get_connection() as conn:
+        cursor = conn.cursor()
+        cursor.execute(CONTAR_NAO_LIDAS)
+        row = cursor.fetchone()
+        return row["total"] if row else 0
+
+def obter_ultimas_nao_lidas(limite: int = 2) -> list[Notificacao]:
+    """Retorna as últimas N notificações não lidas"""
+    with get_connection() as conn:
+        cursor = conn.cursor()
+        cursor.execute(OBTER_ULTIMAS_NAO_LIDAS, (limite,))
+        rows = cursor.fetchall()
+        notificacoes = [
+            Notificacao(
+                cod_notificacao=row["cod_notificacao"],
+                cod_adm=row["cod_adm"],
+                tipo=row["tipo"],
+                mensagem=row["mensagem"],
+                status=row["status"],
+                data_envio=datetime.strptime(row["data_envio"], '%Y-%m-%d %H:%M:%S') if ' ' in row["data_envio"] else datetime.strptime(row["data_envio"], '%Y-%m-%d'),
+                titulo=row["titulo"]
+            ) for row in rows]
+        return notificacoes
     
 def inserir_dados_iniciais(conexao: Connection) -> None:
     lista = obter_todos()
