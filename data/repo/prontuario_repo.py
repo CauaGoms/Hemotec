@@ -111,6 +111,41 @@ def obter_por_id(cod_prontuario: int) -> Optional[Prontuario]:
             )
         return None
     
+def obter_por_doacao(cod_doacao: int) -> Optional[Prontuario]:
+    """
+    Obtém o prontuário relacionado a uma doação específica
+    """
+    with get_connection() as conn:
+        cursor = conn.cursor()
+        cursor.execute(OBTER_POR_DOACAO, (cod_doacao,))
+        row = cursor.fetchone()
+        if row:
+            return Prontuario(
+                cod_prontuario=row["cod_prontuario"],
+                cod_doacao=row["cod_doacao"],
+                data_criacao=datetime.strptime(row["data_criacao"], '%Y-%m-%d'),
+                data_atualizacao=datetime.strptime(row["data_atualizacao"], '%Y-%m-%d'),
+                jejum=row["jejum"],
+                diabetes=row["diabetes"],
+                hipertensao=row["hipertensao"],
+                cardiopatia=row["cardiopatia"],
+                cancer=row["cancer"],
+                hepatite=row["hepatite"],
+                outros=row["outros"],
+                detalhes_outros=row["detalhes_outros"],
+                sintomas_gripais=row["sintomas_gripais"],
+                medicamentos=row["medicamentos"],
+                detalhes_medicamentos=row["detalhes_medicamentos"],
+                fumante=row["fumante"],
+                alcool=row["alcool"],
+                droga=row["droga"],
+                ist=row["ist"],
+                atividade=row["atividade"],
+                sono=row["sono"],
+                tatuagem_e_outros=row["tatuagem_e_outros"]
+            )
+        return None
+    
 def update(prontuario: Prontuario) -> bool:
     with get_connection() as conn:
         cursor = conn.cursor()

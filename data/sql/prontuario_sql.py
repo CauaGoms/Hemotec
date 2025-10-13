@@ -58,3 +58,11 @@ doacao d
 WHERE p.cod_doacao = d.cod_doacao
 AND p.cod_prontuario = ?;
 """
+
+OBTER_POR_DOACAO = """
+SELECT p.cod_prontuario, d.cod_doacao, p.data_criacao, p.data_atualizacao, p.jejum, p.diabetes, p.hipertensao, p.cardiopatia, p.cancer, p.hepatite, p.outros, p.detalhes_outros, p.sintomas_gripais, p.medicamentos, p.detalhes_medicamentos, p.fumante, p.alcool, p.droga, p.ist, p.atividade, p.sono, p.tatuagem_e_outros
+FROM prontuario p, 
+doacao d
+WHERE p.cod_doacao = d.cod_doacao
+AND p.cod_doacao = ?;
+"""

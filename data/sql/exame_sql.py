@@ -40,3 +40,9 @@ doacao d
 WHERE e.cod_doacao = d.cod_doacao
 AND e.cod_exame = ?;
 """
+
+OBTER_POR_DOACAO = """
+SELECT e.cod_exame, e.cod_doacao, e.data_exame, e.tipo_exame, e.resultado, e.arquivo
+FROM exame e
+WHERE e.cod_doacao = ?;
+"""

@@ -73,6 +73,36 @@ def obter_por_id(cod_exame: int) -> Optional[Exame]:
             )
         return None
     
+def obter_por_doacao(cod_doacao: int) -> list[Exame]:
+    """
+    Obtém todos os exames relacionados a uma doação específica
+    """
+    def parse_data_exame(data_exame_str):
+        try:
+            return datetime.strptime(data_exame_str, '%Y-%m-%d %H:%M:%S')
+        except ValueError:
+            try:
+                return datetime.strptime(data_exame_str, '%Y-%m-%d')
+            except ValueError:
+                return None
+
+    with get_connection() as conn:
+        cursor = conn.cursor()
+        cursor.execute(OBTER_POR_DOACAO, (cod_doacao,))
+        rows = cursor.fetchall()
+        exames = [
+            Exame(
+                cod_exame=row["cod_exame"],
+                cod_doacao=row["cod_doacao"],
+                data_exame=parse_data_exame(row["data_exame"]),
+                tipo_exame=row["tipo_exame"],
+                resultado=row["resultado"],
+                arquivo=row["arquivo"]
+            ) 
+            for row in rows
+        ]
+        return exames
+    
 def update(exame: Exame) -> bool:
     with get_connection() as conn:
         cursor = conn.cursor()

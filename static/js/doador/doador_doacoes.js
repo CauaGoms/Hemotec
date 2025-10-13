@@ -147,37 +147,156 @@ document.addEventListener('DOMContentLoaded', function() {
     // Função para mostrar detalhes da doação
     function mostrarDetalhesDoacao(doacaoId) {
         const modalContent = document.getElementById('modalDetailsContent');
+        
+        // Mostrar loading
         modalContent.innerHTML = `
-            <div class="row">
-                <div class="col-md-6">
-                    <h6>Status</h6>
-                    <p class="text-warning"><i class="fas fa-exclamation-triangle me-2"></i>Recusada</p>
+            <div class="text-center py-5">
+                <div class="spinner-border text-primary" role="status">
+                    <span class="visually-hidden">Carregando...</span>
                 </div>
-                <div class="col-md-6">
-                    <h6>Data da Tentativa</h6>
-                    <p>08/03/2025 15:45</p>
-                </div>
-            </div>
-            <hr>
-            <h6>Motivo da Recusa</h6>
-            <p>Hemoglobina baixa detectada no teste inicial (10.2 g/dL). O valor mínimo necessário é 12.5 g/dL para mulheres e 13.0 g/dL para homens.</p>
-            
-            <h6>Recomendações</h6>
-            <ul>
-                <li>Consulte um médico para avaliação da anemia</li>
-                <li>Aumente o consumo de alimentos ricos em ferro</li>
-                <li>Aguarde pelo menos 8 semanas antes de tentar doar novamente</li>
-                <li>Realize exames de sangue para acompanhamento</li>
-            </ul>
-            
-            <div class="alert alert-info">
-                <i class="fas fa-info-circle me-2"></i>
-                Você pode tentar doar novamente após seguir as recomendações médicas e aguardar o período mínimo.
+                <p class="mt-3">Carregando detalhes...</p>
             </div>
         `;
         
         const modal = new bootstrap.Modal(document.getElementById('detailsModal'));
         modal.show();
+        
+        // Buscar dados da API
+        fetch(`/api/doador/doacao/${doacaoId}/detalhes`)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Erro ao buscar detalhes');
+                }
+                return response.json();
+            })
+            .then(data => {
+                // Montar HTML com dados reais
+                let html = `
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h6>Status</h6>
+                            <p class="text-warning"><i class="fas fa-exclamation-triangle me-2"></i>${getStatusText(data.doacao.status)}</p>
+                        </div>
+                        <div class="col-md-6">
+                            <h6>Data da Tentativa</h6>
+                            <p>${formatarDataHora(data.doacao.data_hora)}</p>
+                        </div>
+                    </div>
+                    <hr>
+                    
+                    <h6>Local da Doação</h6>
+                    <p><i class="fas fa-hospital me-2"></i>${data.unidade.nome || 'Não especificada'}</p>
+                    <p class="text-muted">${data.unidade.endereco_completo || 'Endereço não disponível'}</p>
+                `;
+                
+                // Adicionar observações se existirem
+                if (data.doacao.observacoes) {
+                    html += `
+                        <hr>
+                        <h6>Motivo da Recusa</h6>
+                        <p>${data.doacao.observacoes}</p>
+                    `;
+                }
+                
+                // Adicionar informações do prontuário se existir
+                if (data.prontuario) {
+                    html += `
+                        <hr>
+                        <h6>Informações da Triagem</h6>
+                        <ul class="list-unstyled">
+                    `;
+                    
+                    if (data.prontuario.diabetes) html += '<li><i class="fas fa-times text-danger me-2"></i>Diabetes detectado</li>';
+                    if (data.prontuario.hipertensao) html += '<li><i class="fas fa-times text-danger me-2"></i>Hipertensão detectada</li>';
+                    if (data.prontuario.cardiopatia) html += '<li><i class="fas fa-times text-danger me-2"></i>Cardiopatia detectada</li>';
+                    if (data.prontuario.cancer) html += '<li><i class="fas fa-times text-danger me-2"></i>Histórico de câncer</li>';
+                    if (data.prontuario.hepatite) html += '<li><i class="fas fa-times text-danger me-2"></i>Hepatite detectada</li>';
+                    if (data.prontuario.sintomas_gripais) html += '<li><i class="fas fa-times text-danger me-2"></i>Sintomas gripais</li>';
+                    if (data.prontuario.alcool) html += '<li><i class="fas fa-times text-danger me-2"></i>Consumo de álcool recente</li>';
+                    
+                    if (data.prontuario.medicamentos && data.prontuario.detalhes_medicamentos) {
+                        html += `<li><i class="fas fa-pills text-warning me-2"></i>Medicamentos: ${data.prontuario.detalhes_medicamentos}</li>`;
+                    }
+                    
+                    html += '</ul>';
+                }
+                
+                // Adicionar exames se existirem
+                if (data.exames && data.exames.length > 0) {
+                    html += `
+                        <hr>
+                        <h6>Exames Realizados</h6>
+                        <ul class="list-unstyled">
+                    `;
+                    
+                    data.exames.forEach(exame => {
+                        const resultadoClass = exame.resultado.toLowerCase().includes('negativo') || exame.resultado.toLowerCase().includes('normal') ? 'text-success' : 'text-danger';
+                        html += `
+                            <li class="mb-2">
+                                <strong>${exame.tipo_exame}</strong><br>
+                                <span class="${resultadoClass}">Resultado: ${exame.resultado}</span><br>
+                                <small class="text-muted">Data: ${formatarData(exame.data_exame)}</small>
+                            </li>
+                        `;
+                    });
+                    
+                    html += '</ul>';
+                }
+                
+                // Adicionar recomendações se for status recusado
+                if (data.doacao.status === 1) {
+                    html += `
+                        <div class="alert alert-info">
+                            <i class="fas fa-info-circle me-2"></i>
+                            Você pode tentar doar novamente após seguir as recomendações médicas e aguardar o período mínimo.
+                        </div>
+                    `;
+                }
+                
+                modalContent.innerHTML = html;
+            })
+            .catch(error => {
+                console.error('Erro:', error);
+                modalContent.innerHTML = `
+                    <div class="alert alert-danger">
+                        <i class="fas fa-exclamation-circle me-2"></i>
+                        Erro ao carregar os detalhes. Por favor, tente novamente.
+                    </div>
+                `;
+            });
+    }
+    
+    // Funções auxiliares para formatação
+    function getStatusText(status) {
+        const statusMap = {
+            0: 'Cancelada',
+            1: 'Recusada',
+            2: 'Aguardando Exame',
+            3: 'Concluída'
+        };
+        return statusMap[status] || 'Desconhecido';
+    }
+    
+    function formatarDataHora(dataHora) {
+        if (!dataHora) return 'Data não disponível';
+        const data = new Date(dataHora);
+        return data.toLocaleString('pt-BR', {
+            day: '2-digit',
+            month: '2-digit',
+            year: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit'
+        });
+    }
+    
+    function formatarData(data) {
+        if (!data) return 'Data não disponível';
+        const d = new Date(data);
+        return d.toLocaleDateString('pt-BR', {
+            day: '2-digit',
+            month: '2-digit',
+            year: 'numeric'
+        });
     }
 
     // Verificar inicialmente se há doações

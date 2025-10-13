@@ -67,6 +67,7 @@ from routes.publico.publico_confirmar_redefinicao_senha import router as publico
 from routes.doador.doador import router as doador_router
 from routes.doador.doador_notificacoes import router as doador_notificacao_router
 from routes.doador.doador_doacoes import router as doador_doacoes_router
+from routes.doador.doador_doacoes_api import router as doador_doacoes_api_router
 from routes.doador.doador_doacoes_detalhes import router as doador_doacoes_detalhes_router
 from routes.usuario.dados_cadastrais import router as doador_dados_cadastrais_router
 from routes.doador.doador_configuracoes import router as doador_configuracoes_router
@@ -187,6 +188,7 @@ app.include_router(publico_confirmar_redefinicao_senha_router)
 app.include_router(doador_router)
 app.include_router(doador_notificacao_router)
 app.include_router(doador_doacoes_router)
+app.include_router(doador_doacoes_api_router)
 app.include_router(doador_doacoes_detalhes_router)
 app.include_router(doador_dados_cadastrais_router)
 app.include_router(doador_configuracoes_router)
