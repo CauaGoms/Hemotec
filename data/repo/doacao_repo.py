@@ -24,6 +24,7 @@ def inserir(doacao: Doacao, cursor=None) -> Optional[int]:
     if cursor is not None:
         cursor.execute(INSERIR, (
             doacao.cod_doador,
+            doacao.cod_agendamento,
             doacao.data_hora,
             doacao.quantidade,
             doacao.status
@@ -34,6 +35,7 @@ def inserir(doacao: Doacao, cursor=None) -> Optional[int]:
             cursor = conn.cursor()
             cursor.execute(INSERIR, (
                 doacao.cod_doador,
+                doacao.cod_agendamento,
                 doacao.data_hora,
                 doacao.quantidade,
                 doacao.status
@@ -50,6 +52,7 @@ def obter_todos() -> list[Doacao]:
             Doacao(
                 cod_doacao=row["cod_doacao"],
                 cod_doador=row["cod_doador"],
+                cod_agendamento=row["cod_agendamento"],
                 data_hora=datetime.strptime(row["data_hora"], '%Y-%m-%d %H:%M:%S'),
                 quantidade=row["quantidade"],
                 status=row["status"])  
@@ -65,6 +68,7 @@ def obter_por_id(cod_doacao: int) -> Optional[Doacao]:
             return Doacao(
                 cod_doacao=row["cod_doacao"],
                 cod_doador=row["cod_doador"],
+                cod_agendamento=row["cod_agendamento"],
                 data_hora=datetime.strptime(row["data_hora"], '%Y-%m-%d %H:%M:%S'),
                 quantidade=row["quantidade"],
                 status=row["status"]
@@ -78,6 +82,7 @@ def update(doacao: Doacao) -> bool:
             UPDATE,
             (
                 doacao.cod_doador,
+                doacao.cod_agendamento,
                 doacao.data_hora,
                 doacao.quantidade,
                 doacao.status,
@@ -120,6 +125,7 @@ def obter_doacoes_completas_por_doador(cod_doador: int) -> list[dict]:
             doacao = {
                 'cod_doacao': row['cod_doacao'],
                 'cod_doador': row['cod_doador'],
+                'cod_agendamento': row['cod_agendamento'],
                 'data_hora': data_hora_obj,
                 'quantidade': row['quantidade'],
                 'status': row['status'],

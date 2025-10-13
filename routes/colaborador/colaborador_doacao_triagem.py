@@ -181,6 +181,7 @@ async def post_colaborador_doacao_triagem(
         doacao = Doacao(
             cod_doacao=0,  # Será gerado pelo banco
             cod_doador=cod_doador,
+            cod_agendamento=None,  # Pode ser preenchido posteriormente ao vincular com um agendamento
             data_hora=datetime.now(),
             quantidade=0,  # Quantidade padrão de uma doação em ml
             status=0  # Pendente

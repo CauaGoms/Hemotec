@@ -143,11 +143,11 @@ INSERT INTO agendamento (cod_agendamento, cod_colaborador, cod_doador, data_hora
 (3, 2, 1, '2023-10-07 09:00:00', 1, 'Primeira doação de sangue', 'presencial', 1),
 (4, 1, 2, '2023-10-08 11:00:00', 1, 'Doação regular', 'presencial', 2);
 
-INSERT INTO doacao (cod_doacao, cod_doador, data_hora, quantidade, status) VALUES
-(1, 1, '2025-10-01', '490', 1),
-(2, 2, '2025-10-01', '520', 1),
-(3, 1, '2025-10-02', '480', 1),
-(4, 2, '2025-10-02', '500', 1);
+INSERT INTO doacao (cod_doacao, cod_doador, cod_agendamento, data_hora, quantidade, status) VALUES
+(1, 1, 1, '2025-10-01', '490', 1),
+(2, 2, 2, '2025-10-01', '520', 1),
+(3, 1, 3, '2025-10-02', '480', 1),
+(4, 2, 4, '2025-10-02', '500', 1);
 
 INSERT INTO exame (cod_exame, cod_doacao, data_exame, tipo_exame, resultado, arquivo) VALUES
 (1, 1, '2023-10-05', 'Hemograma Completo', 'Normal', 'hemograma_123.pdf'),
