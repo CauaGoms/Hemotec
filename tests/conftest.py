@@ -595,6 +595,7 @@ def doacao_exemplo():
     doacao = Doacao(
         cod_doacao=1,
         cod_doador=1,
+        cod_agendamento=None,
         data_hora=datetime(2025, 1, 1, 1, 0, 0),
         quantidade=10,
         status=1
@@ -609,6 +610,7 @@ def lista_doacoes_exemplo():
         doacao = Doacao(
             cod_doacao=i,
             cod_doador=i,
+            cod_agendamento=None,
             data_hora=datetime(2025, 1, i, i, 0, 0),
             quantidade=i * 10,
             status=i

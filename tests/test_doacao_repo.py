@@ -1,6 +1,6 @@
 from data.repo import usuario_repo, doador_repo, cidade_repo, doacao_repo
 from data.model.doacao_model import Doacao
-from data.util.database import get_connection
+from util.database import get_connection
 
 class TestDoacaoRepo:
     def test_criar_tabela(self, test_db):
