@@ -35,6 +35,27 @@ async def get_notificacoes_api(request: Request, usuario_logado: dict = None):
         ]
     })
 
+@router.get("/api/notificacoes/nao-lidas")
+@requer_autenticacao(["doador"])
+async def get_notificacoes_nao_lidas(request: Request, usuario_logado: dict = None):
+    """Retorna as últimas 2 notificações não lidas e o contador total"""
+    notificacoes = notificacao_repo.obter_ultimas_nao_lidas(2)
+    total_nao_lidas = notificacao_repo.contar_nao_lidas()
+    return JSONResponse(content={
+        "total": total_nao_lidas,
+        "notificacoes": [
+            {
+                "cod_notificacao": n.cod_notificacao,
+                "tipo": n.tipo,
+                "titulo": n.titulo,
+                "mensagem": n.mensagem,
+                "status": n.status,
+                "data_envio": n.data_envio.strftime('%Y-%m-%d %H:%M:%S') if isinstance(n.data_envio, datetime) else str(n.data_envio)
+            }
+            for n in notificacoes
+        ]
+    })
+
 @router.post("/api/notificacoes/{cod_notificacao}/marcar-lida")
 @requer_autenticacao(["doador"])
 async def marcar_notificacao_lida(cod_notificacao: int, request: Request, usuario_logado: dict = None):
