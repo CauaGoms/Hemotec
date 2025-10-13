@@ -26,20 +26,6 @@
                 <div class="col-md-8">
                     <h2 class="featured-title">Junho Vermelho 2025</h2>
                     <p class="featured-subtitle">Mês Nacional do Doador de Sangue - Participe da maior campanha de doação do ano!</p>
-                    <div class="row">
-                        <div class="col-md-4 text-center">
-                            <div class="stat-number text-white">2.500</div>
-                            <div class="stat-label text-white-50">Meta de Doações</div>
-                        </div>
-                        <div class="col-md-4 text-center">
-                            <div class="stat-number text-white">1.847</div>
-                            <div class="stat-label text-white-50">Doações Realizadas</div>
-                        </div>
-                        <div class="col-md-4 text-center">
-                            <div class="stat-number text-white">74%</div>
-                            <div class="stat-label text-white-50">Meta Alcançada</div>
-                        </div>
-                    </div>
                 </div>
                 <div class="col-md-4 text-center">
                     <a href="/doador/campanha/detalhes/1" class="btn btn-light btn-lg px-4 py-3" style="border-radius: 25px; font-weight: 600;">
@@ -86,12 +72,16 @@
         <!-- Campanha 1 -->
         {% if campanhas %}
             {% for campanha in campanhas %}
-        <div class="col-md-6 col-lg-4 campaign-item fade-in mb-5" data-category="active" data-title="doação coletiva empresarial">
+        {% set hoje = now().date() %}
+        {% set status_campanha = 'upcoming' if campanha.data_inicio > hoje else ('active' if campanha.data_fim >= hoje else 'ended') %}
+        {% set status_texto = 'Próxima' if status_campanha == 'upcoming' else ('Ativa' if status_campanha == 'active' else 'Encerrada') %}
+        {% set status_class = 'status-upcoming' if status_campanha == 'upcoming' else ('status-active' if status_campanha == 'active' else 'status-ended') %}
+        <div class="col-md-6 col-lg-4 campaign-item fade-in mb-5" data-category="{{ status_campanha }}" data-title="{{ campanha.titulo|lower }}">
             <div class="campaign-card">
                 <div class="position-relative">
                     <img src="{{campanha.foto}}" class="card-img-top campaign-image" alt="{{campanha.titulo}}">
-                    <div class="campaign-status status-active">
-                        Ativa
+                    <div class="campaign-status {{ status_class }}">
+                        {{ status_texto }}
                     </div>
                 </div>
                 <div class="campaign-body">
