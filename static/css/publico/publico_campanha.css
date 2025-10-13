@@ -206,6 +206,14 @@ body {
 
 .campaign-body {
     padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.campaign-body > p {
+    flex-grow: 1;
+    margin-bottom: 1rem;
 }
 
 .campaign-title {
@@ -263,6 +271,8 @@ body {
     transition: all 0.3s ease;
     text-decoration: none;
     display: inline-block;
+    margin-top: auto;
+    align-self: flex-start;
 }
 
 .btn-campaign:hover {

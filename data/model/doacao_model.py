@@ -6,6 +6,7 @@ from datetime import datetime
 class Doacao:
     cod_doacao: int
     cod_doador: int
+    cod_agendamento: int
     data_hora: datetime
     quantidade: int
     status: int

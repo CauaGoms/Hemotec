@@ -5,6 +5,8 @@
 {% endblock %}
 
 {% block conteudo %}
+{% set hoje = now().date() %}
+{% set status_campanha = 'Próxima' if campanha.data_inicio > hoje else ('Ativa' if campanha.data_fim >= hoje else 'Encerrada') %}
 <div class="campaign-container" style="padding-top: 80px;">
     <div class="campaign-card">
         <!-- Header Moderno da Campanha -->
@@ -15,7 +17,7 @@
                 <div class="campaign-info-footer">
                     <span class="info-footer-item"><i class="fas fa-calendar-day"></i> {{ campanha.data_inicio.strftime('%d/%m/%Y') }}</span>
                     <span class="info-footer-item"><i class="fas fa-calendar-check"></i> {{ campanha.data_fim.strftime('%d/%m/%Y') }}</span>
-                    <span class="info-footer-item"><i class="fas fa-info-circle"></i> {{ campanha.status }}</span>
+                    <span class="info-footer-item"><i class="fas fa-info-circle"></i> {{ status_campanha }}</span>
                 </div>
                     <!-- Chamada para Doação -->
                     <div class="call-to-donate">
