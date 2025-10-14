@@ -277,7 +277,7 @@
                         </div>
                         <!-- Botão para ver todas as notificações -->
                         <div class="text-center mt-3">
-                            <a href="/doador/notificacao" class="btn btn-outline-primary" style="border-radius: 25px; padding: 8px 20px; font-size: 0.9rem; text-decoration: none;">
+                            <a href="/doador/notificacao" class="btn btn-outline-danger" style="border-radius: 25px; padding: 8px 20px; font-size: 0.9rem; text-decoration: none;">
                                 <i class="fas fa-eye me-2"></i>
                                 Ver todas as notificações
                             </a>
@@ -308,7 +308,7 @@
                                     ] %}
                                     {% set cor = cores[loop.index0 % 3] %}
                                     {% set margin_bottom = '20px' if not loop.last else '0' %}
-                            <div class="campaign-item" style="background: {{ cor.fundo }}; border-radius: 15px; padding: 20px; margin-bottom: {{ margin_bottom }}; border-left: 4px solid {{ cor.borda }}; box-shadow: 0 4px 15px rgba(224,32,32,0.08); transition: transform 0.3s ease; cursor: pointer;" onclick="window.location.href='/doador/campanha/{{ campanha.cod_campanha }}'">
+                            <div class="campaign-item" style="background: {{ cor.fundo }}; border-radius: 15px; padding: 20px; margin-bottom: {{ margin_bottom }}; border-left: 4px solid {{ cor.borda }}; box-shadow: 0 4px 15px rgba(224,32,32,0.08); transition: transform 0.3s ease; cursor: pointer;" onclick="window.location.href='/doador/campanha/detalhes/{{ campanha.cod_campanha }}'">
                                 <div class="d-flex align-items-center mb-3">
                                     <div class="campaign-icon" style="background: {{ cor.icone_bg }}; width: 50px; height: 50px; border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-right: 15px;">
                                         <i class="fas fa-{{ cor.icone }} text-white" style="font-size: 1.2rem;"></i>
