@@ -295,95 +295,61 @@
                                 Campanhas Ativas
                             </h5>
                             <div class="campaign-badge">
-                                <span class="badge bg-success" style="border-radius: 20px; padding: 6px 12px;">3 ativas</span>
+                                <span class="badge bg-success" style="border-radius: 20px; padding: 6px 12px;">{{ total_campanhas_ativas }} ativa{% if total_campanhas_ativas != 1 %}s{% endif %}</span>
                             </div>
                         </div>
                         <div class="campaigns-container">
-                            <!-- Campanha 1 -->
-                            <div class="campaign-item" style="background: linear-gradient(135deg, #fef2f2 0%, #fff 100%); border-radius: 15px; padding: 20px; margin-bottom: 20px; border-left: 4px solid #e02020; box-shadow: 0 4px 15px rgba(224,32,32,0.08); transition: transform 0.3s ease;">
+                            {% if campanhas_ativas %}
+                                {% for campanha in campanhas_ativas %}
+                                    {% set cores = [
+                                        {'borda': '#e02020', 'fundo': 'linear-gradient(135deg, #fef2f2 0%, #fff 100%)', 'icone_bg': 'linear-gradient(135deg, #e02020 0%, #ff4040 100%)', 'icone': 'tint'},
+                                        {'borda': '#f59e0b', 'fundo': 'linear-gradient(135deg, #fffbeb 0%, #fff 100%)', 'icone_bg': 'linear-gradient(135deg, #f59e0b 0%, #fbbf24 100%)', 'icone': 'heart'},
+                                        {'borda': '#22c55e', 'fundo': 'linear-gradient(135deg, #f0fdf4 0%, #fff 100%)', 'icone_bg': 'linear-gradient(135deg, #22c55e 0%, #16a34a 100%)', 'icone': 'users'}
+                                    ] %}
+                                    {% set cor = cores[loop.index0 % 3] %}
+                                    {% set margin_bottom = '20px' if not loop.last else '0' %}
+                            <div class="campaign-item" style="background: {{ cor.fundo }}; border-radius: 15px; padding: 20px; margin-bottom: {{ margin_bottom }}; border-left: 4px solid {{ cor.borda }}; box-shadow: 0 4px 15px rgba(224,32,32,0.08); transition: transform 0.3s ease; cursor: pointer;" onclick="window.location.href='/doador/campanha/{{ campanha.cod_campanha }}'">
                                 <div class="d-flex align-items-center mb-3">
-                                    <div class="campaign-icon" style="background: linear-gradient(135deg, #e02020 0%, #ff4040 100%); width: 50px; height: 50px; border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-right: 15px;">
-                                        <i class="fas fa-tint text-white" style="font-size: 1.2rem;"></i>
+                                    <div class="campaign-icon" style="background: {{ cor.icone_bg }}; width: 50px; height: 50px; border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-right: 15px;">
+                                        <i class="fas fa-{{ cor.icone }} text-white" style="font-size: 1.2rem;"></i>
                                     </div>
                                     <div class="flex-grow-1">
-                                        <h6 class="mb-1 fw-bold" style="color: #2c3e50;">Junho Vermelho 2025</h6>
-                                        <p class="mb-2 text-muted" style="font-size: 0.9rem;">Campanha nacional de conscientização</p>
+                                        <h6 class="mb-1 fw-bold" style="color: #2c3e50;">{{ campanha.titulo }}</h6>
+                                        <p class="mb-2 text-muted" style="font-size: 0.9rem;">{{ campanha.descricao[:50] }}{% if campanha.descricao|length > 50 %}...{% endif %}</p>
                                         <div class="progress" style="height: 8px; border-radius: 10px; background: #f3f4f6;">
+                                            {% set dias_total = (campanha.data_fim - campanha.data_inicio).days %}
+                                            {% set dias_passados = (now().date() - campanha.data_inicio).days %}
+                                            {% set progresso = (dias_passados / dias_total * 100) if dias_total > 0 else 0 %}
                                             <div
-                                                class="progress-bar"
-                                                style="background: linear-gradient(90deg, #e02020 0%, #ff4040 100%); width: 65%; border-radius: 10px;"
+                                                class="progress-bar bg-success"
+                                                style="width: {{ progresso|round|int }}%; border-radius: 10px;"
                                                 role="progressbar"
-                                                aria-valuenow="65"
+                                                aria-valuenow="{{ progresso|round|int }}"
                                                 aria-valuemin="0"
                                                 aria-valuemax="100"
                                             ></div>
                                         </div>
                                         <div class="d-flex justify-content-between align-items-center mt-2">
-                                            <small class="text-muted">65% da meta atingida</small>
+                                            <small class="text-muted">{{ progresso|round|int }}% do período</small>
                                             <span class="badge bg-success" style="font-size: 0.75rem; padding: 4px 8px; border-radius: 10px;">Ativa</span>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <!-- Campanha 2 -->
-                            <div class="campaign-item" style="background: linear-gradient(135deg, #fffbeb 0%, #fff 100%); border-radius: 15px; padding: 20px; margin-bottom: 20px; border-left: 4px solid #f59e0b; box-shadow: 0 4px 15px rgba(245,158,11,0.08); transition: transform 0.3s ease;">
-                                <div class="d-flex align-items-center mb-3">
-                                    <div class="campaign-icon" style="background: linear-gradient(135deg, #f59e0b 0%, #fbbf24 100%); width: 50px; height: 50px; border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-right: 15px;">
-                                        <i class="fas fa-heart text-white" style="font-size: 1.2rem;"></i>
-                                    </div>
-                                    <div class="flex-grow-1">
-                                        <h6 class="mb-1 fw-bold" style="color: #2c3e50;">Mutirão Comunitário</h6>
-                                        <p class="mb-2 text-muted" style="font-size: 0.9rem;">Doação em bairros periféricos</p>
-                                        <div class="progress" style="height: 8px; border-radius: 10px; background: #f3f4f6;">
-                                            <div
-                                                class="progress-bar bg-warning"
-                                                style="width: 40%; border-radius: 10px;"
-                                                role="progressbar"
-                                                aria-valuenow="40"
-                                                aria-valuemin="0"
-                                                aria-valuemax="100"
-                                            ></div>
-                                        </div>
-                                        <div class="d-flex justify-content-between align-items-center mt-2">
-                                            <small class="text-muted">40% da meta atingida</small>
-                                            <span class="badge bg-warning" style="font-size: 0.75rem; padding: 4px 8px; border-radius: 10px;">Em andamento</span>
-                                        </div>
-                                    </div>
-                                </div>
+                            {% endfor %}
+                            {% else %}
+                            <div class="text-center py-4">
+                                <i class="fas fa-bullhorn fa-3x text-muted mb-3"></i>
+                                <p class="text-muted">Nenhuma campanha ativa no momento</p>
                             </div>
-                            <!-- Campanha 3 -->
-                            <div class="campaign-item" style="background: linear-gradient(135deg, #f0fdf4 0%, #fff 100%); border-radius: 15px; padding: 20px; margin-bottom: 0; border-left: 4px solid #22c55e; box-shadow: 0 4px 15px rgba(34,197,94,0.08); transition: transform 0.3s ease;">
-                                <div class="d-flex align-items-center mb-3">
-                                    <div class="campaign-icon" style="background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%); width: 50px; height: 50px; border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-right: 15px;">
-                                        <i class="fas fa-users text-white" style="font-size: 1.2rem;"></i>
-                                    </div>
-                                    <div class="flex-grow-1">
-                                        <h6 class="mb-1 fw-bold" style="color: #2c3e50;">Doação Empresarial</h6>
-                                        <p class="mb-2 text-muted" style="font-size: 0.9rem;">Parceria com empresas locais</p>
-                                        <div class="progress" style="height: 8px; border-radius: 10px; background: #f3f4f6;">
-                                            <div
-                                                class="progress-bar bg-success"
-                                                style="width: 80%; border-radius: 10px;"
-                                                role="progressbar"
-                                                aria-valuenow="80"
-                                                aria-valuemin="0"
-                                                aria-valuemax="100"
-                                            ></div>
-                                        </div>
-                                        <div class="d-flex justify-content-between align-items-center mt-2">
-                                            <small class="text-muted">80% da meta atingida</small>
-                                            <span class="badge bg-success" style="font-size: 0.75rem; padding: 4px 8px; border-radius: 10px;">Quase completa</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            {% endif %}
                         </div>
                         <!-- Botão para gerenciar campanhas -->
                         <div class="text-center mt-3">
-                            <button class="btn btn-outline-danger" style="border-radius: 25px; padding: 8px 20px; font-size: 0.9rem;">
-                                <i class="fas fa-cog me-2"></i>
-                                Gerenciar campanhas
-                            </button>
+                            <a href="/doador/campanha" class="btn btn-outline-danger" style="border-radius: 25px; padding: 8px 20px; font-size: 0.9rem; text-decoration: none;">
+                                <i class="fas fa-eye me-2"></i>
+                                Ver todas as campanhas
+                            </a>
                         </div>
                     </div>
                 </div>
