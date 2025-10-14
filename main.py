@@ -8,13 +8,14 @@ import uvicorn
 app = FastAPI()
 
 # Gerar chave secreta (em produção, use variável de ambiente!)
-SECRET_KEY = secrets.token_urlsafe(32)
+# Chave fixa para manter sessões após reload do servidor
+SECRET_KEY = "hemotec_development_secret_key_12345678901234567890123456789012"
 
 # Adicionar middleware de sessão
 app.add_middleware(
     SessionMiddleware, 
     secret_key=SECRET_KEY,
-    max_age=3600,  # Sessão expira em 1 hora
+    max_age=28800,  # Sessão expira em 8 horas (28800 segundos)
     same_site="lax",
     https_only=False  # Em produção, mude para True com HTTPS
 )
