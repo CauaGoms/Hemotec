@@ -25,7 +25,6 @@ def inserir(agendamento: Agendamento) -> Optional[int]:
             agendamento.cod_doador,
             agendamento.data_hora,
             agendamento.status,
-            agendamento.observacoes,
             agendamento.tipo_agendamento,
             agendamento.local_agendamento
         ))
@@ -44,7 +43,6 @@ def obter_todos() -> list[Agendamento]:
                 cod_doador=row["cod_doador"],
                 data_hora=datetime.strptime(row["data_hora"], '%Y-%m-%d %H:%M:%S'),
                 status=row["status"],
-                observacoes=row["observacoes"],
                 tipo_agendamento=row["tipo_agendamento"],
                 local_agendamento=row["local_agendamento"]
             )
@@ -63,7 +61,6 @@ def obter_por_id(cod_agendamento: int) -> Optional[Agendamento]:
                 cod_doador=row["cod_doador"],
                 data_hora=datetime.strptime(row["data_hora"], '%Y-%m-%d %H:%M:%S'),
                 status=row["status"],
-                observacoes=row["observacoes"],
                 tipo_agendamento=row["tipo_agendamento"],
                 local_agendamento=row["local_agendamento"]
             )
@@ -77,7 +74,6 @@ def update(agendamento: Agendamento) -> bool:
             (
                 agendamento.data_hora,
                 agendamento.status,
-                agendamento.observacoes,
                 agendamento.tipo_agendamento,
                 agendamento.cod_agendamento
             ),

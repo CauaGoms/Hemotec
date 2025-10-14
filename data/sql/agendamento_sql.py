@@ -5,7 +5,6 @@ cod_colaborador INTEGER NOT NULL,
 cod_doador INTEGER NOT NULL,
 data_hora TEXT NOT NULL,
 status INTEGER NOT NULL,
-observacoes TEXT NOT NULL,
 tipo_agendamento TEXT NOT NULL,
 local_agendamento INTEGER NOT NULL,
 FOREIGN KEY (cod_colaborador) REFERENCES colaborador(cod_colaborador),
@@ -15,12 +14,12 @@ FOREIGN KEY (local_agendamento) REFERENCES unidade_coleta(cod_unidade)
 """
 
 INSERIR = """
-INSERT INTO agendamento (cod_colaborador, cod_doador, data_hora, status, observacoes, tipo_agendamento, local_agendamento) 
-VALUES (?, ?, ?, ? , ?, ?, ?)
+INSERT INTO agendamento (cod_colaborador, cod_doador, data_hora, status, tipo_agendamento, local_agendamento) 
+VALUES (?, ?, ?, ?, ?, ?)
 """
 
 OBTER_TODOS = """
-SELECT a.cod_agendamento, c.cod_colaborador, d.cod_doador, a.data_hora, a.status, a.observacoes, a.tipo_agendamento, a.local_agendamento
+SELECT a.cod_agendamento, c.cod_colaborador, d.cod_doador, a.data_hora, a.status, a.tipo_agendamento, a.local_agendamento
 FROM agendamento a,
 colaborador c,
 doador d,
@@ -32,7 +31,7 @@ AND a.local_agendamento = u.cod_unidade
 
 UPDATE = """
 UPDATE agendamento
-SET data_hora = ?, status = ?, observacoes = ?, tipo_agendamento = ?
+SET data_hora = ?, status = ?, tipo_agendamento = ?
 WHERE cod_agendamento = ?;
 """
 
@@ -42,7 +41,7 @@ WHERE cod_agendamento = ?;
 """
 
 OBTER_POR_ID = """
-SELECT a.cod_agendamento, c.cod_colaborador, d.cod_doador, a.data_hora, a.status, a.observacoes, a.tipo_agendamento, a.local_agendamento
+SELECT a.cod_agendamento, c.cod_colaborador, d.cod_doador, a.data_hora, a.status, a.tipo_agendamento, a.local_agendamento
 FROM agendamento a,
 colaborador c,
 doador d,

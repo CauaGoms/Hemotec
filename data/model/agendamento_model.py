@@ -9,7 +9,6 @@ class Agendamento:
     cod_doador: int
     data_hora: datetime
     status: int
-    observacoes: str
     tipo_agendamento: str
     local_agendamento: int
     

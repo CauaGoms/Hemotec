@@ -10,5 +10,6 @@ class Doacao:
     data_hora: datetime
     quantidade: int
     status: int
+    observacoes: str
     
     

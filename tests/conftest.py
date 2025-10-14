@@ -506,8 +506,8 @@ def agendamento_exemplo():
         cod_doador=1,
         data_hora=datetime(2025, 1, 1, 1, 0, 0),
         status=1,
-        observacoes="observacoes teste",
-        tipo_agendamento="tipo_agendamento teste"
+        tipo_agendamento="tipo_agendamento teste",
+        local_agendamento=1
     )
     return agendamento
 
@@ -522,8 +522,8 @@ def lista_agendamentos_exemplo():
             cod_doador=i,
             data_hora=datetime(2025, 1, i, i, 0, 0),
             status=i,
-            observacoes=f'observacoes {i:02d}',
-            tipo_agendamento=f'tipo_agendamento {i:02d}'
+            tipo_agendamento=f'tipo_agendamento {i:02d}',
+            local_agendamento=i
         )
         agendamentos.append(agendamento)
     return agendamentos

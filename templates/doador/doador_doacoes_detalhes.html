@@ -1,13 +1,480 @@
 {% extends "doador/doador__base.html" %}
+
 {% block custom_css %}
-<!-- <link href="/static/css/" rel="stylesheet"> -->
+<link href="/static/css/doador/doador_doacoes.css" rel="stylesheet">
+<link href="/static/css/doador/doador_doacoes_detalhes.css" rel="stylesheet">
 {% endblock %}
 
 {% block conteudo %}
-<h1>doador_doacoes_detalhes</h1>
+<!-- Botão Voltar -->
+<a href="/doador/doacoes" class="back-arrow">
+    <i class="fas fa-arrow-left"></i>
+</a>
+
+<!-- Seção de Cabeçalho -->
+<section class="hero-section-historico">
+    <div class="container">
+        <div class="hero-content">
+            <h1 class="hero-title">Detalhes da Doação</h1>
+            <p class="hero-subtitle">Informações completas sobre sua doação</p>
+        </div>
+    </div>
+</section>
+
+<!-- Conteúdo Principal -->
+<div class="container mt-n5">
+    <div class="history-container">
+        
+        <!-- Status da Doação -->
+        <div class="detail-card">
+            <div class="detail-header">
+                <h4><i class="fas fa-info-circle me-2"></i>Status da Doação</h4>
+            </div>
+            <div class="text-center py-3">
+                <span class="status-badge-large status-{{ doacao.status_info.badge }}">
+                    <i class="fas {{ doacao.status_info.icone }} me-2"></i>{{ doacao.status_info.nome }}
+                </span>
+                <p class="mt-3 text-muted">{{ doacao.data_formatada }}</p>
+            </div>
+        </div>
+
+        <!-- Informações da Doação -->
+        <div class="detail-card">
+            <div class="detail-header">
+                <h4><i class="fas fa-tint me-2"></i>Dados da Doação</h4>
+            </div>
+            <div class="info-row">
+                <span class="info-label">Código da Doação:</span>
+                <span class="info-value">#{{ doacao.cod_doacao }}</span>
+            </div>
+            <div class="info-row">
+                <span class="info-label">Data e Hora:</span>
+                <span class="info-value">{{ doacao.data_formatada }}</span>
+            </div>
+            <div class="info-row">
+                <span class="info-label">Tipo Sanguíneo:</span>
+                <span class="info-value"><strong>{{ doacao.tipo_sanguineo_completo }}</strong></span>
+            </div>
+            {% if doacao.quantidade %}
+            <div class="info-row">
+                <span class="info-label">Quantidade Coletada:</span>
+                <span class="info-value">{{ doacao.quantidade }}ml</span>
+            </div>
+            {% endif %}
+        </div>
+
+        <!-- Informações da Unidade -->
+        <div class="detail-card">
+            <div class="detail-header">
+                <h4><i class="fas fa-hospital-alt me-2"></i>Local da Doação</h4>
+            </div>
+            <div class="info-row">
+                <span class="info-label">Unidade:</span>
+                <span class="info-value">{{ doacao.nome_unidade or 'Não especificada' }}</span>
+            </div>
+            {% if doacao.rua_unidade %}
+            <div class="info-row">
+                <span class="info-label">Endereço:</span>
+                <span class="info-value">{{ doacao.endereco_completo }}</span>
+            </div>
+            {% endif %}
+            {% if doacao.nome_cidade %}
+            <div class="info-row">
+                <span class="info-label">Cidade/Estado:</span>
+                <span class="info-value">{{ doacao.nome_cidade }}/{{ doacao.sigla_estado }}</span>
+            </div>
+            {% endif %}
+            {% if doacao.cep_unidade %}
+            <div class="info-row">
+                <span class="info-label">CEP:</span>
+                <span class="info-value">{{ doacao.cep_unidade }}</span>
+            </div>
+            {% endif %}
+            {% if doacao.telefone_unidade %}
+            <div class="info-row">
+                <span class="info-label">Telefone:</span>
+                <span class="info-value">{{ doacao.telefone_unidade }}</span>
+            </div>
+            {% endif %}
+        </div>
+
+        {% if doacao.status == 3 %}
+        <!-- DOAÇÃO CONCLUÍDA - Comprovante -->
+        <div class="detail-card">
+            <div class="comprovante-box">
+                <i class="fas fa-certificate comprovante-icon"></i>
+                <h3 class="comprovante-title">Comprovante de Doação de Sangue</h3>
+                <p class="comprovante-subtitle">Doação registrada e validada pelo sistema Hemotec</p>
+                <p class="comprovante-subtitle">Este comprovante é válido em todo o território nacional</p>
+                
+                <div class="comprovante-info">
+                    <div class="comprovante-detail">
+                        <span class="comprovante-label">Doador:</span>
+                        <span class="comprovante-value">{{ doacao.nome_doador or 'Ricardo Maroquio' }}</span>
+                    </div>
+                    <div class="comprovante-detail">
+                        <span class="comprovante-label">Código da Doação:</span>
+                        <span class="comprovante-value">#{{ doacao.cod_doacao }}</span>
+                    </div>
+                    <div class="comprovante-detail">
+                        <span class="comprovante-label">Data e Hora:</span>
+                        <span class="comprovante-value">{{ doacao.data_formatada }}</span>
+                    </div>
+                    <div class="comprovante-detail">
+                        <span class="comprovante-label">Tipo Sanguíneo:</span>
+                        <span class="comprovante-value">{{ doacao.tipo_sanguineo_completo }}</span>
+                    </div>
+                    <div class="comprovante-detail">
+                        <span class="comprovante-label">Quantidade:</span>
+                        <span class="comprovante-value">{{ doacao.quantidade }}ml</span>
+                    </div>
+                    <div class="comprovante-detail">
+                        <span class="comprovante-label">Unidade:</span>
+                        <span class="comprovante-value">{{ doacao.nome_unidade }}</span>
+                    </div>
+                    <div class="comprovante-detail">
+                        <span class="comprovante-label">Endereço:</span>
+                        <span class="comprovante-value">{{ doacao.endereco_completo }}</span>
+                    </div>
+                    <div class="comprovante-detail">
+                        <span class="comprovante-label">Cidade:</span>
+                        <span class="comprovante-value">{{ doacao.nome_cidade }}/{{ doacao.sigla_estado }}</span>
+                    </div>
+                </div>
+
+                <div class="mt-3">
+                    <span class="comprovante-badge">
+                        <i class="fas fa-check-circle me-1"></i> Doação Validada
+                    </span>
+                    <span class="comprovante-badge">
+                        <i class="fas fa-shield-alt me-1"></i> Documento Oficial
+                    </span>
+                </div>
+
+                <div class="mt-4">
+                    <button class="btn btn-print" onclick="imprimirComprovante()">
+                        <i class="fas fa-print"></i> Imprimir Comprovante
+                    </button>
+                    <button class="btn btn-print" onclick="baixarPDF({{ doacao.cod_doacao }})">
+                        <i class="fas fa-download"></i> Baixar PDF
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="alert alert-custom alert-success" style="border-color: #28a745;">
+            <i class="fas fa-heart me-2"></i>
+            <strong>Parabéns!</strong> Sua doação foi concluída com sucesso e já está ajudando a salvar vidas.
+            Você pode doar novamente após {{ 'Doação' if doacao.fator_rh else '60 dias (homens) ou 90 dias (mulheres)' }}.
+        </div>
+
+        {% if prontuario %}
+        <!-- Informações da Triagem -->
+        <div class="detail-card">
+            <div class="detail-header">
+                <h4><i class="fas fa-notes-medical me-2"></i>Informações da Triagem</h4>
+            </div>
+            
+            <div class="row">
+                <div class="col-md-6">
+                    <h6>Condições de Saúde Detectadas:</h6>
+                    <ul class="list-unstyled">
+                        {% if prontuario.diabetes %}
+                        <li><i class="fas fa-times-circle text-danger me-2"></i>Diabetes</li>
+                        {% endif %}
+                        {% if prontuario.hipertensao %}
+                        <li><i class="fas fa-times-circle text-danger me-2"></i>Hipertensão</li>
+                        {% endif %}
+                        {% if prontuario.cardiopatia %}
+                        <li><i class="fas fa-times-circle text-danger me-2"></i>Cardiopatia</li>
+                        {% endif %}
+                        {% if prontuario.cancer %}
+                        <li><i class="fas fa-times-circle text-danger me-2"></i>Histórico de Câncer</li>
+                        {% endif %}
+                        {% if prontuario.hepatite %}
+                        <li><i class="fas fa-times-circle text-danger me-2"></i>Hepatite</li>
+                        {% endif %}
+                        {% if prontuario.sintomas_gripais %}
+                        <li><i class="fas fa-times-circle text-danger me-2"></i>Sintomas Gripais</li>
+                        {% endif %}
+                        {% if prontuario.fumante %}
+                        <li><i class="fas fa-smoking text-warning me-2"></i>Fumante</li>
+                        {% endif %}
+                        {% if prontuario.alcool %}
+                        <li><i class="fas fa-wine-glass text-warning me-2"></i>Consumo Recente de Álcool</li>
+                        {% endif %}
+                        
+                        {% if not (prontuario.diabetes or prontuario.hipertensao or prontuario.cardiopatia or prontuario.cancer or prontuario.hepatite or prontuario.sintomas_gripais or prontuario.fumante or prontuario.alcool) %}
+                        <li><i class="fas fa-check-circle text-success me-2"></i>Nenhuma condição impeditiva detectada na triagem</li>
+                        {% endif %}
+                    </ul>
+                </div>
+                
+                <div class="col-md-6">
+                    <h6>Outras Informações:</h6>
+                    <ul class="list-unstyled">
+                        {% if prontuario.jejum is not none %}
+                        <li>
+                            <i class="fas {{ 'check-circle text-success' if not prontuario.jejum else 'times-circle text-danger' }} me-2"></i>
+                            {{ 'Não estava em jejum' if not prontuario.jejum else 'Estava em jejum' }}
+                        </li>
+                        {% endif %}
+                        {% if prontuario.medicamentos and prontuario.detalhes_medicamentos %}
+                        <li><i class="fas fa-pills text-info me-2"></i>Medicamentos: {{ prontuario.detalhes_medicamentos }}</li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+
+        {% elif doacao.status == 2 %}
+        <!-- DOAÇÃO AGUARDANDO EXAME - Timeline -->
+        <div class="detail-card">
+            <div class="detail-header">
+                <h4><i class="fas fa-clock me-2"></i>Acompanhamento do Processo</h4>
+            </div>
+            
+            <div class="alert alert-custom alert-info mb-4" style="border-color: #17a2b8;">
+                <i class="fas fa-info-circle me-2"></i>
+                <strong>Previsão de Resultado:</strong> Os resultados dos exames ficam prontos em 3 a 5 dias úteis.
+            </div>
+
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div>
+                        <i class="fas fa-check text-success me-2"></i>
+                        <strong>Doação Realizada</strong>
+                        <p class="text-muted mb-0">{{ doacao.data_formatada }}</p>
+                        <small class="text-muted">Coleta de sangue realizada com sucesso</small>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div>
+                        <i class="fas fa-vial text-primary me-2"></i>
+                        <strong>Amostra em Análise</strong>
+                        <p class="text-muted mb-0">Em andamento</p>
+                        <small class="text-muted">A amostra foi enviada para o laboratório</small>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div>
+                        <i class="fas fa-hourglass-half text-warning me-2"></i>
+                        <strong>Aguardando Resultados</strong>
+                        <p class="text-muted mb-0">Pendente</p>
+                        <small class="text-muted">Os resultados serão disponibilizados em breve</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {% if prontuario %}
+        <!-- Informações da Triagem -->
+        <div class="detail-card">
+            <div class="detail-header">
+                <h4><i class="fas fa-notes-medical me-2"></i>Informações da Triagem</h4>
+            </div>
+            
+            <div class="row">
+                <div class="col-md-6">
+                    <h6>Condições de Saúde Detectadas:</h6>
+                    <ul class="list-unstyled">
+                        {% if prontuario.diabetes %}
+                        <li><i class="fas fa-times-circle text-danger me-2"></i>Diabetes</li>
+                        {% endif %}
+                        {% if prontuario.hipertensao %}
+                        <li><i class="fas fa-times-circle text-danger me-2"></i>Hipertensão</li>
+                        {% endif %}
+                        {% if prontuario.cardiopatia %}
+                        <li><i class="fas fa-times-circle text-danger me-2"></i>Cardiopatia</li>
+                        {% endif %}
+                        {% if prontuario.cancer %}
+                        <li><i class="fas fa-times-circle text-danger me-2"></i>Histórico de Câncer</li>
+                        {% endif %}
+                        {% if prontuario.hepatite %}
+                        <li><i class="fas fa-times-circle text-danger me-2"></i>Hepatite</li>
+                        {% endif %}
+                        {% if prontuario.sintomas_gripais %}
+                        <li><i class="fas fa-times-circle text-danger me-2"></i>Sintomas Gripais</li>
+                        {% endif %}
+                        {% if prontuario.fumante %}
+                        <li><i class="fas fa-smoking text-warning me-2"></i>Fumante</li>
+                        {% endif %}
+                        {% if prontuario.alcool %}
+                        <li><i class="fas fa-wine-glass text-warning me-2"></i>Consumo Recente de Álcool</li>
+                        {% endif %}
+                        
+                        {% if not (prontuario.diabetes or prontuario.hipertensao or prontuario.cardiopatia or prontuario.cancer or prontuario.hepatite or prontuario.sintomas_gripais or prontuario.fumante or prontuario.alcool) %}
+                        <li><i class="fas fa-check-circle text-success me-2"></i>Nenhuma condição impeditiva detectada na triagem</li>
+                        {% endif %}
+                    </ul>
+                </div>
+                
+                <div class="col-md-6">
+                    <h6>Outras Informações:</h6>
+                    <ul class="list-unstyled">
+                        {% if prontuario.jejum is not none %}
+                        <li>
+                            <i class="fas {{ 'check-circle text-success' if not prontuario.jejum else 'times-circle text-danger' }} me-2"></i>
+                            {{ 'Não estava em jejum' if not prontuario.jejum else 'Estava em jejum' }}
+                        </li>
+                        {% endif %}
+                        {% if prontuario.medicamentos and prontuario.detalhes_medicamentos %}
+                        <li><i class="fas fa-pills text-info me-2"></i>Medicamentos: {{ prontuario.detalhes_medicamentos }}</li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+
+        {% elif doacao.status == 1 %}
+        <!-- DOAÇÃO RECUSADA - Detalhes e Motivos -->
+        {% if doacao.observacoes %}
+        <div class="alert alert-custom alert-warning" style="border-color: #ffc107;">
+            <i class="fas fa-exclamation-triangle me-2"></i>
+            <strong>Motivo da Recusa:</strong>
+            <p class="mb-0 mt-2">{{ doacao.observacoes }}</p>
+        </div>
+        {% endif %}
+
+        {% if prontuario %}
+        <!-- Informações da Triagem -->
+        <div class="detail-card">
+            <div class="detail-header">
+                <h4><i class="fas fa-notes-medical me-2"></i>Informações da Triagem</h4>
+            </div>
+            
+            <div class="row">
+                <div class="col-md-6">
+                    <h6>Condições de Saúde Detectadas:</h6>
+                    <ul class="list-unstyled">
+                        {% if prontuario.diabetes %}
+                        <li><i class="fas fa-times-circle text-danger me-2"></i>Diabetes</li>
+                        {% endif %}
+                        {% if prontuario.hipertensao %}
+                        <li><i class="fas fa-times-circle text-danger me-2"></i>Hipertensão</li>
+                        {% endif %}
+                        {% if prontuario.cardiopatia %}
+                        <li><i class="fas fa-times-circle text-danger me-2"></i>Cardiopatia</li>
+                        {% endif %}
+                        {% if prontuario.cancer %}
+                        <li><i class="fas fa-times-circle text-danger me-2"></i>Histórico de Câncer</li>
+                        {% endif %}
+                        {% if prontuario.hepatite %}
+                        <li><i class="fas fa-times-circle text-danger me-2"></i>Hepatite</li>
+                        {% endif %}
+                        {% if prontuario.sintomas_gripais %}
+                        <li><i class="fas fa-times-circle text-danger me-2"></i>Sintomas Gripais</li>
+                        {% endif %}
+                        {% if prontuario.fumante %}
+                        <li><i class="fas fa-smoking text-warning me-2"></i>Fumante</li>
+                        {% endif %}
+                        {% if prontuario.alcool %}
+                        <li><i class="fas fa-wine-glass text-warning me-2"></i>Consumo Recente de Álcool</li>
+                        {% endif %}
+                        
+                        {% if not (prontuario.diabetes or prontuario.hipertensao or prontuario.cardiopatia or prontuario.cancer or prontuario.hepatite or prontuario.sintomas_gripais or prontuario.fumante or prontuario.alcool) %}
+                        <li><i class="fas fa-check-circle text-success me-2"></i>Nenhuma condição impeditiva detectada na triagem</li>
+                        {% endif %}
+                    </ul>
+                </div>
+                
+                <div class="col-md-6">
+                    <h6>Outras Informações:</h6>
+                    <ul class="list-unstyled">
+                        {% if prontuario.jejum is not none %}
+                        <li>
+                            <i class="fas {{ 'check-circle text-success' if not prontuario.jejum else 'times-circle text-danger' }} me-2"></i>
+                            {{ 'Não estava em jejum' if not prontuario.jejum else 'Estava em jejum' }}
+                        </li>
+                        {% endif %}
+                        {% if prontuario.medicamentos and prontuario.detalhes_medicamentos %}
+                        <li><i class="fas fa-pills text-info me-2"></i>Medicamentos: {{ prontuario.detalhes_medicamentos }}</li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+
+        {% if exames %}
+        <!-- Exames Realizados -->
+        <div class="detail-card">
+            <div class="detail-header">
+                <h4><i class="fas fa-flask me-2"></i>Exames Realizados</h4>
+            </div>
+            
+            {% for exame in exames %}
+            <div class="exam-card">
+                <h6>{{ exame.tipo_exame }}</h6>
+                <p class="mb-1">
+                    <strong>Resultado:</strong> 
+                    <span class="{% if 'negativo' in exame.resultado.lower() or 'normal' in exame.resultado.lower() %}text-success{% else %}text-danger{% endif %}">
+                        {{ exame.resultado }}
+                    </span>
+                </p>
+                <small class="text-muted">Data do exame: {{ exame.data_exame }}</small>
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        <div class="alert alert-custom alert-info" style="border-color: #17a2b8;">
+            <i class="fas fa-info-circle me-2"></i>
+            <strong>Você pode doar novamente!</strong> Após seguir as recomendações médicas e aguardar o período mínimo de intervalo entre doações, você poderá tentar novamente.
+        </div>
+
+        <div class="text-center mt-4">
+            <a href="/doador/agendamento/adicionar" class="btn btn-primary btn-lg">
+                <i class="fas fa-calendar-plus me-2"></i>Agendar Nova Doação
+            </a>
+        </div>
+
+        {% elif doacao.status == 0 %}
+        <!-- DOAÇÃO CANCELADA -->
+        <div class="detail-card">
+            <div class="cancelamento-box">
+                <i class="fas fa-ban cancelamento-icon"></i>
+                <h3 class="cancelamento-title">Doação Cancelada</h3>
+                <p class="cancelamento-subtitle">Esta doação foi cancelada e não foi processada</p>
+                
+                {% if doacao.observacoes %}
+                <div class="cancelamento-motivo">
+                    <i class="fas fa-info-circle me-2"></i>
+                    <strong>Motivo do Cancelamento:</strong>
+                    <p class="mb-0 mt-2">{{ doacao.observacoes }}</p>
+                </div>
+                {% else %}
+                <div class="cancelamento-info">
+                    <p class="mb-0">Não há informações adicionais disponíveis sobre o cancelamento.</p>
+                </div>
+                {% endif %}
+
+                <div class="mt-4">
+                    <p class="mb-3">
+                        <i class="fas fa-heart me-2"></i>
+                        <strong>Você pode agendar uma nova doação a qualquer momento!</strong>
+                    </p>
+                    <a href="/doador/agendamento/adicionar" class="btn-nova-doacao">
+                        <i class="fas fa-calendar-plus"></i> Agendar Nova Doação
+                    </a>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+
+        <!-- Botão Voltar -->
+        <div class="text-center mt-4 mb-5">
+            <a href="/doador/doacoes" class="btn btn-outline-secondary">
+                <i class="fas fa-arrow-left me-2"></i>Voltar para Histórico
+            </a>
+        </div>
+
+    </div>
+</div>
 {% endblock %}
 
-<!-- Custom JavaScript -->
 {% block custom_js %}
-<!-- <script src="/static/js/"></script> -->
+<script src="/static/js/doador/doador_doacoes_detalhes.js"></script>
 {% endblock %}

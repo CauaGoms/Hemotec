@@ -44,7 +44,6 @@ class TestAgendamentoRepo:
         assert dados_db.cod_doador == id_doador, "O ID do colaborador inserido não confere"
         assert dados_db.data_hora.strftime('%Y-%m-%d %H:%M:%S') == "2025-01-01 01:00:00", "A data/hora não confere"
         assert dados_db.status == 1, "O ID do colaborador inserido não confere"
-        assert dados_db.observacoes == "observacoes teste", "O ID do colaborador inserido não confere"
         assert dados_db.tipo_agendamento == "tipo_agendamento teste", "O ID do colaborador inserido não confere"
 
     def test_update_existente(self, test_db, usuario_exemplo, cidade_exemplo, colaborador_exemplo, doador_exemplo, agendamento_exemplo):
@@ -77,7 +76,6 @@ class TestAgendamentoRepo:
         #Lembrar que as chaves estrangeiras não podem ser atualizadas
         tabela_inserida.data_hora = datetime(2025, 1, 2, 10, 0)
         tabela_inserida.status = "status atualizado"
-        tabela_inserida.observacoes = "observacoes atualizado"
         tabela_inserida.tipo_agendamento = "tipo_agendamento atualizada"
         resultado = agendamento_repo.update(tabela_inserida)
         #Assert
@@ -85,7 +83,6 @@ class TestAgendamentoRepo:
         dados_db = agendamento_repo.obter_por_id(id_tabela_inserida)
         assert dados_db.data_hora == datetime(2025, 1, 2, 10, 0), "Data Hora"
         assert dados_db.status == "status atualizado"
-        assert dados_db.observacoes == "observacoes atualizado"
         assert dados_db.tipo_agendamento == "tipo_agendamento atualizada"
 
     def test_update_inexistente(self, test_db, agendamento_exemplo):
@@ -254,7 +251,6 @@ class TestAgendamentoRepo:
         assert dados_db.cod_doador == id_doador, "O ID do doador não confere"
         assert dados_db.data_hora == datetime(2025, 1, 1, 1, 0), "A data e hora do agendamento não confere"
         assert dados_db.status == 1, "O status não confere"
-        assert dados_db.observacoes == "observacoes teste", "As observações não conferem"
         assert dados_db.tipo_agendamento == "tipo_agendamento teste", "O tipo de agendamento não confere"
 
     def test_obter_por_id_inexistente(self, test_db, cidade_exemplo, usuario_exemplo, doador_exemplo, colaborador_exemplo):

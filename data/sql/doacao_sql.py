@@ -6,18 +6,19 @@ cod_agendamento INTEGER,
 data_hora TEXT,
 quantidade INTEGER,
 status INTEGER,
+observacoes TEXT,
 FOREIGN KEY (cod_doador) REFERENCES doador(cod_doador),
 FOREIGN KEY (cod_agendamento) REFERENCES agendamento(cod_agendamento)
 )
 """
 
 INSERIR = """
-INSERT INTO doacao (cod_doador, cod_agendamento, data_hora, quantidade, status) 
-VALUES (?, ?, ?, ?, ?)
+INSERT INTO doacao (cod_doador, cod_agendamento, data_hora, quantidade, status, observacoes) 
+VALUES (?, ?, ?, ?, ?, ?)
 """
 
 OBTER_TODOS = """
-SELECT d.cod_doacao, o.cod_doador, d.cod_agendamento, d.data_hora, d.quantidade, d.status
+SELECT d.cod_doacao, o.cod_doador, d.cod_agendamento, d.data_hora, d.quantidade, d.status, d.observacoes
 FROM doacao d,
 doador o
 WHERE d.cod_doador = o.cod_doador
@@ -25,7 +26,7 @@ WHERE d.cod_doador = o.cod_doador
 
 UPDATE = """
 UPDATE doacao
-SET cod_doador = ?, cod_agendamento = ?, data_hora = ?, quantidade = ?, status = ?
+SET cod_doador = ?, cod_agendamento = ?, data_hora = ?, quantidade = ?, status = ?, observacoes = ?
 WHERE cod_doacao = ?;
 """
 
@@ -35,7 +36,7 @@ WHERE cod_doacao = ?;
 """
 
 OBTER_POR_ID = """
-SELECT d.cod_doacao, o.cod_doador, d.cod_agendamento, d.data_hora, d.quantidade, d.status
+SELECT d.cod_doacao, o.cod_doador, d.cod_agendamento, d.data_hora, d.quantidade, d.status, d.observacoes
 FROM doacao d,
 doador o
 WHERE d.cod_doador = o.cod_doador
@@ -50,6 +51,7 @@ SELECT
     d.data_hora,
     d.quantidade,
     d.status,
+    d.observacoes,
     u.nome as nome_doador,
     do.tipo_sanguineo,
     do.fator_rh,
@@ -60,7 +62,6 @@ SELECT
     uc.telefone as telefone_unidade,
     c.nome_cidade,
     c.sigla_estado,
-    a.observacoes,
     a.data_hora as data_hora_agendamento
 FROM doacao d
 INNER JOIN doador do ON d.cod_doador = do.cod_doador

@@ -27,7 +27,8 @@ def inserir(doacao: Doacao, cursor=None) -> Optional[int]:
             doacao.cod_agendamento,
             doacao.data_hora,
             doacao.quantidade,
-            doacao.status
+            doacao.status,
+            doacao.observacoes
         ))
         return cursor.lastrowid
     else:
@@ -38,7 +39,8 @@ def inserir(doacao: Doacao, cursor=None) -> Optional[int]:
                 doacao.cod_agendamento,
                 doacao.data_hora,
                 doacao.quantidade,
-                doacao.status
+                doacao.status,
+                doacao.observacoes
             ))
             return cursor.lastrowid
     
@@ -55,7 +57,8 @@ def obter_todos() -> list[Doacao]:
                 cod_agendamento=row["cod_agendamento"],
                 data_hora=datetime.strptime(row["data_hora"], '%Y-%m-%d %H:%M:%S'),
                 quantidade=row["quantidade"],
-                status=row["status"])  
+                status=row["status"],
+                observacoes=row["observacoes"])  
                 for row in rows]
         return doacao
     
@@ -71,7 +74,8 @@ def obter_por_id(cod_doacao: int) -> Optional[Doacao]:
                 cod_agendamento=row["cod_agendamento"],
                 data_hora=datetime.strptime(row["data_hora"], '%Y-%m-%d %H:%M:%S'),
                 quantidade=row["quantidade"],
-                status=row["status"]
+                status=row["status"],
+                observacoes=row["observacoes"]
             )
         return None
     
@@ -86,6 +90,7 @@ def update(doacao: Doacao) -> bool:
                 doacao.data_hora,
                 doacao.quantidade,
                 doacao.status,
+                doacao.observacoes,
                 doacao.cod_doacao
             ),
         )
