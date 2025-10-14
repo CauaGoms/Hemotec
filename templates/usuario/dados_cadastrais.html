@@ -392,51 +392,170 @@
                     <div class="profile-card">
                         <div class="card-header profile-card-header d-flex justify-content-between align-items-center">
                             <span>
-                                <i class="fas fa-heartbeat me-2"></i>
-                                Verificação de Elegibilidade
+                                <i class="fas fa-check-circle me-2"></i>
+                                Verificação de Elegibilidade para Doação
                             </span>
-                            <button class="edit-btn" onclick="editHealthInfo()">
-                                <i class="fas fa-pencil-alt"></i>
-                            </button>
                         </div>
-                        <div class="eligibility-card" id="eligibility-age">
-                            <div class="d-flex align-items-center">
-                                <i class="fas fa-birthday-cake me-3 text-primary"></i>
-                                <div>
-                                    <h6 class="mb-1">Idade</h6>
-                                    <p class="mb-0">Entre 16 e 69 anos (menores de 18 precisam de autorização dos pais)</p>
-                                </div>
-                                <div class="ms-auto">
-                                    <i class="fas fa-check-circle text-success" style="display: none;"></i>
-                                    <i class="fas fa-times-circle text-danger" style="display: none;"></i>
+                        <div class="card-body profile-card-body">
+                            <!-- Card de Idade -->
+                            <div class="eligibility-card" id="eligibility-age" style="background: linear-gradient(135deg, #f0f9ff 0%, #fff 100%); border-radius: 12px; padding: 20px; margin-bottom: 15px; border-left: 4px solid #3b82f6; box-shadow: 0 2px 10px rgba(0,0,0,0.05); transition: all 0.3s ease;">
+                                <div class="d-flex align-items-center justify-content-between">
+                                    <div class="d-flex align-items-center flex-grow-1">
+                                        <div style="background: #dbeafe; width: 50px; height: 50px; border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-right: 15px; flex-shrink: 0;">
+                                            <i class="fas fa-birthday-cake" style="font-size: 1.3rem; color: #3b82f6;"></i>
+                                        </div>
+                                        <div class="flex-grow-1">
+                                            <h6 class="mb-1 fw-bold" style="color: #1e293b; font-size: 1.1rem;">Idade</h6>
+                                            <p class="mb-0 text-muted" style="font-size: 0.95rem;">Entre 16 e 69 anos (menores de 18 precisam de autorização dos pais)</p>
+                                            <small id="idade-valor" class="text-primary fw-bold"></small>
+                                        </div>
+                                    </div>
+                                    <div style="min-width: 60px; text-align: right; flex-shrink: 0;">
+                                        <div id="idade-status"></div>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="eligibility-card" id="eligibility-weight">
-                            <div class="d-flex align-items-center">
-                                <i class="fas fa-weight me-3 text-primary"></i>
-                                <div>
-                                    <h6 class="mb-1">Peso</h6>
-                                    <p class="mb-0">Mínimo de 50kg</p>
-                                </div>
-                                <div class="ms-auto">
-                                    <i class="fas fa-check-circle text-success" style="display: none;"></i>
-                                    <i class="fas fa-times-circle text-danger" style="display: none;"></i>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="eligibility-card">
-                            <div class="d-flex align-items-center">
-                                <i class="fas fa-clock me-3 text-primary"></i>
-                                <div>
-                                    <h6 class="mb-1">Intervalo entre doações</h6>
-                                    <p class="mb-0">Homens: 60 dias | Mulheres: 90 dias</p>
-                                </div>
-                                <div class="ms-auto">
-                                    <i class="fas fa-check-circle text-success"></i>
+                            <!-- Card de Peso -->
+                            <div class="eligibility-card" id="eligibility-weight" style="background: linear-gradient(135deg, #f0f9ff 0%, #fff 100%); border-radius: 12px; padding: 20px; margin-bottom: 15px; border-left: 4px solid #3b82f6; box-shadow: 0 2px 10px rgba(0,0,0,0.05); transition: all 0.3s ease;">
+                                <div class="d-flex align-items-center justify-content-between">
+                                    <div class="d-flex align-items-center flex-grow-1">
+                                        <div style="background: #dbeafe; width: 50px; height: 50px; border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-right: 15px; flex-shrink: 0;">
+                                            <i class="fas fa-weight" style="font-size: 1.3rem; color: #3b82f6;"></i>
+                                        </div>
+                                        <div class="flex-grow-1">
+                                            <h6 class="mb-1 fw-bold" style="color: #1e293b; font-size: 1.1rem;">Peso</h6>
+                                            <p class="mb-0 text-muted" style="font-size: 0.95rem;">Mínimo de 50kg</p>
+                                            <small id="peso-valor" class="text-primary fw-bold"></small>
+                                        </div>
+                                    </div>
+                                    <div style="min-width: 60px; text-align: right; flex-shrink: 0;">
+                                        <div id="peso-status"></div>
+                                    </div>
                                 </div>
                             </div>
+                            <!-- Card de Intervalo -->
+                            <div class="eligibility-card" style="background: linear-gradient(135deg, #f0fdf4 0%, #fff 100%); border-radius: 12px; padding: 20px; border-left: 4px solid #22c55e; box-shadow: 0 2px 10px rgba(0,0,0,0.05);">
+                                <div class="d-flex align-items-center justify-content-between">
+                                    <div class="d-flex align-items-center flex-grow-1">
+                                        <div style="background: #dcfce7; width: 50px; height: 50px; border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-right: 15px;">
+                                            <i class="fas fa-clock" style="font-size: 1.3rem; color: #22c55e;"></i>
+                                        </div>
+                                        <div>
+                                            <h6 class="mb-1 fw-bold" style="color: #1e293b; font-size: 1.1rem;">Intervalo entre doações</h6>
+                                            <p class="mb-0 text-muted" style="font-size: 0.95rem;">Homens: 60 dias | Mulheres: 90 dias</p>
+                                            <small class="text-success fw-bold">Consulte seu histórico de doações</small>
+                                        </div>
+                                    </div>
+                                    <div style="min-width: 60px; text-align: right;">
+                                        <i class="fas fa-info-circle" style="font-size: 2rem; color: #22c55e;"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Resultado Final -->
+                            <div id="eligibility-result" class="mt-4 p-4" style="border-radius: 12px; display: none;"></div>
                         </div>
+                        <script>
+                            // Verificar elegibilidade com dados reais
+                            (function() {
+                                const dataNascimento = "{{ usuario.data_nascimento }}";
+                                const peso = {{ doador.peso if doador and doador.peso else 'null' }};
+                                const altura = {{ doador.altura if doador and doador.altura else 'null' }};
+
+                                // Calcular idade
+                                const hoje = new Date();
+                                const nascimento = new Date(dataNascimento);
+                                let idade = hoje.getFullYear() - nascimento.getFullYear();
+                                const mesAtual = hoje.getMonth();
+                                const mesNasc = nascimento.getMonth();
+                                if (mesAtual < mesNasc || (mesAtual === mesNasc && hoje.getDate() < nascimento.getDate())) {
+                                    idade--;
+                                }
+
+                                // Verificar Idade
+                                const idadeCard = document.getElementById('eligibility-age');
+                                const idadeStatus = document.getElementById('idade-status');
+                                const idadeValor = document.getElementById('idade-valor');
+                                
+                                idadeValor.textContent = `Você tem ${idade} anos`;
+
+                                if (idade >= 16 && idade <= 69) {
+                                    idadeStatus.innerHTML = '<i class="fas fa-check-circle" style="font-size: 2rem; color: #22c55e;"></i>';
+                                    idadeCard.style.borderLeftColor = '#22c55e';
+                                    idadeCard.style.background = 'linear-gradient(135deg, #f0fdf4 0%, #fff 100%)';
+                                } else {
+                                    idadeStatus.innerHTML = '<i class="fas fa-times-circle" style="font-size: 2rem; color: #ef4444;"></i>';
+                                    idadeCard.style.borderLeftColor = '#ef4444';
+                                    idadeCard.style.background = 'linear-gradient(135deg, #fef2f2 0%, #fff 100%)';
+                                }
+
+                                // Verificar Peso
+                                const pesoCard = document.getElementById('eligibility-weight');
+                                const pesoStatus = document.getElementById('peso-status');
+                                const pesoValor = document.getElementById('peso-valor');
+
+                                if (peso === null || peso === undefined) {
+                                    pesoValor.textContent = 'Peso não informado';
+                                    pesoStatus.innerHTML = '<i class="fas fa-exclamation-triangle" style="font-size: 2rem; color: #f59e0b;"></i>';
+                                    pesoCard.style.borderLeftColor = '#f59e0b';
+                                    pesoCard.style.background = 'linear-gradient(135deg, #fffbeb 0%, #fff 100%)';
+                                } else {
+                                    pesoValor.textContent = `Seu peso: ${peso}kg`;
+                                    if (peso >= 50) {
+                                        pesoStatus.innerHTML = '<i class="fas fa-check-circle" style="font-size: 2rem; color: #22c55e;"></i>';
+                                        pesoCard.style.borderLeftColor = '#22c55e';
+                                        pesoCard.style.background = 'linear-gradient(135deg, #f0fdf4 0%, #fff 100%)';
+                                    } else {
+                                        pesoStatus.innerHTML = '<i class="fas fa-times-circle" style="font-size: 2rem; color: #ef4444;"></i>';
+                                        pesoCard.style.borderLeftColor = '#ef4444';
+                                        pesoCard.style.background = 'linear-gradient(135deg, #fef2f2 0%, #fff 100%)';
+                                    }
+                                }
+
+                                // Mostrar resultado final
+                                const resultDiv = document.getElementById('eligibility-result');
+                                const idadeOk = idade >= 16 && idade <= 69;
+                                const pesoOk = peso !== null && peso >= 50;
+
+                                if (idadeOk && pesoOk) {
+                                    resultDiv.innerHTML = `
+                                        <div class="d-flex align-items-center">
+                                            <i class="fas fa-check-circle me-3" style="font-size: 3rem; color: #22c55e;"></i>
+                                            <div>
+                                                <h5 class="mb-1 fw-bold" style="color: #22c55e;">Você está elegível para doar sangue!</h5>
+                                                <p class="mb-0 text-muted">Todos os critérios básicos foram atendidos. Agende sua doação!</p>
+                                            </div>
+                                        </div>
+                                    `;
+                                    resultDiv.style.background = 'linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%)';
+                                    resultDiv.style.border = '2px solid #22c55e';
+                                } else if (!pesoOk && peso === null) {
+                                    resultDiv.innerHTML = `
+                                        <div class="d-flex align-items-center">
+                                            <i class="fas fa-info-circle me-3" style="font-size: 3rem; color: #3b82f6;"></i>
+                                            <div>
+                                                <h5 class="mb-1 fw-bold" style="color: #3b82f6;">Informações incompletas</h5>
+                                                <p class="mb-0 text-muted">Complete seu cadastro com peso e altura para verificar sua elegibilidade completa.</p>
+                                            </div>
+                                        </div>
+                                    `;
+                                    resultDiv.style.background = 'linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%)';
+                                    resultDiv.style.border = '2px solid #3b82f6';
+                                } else {
+                                    resultDiv.innerHTML = `
+                                        <div class="d-flex align-items-center">
+                                            <i class="fas fa-times-circle me-3" style="font-size: 3rem; color: #ef4444;"></i>
+                                            <div>
+                                                <h5 class="mb-1 fw-bold" style="color: #ef4444;">Alguns critérios não foram atendidos</h5>
+                                                <p class="mb-0 text-muted">Consulte um profissional de saúde para mais informações sobre elegibilidade.</p>
+                                            </div>
+                                        </div>
+                                    `;
+                                    resultDiv.style.background = 'linear-gradient(135deg, #fef2f2 0%, #fee2e2 100%)';
+                                    resultDiv.style.border = '2px solid #ef4444';
+                                }
+                                resultDiv.style.display = 'block';
+                            })();
+                        </script>
                     </div>
                 </div>
             </div>
