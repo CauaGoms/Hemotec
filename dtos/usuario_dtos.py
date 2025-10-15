@@ -59,6 +59,10 @@ class CriarUsuarioDTO(BaseDTO):
         max_length=2,
         description="Estado (UF) do usuário"
     )
+    genero: str = Field(
+        ...,
+        description="Gênero do usuário: Masculino, Feminino ou Outros"
+    )
     senha: str = Field(
         ...,
         min_length=6,
@@ -195,6 +199,14 @@ class CriarUsuarioDTO(BaseDTO):
         )
         return validador(v.upper())  # Garante que o estado seja sempre maiúsculo
 
+    @field_validator('genero')
+    @classmethod
+    def validar_genero(cls, v: str) -> str:
+        generos_validos = ['Masculino', 'Feminino', 'Outros']
+        if v not in generos_validos:
+            raise ValueError(f'Gênero deve ser: {", ".join(generos_validos)}')
+        return v
+
     @field_validator('senha')
     @classmethod
     def validar_senha(cls, v: str) -> str:
@@ -225,6 +237,7 @@ class CriarUsuarioDTO(BaseDTO):
             "bairro_usuario": "Centro",
             "cidade_usuario": "São Paulo",
             "estado_usuario": "SP",
+            "genero": "Masculino",
             "senha": "minhasenha123"
         }
         exemplo.update(overrides)

@@ -112,6 +112,24 @@
                         <div class="invalid-feedback">{{ erro }}</div>
                         {% endif %}
                     </div>
+                    <div class="mb-3">
+                        <select
+                            class="form-control {% if erros and erros.get('genero') %}is-invalid{% elif erro and 'gênero' in erro.lower() or erro and 'genero' in erro.lower() %}is-invalid{% endif %}"
+                            id="genero"
+                            required
+                            name="genero"
+                        >
+                            <option value="" disabled {% if not dados or not dados.genero %}selected{% endif %}>Selecione o gênero</option>
+                            <option value="Masculino" {% if dados and dados.genero == 'Masculino' %}selected{% endif %}>Masculino</option>
+                            <option value="Feminino" {% if dados and dados.genero == 'Feminino' %}selected{% endif %}>Feminino</option>
+                            <option value="Outros" {% if dados and dados.genero == 'Outros' %}selected{% endif %}>Outros</option>
+                        </select>
+                        {% if erros and erros.get('genero') %}
+                        <div class="invalid-feedback">{{ erros.get('genero') }}</div>
+                        {% elif erro and ('gênero' in erro.lower() or 'genero' in erro.lower()) %}
+                        <div class="invalid-feedback">{{ erro }}</div>
+                        {% endif %}
+                    </div>
                 </div>
                 <!-- Seção 2: Endereço -->
                 <div class="form-section" id="cadastroSection2" style="display: none;">
