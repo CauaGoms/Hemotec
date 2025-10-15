@@ -67,9 +67,9 @@
     width: 12px;
     height: 12px;
     border-radius: 50%;
-    background: #007bff;
+    background: #dc3545;
     border: 3px solid white;
-    box-shadow: 0 0 0 2px #007bff;
+    box-shadow: 0 0 0 2px #dc3545;
 }
 
 .timeline-item:after {
@@ -89,7 +89,7 @@
 /* Cards de Exames */
 .exam-card {
     background: #f8f9fa;
-    border-left: 4px solid #007bff;
+    border-left: 4px solid #dc3545;
     padding: 1rem;
     margin-bottom: 1rem;
     border-radius: 4px;
@@ -104,14 +104,15 @@
 
 /* Box de Comprovante */
 .comprovante-box {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    color: white;
+    background: linear-gradient(135deg, #f8d7da 0%, #f5c6cb 100%);
+    color: #721c24;
     border-radius: 16px;
     padding: 3rem;
     text-align: center;
     position: relative;
     overflow: hidden;
-    box-shadow: 0 10px 40px rgba(102, 126, 234, 0.3);
+    box-shadow: 0 10px 40px rgba(220, 53, 69, 0.15);
+    border: 2px solid #f5c6cb;
 }
 
 /* Box de Cancelamento */
@@ -232,9 +233,10 @@
 .comprovante-icon {
     font-size: 4rem;
     margin-bottom: 1.5rem;
-    filter: drop-shadow(0 4px 6px rgba(0,0,0,0.2));
+    filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1));
     position: relative;
     z-index: 1;
+    opacity: 0.8;
 }
 
 .comprovante-title {
@@ -243,7 +245,6 @@
     margin-bottom: 1rem;
     position: relative;
     z-index: 1;
-    text-shadow: 0 2px 4px rgba(0,0,0,0.2);
 }
 
 .comprovante-subtitle {
@@ -255,20 +256,21 @@
 }
 
 .comprovante-info {
-    background: rgba(255, 255, 255, 0.15);
+    background: rgba(255, 255, 255, 0.5);
     backdrop-filter: blur(10px);
     border-radius: 12px;
     padding: 1.5rem;
     margin: 2rem 0;
     position: relative;
     z-index: 1;
+    border: 1px solid rgba(220, 53, 69, 0.2);
 }
 
 .comprovante-detail {
     display: flex;
     justify-content: space-between;
     padding: 0.75rem 0;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    border-bottom: 1px solid rgba(114, 28, 36, 0.2);
 }
 
 .comprovante-detail:last-child {
@@ -297,8 +299,8 @@
 /* Botão de Impressão */
 .btn-print {
     background: white;
-    color: #667eea;
-    border: none;
+    color: #dc3545;
+    border: 2px solid #dc3545;
     padding: 1rem 2.5rem;
     border-radius: 12px;
     font-weight: 700;
@@ -306,14 +308,14 @@
     transition: all 0.3s ease;
     position: relative;
     z-index: 1;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    box-shadow: 0 4px 15px rgba(220, 53, 69, 0.3);
 }
 
 .btn-print:hover {
-    background: #f8f9fa;
-    color: #667eea;
+    background: #dc3545;
+    color: white;
     transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+    box-shadow: 0 6px 20px rgba(220, 53, 69, 0.4);
 }
 
 .btn-print i {
@@ -341,7 +343,7 @@
     }
     
     body.printing .comprovante-box {
-        background: #667eea !important;
+        background: #f8d7da !important;
         -webkit-print-color-adjust: exact;
         print-color-adjust: exact;
     }

@@ -98,6 +98,66 @@
             {% endif %}
         </div>
 
+        {% if prontuario and doacao.status in [1, 2, 3] %}
+        <!-- Informações da Triagem -->
+        <div class="detail-card">
+            <div class="detail-header">
+                <h4><i class="fas fa-notes-medical me-2"></i>Informações da Triagem</h4>
+            </div>
+            
+            <div class="row">
+                <div class="col-md-6">
+                    <h6>Condições de Saúde Detectadas:</h6>
+                    <ul class="list-unstyled">
+                        {% if prontuario.diabetes %}
+                        <li><i class="fas fa-times-circle text-danger me-2"></i>Diabetes</li>
+                        {% endif %}
+                        {% if prontuario.hipertensao %}
+                        <li><i class="fas fa-times-circle text-danger me-2"></i>Hipertensão</li>
+                        {% endif %}
+                        {% if prontuario.cardiopatia %}
+                        <li><i class="fas fa-times-circle text-danger me-2"></i>Cardiopatia</li>
+                        {% endif %}
+                        {% if prontuario.cancer %}
+                        <li><i class="fas fa-times-circle text-danger me-2"></i>Histórico de Câncer</li>
+                        {% endif %}
+                        {% if prontuario.hepatite %}
+                        <li><i class="fas fa-times-circle text-danger me-2"></i>Hepatite</li>
+                        {% endif %}
+                        {% if prontuario.sintomas_gripais %}
+                        <li><i class="fas fa-times-circle text-danger me-2"></i>Sintomas Gripais</li>
+                        {% endif %}
+                        {% if prontuario.fumante %}
+                        <li><i class="fas fa-smoking text-warning me-2"></i>Fumante</li>
+                        {% endif %}
+                        {% if prontuario.alcool %}
+                        <li><i class="fas fa-wine-glass text-warning me-2"></i>Consumo Recente de Álcool</li>
+                        {% endif %}
+                        
+                        {% if not (prontuario.diabetes or prontuario.hipertensao or prontuario.cardiopatia or prontuario.cancer or prontuario.hepatite or prontuario.sintomas_gripais or prontuario.fumante or prontuario.alcool) %}
+                        <li><i class="fas fa-check-circle text-success me-2"></i>Nenhuma condição impeditiva detectada na triagem</li>
+                        {% endif %}
+                    </ul>
+                </div>
+                
+                <div class="col-md-6">
+                    <h6>Outras Informações:</h6>
+                    <ul class="list-unstyled">
+                        {% if prontuario.jejum is not none %}
+                        <li>
+                            <i class="fas {{ 'check-circle text-success' if not prontuario.jejum else 'times-circle text-danger' }} me-2"></i>
+                            {{ 'Não estava em jejum' if not prontuario.jejum else 'Estava em jejum' }}
+                        </li>
+                        {% endif %}
+                        {% if prontuario.medicamentos and prontuario.detalhes_medicamentos %}
+                        <li><i class="fas fa-pills text-info me-2"></i>Medicamentos: {{ prontuario.detalhes_medicamentos }}</li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+
         {% if doacao.status == 3 %}
         <!-- DOAÇÃO CONCLUÍDA - Comprovante -->
         <div class="detail-card">
@@ -155,7 +215,7 @@
                     <button class="btn btn-print" onclick="imprimirComprovante()">
                         <i class="fas fa-print"></i> Imprimir Comprovante
                     </button>
-                    <button class="btn btn-print" onclick="baixarPDF({{ doacao.cod_doacao }})">
+                    <button class="btn btn-print" onclick="baixarPDF('{{ doacao.cod_doacao }}')">
                         <i class="fas fa-download"></i> Baixar PDF
                     </button>
                 </div>
@@ -167,66 +227,6 @@
             <strong>Parabéns!</strong> Sua doação foi concluída com sucesso e já está ajudando a salvar vidas.
             Você pode doar novamente após {{ 'Doação' if doacao.fator_rh else '60 dias (homens) ou 90 dias (mulheres)' }}.
         </div>
-
-        {% if prontuario %}
-        <!-- Informações da Triagem -->
-        <div class="detail-card">
-            <div class="detail-header">
-                <h4><i class="fas fa-notes-medical me-2"></i>Informações da Triagem</h4>
-            </div>
-            
-            <div class="row">
-                <div class="col-md-6">
-                    <h6>Condições de Saúde Detectadas:</h6>
-                    <ul class="list-unstyled">
-                        {% if prontuario.diabetes %}
-                        <li><i class="fas fa-times-circle text-danger me-2"></i>Diabetes</li>
-                        {% endif %}
-                        {% if prontuario.hipertensao %}
-                        <li><i class="fas fa-times-circle text-danger me-2"></i>Hipertensão</li>
-                        {% endif %}
-                        {% if prontuario.cardiopatia %}
-                        <li><i class="fas fa-times-circle text-danger me-2"></i>Cardiopatia</li>
-                        {% endif %}
-                        {% if prontuario.cancer %}
-                        <li><i class="fas fa-times-circle text-danger me-2"></i>Histórico de Câncer</li>
-                        {% endif %}
-                        {% if prontuario.hepatite %}
-                        <li><i class="fas fa-times-circle text-danger me-2"></i>Hepatite</li>
-                        {% endif %}
-                        {% if prontuario.sintomas_gripais %}
-                        <li><i class="fas fa-times-circle text-danger me-2"></i>Sintomas Gripais</li>
-                        {% endif %}
-                        {% if prontuario.fumante %}
-                        <li><i class="fas fa-smoking text-warning me-2"></i>Fumante</li>
-                        {% endif %}
-                        {% if prontuario.alcool %}
-                        <li><i class="fas fa-wine-glass text-warning me-2"></i>Consumo Recente de Álcool</li>
-                        {% endif %}
-                        
-                        {% if not (prontuario.diabetes or prontuario.hipertensao or prontuario.cardiopatia or prontuario.cancer or prontuario.hepatite or prontuario.sintomas_gripais or prontuario.fumante or prontuario.alcool) %}
-                        <li><i class="fas fa-check-circle text-success me-2"></i>Nenhuma condição impeditiva detectada na triagem</li>
-                        {% endif %}
-                    </ul>
-                </div>
-                
-                <div class="col-md-6">
-                    <h6>Outras Informações:</h6>
-                    <ul class="list-unstyled">
-                        {% if prontuario.jejum is not none %}
-                        <li>
-                            <i class="fas {{ 'check-circle text-success' if not prontuario.jejum else 'times-circle text-danger' }} me-2"></i>
-                            {{ 'Não estava em jejum' if not prontuario.jejum else 'Estava em jejum' }}
-                        </li>
-                        {% endif %}
-                        {% if prontuario.medicamentos and prontuario.detalhes_medicamentos %}
-                        <li><i class="fas fa-pills text-info me-2"></i>Medicamentos: {{ prontuario.detalhes_medicamentos }}</li>
-                        {% endif %}
-                    </ul>
-                </div>
-            </div>
-        </div>
-        {% endif %}
 
         {% elif doacao.status == 2 %}
         <!-- DOAÇÃO AGUARDANDO EXAME - Timeline -->
@@ -268,66 +268,6 @@
             </div>
         </div>
 
-        {% if prontuario %}
-        <!-- Informações da Triagem -->
-        <div class="detail-card">
-            <div class="detail-header">
-                <h4><i class="fas fa-notes-medical me-2"></i>Informações da Triagem</h4>
-            </div>
-            
-            <div class="row">
-                <div class="col-md-6">
-                    <h6>Condições de Saúde Detectadas:</h6>
-                    <ul class="list-unstyled">
-                        {% if prontuario.diabetes %}
-                        <li><i class="fas fa-times-circle text-danger me-2"></i>Diabetes</li>
-                        {% endif %}
-                        {% if prontuario.hipertensao %}
-                        <li><i class="fas fa-times-circle text-danger me-2"></i>Hipertensão</li>
-                        {% endif %}
-                        {% if prontuario.cardiopatia %}
-                        <li><i class="fas fa-times-circle text-danger me-2"></i>Cardiopatia</li>
-                        {% endif %}
-                        {% if prontuario.cancer %}
-                        <li><i class="fas fa-times-circle text-danger me-2"></i>Histórico de Câncer</li>
-                        {% endif %}
-                        {% if prontuario.hepatite %}
-                        <li><i class="fas fa-times-circle text-danger me-2"></i>Hepatite</li>
-                        {% endif %}
-                        {% if prontuario.sintomas_gripais %}
-                        <li><i class="fas fa-times-circle text-danger me-2"></i>Sintomas Gripais</li>
-                        {% endif %}
-                        {% if prontuario.fumante %}
-                        <li><i class="fas fa-smoking text-warning me-2"></i>Fumante</li>
-                        {% endif %}
-                        {% if prontuario.alcool %}
-                        <li><i class="fas fa-wine-glass text-warning me-2"></i>Consumo Recente de Álcool</li>
-                        {% endif %}
-                        
-                        {% if not (prontuario.diabetes or prontuario.hipertensao or prontuario.cardiopatia or prontuario.cancer or prontuario.hepatite or prontuario.sintomas_gripais or prontuario.fumante or prontuario.alcool) %}
-                        <li><i class="fas fa-check-circle text-success me-2"></i>Nenhuma condição impeditiva detectada na triagem</li>
-                        {% endif %}
-                    </ul>
-                </div>
-                
-                <div class="col-md-6">
-                    <h6>Outras Informações:</h6>
-                    <ul class="list-unstyled">
-                        {% if prontuario.jejum is not none %}
-                        <li>
-                            <i class="fas {{ 'check-circle text-success' if not prontuario.jejum else 'times-circle text-danger' }} me-2"></i>
-                            {{ 'Não estava em jejum' if not prontuario.jejum else 'Estava em jejum' }}
-                        </li>
-                        {% endif %}
-                        {% if prontuario.medicamentos and prontuario.detalhes_medicamentos %}
-                        <li><i class="fas fa-pills text-info me-2"></i>Medicamentos: {{ prontuario.detalhes_medicamentos }}</li>
-                        {% endif %}
-                    </ul>
-                </div>
-            </div>
-        </div>
-        {% endif %}
-
         {% elif doacao.status == 1 %}
         <!-- DOAÇÃO RECUSADA - Detalhes e Motivos -->
         {% if doacao.observacoes %}
@@ -335,66 +275,6 @@
             <i class="fas fa-exclamation-triangle me-2"></i>
             <strong>Motivo da Recusa:</strong>
             <p class="mb-0 mt-2">{{ doacao.observacoes }}</p>
-        </div>
-        {% endif %}
-
-        {% if prontuario %}
-        <!-- Informações da Triagem -->
-        <div class="detail-card">
-            <div class="detail-header">
-                <h4><i class="fas fa-notes-medical me-2"></i>Informações da Triagem</h4>
-            </div>
-            
-            <div class="row">
-                <div class="col-md-6">
-                    <h6>Condições de Saúde Detectadas:</h6>
-                    <ul class="list-unstyled">
-                        {% if prontuario.diabetes %}
-                        <li><i class="fas fa-times-circle text-danger me-2"></i>Diabetes</li>
-                        {% endif %}
-                        {% if prontuario.hipertensao %}
-                        <li><i class="fas fa-times-circle text-danger me-2"></i>Hipertensão</li>
-                        {% endif %}
-                        {% if prontuario.cardiopatia %}
-                        <li><i class="fas fa-times-circle text-danger me-2"></i>Cardiopatia</li>
-                        {% endif %}
-                        {% if prontuario.cancer %}
-                        <li><i class="fas fa-times-circle text-danger me-2"></i>Histórico de Câncer</li>
-                        {% endif %}
-                        {% if prontuario.hepatite %}
-                        <li><i class="fas fa-times-circle text-danger me-2"></i>Hepatite</li>
-                        {% endif %}
-                        {% if prontuario.sintomas_gripais %}
-                        <li><i class="fas fa-times-circle text-danger me-2"></i>Sintomas Gripais</li>
-                        {% endif %}
-                        {% if prontuario.fumante %}
-                        <li><i class="fas fa-smoking text-warning me-2"></i>Fumante</li>
-                        {% endif %}
-                        {% if prontuario.alcool %}
-                        <li><i class="fas fa-wine-glass text-warning me-2"></i>Consumo Recente de Álcool</li>
-                        {% endif %}
-                        
-                        {% if not (prontuario.diabetes or prontuario.hipertensao or prontuario.cardiopatia or prontuario.cancer or prontuario.hepatite or prontuario.sintomas_gripais or prontuario.fumante or prontuario.alcool) %}
-                        <li><i class="fas fa-check-circle text-success me-2"></i>Nenhuma condição impeditiva detectada na triagem</li>
-                        {% endif %}
-                    </ul>
-                </div>
-                
-                <div class="col-md-6">
-                    <h6>Outras Informações:</h6>
-                    <ul class="list-unstyled">
-                        {% if prontuario.jejum is not none %}
-                        <li>
-                            <i class="fas {{ 'check-circle text-success' if not prontuario.jejum else 'times-circle text-danger' }} me-2"></i>
-                            {{ 'Não estava em jejum' if not prontuario.jejum else 'Estava em jejum' }}
-                        </li>
-                        {% endif %}
-                        {% if prontuario.medicamentos and prontuario.detalhes_medicamentos %}
-                        <li><i class="fas fa-pills text-info me-2"></i>Medicamentos: {{ prontuario.detalhes_medicamentos }}</li>
-                        {% endif %}
-                    </ul>
-                </div>
-            </div>
         </div>
         {% endif %}
 
