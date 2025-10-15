@@ -38,6 +38,20 @@ function cadastroValidateCurrentStep() {
             field.classList.remove('is-invalid');
         }
     }
+    
+    // Validação do campo gênero na Seção 1
+    if (cadastroStep === 1) {
+        const generoEl = document.getElementById('genero');
+        if (generoEl && !generoEl.value) {
+            generoEl.classList.add('is-invalid');
+            generoEl.focus();
+            if (window.showWarning) window.showWarning('Por favor, selecione o gênero');
+            return false;
+        } else if (generoEl) {
+            generoEl.classList.remove('is-invalid');
+        }
+    }
+    
     // Validação extra para senha
     if (cadastroStep === 3) {
         const senhaEl = document.getElementById('password');

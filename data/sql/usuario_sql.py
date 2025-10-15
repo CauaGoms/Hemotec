@@ -13,6 +13,7 @@ cidade_usuario INTEGER NOT NULL,
 cep_usuario TEXT NOT NULL,
 telefone TEXT NOT NULL,
 perfil TEXT NOT NULL DEFAULT 'doador',
+genero TEXT NOT NULL,
 data_cadastro TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 foto TEXT,
 token_redefinicao TEXT,
@@ -23,12 +24,12 @@ FOREIGN KEY (cidade_usuario) REFERENCES cidade(cod_cidade)
 """
 
 INSERIR = """
-INSERT INTO usuario (nome, email, senha, cpf, data_nascimento, status, rua_usuario, bairro_usuario, cidade_usuario, cep_usuario, telefone, perfil, data_cadastro, estado_usuario) 
-VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+INSERT INTO usuario (nome, email, senha, cpf, data_nascimento, status, rua_usuario, bairro_usuario, cidade_usuario, cep_usuario, telefone, perfil, genero, data_cadastro, estado_usuario) 
+VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
 """
 
 OBTER_TODOS = """
-SELECT u.cod_usuario, u.nome, u.email, u.senha, u.cpf, u.data_nascimento, u.status, u.rua_usuario, u.bairro_usuario, u.cidade_usuario, u.cep_usuario, u.telefone, u.perfil, u.data_cadastro, u.foto, u.estado_usuario
+SELECT u.cod_usuario, u.nome, u.email, u.senha, u.cpf, u.data_nascimento, u.status, u.rua_usuario, u.bairro_usuario, u.cidade_usuario, u.cep_usuario, u.telefone, u.perfil, u.genero, u.data_cadastro, u.foto, u.estado_usuario
 FROM usuario u,
 cidade c
 WHERE u.cidade_usuario = c.cod_cidade
@@ -36,7 +37,7 @@ WHERE u.cidade_usuario = c.cod_cidade
 
 UPDATE = """
 UPDATE usuario
-SET nome = ?, email = ?, senha = ?, cpf = ?, data_nascimento = ?, status = ?, rua_usuario = ?, bairro_usuario = ?, cidade_usuario = ?, cep_usuario = ?, telefone = ?, perfil = ?, estado_usuario = ?
+SET nome = ?, email = ?, senha = ?, cpf = ?, data_nascimento = ?, status = ?, rua_usuario = ?, bairro_usuario = ?, cidade_usuario = ?, cep_usuario = ?, telefone = ?, perfil = ?, genero = ?, estado_usuario = ?
 WHERE cod_usuario = ?;
 """
 
@@ -52,7 +53,7 @@ WHERE cod_usuario = ?;
 """
 
 OBTER_POR_ID = """
-SELECT u.cod_usuario, u.nome, u.email, u.senha, u.cpf, u.data_nascimento, u.status, u.rua_usuario, u.bairro_usuario, u.cidade_usuario, u.cep_usuario, u.telefone, u.perfil, u.data_cadastro, u.foto, u.token_redefinicao, u.data_token, u.estado_usuario
+SELECT u.cod_usuario, u.nome, u.email, u.senha, u.cpf, u.data_nascimento, u.status, u.rua_usuario, u.bairro_usuario, u.cidade_usuario, u.cep_usuario, u.telefone, u.perfil, u.genero, u.data_cadastro, u.foto, u.token_redefinicao, u.data_token, u.estado_usuario
 FROM usuario u,
 cidade c
 WHERE u.cidade_usuario = c.cod_cidade
@@ -60,7 +61,7 @@ AND u.cod_usuario = ?;
 """
 
 OBTER_POR_EMAIL = """
-SELECT u.cod_usuario, u.nome, u.email, u.senha, u.cpf, u.data_nascimento, u.status, u.rua_usuario, u.bairro_usuario, u.cidade_usuario, u.cep_usuario, u.telefone, u.perfil, u.data_cadastro, u.foto, u.estado_usuario
+SELECT u.cod_usuario, u.nome, u.email, u.senha, u.cpf, u.data_nascimento, u.status, u.rua_usuario, u.bairro_usuario, u.cidade_usuario, u.cep_usuario, u.telefone, u.perfil, u.genero, u.data_cadastro, u.foto, u.estado_usuario
 FROM usuario u,
 cidade c
 WHERE u.cidade_usuario = c.cod_cidade
@@ -80,7 +81,7 @@ WHERE cod_usuario=?
 """
 
 OBTER_POR_TOKEN = """
-SELECT u.cod_usuario, u.nome, u.email, u.senha, u.cpf, u.data_nascimento, u.status, u.rua_usuario, u.bairro_usuario, u.cidade_usuario, u.cep_usuario, u.telefone, u.perfil, u.data_cadastro, u.foto, u.token_redefinicao, u.data_token, u.estado_usuario
+SELECT u.cod_usuario, u.nome, u.email, u.senha, u.cpf, u.data_nascimento, u.status, u.rua_usuario, u.bairro_usuario, u.cidade_usuario, u.cep_usuario, u.telefone, u.perfil, u.genero, u.data_cadastro, u.foto, u.token_redefinicao, u.data_token, u.estado_usuario
 FROM usuario u,
 cidade c
 WHERE u.cidade_usuario = c.cod_cidade

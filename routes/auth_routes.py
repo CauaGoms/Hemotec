@@ -87,6 +87,7 @@ async def post_cadastro(
     bairro_usuario: str = Form(...),
     cidade_usuario: str = Form(...),
     estado_usuario: str = Form(...),
+    genero: str = Form(...),
     senha: str = Form(...),
     confirmar_senha: str = Form(...),
 ):
@@ -100,7 +101,8 @@ async def post_cadastro(
         "rua_usuario": rua_usuario,
         "bairro_usuario": bairro_usuario,
         "cidade_usuario": cidade_usuario,
-        "estado_usuario": estado_usuario
+        "estado_usuario": estado_usuario,
+        "genero": genero
     }
 
     try:
@@ -136,6 +138,7 @@ async def post_cadastro(
             cep_usuario=dados.cep_usuario,
             telefone=dados.telefone,
             perfil="doador",
+            genero=dados.genero,
             data_cadastro=None,
             estado_usuario=dados.estado_usuario
         )
