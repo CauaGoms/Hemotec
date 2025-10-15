@@ -31,32 +31,32 @@
                     </div>
                     <div class="blood-type-display">
                         <span class="label">Tipo Sanguíneo</span>
-                        <span class="blood-type">O+</span>
+                        <span class="blood-type">{{ tipo_sanguineo }}</span>
                     </div>
                 </div>
                 <div class="right-panel">
                     <div class="info-field">
                         <span class="label">Nome Completo</span>
-                        <p class="value">João da Silva</p>
+                        <p class="value">{{usuario["nome"]}}</p>
                     </div>
                     <div class="info-grid">
                         <div class="info-field">
                             <span class="label">Nascimento</span>
-                            <p class="value">15/08/1990</p>
+                            <p class="value">{{ usuario["data_nascimento"]}}</p>
                         </div>
                         <div class="info-field">
-                            <span class="label">RG</span>
-                            <p class="value">12.345.678-9</p>
+                            <span class="label">CPF</span>
+                            <p class="value">{{usuario["cpf"]}}</p>
                         </div>
                     </div>
                     <div class="info-field">
                         <span class="label">Última Doação</span>
-                        <p class="value">15/04/2025</p>
+                        <p class="value">{{ ultima_doacao }}</p>
                     </div>
                 </div>
             </div>
             <div class="card-footer">
-                <p>ID Doador: 123456789</p>
+                <p>ID Doador: {{ cod_doador }}</p>
                 <p class="validity">Válido em todo o território nacional</p>
             </div>
         </div>
