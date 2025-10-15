@@ -1,10 +1,11 @@
 from dataclasses import dataclass
-
+from datetime import time
 
 @dataclass
 class Unidade_coleta:
     cod_unidade: int
     cod_licenca: int
+    cod_horario_funcionamento: int
     nome: str
     email: str
     rua_unidade: str

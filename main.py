@@ -28,6 +28,7 @@ from data.repo import cidade_repo
 from data.repo import campanha_repo
 from data.repo import usuario_repo
 from data.repo import gestor_repo
+from data.repo import possivel_gestor_repo
 from data.repo import instituicao_repo
 from data.repo import assinatura_repo
 from data.repo import plano_repo
@@ -38,6 +39,8 @@ from data.repo import unidade_coleta_repo
 from data.repo import estoque_repo
 from data.repo import notificacao_repo
 from data.repo import colaborador_repo
+from data.repo import agenda_repo
+from data.repo import horario_funcionamento_repo
 from data.repo import agendamento_repo
 from data.repo import doador_repo
 from data.repo import doacao_repo
@@ -147,11 +150,13 @@ from routes.rotas_teste.doador_estoque import router as doador_estoque_teste_rou
 from routes.auth_routes import router as auth_router
 
 cidade_repo.criar_tabela()
+horario_funcionamento_repo.criar_tabela()
 usuario_repo.criar_tabela()
 campanha_repo.criar_tabela()
 plano_repo.criar_tabela()
 instituicao_repo.criar_tabela()
 gestor_repo.criar_tabela()
+possivel_gestor_repo.criar_tabela()
 assinatura_repo.criar_tabela()
 licenca_repo.criar_tabela()
 unidade_coleta_repo.criar_tabela()
@@ -161,6 +166,7 @@ adm_campanha_repo.criar_tabela()
 notificacao_repo.criar_tabela()
 colaborador_repo.criar_tabela()
 doador_repo.criar_tabela()
+agenda_repo.criar_tabela()
 agendamento_repo.criar_tabela()
 doacao_repo.criar_tabela()
 exame_repo.criar_tabela()
