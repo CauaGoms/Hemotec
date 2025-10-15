@@ -146,6 +146,53 @@ def obter_por_doacao(cod_doacao: int) -> Optional[Prontuario]:
             )
         return None
     
+def obter_por_doador(cod_doador: int) -> Optional[Prontuario]:
+    """
+    Obtém o prontuário mais recente de um doador
+    """
+    with get_connection() as conn:
+        cursor = conn.cursor()
+        # Busca o prontuário da doação mais recente do doador
+        cursor.execute("""
+            SELECT p.cod_prontuario, p.cod_doacao, p.data_criacao, p.data_atualizacao, 
+                   p.jejum, p.diabetes, p.hipertensao, p.cardiopatia, p.cancer, p.hepatite, 
+                   p.outros, p.detalhes_outros, p.sintomas_gripais, p.medicamentos, 
+                   p.detalhes_medicamentos, p.fumante, p.alcool, p.droga, p.ist, 
+                   p.atividade, p.sono, p.tatuagem_e_outros
+            FROM prontuario p
+            INNER JOIN doacao d ON p.cod_doacao = d.cod_doacao
+            WHERE d.cod_doador = ?
+            ORDER BY p.data_criacao DESC
+            LIMIT 1
+        """, (cod_doador,))
+        row = cursor.fetchone()
+        if row:
+            return Prontuario(
+                cod_prontuario=row["cod_prontuario"],
+                cod_doacao=row["cod_doacao"],
+                data_criacao=datetime.strptime(row["data_criacao"], '%Y-%m-%d') if isinstance(row["data_criacao"], str) else row["data_criacao"],
+                data_atualizacao=datetime.strptime(row["data_atualizacao"], '%Y-%m-%d') if isinstance(row["data_atualizacao"], str) else row["data_atualizacao"],
+                jejum=row["jejum"],
+                diabetes=row["diabetes"],
+                hipertensao=row["hipertensao"],
+                cardiopatia=row["cardiopatia"],
+                cancer=row["cancer"],
+                hepatite=row["hepatite"],
+                outros=row["outros"],
+                detalhes_outros=row["detalhes_outros"],
+                sintomas_gripais=row["sintomas_gripais"],
+                medicamentos=row["medicamentos"],
+                detalhes_medicamentos=row["detalhes_medicamentos"],
+                fumante=row["fumante"],
+                alcool=row["alcool"],
+                droga=row["droga"],
+                ist=row["ist"],
+                atividade=row["atividade"],
+                sono=row["sono"],
+                tatuagem_e_outros=row["tatuagem_e_outros"]
+            )
+        return None
+
 def update(prontuario: Prontuario) -> bool:
     with get_connection() as conn:
         cursor = conn.cursor()

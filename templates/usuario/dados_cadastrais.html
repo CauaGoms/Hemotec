@@ -359,7 +359,13 @@
                                 </div>
                                 <div class="profile-info-content">
                                     <div class="profile-info-label">Medicamentos</div>
-                                    <div class="profile-info-value">Nenhum</div>
+                                    <div class="profile-info-value">
+                                        {% if prontuario and prontuario.medicamentos %}
+                                            {{ prontuario.detalhes_medicamentos if prontuario.detalhes_medicamentos else "Sim, sem detalhes" }}
+                                        {% else %}
+                                            Nenhum
+                                        {% endif %}
+                                    </div>
                                 </div>
                             </div>
                             <div class="profile-info-item">
@@ -367,8 +373,16 @@
                                     <i class="fas fa-allergies"></i>
                                 </div>
                                 <div class="profile-info-content">
-                                    <div class="profile-info-label">Alergias</div>
-                                    <div class="profile-info-value">Nenhuma conhecida</div>
+                                    <div class="profile-info-label">Doenças</div>
+                                    <div class="profile-info-value">
+                                        {% if prontuario and (prontuario.diabetes or prontuario.hipertensao or prontuario.hepatite) %}
+                                            {% if prontuario.diabetes %}Diabetes{% endif %}
+                                            {% if prontuario.hipertensao %}{% if prontuario.diabetes %}, {% endif %}Hipertensão{% endif %}
+                                            {% if prontuario.hepatite %}{% if prontuario.diabetes or prontuario.hipertensao %}, {% endif %}Hepatite{% endif %}
+                                        {% else %}
+                                            Nenhuma conhecida
+                                        {% endif %}
+                                    </div>
                                 </div>
                             </div>
                             <div class="profile-info-item">
@@ -377,7 +391,16 @@
                                 </div>
                                 <div class="profile-info-content">
                                     <div class="profile-info-label">Condições Médicas</div>
-                                    <div class="profile-info-value">Nenhuma</div>
+                                    <div class="profile-info-value">
+                                        {% if prontuario and (prontuario.cardiopatia or prontuario.cancer or prontuario.ist or prontuario.outros) %}
+                                            {% if prontuario.cardiopatia %}Cardiopatia{% endif %}
+                                            {% if prontuario.cancer %}{% if prontuario.cardiopatia %}, {% endif %}Câncer{% endif %}
+                                            {% if prontuario.ist %}{% if prontuario.cardiopatia or prontuario.cancer %}, {% endif %}IST{% endif %}
+                                            {% if prontuario.outros %}{% if prontuario.cardiopatia or prontuario.cancer or prontuario.ist %}, {% endif %}{{ prontuario.detalhes_outros }}{% endif %}
+                                        {% else %}
+                                            Nenhuma
+                                        {% endif %}
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -431,20 +454,51 @@
                                 </div>
                             </div>
                             <!-- Card de Intervalo -->
-                            <div class="eligibility-card" style="background: linear-gradient(135deg, #f0fdf4 0%, #fff 100%); border-radius: 12px; padding: 20px; border-left: 4px solid #22c55e; box-shadow: 0 2px 10px rgba(0,0,0,0.05);">
+                            <div class="eligibility-card" style="background: linear-gradient(135deg, {% if intervalo_doacao.status == 'apto' %}#f0fdf4{% elif intervalo_doacao.status == 'aguardando' %}#fef3c7{% else %}#dbeafe{% endif %} 0%, #fff 100%); border-radius: 12px; padding: 20px; border-left: 4px solid {% if intervalo_doacao.status == 'apto' %}#22c55e{% elif intervalo_doacao.status == 'aguardando' %}#f59e0b{% else %}#3b82f6{% endif %}; box-shadow: 0 2px 10px rgba(0,0,0,0.05);">
                                 <div class="d-flex align-items-center justify-content-between">
                                     <div class="d-flex align-items-center flex-grow-1">
-                                        <div style="background: #dcfce7; width: 50px; height: 50px; border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-right: 15px;">
-                                            <i class="fas fa-clock" style="font-size: 1.3rem; color: #22c55e;"></i>
+                                        <div style="background: {% if intervalo_doacao.status == 'apto' %}#dcfce7{% elif intervalo_doacao.status == 'aguardando' %}#fef3c7{% else %}#dbeafe{% endif %}; width: 50px; height: 50px; border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-right: 15px;">
+                                            <i class="fas fa-clock" style="font-size: 1.3rem; color: {% if intervalo_doacao.status == 'apto' %}#22c55e{% elif intervalo_doacao.status == 'aguardando' %}#f59e0b{% else %}#3b82f6{% endif %};"></i>
                                         </div>
                                         <div>
                                             <h6 class="mb-1 fw-bold" style="color: #1e293b; font-size: 1.1rem;">Intervalo entre doações</h6>
-                                            <p class="mb-0 text-muted" style="font-size: 0.95rem;">Homens: 60 dias | Mulheres: 90 dias</p>
-                                            <small class="text-success fw-bold">Consulte seu histórico de doações</small>
+                                            <p class="mb-0 text-muted" style="font-size: 0.95rem;">
+                                                Intervalo mínimo: {{ intervalo_doacao.dias_minimos }} dias
+                                            </p>
+                                            {% if intervalo_doacao.status == 'apto' %}
+                                            <small class="text-success fw-bold">
+                                                <i class="fas fa-check-circle"></i>
+                                                {% if intervalo_doacao.dias_desde_ultima %}
+                                                        Apto para doar! ({{ intervalo_doacao.dias_desde_ultima }} dias desde última doação)
+                                                    {% else %}
+                                                        Apto para doar! (Primeira doação)
+                                                    {% endif %}
+                                            </small>
+                                            {% elif intervalo_doacao.status == 'aguardando' %}
+                                            <small class="text-warning fw-bold">
+                                                <i class="fas fa-hourglass-half"></i>
+                                                Aguarde {{ intervalo_doacao.dias_restantes }} dias ({{ intervalo_doacao.dias_desde_ultima }} dias desde última doação)
+                                            </small>
+                                            <br>
+                                            <small class="text-muted">
+                                                Próxima doação disponível: {{ intervalo_doacao.proxima_doacao.strftime('%d/%m/%Y') }}
+                                            </small>
+                                            {% else %}
+                                            <small class="text-primary fw-bold">
+                                                <i class="fas fa-info-circle"></i>
+                                                Você nunca doou. Faça sua primeira doação!
+                                            </small>
+                                            {% endif %}
                                         </div>
                                     </div>
                                     <div style="min-width: 60px; text-align: right;">
-                                        <i class="fas fa-info-circle" style="font-size: 2rem; color: #22c55e;"></i>
+                                        {% if intervalo_doacao.status == 'apto' %}
+                                        <i class="fas fa-check-circle" style="font-size: 2rem; color: #22c55e;"></i>
+                                        {% elif intervalo_doacao.status == 'aguardando' %}
+                                        <i class="fas fa-hourglass-half" style="font-size: 2rem; color: #f59e0b;"></i>
+                                        {% else %}
+                                        <i class="fas fa-info-circle" style="font-size: 2rem; color: #3b82f6;"></i>
+                                        {% endif %}
                                     </div>
                                 </div>
                             </div>
@@ -457,6 +511,14 @@
                                 const dataNascimento = "{{ usuario.data_nascimento }}";
                                 const peso = {{ doador.peso if doador and doador.peso else 'null' }};
                                 const altura = {{ doador.altura if doador and doador.altura else 'null' }};
+                                
+                                // Informações do intervalo de doação do backend
+                                const intervaloDoacao = {
+                                    pode_doar: {{ 'true' if intervalo_doacao.pode_doar else 'false' }},
+                                    status: "{{ intervalo_doacao.status }}",
+                                    dias_desde_ultima: {{ intervalo_doacao.dias_desde_ultima if intervalo_doacao.dias_desde_ultima else 'null' }},
+                                    dias_restantes: {{ intervalo_doacao.dias_restantes }}
+                                };
 
                                 // Calcular idade
                                 const hoje = new Date();
@@ -508,42 +570,80 @@
                                     }
                                 }
 
-                                // Mostrar resultado final
+                                // Mostrar resultado final com AS TRÊS VERIFICAÇÕES
                                 const resultDiv = document.getElementById('eligibility-result');
                                 const idadeOk = idade >= 16 && idade <= 69;
                                 const pesoOk = peso !== null && peso >= 50;
+                                const intervaloOk = intervaloDoacao.pode_doar;
 
-                                if (idadeOk && pesoOk) {
+                                // Contar quantos critérios foram atendidos
+                                let criteriosAtendidos = 0;
+                                let criteriosNaoAtendidos = [];
+                                
+                                if (idadeOk) criteriosAtendidos++;
+                                else criteriosNaoAtendidos.push('idade (16-69 anos)');
+                                
+                                if (pesoOk) criteriosAtendidos++;
+                                else if (peso !== null) criteriosNaoAtendidos.push('peso mínimo (50kg)');
+                                
+                                if (intervaloOk) criteriosAtendidos++;
+                                else if (intervaloDoacao.status === 'aguardando') {
+                                    criteriosNaoAtendidos.push(`intervalo entre doações (aguarde ${intervaloDoacao.dias_restantes} dias)`);
+                                }
+
+                                // Todos os 3 critérios atendidos
+                                if (idadeOk && pesoOk && intervaloOk) {
                                     resultDiv.innerHTML = `
                                         <div class="d-flex align-items-center">
                                             <i class="fas fa-check-circle me-3" style="font-size: 3rem; color: #22c55e;"></i>
                                             <div>
-                                                <h5 class="mb-1 fw-bold" style="color: #22c55e;">Você está elegível para doar sangue!</h5>
-                                                <p class="mb-0 text-muted">Todos os critérios básicos foram atendidos. Agende sua doação!</p>
+                                                <h5 class="mb-1 fw-bold" style="color: #22c55e;">✓ Você está ELEGÍVEL para doar sangue!</h5>
+                                                <p class="mb-0 text-success fw-bold">Todos os 3 critérios foram atendidos:</p>
+                                                <ul class="mb-0 mt-2 text-muted" style="font-size: 0.95rem;">
+                                                    <li>✓ Idade adequada (${idade} anos)</li>
+                                                    <li>✓ Peso adequado (${peso}kg)</li>
+                                                    <li>✓ Intervalo entre doações respeitado</li>
+                                                </ul>
+                                                <p class="mb-0 mt-2 text-muted">Agende sua doação e salve vidas!</p>
                                             </div>
                                         </div>
                                     `;
                                     resultDiv.style.background = 'linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%)';
                                     resultDiv.style.border = '2px solid #22c55e';
-                                } else if (!pesoOk && peso === null) {
+                                }
+                                // Dados incompletos (peso não informado)
+                                else if (peso === null) {
                                     resultDiv.innerHTML = `
                                         <div class="d-flex align-items-center">
                                             <i class="fas fa-info-circle me-3" style="font-size: 3rem; color: #3b82f6;"></i>
                                             <div>
-                                                <h5 class="mb-1 fw-bold" style="color: #3b82f6;">Informações incompletas</h5>
-                                                <p class="mb-0 text-muted">Complete seu cadastro com peso e altura para verificar sua elegibilidade completa.</p>
+                                                <h5 class="mb-1 fw-bold" style="color: #3b82f6;">ℹ️ Informações incompletas</h5>
+                                                <p class="mb-0 text-muted">Complete seu cadastro com peso para verificar sua elegibilidade completa.</p>
+                                                <p class="mb-0 mt-2"><strong>Status atual:</strong></p>
+                                                <ul class="mb-0 mt-1 text-muted" style="font-size: 0.95rem;">
+                                                    <li>${idadeOk ? '✓' : '✗'} Idade: ${idade} anos ${idadeOk ? '(OK)' : '(Não atende)'}</li>
+                                                    <li>⚠️ Peso: Não informado</li>
+                                                    <li>${intervaloOk ? '✓' : '✗'} Intervalo: ${intervaloOk ? 'OK' : intervaloDoacao.status === 'aguardando' ? `Aguarde ${intervaloDoacao.dias_restantes} dias` : 'Primeira doação'}</li>
+                                                </ul>
                                             </div>
                                         </div>
                                     `;
                                     resultDiv.style.background = 'linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%)';
                                     resultDiv.style.border = '2px solid #3b82f6';
-                                } else {
+                                }
+                                // Alguns critérios não atendidos
+                                else {
                                     resultDiv.innerHTML = `
                                         <div class="d-flex align-items-center">
                                             <i class="fas fa-times-circle me-3" style="font-size: 3rem; color: #ef4444;"></i>
                                             <div>
-                                                <h5 class="mb-1 fw-bold" style="color: #ef4444;">Alguns critérios não foram atendidos</h5>
-                                                <p class="mb-0 text-muted">Consulte um profissional de saúde para mais informações sobre elegibilidade.</p>
+                                                <h5 class="mb-1 fw-bold" style="color: #ef4444;">✗ Alguns critérios não foram atendidos</h5>
+                                                <p class="mb-0 text-muted">${criteriosAtendidos}/3 critérios atendidos.</p>
+                                                <p class="mb-0 mt-2"><strong>Critérios não atendidos:</strong></p>
+                                                <ul class="mb-0 mt-1 text-danger" style="font-size: 0.95rem;">
+                                                    ${criteriosNaoAtendidos.map(c => `<li>✗ ${c}</li>`).join('')}
+                                                </ul>
+                                                <p class="mb-0 mt-2 text-muted">Consulte um profissional de saúde para mais informações.</p>
                                             </div>
                                         </div>
                                     `;

@@ -3,8 +3,9 @@ from fastapi import APIRouter, File, Request, UploadFile, status
 from fastapi.responses import RedirectResponse
 from fastapi.templating import Jinja2Templates
 
-from data.repo import cidade_repo, doador_repo, usuario_repo
+from data.repo import cidade_repo, doador_repo, prontuario_repo, usuario_repo
 from util.auth_decorator import requer_autenticacao
+from util.doacao_utils import calcular_intervalo_doacao, obter_ultima_doacao_doador
 
 router = APIRouter()
 templates = Jinja2Templates(directory="templates")
@@ -15,7 +16,23 @@ async def get_doador_dados_cadastrais(request: Request, usuario_logado: dict = N
     usuario = usuario_repo.obter_por_id(usuario_logado['cod_usuario'])
     cidade = cidade_repo.obter_por_id(usuario_logado['cidade_usuario'])
     doador = doador_repo.obter_por_id(usuario_logado['cod_usuario'])
-    response = templates.TemplateResponse("usuario/dados_cadastrais.html", {"request": request, "active_page": "perfil", "usuario": usuario, "cidade": cidade, "doador": doador})
+    
+    # Calcular intervalo de doação
+    ultima_doacao = obter_ultima_doacao_doador(usuario_logado['cod_usuario'])
+    intervalo_doacao = calcular_intervalo_doacao(usuario.genero, ultima_doacao)
+    
+    # Buscar prontuário mais recente do doador
+    prontuario = prontuario_repo.obter_por_doador(usuario_logado['cod_usuario'])
+    
+    response = templates.TemplateResponse("usuario/dados_cadastrais.html", {
+        "request": request, 
+        "active_page": "perfil", 
+        "usuario": usuario, 
+        "cidade": cidade, 
+        "doador": doador,
+        "intervalo_doacao": intervalo_doacao,
+        "prontuario": prontuario
+    })
     return response
 
 @router.post("/dados_cadastrais/alterar-foto")
