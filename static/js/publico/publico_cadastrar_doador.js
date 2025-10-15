@@ -38,7 +38,7 @@ function cadastroValidateCurrentStep() {
             field.classList.remove('is-invalid');
         }
     }
-    
+
     // Validação do campo gênero na Seção 1
     if (cadastroStep === 1) {
         const generoEl = document.getElementById('genero');
@@ -51,7 +51,7 @@ function cadastroValidateCurrentStep() {
             generoEl.classList.remove('is-invalid');
         }
     }
-    
+
     // Validação extra para senha
     if (cadastroStep === 3) {
         const senhaEl = document.getElementById('password');
