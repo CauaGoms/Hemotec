@@ -32,8 +32,8 @@ def inserir(usuario: Usuario) -> Optional[int]:
             usuario.cidade_usuario,
             usuario.cep_usuario,
             usuario.telefone,
-            usuario.perfil,
             usuario.genero,
+            usuario.perfil,
             usuario.data_cadastro,
             usuario.estado_usuario
             ))
@@ -60,8 +60,8 @@ def obter_todos() -> list[Usuario]:
                 cidade_usuario=row["cidade_usuario"],
                 cep_usuario=row["cep_usuario"],
                 telefone=row["telefone"],
-                perfil=row["perfil"],
                 genero=row["genero"],
+                perfil=row["perfil"],
                 data_cadastro=datetime.strptime(row["data_cadastro"], '%Y-%m-%d').date() if row["data_cadastro"] else None,
                 foto=row["foto"],
                 estado_usuario=row["estado_usuario"]
@@ -88,8 +88,8 @@ def obter_por_id(cod_usuario: int) -> Optional[Usuario]:
                 cidade_usuario=row["cidade_usuario"],
                 cep_usuario=row["cep_usuario"],
                 telefone=row["telefone"],
-                perfil=row["perfil"],
                 genero=row["genero"],
+                perfil=row["perfil"],
                 data_cadastro=datetime.strptime(row["data_cadastro"], "%Y-%m-%d").date() if row["data_cadastro"] else None,
                 foto=row["foto"],
                 token_redefinicao=row["token_redefinicao"],
@@ -117,8 +117,8 @@ def obter_por_email(email: str) -> Optional[Usuario]:
                 cidade_usuario=row["cidade_usuario"],
                 cep_usuario=row["cep_usuario"],
                 telefone=row["telefone"],
-                perfil=row["perfil"],
                 genero=row["genero"],
+                perfil=row["perfil"],
                 data_cadastro=datetime.strptime(row["data_cadastro"], "%Y-%m-%d").date() if row["data_cadastro"] else None,
                 foto=row["foto"],
                 estado_usuario=row["estado_usuario"]
@@ -141,8 +141,8 @@ def update(usuario: Usuario, cursor=None) -> bool:
                 usuario.cidade_usuario,
                 usuario.cep_usuario,
                 usuario.telefone,
-                usuario.perfil,
                 usuario.genero,
+                usuario.perfil,
                 usuario.estado_usuario,
                 usuario.cod_usuario
             )
@@ -165,8 +165,8 @@ def update(usuario: Usuario, cursor=None) -> bool:
                     usuario.cidade_usuario,
                     usuario.cep_usuario,
                     usuario.telefone,
-                    usuario.perfil,
                     usuario.genero,
+                    usuario.perfil,
                     usuario.estado_usuario,
                     usuario.cod_usuario
                 )
@@ -220,8 +220,8 @@ def obter_por_token(token: str) -> Optional[Usuario]:
                     cidade_usuario=row["cidade_usuario"],
                     cep_usuario=row["cep_usuario"],
                     telefone=row["telefone"],
-                    perfil=row["perfil"],
                     genero=row["genero"],
+                    perfil=row["perfil"],
                     data_cadastro=datetime.strptime(row["data_cadastro"], "%Y-%m-%d").date() if row["data_cadastro"] else None,
                     foto=row["foto"],
                     token_redefinicao=row["token_redefinicao"],
@@ -257,8 +257,8 @@ def obter_todos_por_perfil(perfil: str) -> list[Usuario]:
                 cidade_usuario=row["cidade_usuario"],
                 cep_usuario=row["cep_usuario"],
                 telefone=row["telefone"],
-                perfil=row["perfil"],
                 genero=row["genero"],
+                perfil=row["perfil"],
                 data_cadastro=datetime.strptime(row["data_cadastro"], "%Y-%m-%d").date() if row["data_cadastro"] else None,
                 foto=row["foto"],
                 token_redefinicao=row["token_redefinicao"],

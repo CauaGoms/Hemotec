@@ -3,9 +3,9 @@ INSERT INTO cidade (cod_cidade, nome_cidade, sigla_estado) VALUES
 (2, 'Marataizes', 'ES'),
 (3, 'Rio de janeiro', 'RJ');
 
-INSERT INTO usuario (cod_usuario, nome, email, senha, cpf, data_nascimento, status, rua_usuario, bairro_usuario, cidade_usuario, cep_usuario, telefone, perfil, data_cadastro, foto, token_redefinicao, data_token) VALUES
-(1, 'lucas', 'lucas@gmail.com', '123456', '12345678900', '2000-01-01', 1, 'Rua Horacio Leandro de Souza', 'Basileia', 1, '29302875', '11999999999', 'doador', '2023-10-01', '', '', ''),
-(2, 'caua', 'caua@gmail.com', '123456', '12345678900', '2000-01-01', 1, 'Rua Projetada', 'Timbo I', 2, '29345000', '11999999999', 'doador', '2023-10-01', '', '', '');
+INSERT INTO usuario (cod_usuario, nome, email, senha, cpf, data_nascimento, status, rua_usuario, bairro_usuario, cidade_usuario, cep_usuario, telefone, perfil, genero, data_cadastro, foto, token_redefinicao, data_token, estado_usuario) VALUES
+(1, 'lucas', 'lucas@gmail.com', '123456', '12345678900', '2000-01-01', 1, 'Rua Horacio Leandro de Souza', 'Basileia', 1, '29302875', '11999999999', 'doador', 'Masculino', '2023-10-01', '', '', '', 'ES'),
+(2, 'caua', 'caua@gmail.com', '123456', '12345678900', '2000-01-01', 1, 'Rua Projetada', 'Timbo I', 2, '29345000', '11999999999', 'doador', 'Masculino', '2023-10-01', '', '', '', 'ES');
 
 INSERT INTO campanha (cod_campanha, titulo, descricao, data_inicio, data_fim, status, foto) VALUES
 (1, 'Campanha de Verão', 'O verão, com suas férias e viagens, é uma época deliciosa, mas que traz um desafio crítico para os bancos de sangue: a demanda por transfusões aumenta, enquanto o número de doadores diminui drasticamente. Acidentes, cirurgias de emergência e o tratamento contínuo de pacientes não param no calor, e o suprimento de sangue é vital para a sobrevivência dessas pessoas. Por isso, lançamos a Campanha de Verão. Sua solidariedade não pode entrar de férias! Convidamos você a dedicar um pequeno tempo do seu verão para realizar um gesto grandioso: a doação de sangue. Manter os estoques abastecidos nesta época é crucial para garantir que hospitais e clínicas tenham recursos para salvar vidas a qualquer momento. Não deixe o calor diminuir a esperança de quem precisa. Participe, doe sangue e ajude a garantir que ninguém fique sem o suporte necessário durante a estação mais quente do ano!
@@ -137,11 +137,11 @@ INSERT INTO doador (cod_doador, tipo_sanguineo, fator_rh, elegivel, altura, peso
 (1, 'O', 'negativo', "elegivel", 1.75, 70.0, 'Estudante', 'Maria Silva', '11988887777'),
 (2, 'A', 'positivo', "elegivel", 1.80, 80.0, 'Engenheiro', 'João Souza', '11977776666');
 
-INSERT INTO agendamento (cod_agendamento, cod_colaborador, cod_doador, data_hora, status, observacoes, tipo_agendamento, local_agendamento) VALUES
-(1, 1, 1, '2023-10-05 10:00:00', 1, 'Primeira doação de sangue', 'presencial', 1),
-(2, 2, 2, '2023-10-06 14:00:00', 1, 'Doação regular', 'presencial', 2),
-(3, 2, 1, '2023-10-07 09:00:00', 1, 'Primeira doação de sangue', 'presencial', 1),
-(4, 1, 2, '2023-10-08 11:00:00', 1, 'Doação regular', 'presencial', 2);
+INSERT INTO agendamento (cod_agendamento, cod_colaborador, cod_doador, data_hora, status, tipo_agendamento, local_agendamento) VALUES
+(1, 1, 1, '2023-10-05 10:00:00', 1, 'presencial', 1),
+(2, NULL, 2, '2023-10-06 14:00:00', 1, 'online', 2),
+(3, NULL, 1, '2023-10-07 09:00:00', 1, 'online', 1),
+(4, 1, 2, '2023-10-08 11:00:00', 1, 'presencial', 2);
 
 INSERT INTO doacao (cod_doacao, cod_doador, cod_agendamento, data_hora, quantidade, status) VALUES
 (1, 1, 1, '2025-10-01', '490', 1),

@@ -16,8 +16,8 @@ class Usuario:
     cidade_usuario: int
     cep_usuario: str
     telefone: str
-    perfil: str = 'doador'
     genero: str
+    perfil: str = 'doador'
     data_cadastro: Optional[str] = None
     foto: Optional[str] = None
     token_redefinicao: Optional[str] = None

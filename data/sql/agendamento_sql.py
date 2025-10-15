@@ -1,7 +1,7 @@
 CRIAR_TABELA = """
 CREATE TABLE IF NOT EXISTS agendamento (
 cod_agendamento INTEGER PRIMARY KEY AUTOINCREMENT,
-cod_colaborador INTEGER NOT NULL,
+cod_colaborador INTEGER,
 cod_doador INTEGER NOT NULL,
 data_hora TEXT NOT NULL,
 status INTEGER NOT NULL,
@@ -19,14 +19,11 @@ VALUES (?, ?, ?, ?, ?, ?)
 """
 
 OBTER_TODOS = """
-SELECT a.cod_agendamento, c.cod_colaborador, d.cod_doador, a.data_hora, a.status, a.tipo_agendamento, a.local_agendamento
-FROM agendamento a,
-colaborador c,
-doador d,
-unidade_coleta u
-WHERE a.cod_colaborador = c.cod_colaborador
-AND a.cod_doador = d.cod_doador
-AND a.local_agendamento = u.cod_unidade
+SELECT a.cod_agendamento, a.cod_colaborador, d.cod_doador, a.data_hora, a.status, a.tipo_agendamento, a.local_agendamento
+FROM agendamento a
+INNER JOIN doador d ON a.cod_doador = d.cod_doador
+INNER JOIN unidade_coleta u ON a.local_agendamento = u.cod_unidade
+LEFT JOIN colaborador c ON a.cod_colaborador = c.cod_colaborador
 """ 
 
 UPDATE = """
@@ -41,13 +38,10 @@ WHERE cod_agendamento = ?;
 """
 
 OBTER_POR_ID = """
-SELECT a.cod_agendamento, c.cod_colaborador, d.cod_doador, a.data_hora, a.status, a.tipo_agendamento, a.local_agendamento
-FROM agendamento a,
-colaborador c,
-doador d,
-unidade_coleta u
-WHERE a.cod_colaborador = c.cod_colaborador
-AND a.cod_doador = d.cod_doador
-AND a.local_agendamento = u.cod_unidade
-AND a.cod_agendamento = ?;
+SELECT a.cod_agendamento, a.cod_colaborador, d.cod_doador, a.data_hora, a.status, a.tipo_agendamento, a.local_agendamento
+FROM agendamento a
+INNER JOIN doador d ON a.cod_doador = d.cod_doador
+INNER JOIN unidade_coleta u ON a.local_agendamento = u.cod_unidade
+LEFT JOIN colaborador c ON a.cod_colaborador = c.cod_colaborador
+WHERE a.cod_agendamento = ?;
 """
