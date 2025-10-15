@@ -32,7 +32,8 @@ def esta_logado(request: Request) -> bool:
     Returns:
         True se há usuário logado, False caso contrário
     """
-    return obter_usuario_logado(request) is not None
+    usuario = obter_usuario_logado(request)
+    return usuario is not None and len(usuario) > 0
 
 
 def criar_sessao(request: Request, usuario: dict) -> None:

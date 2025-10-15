@@ -207,14 +207,45 @@
             font-size: 1.13rem;
             color: var(--gray-800);
             margin-bottom: 2.2rem;
-            line-height: 1.8;
+            line-height: 2;
             font-weight: 400;
-            letter-spacing: 0.01em;
+            letter-spacing: 0.02em;
             border-left: 5px solid var(--primary-color);
-            padding-left: 1.2rem;
+            padding-left: 1.5rem;
+            padding-right: 1.2rem;
+            padding-top: 1.5rem;
+            padding-bottom: 1.5rem;
             background: var(--gray-50);
             border-radius: 8px;
             box-shadow: 0 2px 8px rgba(229,62,62,0.04);
+            white-space: pre-wrap;
+            text-indent: 3rem;
+        }
+        
+        .campaign-description-modern::first-line {
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+        
+        .campaign-description-modern p {
+            margin-bottom: 1.5rem;
+            line-height: 2;
+        }
+        
+        .campaign-description-modern p:last-child {
+            margin-bottom: 0;
+        }
+        
+        .campaign-description-modern strong,
+        .campaign-description-modern b {
+            color: var(--primary-color);
+            font-weight: 700;
+        }
+        
+        .campaign-description-modern em,
+        .campaign-description-modern i {
+            font-style: italic;
+            color: var(--gray-700);
         }
     .campaign-info-modern {
         display: flex;

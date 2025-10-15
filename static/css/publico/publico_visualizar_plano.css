@@ -168,6 +168,78 @@ body {
     }
 }
 
+/* Finalizar Cadastro Section */
+.finalizar-cadastro-section {
+    background: white;
+    position: relative;
+    z-index: 2;
+    margin-bottom: 2rem;
+}
+
+.btn-finalizar-cadastro {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    background: var(--gradient-primary);
+    color: white;
+    padding: 1.3rem 3.5rem;
+    border-radius: 50px;
+    font-weight: 600;
+    font-size: 1.15rem;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 6px 20px rgba(224, 32, 32, 0.35);
+    border: 2px solid transparent;
+    min-width: 300px;
+}
+
+.btn-finalizar-cadastro::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    transition: left 0.5s;
+}
+
+.btn-finalizar-cadastro:hover::before {
+    left: 100%;
+}
+
+.btn-finalizar-cadastro:hover {
+    transform: translateY(-5px) scale(1.02);
+    box-shadow: 0 10px 30px rgba(224, 32, 32, 0.45);
+    color: white;
+    text-decoration: none;
+}
+
+.btn-finalizar-cadastro i {
+    font-size: 1.2rem;
+    transition: all 0.3s ease;
+}
+
+.btn-finalizar-cadastro .btn-arrow {
+    transition: transform 0.3s ease;
+}
+
+.btn-finalizar-cadastro:hover .btn-arrow {
+    transform: translateX(5px);
+}
+
+.btn-finalizar-cadastro:hover i.fa-user-plus {
+    transform: scale(1.15);
+}
+
+.btn-finalizar-cadastro span {
+    font-weight: 700;
+    letter-spacing: 0.3px;
+}
+
 /* Planos Section */
 .planos-section {
     position: relative;
