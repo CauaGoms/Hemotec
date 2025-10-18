@@ -33,13 +33,26 @@ async def get_colaborador_agendamento_alterar(request: Request, id_agendamento: 
     
     unidades = unidade_coleta_repo.obter_todos()
     
+    # Converter agendamento para dict - passar como string simples
+    agendamento_dict = None
+    if agendamento:
+        agendamento_dict = {
+            'cod_agendamento': agendamento.cod_agendamento,
+            'cod_colaborador': agendamento.cod_colaborador,
+            'cod_doador': agendamento.cod_doador,
+            'data_hora': str(agendamento.data_hora) if agendamento.data_hora else None,  # Simples: "2025-10-21 09:00:00"
+            'status': agendamento.status,
+            'tipo_agendamento': agendamento.tipo_agendamento,
+            'local_agendamento': agendamento.local_agendamento
+        }
+    
     response = templates.TemplateResponse(
         "colaborador/colaborador_agendamento_alterar.html", 
         {
             "request": request, 
             "active_page": "agendamento",
             "usuario": usuario_logado,
-            "agendamento": agendamento,
+            "agendamento": agendamento_dict,
             "unidade": unidade,
             "doador": doador_completo,
             "unidades": unidades

@@ -1,5 +1,5 @@
 import datetime
-from fastapi import APIRouter, Request
+from fastapi import APIRouter, Request, Body
 from fastapi.templating import Jinja2Templates
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel
@@ -9,10 +9,6 @@ from util.auth_decorator import requer_autenticacao
 
 router = APIRouter()
 templates = Jinja2Templates(directory="templates")
-
-class ConfirmarPresencaRequest(BaseModel):
-    cod_agendamento: int
-    cod_doador: int
 
 @router.get("/colaborador/agendamento")
 @requer_autenticacao(["colaborador"])
@@ -57,14 +53,15 @@ async def get_colaborador_agendamento(request: Request, usuario_logado: dict = N
 
 @router.post("/api/colaborador/agendamento/confirmar-presenca")
 @requer_autenticacao(["colaborador"])
-async def confirmar_presenca_agendamento(request: Request, dados: ConfirmarPresencaRequest, usuario_logado: dict = None):
+async def confirmar_presenca_agendamento(request: Request, cod_agendamento: int = Body(...), cod_doador: int = Body(...), usuario_logado: dict = None):
     try:
         # Criar nova doação
         nova_doacao = Doacao(
-            cod_doador=dados.cod_doador,
-            cod_agendamento=dados.cod_agendamento,
+            cod_doacao=None,  # Será gerado pelo banco de dados
+            cod_doador=cod_doador,
+            cod_agendamento=cod_agendamento,
             data_hora=datetime.datetime.now(),
-            quantidade=None,  # Será preenchido posteriormente
+            quantidade=0,  # Será preenchido posteriormente
             status=0,  # Status pendente
             observacoes="Doação criada automaticamente ao confirmar presença"
         )
@@ -73,7 +70,7 @@ async def confirmar_presenca_agendamento(request: Request, dados: ConfirmarPrese
         doacao_repo.inserir(nova_doacao)
         
         # Atualizar status do agendamento para concluído
-        agendamento = agendamento_repo.obter_por_id(dados.cod_agendamento)
+        agendamento = agendamento_repo.obter_por_id(cod_agendamento)
         if agendamento:
             agendamento.status = 1  # Concluído
             agendamento_repo.update(agendamento)

@@ -65,20 +65,25 @@ def obter_por_id(cod_agendamento: int) -> Optional[Agendamento]:
         row = cursor.fetchone()
         if row:
             # Debug: imprimir valor da data_hora do banco
-            print(f"DEBUG - data_hora do banco: '{row['data_hora']}' (tipo: {type(row['data_hora'])})")
+            import sys
+            sys.stderr.write(f"DEBUG - data_hora do banco: '{row['data_hora']}' (tipo: {type(row['data_hora'])})\n")
+            sys.stderr.flush()
             
             # Tentar parse com hora, se falhar tentar apenas data
             try:
                 data_hora = datetime.strptime(row["data_hora"], '%Y-%m-%d %H:%M:%S')
             except ValueError as e:
-                print(f"DEBUG - Erro ao fazer parse com hora: {e}")
+                sys.stderr.write(f"DEBUG - Erro ao fazer parse com hora: {e}\n")
+                sys.stderr.flush()
                 try:
                     data_hora = datetime.strptime(row["data_hora"], '%Y-%m-%d')
                 except ValueError as e2:
-                    print(f"DEBUG - Erro ao fazer parse só data: {e2}")
+                    sys.stderr.write(f"DEBUG - Erro ao fazer parse só data: {e2}\n")
+                    sys.stderr.flush()
                     data_hora = None
             
-            print(f"DEBUG - data_hora após parse: {data_hora}")
+            sys.stderr.write(f"DEBUG - data_hora após parse: {data_hora}\n")
+            sys.stderr.flush()
             
             return Agendamento(
                 cod_agendamento=row["cod_agendamento"],

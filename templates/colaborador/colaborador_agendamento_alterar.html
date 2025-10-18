@@ -74,7 +74,7 @@
         <div class="info-item">
             <i class="fas fa-calendar-alt"></i>
             <strong>Data e Horário:</strong>
-            <span>{{ agendamento.data_hora.strftime('%d/%m/%Y às %H:%M') if agendamento.data_hora else 'Não especificado' }}</span>
+            <span>{% if agendamento and agendamento.data_hora %}{{ agendamento.data_hora }}{% else %}Não especificado{% endif %}</span>
         </div>
         {% if doador %}
         <div class="info-item">
