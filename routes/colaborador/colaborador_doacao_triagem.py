@@ -20,6 +20,38 @@ async def get_colaborador_doacao_triagem(request: Request):
     response = templates.TemplateResponse("colaborador/colaborador_doacao_triagem.html", {"request": request, "active_page": "doacoes"})
     return response
 
+@router.get("/colaborador/doacao/triagem/{cod_doacao}")
+async def get_colaborador_doacao_triagem_com_codigo(request: Request, cod_doacao: int):
+    """Carrega a página de triagem com o código da doação"""
+    try:
+        # Obter a doação
+        doacao = doacao_repo.obter_por_id(cod_doacao)
+        if not doacao:
+            # Redirecionar se não encontrar
+            from fastapi.responses import RedirectResponse
+            return RedirectResponse(url="/colaborador/doacoes", status_code=303)
+        
+        # Obter dados do doador
+        doador = doador_repo.obter_por_id(doacao.cod_doador)
+        usuario = usuario_repo.obter_por_id(doacao.cod_doador)
+        
+        response = templates.TemplateResponse(
+            "colaborador/colaborador_doacao_triagem.html", 
+            {
+                "request": request, 
+                "active_page": "doacoes",
+                "cod_doacao": cod_doacao,
+                "doacao": doacao,
+                "doador": doador,
+                "usuario": usuario
+            }
+        )
+        return response
+    except Exception as e:
+        print(f"Erro ao carregar triagem: {e}")
+        from fastapi.responses import RedirectResponse
+        return RedirectResponse(url="/colaborador/doacoes", status_code=303)
+
 @router.post("/colaborador/doacao/triagem")
 async def post_colaborador_doacao_triagem(
     request: Request,

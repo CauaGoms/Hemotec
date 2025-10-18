@@ -1,45 +1,44 @@
-/* Variáveis CSS herdadas do sistema base */
 :root {
-    --hemotec-red: #e02020;
-    --hemotec-dark-red: #c01010;
-    --hemotec-light-red: #ff4040;
-    --hemotec-bg-light: #f8f9fa;
-    --hemotec-text-dark: #333333;
-    --hemotec-accent: #0066cc;
-    --hemotec-success: #28a745;
-    --hemotec-warning: #ffc107;
-    --hemotec-danger: #dc3545;
-    --hemotec-info: #17a2b8;
-    --hemotec-border: #e9ecef;
-    --hemotec-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    --hemotec-shadow-hover: 0 8px 15px rgba(0, 0, 0, 0.15);
-    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    --transition-fast: all 0.2s ease;
-    
-    /* Cores específicas para status - versão menos vibrante */
-    --status-triagem: #6c757d;
-    --status-triagem-light: rgba(108, 117, 125, 0.1);
-    --status-doacao: #007bff;
-    --status-doacao-light: rgba(0, 123, 255, 0.1);
-    --status-exames: #17a2b8;
-    --status-exames-light: rgba(23, 162, 184, 0.1);
-    --status-concluida: #28a745;
-    --status-concluida-light: rgba(40, 167, 69, 0.1);
+    --hemotec-red: #C41515;
+    --hemotec-gray: #23282F;
 }
 
-/* Layout Principal */
-.main-content {
-    min-height: calc(100vh - 200px);
-    background: #fafbfc;
-    padding-bottom: 2rem;
+/* Botão Voltar */
+.back-arrow {
+    position: fixed;
+    top: 100px;
+    left: 20px;
+    background: rgba(255, 255, 255, 0.9);
+    color: var(--hemotec-red);
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    font-size: 1.2rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+}
+
+.back-arrow:hover {
+    background: var(--hemotec-red);
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+    text-decoration: none;
 }
 
 /* Seção Hero */
 .hero-section {
-    background: linear-gradient(135deg, var(--hemotec-red) 0%, var(--hemotec-dark-red) 100%);
+    background: linear-gradient(135deg, rgba(35, 40, 47, 0.8), rgba(80, 80, 90, 0.7)), 
+                url('https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop') no-repeat center center;
+    background-size: cover;
     color: white;
-    padding: 2.5rem 0;
-    margin-bottom: 2rem;
+    padding: 8rem 0 6rem;
+    text-align: center;
     position: relative;
     overflow: hidden;
 }
@@ -51,1188 +50,40 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background: rgba(255,255,255,0.05);
-    opacity: 0.1;
+    background: radial-gradient(circle at 30% 50%, rgba(255, 255, 255, 0.1) 0%, transparent 50%);
+    pointer-events: none;
+}
+
+.hero-header {
+    position: relative;
+    z-index: 2;
 }
 
 .hero-content {
-    position: relative;
-    z-index: 1;
-    text-align: center;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    animation: fadeInUp 0.8s ease-out;
 }
 
 .hero-title {
     font-family: 'Montserrat', sans-serif;
     font-weight: 700;
-    font-size: 2.5rem;
-    margin-bottom: 1rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 1rem;
-}
-
-.hero-title i {
-    font-size: 2rem;
+    font-size: 3.5rem;
+    margin-bottom: 1.5rem;
+    text-shadow: 2px 4px 8px rgba(0, 0, 0, 0.3);
+    line-height: 1.2;
 }
 
 .hero-subtitle {
-    font-size: 1.2rem;
-    opacity: 0.9;
-    margin: 0;
-}
-
-/* Container de Doações */
-.donations-container {
-    background: white;
-    border-radius: 20px;
-    box-shadow: var(--hemotec-shadow);
-    overflow: hidden;
-    margin-top: -2rem;
-    position: relative;
-    z-index: 2;
-}
-
-/* Header com Filtros Modernos */
-.donations-header {
-    padding: 2rem;
-    background: linear-gradient(135deg, #ffffff 0%, #f8fafb 100%);
-    border-bottom: 1px solid var(--hemotec-border);
-    position: relative;
-}
-
-.donations-header::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 60"><defs><pattern id="dots" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="10" cy="10" r="1" fill="rgba(224,32,32,0.05)"/></pattern></defs><rect width="60" height="60" fill="url(%23dots)"/></svg>');
-    opacity: 0.3;
-    pointer-events: none;
-}
-
-.header-content {
-    position: relative;
-    z-index: 1;
-}
-
-.header-title-section {
-    text-align: center;
-    margin-bottom: 2rem;
-}
-
-.header-title {
-    font-family: 'Montserrat', sans-serif;
-    font-weight: 600;
-    font-size: 1.5rem;
-    color: var(--hemotec-text-dark);
-    margin: 0 0 0.5rem 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.5rem;
-}
-
-.header-title i {
-    color: var(--hemotec-red);
-    font-size: 1.25rem;
-}
-
-.header-subtitle {
-    color: #6c757d;
-    font-size: 0.9rem;
-    margin: 0;
-    font-weight: 400;
-}
-
-.filters-and-search {
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
-    align-items: center;
-}
-
-/* Container dos Filtros Modernos */
-.filters-container {
-    width: 100%;
-    max-width: 900px;
-}
-
-.filter-buttons-modern {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-    gap: 1rem;
-    justify-content: center;
-}
-
-/* Botões de Filtro Modernos */
-.filter-btn-modern {
-    padding: 1rem;
-    border: 2px solid transparent;
-    border-radius: 16px;
-    background: white;
-    color: var(--hemotec-text-dark);
-    font-weight: 500;
-    transition: var(--transition-smooth);
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    cursor: pointer;
-    text-decoration: none;
-    position: relative;
-    overflow: hidden;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-    min-height: 70px;
-}
-
-.filter-btn-modern::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
-    transition: left 0.5s;
-}
-
-.filter-btn-modern:hover::before {
-    left: 100%;
-}
-
-.filter-btn-modern:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
-    border-color: var(--hemotec-red);
-}
-
-/* Ícone do botão */
-.btn-icon {
-    width: 40px;
-    height: 40px;
-    border-radius: 12px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.1rem;
-    color: white;
-    flex-shrink: 0;
-    background: #6c757d;
-    transition: var(--transition-smooth);
-}
-
-/* Conteúdo do botão */
-.btn-content {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    flex: 1;
-}
-
-.btn-label {
-    font-size: 0.9rem;
-    font-weight: 600;
-    line-height: 1.2;
-    margin-bottom: 0.25rem;
-}
-
-.btn-count {
-    font-size: 0.75rem;
-    color: #6c757d;
-    font-weight: 500;
-}
-
-/* Estados específicos dos botões */
-.filter-btn-modern.active {
-    background: linear-gradient(135deg, var(--hemotec-red) 0%, var(--hemotec-dark-red) 100%);
-    color: white;
-    border-color: var(--hemotec-red);
-    transform: translateY(-2px);
-    box-shadow: 0 8px 25px rgba(224, 32, 32, 0.3);
-}
-
-.filter-btn-modern.active .btn-icon {
-    background: rgba(255, 255, 255, 0.2);
-}
-
-.filter-btn-modern.active .btn-count {
-    color: rgba(255, 255, 255, 0.8);
-}
-
-/* Cores específicas dos ícones */
-.filter-btn-modern.triagem .btn-icon {
-    background: linear-gradient(135deg, var(--status-triagem) 0%, #5a6c7d 100%);
-}
-
-.filter-btn-modern.coleta .btn-icon {
-    background: linear-gradient(135deg, var(--status-doacao) 0%, #0056b3 100%);
-}
-
-.filter-btn-modern.exames .btn-icon {
-    background: linear-gradient(135deg, var(--status-exames) 0%, #138496 100%);
-}
-
-.filter-btn-modern.concluidas .btn-icon {
-    background: linear-gradient(135deg, var(--status-concluida) 0%, #1e7e34 100%);
-}
-
-/* Container de Busca Moderno */
-.search-container {
-    width: 100%;
-    max-width: 400px;
-    position: relative;
-}
-
-.search-box-modern {
-    position: relative;
-    display: flex;
-    align-items: center;
-    background: white;
-    border: 2px solid var(--hemotec-border);
-    border-radius: 50px;
-    padding: 0.75rem 1rem;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-    transition: var(--transition-smooth);
-}
-
-.search-box-modern:focus-within {
-    border-color: var(--hemotec-red);
-    box-shadow: 0 4px 20px rgba(224, 32, 32, 0.2);
-    transform: translateY(-1px);
-}
-
-.search-icon {
-    color: #6c757d;
-    margin-right: 0.75rem;
-    font-size: 1rem;
-}
-
-.search-input {
-    flex: 1;
-    border: none;
-    outline: none;
-    font-size: 0.9rem;
-    color: var(--hemotec-text-dark);
-    background: transparent;
-}
-
-.search-input::placeholder {
-    color: #adb5bd;
-    font-weight: 400;
-}
-
-.search-actions {
-    margin-left: 0.75rem;
-}
-
-.clear-search {
-    background: none;
-    border: none;
-    color: #6c757d;
-    cursor: pointer;
-    padding: 0.25rem;
-    border-radius: 50%;
-    transition: var(--transition-smooth);
-    display: none;
-}
-
-.clear-search:hover {
-    background: #f8f9fa;
-    color: var(--hemotec-red);
-}
-
-.search-input:not(:placeholder-shown) + .search-actions .clear-search {
-    display: block;
-}
-
-/* Sugestões de Busca */
-.search-suggestions {
-    position: absolute;
-    top: 100%;
-    left: 0;
-    right: 0;
-    background: white;
-    border: 1px solid var(--hemotec-border);
-    border-radius: 12px;
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
-    z-index: 10;
-    margin-top: 0.5rem;
-    max-height: 200px;
-    overflow-y: auto;
-}
-
-.suggestion-item {
-    padding: 0.75rem 1rem;
-    border-bottom: 1px solid #f1f3f4;
-    cursor: pointer;
-    transition: var(--transition-fast);
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-}
-
-.suggestion-item:hover {
-    background: #f8f9fa;
-}
-
-.suggestion-item:last-child {
-    border-bottom: none;
-}
-
-.suggestion-icon {
-    color: var(--hemotec-red);
-    font-size: 0.8rem;
-}
-
-/* Animações */
-@keyframes slideInUp {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-@keyframes fadeInScale {
-    from {
-        opacity: 0;
-        transform: scale(0.95);
-    }
-    to {
-        opacity: 1;
-        transform: scale(1);
-    }
-}
-
-.filter-btn-modern {
-    animation: fadeInScale 0.6s ease-out;
-}
-
-.filter-btn-modern:nth-child(1) { animation-delay: 0.1s; }
-.filter-btn-modern:nth-child(2) { animation-delay: 0.2s; }
-.filter-btn-modern:nth-child(3) { animation-delay: 0.3s; }
-.filter-btn-modern:nth-child(4) { animation-delay: 0.4s; }
-.filter-btn-modern:nth-child(5) { animation-delay: 0.5s; }
-
-.search-box-modern {
-    animation: slideInUp 0.6s ease-out 0.3s both;
-}
-
-.search-box {
-    position: relative;
-    display: flex;
-    align-items: center;
-}
-
-.search-box i {
-    position: absolute;
-    left: 1rem;
-    color: #6c757d;
-    z-index: 1;
-}
-
-.search-box input {
-    width: 100%;
-    padding: 0.875rem 1rem 0.875rem 2.5rem;
-    border: 2px solid var(--hemotec-border);
-    border-radius: 12px;
-    font-size: 1rem;
-    transition: var(--transition-smooth);
-    background: white;
-}
-
-.search-box input:focus {
-    outline: none;
-    border-color: var(--hemotec-red);
-    box-shadow: 0 0 0 0.2rem rgba(224, 32, 32, 0.15);
-}
-
-
-
-/* Lista de Doações */
-.donations-list {
-    padding: 2rem;
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
-}
-
-.donation-card {
-    background: white;
-    border-radius: 12px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-    transition: var(--transition-smooth);
-    overflow: hidden;
-    border: 1px solid var(--hemotec-border);
-    border-left: 3px solid;
-}
-
-.donation-card:hover {
-    transform: translateY(-1px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-}
-
-.donation-card.aguardando_triagem {
-    border-left-color: var(--status-triagem);
-}
-
-.donation-card.aguardando_doacao {
-    border-left-color: var(--status-doacao);
-}
-
-.donation-card.aguardando_exames {
-    border-left-color: var(--status-exames);
-}
-
-.donation-card.concluida {
-    border-left-color: var(--status-concluida);
-}
-
-.card-header {
-    padding: 1.5rem;
-    background: #fafbfc;
-    border-bottom: 1px solid var(--hemotec-border);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 1rem;
-}
-
-.donor-info {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    flex: 1;
-}
-
-.donor-avatar {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    background: linear-gradient(135deg, var(--hemotec-red) 0%, var(--hemotec-light-red) 100%);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: white;
-    font-size: 1.25rem;
-    flex-shrink: 0;
-}
-
-.donor-details {
-    flex: 1;
-}
-
-.donor-name {
-    font-family: 'Montserrat', sans-serif;
-    font-weight: 600;
-    font-size: 1.25rem;
-    margin: 0 0 0.5rem 0;
-    color: var(--hemotec-text-dark);
-}
-
-.donor-info-text {
-    margin: 0;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 1rem;
-    font-size: 0.9rem;
-    color: #6c757d;
-}
-
-.donor-info-text span {
-    display: flex;
-    align-items: center;
-    gap: 0.25rem;
-}
-
-.donor-info-text i {
-    color: var(--hemotec-red);
-    width: 14px;
-}
-
-.status-badge {
-    padding: 0.4rem 0.8rem;
-    border-radius: 16px;
-    font-weight: 500;
-    font-size: 0.8rem;
-    display: flex;
-    align-items: center;
-    gap: 0.4rem;
-    white-space: nowrap;
-}
-
-.status-badge.triagem {
-    background: var(--status-triagem-light);
-    color: var(--status-triagem);
-}
-
-.status-badge.doacao {
-    background: var(--status-doacao-light);
-    color: var(--status-doacao);
-}
-
-.status-badge.exames {
-    background: var(--status-exames-light);
-    color: var(--status-exames);
-}
-
-.status-badge.concluida {
-    background: var(--status-concluida-light);
-    color: var(--status-concluida);
-}
-
-.card-body {
-    padding: 1.5rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 1.5rem;
-}
-
-.donation-details {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 1.5rem;
-    flex: 1;
-}
-
-.detail-item {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    font-size: 0.9rem;
-    color: var(--hemotec-text-dark);
-}
-
-.detail-item i {
-    color: var(--hemotec-red);
-    width: 16px;
-    text-align: center;
-}
-
-.card-actions {
-    display: flex;
-    gap: 0.75rem;
-    flex-wrap: wrap;
-}
-
-.btn {
-    padding: 0.6rem 1.2rem;
-    border-radius: 8px;
-    font-weight: 500;
-    font-size: 0.85rem;
-    transition: var(--transition-smooth);
-    border: 1px solid transparent;
-    display: inline-flex;
-    align-items: center;
-    gap: 0.4rem;
-    text-decoration: none;
-    cursor: pointer;
-    white-space: nowrap;
-}
-
-.btn-primary {
-    background: var(--hemotec-red);
-    border-color: var(--hemotec-red);
-    color: white;
-}
-
-.btn-primary:hover {
-    background: var(--hemotec-dark-red);
-    border-color: var(--hemotec-dark-red);
-}
-
-.btn-success {
-    background: var(--hemotec-success);
-    border-color: var(--hemotec-success);
-    color: white;
-}
-
-.btn-success:hover {
-    background: #218838;
-    border-color: #1e7e34;
-}
-
-.btn-warning {
-    background: var(--hemotec-warning);
-    border-color: var(--hemotec-warning);
-    color: #212529;
-}
-
-.btn-warning:hover {
-    background: #e0a800;
-    border-color: #d39e00;
-}
-
-.btn-info {
-    background: var(--hemotec-info);
-    border-color: var(--hemotec-info);
-    color: white;
-}
-
-.btn-info:hover {
-    background: #138496;
-    border-color: #117a8b;
-}
-
-.btn-outline-secondary {
-    background: transparent;
-    border-color: #6c757d;
-    color: #6c757d;
-}
-
-.btn-outline-secondary:hover {
-    background: #6c757d;
-    color: white;
-}
-
-.action-btn {
-    min-width: 150px;
-    justify-content: center;
-}
-
-/* Paginação */
-.pagination-container {
-    padding: 2rem;
-    border-top: 1px solid var(--hemotec-border);
-}
-
-.pagination {
-    margin: 0;
-}
-
-.page-link {
-    border: 2px solid var(--hemotec-border);
-    color: var(--hemotec-text-dark);
-    padding: 0.75rem 1rem;
-    margin: 0 0.25rem;
-    border-radius: 8px;
-    transition: var(--transition-smooth);
-}
-
-.page-link:hover {
-    border-color: var(--hemotec-red);
-    color: var(--hemotec-red);
-    background: rgba(224, 32, 32, 0.05);
-}
-
-.page-item.active .page-link {
-    background: var(--hemotec-red);
-    border-color: var(--hemotec-red);
-    color: white;
-}
-
-.page-item.disabled .page-link {
-    opacity: 0.5;
-    cursor: not-allowed;
-}
-
-/* Mensagem de Nenhuma Doação */
-.no-donations-message {
-    background: #f8f9fa;
-    border-radius: 16px;
-    margin: 2rem;
-    color: #6c757d;
-}
-
-/* Modal Customizado */
-.modal-content {
-    border-radius: 20px;
-    border: none;
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
-}
-
-.modal-header {
-    border-bottom: 1px solid var(--hemotec-border);
-    padding: 1.5rem 2rem;
-    background: var(--hemotec-bg-light);
-    border-radius: 20px 20px 0 0;
-}
-
-.modal-title {
-    font-family: 'Montserrat', sans-serif;
-    font-weight: 600;
-    color: var(--hemotec-text-dark);
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-}
-
-.modal-body {
-    padding: 0;
-    max-height: 80vh;
-    overflow-y: auto;
-}
-
-.modal-footer {
-    border-top: 1px solid var(--hemotec-border);
-    padding: 1rem 2rem;
-}
-
-/* Header do Modal com informações principais */
-.modal-header-info {
-    display: flex;
-    align-items: center;
-    gap: 1.5rem;
-    padding: 2rem;
-    background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
-    border-bottom: 1px solid var(--hemotec-border);
-}
-
-.donor-avatar-large {
-    width: 80px;
-    height: 80px;
-    border-radius: 50%;
-    background: linear-gradient(135deg, var(--hemotec-red) 0%, var(--hemotec-dark-red) 100%);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: white;
-    font-size: 2rem;
-    flex-shrink: 0;
-    box-shadow: 0 4px 15px rgba(224, 32, 32, 0.3);
-}
-
-.donor-main-info {
-    flex: 1;
-}
-
-.donor-modal-name {
-    font-family: 'Montserrat', sans-serif;
-    font-weight: 700;
-    font-size: 1.5rem;
-    color: var(--hemotec-text-dark);
-    margin: 0 0 0.5rem 0;
-}
-
-.donor-key-details {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 1rem;
-}
-
-.key-detail {
-    display: flex;
-    align-items: center;
-    gap: 0.25rem;
-    font-size: 0.9rem;
-    color: #6c757d;
-    font-weight: 500;
-}
-
-.key-detail i {
-    color: var(--hemotec-red);
-    width: 16px;
-}
-
-.status-info {
-    text-align: center;
-}
-
-.status-badge-modal {
-    padding: 0.5rem 1rem;
-    border-radius: 20px;
-    font-weight: 600;
-    font-size: 0.875rem;
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    margin-bottom: 0.5rem;
-}
-
-.status-badge-modal.triagem {
-    background: var(--status-triagem-light);
-    color: var(--status-triagem);
-}
-
-.status-badge-modal.doacao {
-    background: var(--status-doacao-light);
-    color: var(--status-doacao);
-}
-
-.status-badge-modal.exames {
-    background: var(--status-exames-light);
-    color: var(--status-exames);
-}
-
-.status-badge-modal.concluida {
-    background: var(--status-concluida-light);
-    color: var(--status-concluida);
-}
-
-.status-date {
-    display: block;
-    font-size: 0.75rem;
-    color: #6c757d;
-}
-
-/* Sistema de Abas do Modal */
-.modal-tabs {
-    display: flex;
-    background: #f8f9fa;
-    border-bottom: 1px solid var(--hemotec-border);
-    margin: 0;
-}
-
-.tab-btn {
-    flex: 1;
-    padding: 1rem 1.5rem;
-    background: none;
-    border: none;
-    font-weight: 500;
-    color: #6c757d;
-    cursor: pointer;
-    transition: var(--transition-smooth);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.5rem;
-    position: relative;
-}
-
-.tab-btn:hover {
-    background: rgba(224, 32, 32, 0.05);
-    color: var(--hemotec-red);
-}
-
-.tab-btn.active {
-    background: white;
-    color: var(--hemotec-red);
-    border-bottom: 3px solid var(--hemotec-red);
-}
-
-.tab-btn i {
-    font-size: 0.9rem;
-}
-
-/* Conteúdo das Abas */
-.modal-tab-content {
-    min-height: 400px;
-}
-
-.tab-panel {
-    display: none;
-    padding: 2rem;
-    animation: fadeIn 0.3s ease-in-out;
-}
-
-.tab-panel.active {
-    display: block;
-}
-
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-
-/* Grid de Cards de Informação */
-.info-cards-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 1.5rem;
-}
-
-.info-card {
-    background: white;
-    border: 1px solid var(--hemotec-border);
-    border-radius: 12px;
-    overflow: hidden;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-    transition: var(--transition-smooth);
-}
-
-.info-card:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-}
-
-.info-card-header {
-    padding: 1rem;
-    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-    border-bottom: 1px solid var(--hemotec-border);
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-}
-
-.info-card-header i {
-    color: var(--hemotec-red);
-    font-size: 1.1rem;
-}
-
-.info-card-header h6 {
-    margin: 0;
-    font-weight: 600;
-    color: var(--hemotec-text-dark);
-    font-size: 0.9rem;
-}
-
-.info-card-body {
-    padding: 1rem;
-}
-
-.info-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0.5rem 0;
-    border-bottom: 1px solid #f1f3f4;
-}
-
-.info-row:last-child {
-    border-bottom: none;
-}
-
-.info-label {
-    font-size: 0.85rem;
-    color: #6c757d;
-    font-weight: 500;
-}
-
-.info-value {
-    font-weight: 600;
-    color: var(--hemotec-text-dark);
-    font-size: 0.9rem;
-}
-
-.info-value.blood-type {
-    background: var(--hemotec-red);
-    color: white;
-    padding: 0.25rem 0.5rem;
-    border-radius: 8px;
-    font-size: 0.8rem;
-    font-weight: 700;
-}
-
-/* Timeline do Processo */
-.process-timeline {
-    max-width: 600px;
-    margin: 0 auto;
-}
-
-.timeline-item {
-    display: flex;
-    gap: 1rem;
-    margin-bottom: 2rem;
-    position: relative;
-}
-
-.timeline-item::before {
-    content: '';
-    position: absolute;
-    left: 20px;
-    top: 40px;
-    bottom: -20px;
-    width: 2px;
-    background: #e9ecef;
-}
-
-.timeline-item:last-child::before {
-    display: none;
-}
-
-.timeline-marker {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1rem;
-    color: white;
-    flex-shrink: 0;
-    position: relative;
-    z-index: 1;
-}
-
-.timeline-item.completed .timeline-marker {
-    background: linear-gradient(135deg, var(--hemotec-success) 0%, #1e7e34 100%);
-}
-
-.timeline-item.pending .timeline-marker {
-    background: linear-gradient(135deg, #6c757d 0%, #495057 100%);
-}
-
-.timeline-content {
-    flex: 1;
-    padding-top: 0.25rem;
-}
-
-.timeline-title {
-    font-weight: 600;
-    color: var(--hemotec-text-dark);
-    margin: 0 0 0.25rem 0;
-    font-size: 1rem;
-}
-
-.timeline-date {
-    font-size: 0.85rem;
-    color: var(--hemotec-red);
-    font-weight: 500;
-    margin: 0 0 0.5rem 0;
-}
-
-.timeline-description {
-    font-size: 0.85rem;
-    color: #6c757d;
-    margin: 0;
-    line-height: 1.4;
-}
-
-/* Seção de Observações */
-.observations-section {
-    max-width: 600px;
-    margin: 0 auto;
-}
-
-.observation-card {
-    background: #f8f9fa;
-    border: 1px solid var(--hemotec-border);
-    border-radius: 12px;
-    margin-bottom: 2rem;
-}
-
-.observation-header {
-    padding: 1rem;
-    border-bottom: 1px solid var(--hemotec-border);
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-}
-
-.observation-header i {
-    color: var(--hemotec-red);
-}
-
-.observation-header h6 {
-    margin: 0;
-    font-weight: 600;
-    color: var(--hemotec-text-dark);
-}
-
-.observation-content {
-    padding: 1rem;
-    color: var(--hemotec-text-dark);
+    font-size: 1.3rem;
+    font-weight: 300;
+    opacity: 0.95;
     line-height: 1.6;
-    font-style: italic;
+    text-shadow: 1px 2px 4px rgba(0, 0, 0, 0.2);
+    margin-bottom: 0;
 }
 
-/* Ações Rápidas */
-.quick-actions h6 {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    color: var(--hemotec-text-dark);
-    font-weight: 600;
-    margin-bottom: 1rem;
-}
-
-.quick-actions h6 i {
-    color: var(--hemotec-red);
-}
-
-.action-buttons-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 0.75rem;
-}
-
-.action-btn-modal {
-    padding: 0.75rem 1rem;
-    border: none;
-    border-radius: 8px;
-    font-weight: 500;
-    font-size: 0.85rem;
-    cursor: pointer;
-    transition: var(--transition-smooth);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.5rem;
-}
-
-.action-btn-modal.primary {
-    background: var(--hemotec-red);
-    color: white;
-}
-
-.action-btn-modal.primary:hover {
-    background: var(--hemotec-dark-red);
-}
-
-.action-btn-modal.secondary {
-    background: #6c757d;
-    color: white;
-}
-
-.action-btn-modal.secondary:hover {
-    background: #5a6268;
-}
-
-.action-btn-modal.info {
-    background: var(--hemotec-info);
-    color: white;
-}
-
-.action-btn-modal.info:hover {
-    background: #138496;
-}
-
-.action-btn-modal.warning {
-    background: var(--hemotec-warning);
-    color: #212529;
-}
-
-.action-btn-modal.warning:hover {
-    background: #e0a800;
-}
-
-/* Responsividade do Modal */
-@media (max-width: 768px) {
-    .modal-header-info {
-        flex-direction: column;
-        text-align: center;
-        gap: 1rem;
-    }
-    
-    .donor-key-details {
-        justify-content: center;
-    }
-    
-    .modal-tabs {
-        flex-direction: column;
-    }
-    
-    .tab-btn {
-        border-bottom: 1px solid var(--hemotec-border);
-    }
-    
-    .tab-btn.active {
-        border-bottom: 3px solid var(--hemotec-red);
-        border-left: 3px solid var(--hemotec-red);
-    }
-    
-    .info-cards-grid {
-        grid-template-columns: 1fr;
-    }
-    
-    .action-buttons-grid {
-        grid-template-columns: 1fr;
-    }
-    
-    .tab-panel {
-        padding: 1rem;
-    }
-}
-
-/* Animações */
 @keyframes fadeInUp {
     from {
         opacity: 0;
@@ -1244,282 +95,401 @@
     }
 }
 
-@keyframes slideIn {
-    from {
-        opacity: 0;
-        transform: translateX(-20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateX(0);
-    }
-}
-
-.donation-card {
-    animation: fadeInUp 0.6s ease-out;
-}
-
-.donation-card:nth-child(1) { animation-delay: 0.1s; }
-.donation-card:nth-child(2) { animation-delay: 0.2s; }
-.donation-card:nth-child(3) { animation-delay: 0.3s; }
-.donation-card:nth-child(4) { animation-delay: 0.4s; }
-
-.stat-card {
-    animation: slideIn 0.6s ease-out;
-}
-
-.stat-card:nth-child(1) { animation-delay: 0.1s; }
-.stat-card:nth-child(2) { animation-delay: 0.2s; }
-.stat-card:nth-child(3) { animation-delay: 0.3s; }
-.stat-card:nth-child(4) { animation-delay: 0.4s; }
-
-/* Estados de Loading */
-.btn.loading {
+/* Container Principal */
+.doacoes-container {
+    background-color: white;
+    border-radius: 20px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+    padding: 2rem;
+    margin-top: -3rem;
     position: relative;
-    color: transparent !important;
+    z-index: 10;
 }
 
-.btn.loading::after {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 20px;
-    height: 20px;
-    border: 2px solid transparent;
-    border-top: 2px solid currentColor;
-    border-radius: 50%;
-    animation: spin 1s linear infinite;
+/* Filtros */
+.filter-buttons-container {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+    padding: 1.5rem;
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    border-radius: 12px;
+    margin-bottom: 2rem;
+    justify-content: center;
+    align-items: center;
+}
+
+.filter-btn {
+    padding: 0.7rem 1.3rem;
+    border: none;
+    background: white;
+    border-radius: 25px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    color: #555;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+    font-size: 0.9rem;
+}
+
+.filter-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+}
+
+.filter-btn.active {
+    background: var(--hemotec-red);
     color: white;
+    box-shadow: 0 4px 15px rgba(196, 21, 21, 0.3);
 }
 
-@keyframes spin {
-    0% { transform: translate(-50%, -50%) rotate(0deg); }
-    100% { transform: translate(-50%, -50%) rotate(360deg); }
+.filter-btn i {
+    font-size: 0.95rem;
 }
 
-/* Filtros Ativos */
-.filter-active {
-    background: rgba(224, 32, 32, 0.1);
+.filter-btn span {
+    font-size: 0.9rem;
+}
+
+/* Busca */
+.search-container {
+    margin-bottom: 1.5rem;
+}
+
+.search-container .input-group {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.search-container .input-group-text {
+    background: #f8f9fa;
+    border: 1px solid #e9ecef;
+    color: var(--hemotec-red);
+}
+
+.search-container input {
+    border: 1px solid #e9ecef;
+    padding: 0.75rem 1rem;
+}
+
+.search-container input:focus {
     border-color: var(--hemotec-red);
+    box-shadow: 0 0 0 0.2rem rgba(196, 21, 21, 0.25);
 }
 
-/* Responsividade */
+/* Lista de Doações */
+#doacoes-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+}
+
+/* Card de Doação */
+.donation-card {
+    background: white;
+    border: 1px solid #e9ecef;
+    border-radius: 10px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+    transition: all 0.3s ease;
+    overflow: hidden;
+    border-left: 4px solid #e0e0e0;
+}
+
+.donation-card:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    transform: translateY(-1px);
+}
+
+.donation-card[data-status="aguardando_triagem"] {
+    border-left-color: #FF6B6B;
+    border-left-width: 5px;
+}
+
+.donation-card[data-status="aguardando_doacao"] {
+    border-left-color: #4ECDC4;
+    border-left-width: 5px;
+}
+
+.donation-card[data-status="aguardando_exames"] {
+    border-left-color: #FFD93D;
+    border-left-width: 5px;
+}
+
+.donation-card[data-status="concluida"] {
+    border-left-color: #6BCF7F;
+    border-left-width: 5px;
+}
+
+/* Card Header */
+.donation-card .card-header {
+    padding: 1rem 1.25rem;
+    background: #f8f9fa;
+    border-bottom: 1px solid #e9ecef;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.donation-card .date {
+    margin: 0;
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: #333;
+    flex: 1;
+    display: flex;
+    align-items: center;
+}
+
+.donation-card .date i {
+    margin-right: 0.5rem;
+    color: var(--hemotec-red);
+}
+
+.status-badge {
+    padding: 0.4rem 1rem;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    white-space: nowrap;
+}
+
+.status-badge i {
+    font-size: 0.9rem;
+}
+
+.status-badge[data-status="aguardando_triagem"] {
+    background: rgba(255, 107, 107, 0.15);
+    color: #FF6B6B;
+    border: 1px solid rgba(255, 107, 107, 0.3);
+}
+
+.status-badge[data-status="aguardando_doacao"] {
+    background: rgba(78, 205, 196, 0.15);
+    color: #4ECDC4;
+    border: 1px solid rgba(78, 205, 196, 0.3);
+}
+
+.status-badge[data-status="aguardando_exames"] {
+    background: rgba(255, 217, 61, 0.15);
+    color: #FFB300;
+    border: 1px solid rgba(255, 217, 61, 0.3);
+}
+
+.status-badge[data-status="concluida"] {
+    background: rgba(107, 207, 127, 0.15);
+    color: #6BCF7F;
+    border: 1px solid rgba(107, 207, 127, 0.3);
+}
+
+/* Card Body */
+.donation-card .card-body {
+    padding: 1rem 1.25rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+}
+
+.doador-info {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    flex: 1;
+    min-width: 250px;
+}
+
+.doador-info .icon {
+    font-size: 2rem;
+    color: var(--hemotec-red);
+    flex-shrink: 0;
+}
+
+.doador-info > div {
+    flex: 1;
+}
+
+.doador-name {
+    margin: 0;
+    font-weight: 600;
+    font-size: 1rem;
+    color: #333;
+}
+
+.doador-details {
+    margin: 0.3rem 0 0 0;
+    font-size: 0.85rem;
+    color: #666;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.doador-details span {
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+}
+
+.doador-details i {
+    color: var(--hemotec-red);
+    font-size: 0.8rem;
+}
+
+/* Actions */
+.actions {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+}
+
+.actions .btn {
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    text-decoration: none;
+}
+
+.btn-triagem {
+    background: #E63946;
+    color: white;
+    border: 1px solid #E63946;
+    font-weight: 600;
+}
+
+.btn-triagem:hover {
+    background: #C62828;
+    border-color: #C62828;
+    box-shadow: 0 3px 10px rgba(230, 57, 70, 0.4);
+}
+
+.btn-coleta {
+    background: #2A9D8F;
+    color: white;
+    border: 1px solid #2A9D8F;
+    font-weight: 600;
+}
+
+.btn-coleta:hover {
+    background: #1F7A6F;
+    border-color: #1F7A6F;
+    box-shadow: 0 3px 10px rgba(42, 157, 143, 0.4);
+}
+
+.btn-exame {
+    background: #F4A261;
+    color: white;
+    border: 1px solid #F4A261;
+    font-weight: 600;
+}
+
+.btn-exame:hover {
+    background: #E76F51;
+    border-color: #E76F51;
+    box-shadow: 0 3px 10px rgba(244, 162, 97, 0.4);
+}
+
+.btn-detalhes {
+    background: #2A9D2A;
+    color: white;
+    border: 1px solid #2A9D2A;
+    font-weight: 600;
+}
+
+.btn-detalhes:hover {
+    background: #1F7A1F;
+    border-color: #1F7A1F;
+    box-shadow: 0 3px 10px rgba(42, 157, 42, 0.4);
+}
+
+.btn-detalhes-outline {
+    background: white;
+    color: #666;
+    border: 1px solid #dee2e6;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+.btn-detalhes-outline:hover {
+    background: #f8f9fa;
+    border-color: var(--hemotec-red);
+    color: var(--hemotec-red);
+    box-shadow: 0 2px 6px rgba(196, 21, 21, 0.1);
+}
+
+/* Sem Doações */
+.no-doacoes-message {
+    text-align: center;
+    padding: 3rem 1rem;
+    color: #999;
+}
+
+.no-doacoes-message i {
+    color: #ddd;
+    margin-bottom: 1rem;
+}
+
+.no-doacoes-message h4 {
+    color: #666;
+    margin-bottom: 0.5rem;
+}
+
+.no-doacoes-message p {
+    color: #999;
+    margin: 0;
+}
+
+/* Responsivo */
 @media (max-width: 768px) {
     .hero-title {
         font-size: 2rem;
-        flex-direction: column;
-        gap: 0.5rem;
     }
-    
-    .donations-header {
-        padding: 1.5rem 1rem;
-    }
-    
-    .header-title {
-        font-size: 1.25rem;
-    }
-    
-    .header-subtitle {
-        font-size: 0.85rem;
-    }
-    
-    .filter-buttons-modern {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 0.75rem;
-    }
-    
-    .filter-btn-modern {
-        min-height: 60px;
-        padding: 0.75rem;
-    }
-    
-    .btn-icon {
-        width: 35px;
-        height: 35px;
-        font-size: 1rem;
-    }
-    
-    .btn-label {
-        font-size: 0.8rem;
-    }
-    
-    .btn-count {
-        font-size: 0.7rem;
-    }
-    
-    .search-container {
-        max-width: 100%;
-    }
-    
-    .search-box-modern {
-        padding: 0.6rem 0.8rem;
-    }
-    
-    .search-input {
-        font-size: 0.85rem;
-    }
-    
-    .donations-list {
-        padding: 1rem;
-    }
-}
-    
-    .card-header {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 1rem;
-    }
-    
-    .donor-info {
-        width: 100%;
-    }
-    
-    .status-badge {
-        align-self: flex-start;
-    }
-    
-    .card-body {
-        flex-direction: column;
-        align-items: flex-start;
-    }
-    
-    .donation-details {
-        width: 100%;
-        flex-direction: column;
-        gap: 0.75rem;
-    }
-    
-    .card-actions {
-        width: 100%;
-        justify-content: stretch;
-    }
-    
-    .btn {
-        flex: 1;
-        justify-content: center;
-    }
-    
-    .donor-info-text {
-        flex-direction: column;
-        gap: 0.5rem;
-    }
-}
 
-@media (max-width: 576px) {
-    .main-content {
-        padding-left: 1rem;
-        padding-right: 1rem;
-    }
-    
-    .hero-section {
-        padding: 2rem 0;
-    }
-    
-    .hero-title {
-        font-size: 1.75rem;
-    }
-    
     .hero-subtitle {
         font-size: 1rem;
     }
-    
-    .donations-header {
+
+    .doacoes-container {
         padding: 1rem;
     }
-    
-    .header-title {
-        font-size: 1.1rem;
-    }
-    
-    .filter-buttons-modern {
-        grid-template-columns: 1fr;
+
+    .filter-buttons-container {
         gap: 0.5rem;
     }
-    
-    .filter-btn-modern {
-        min-height: 55px;
-        padding: 0.6rem;
+
+    .filter-btn {
+        padding: 0.5rem 1rem;
+        font-size: 0.85rem;
     }
-    
-    .btn-icon {
-        width: 30px;
-        height: 30px;
-        font-size: 0.9rem;
+
+    .donation-card .card-body {
+        flex-direction: column;
+        align-items: flex-start;
     }
-    
-    .btn-content {
-        align-items: center;
-        text-align: center;
+
+    .actions {
+        width: 100%;
+    }
+
+    .actions .btn {
         flex: 1;
-    }
-    
-    .btn-label {
-        font-size: 0.75rem;
-    }
-    
-    .search-box-modern {
-        padding: 0.5rem 0.75rem;
-    }
-    
-    .donations-list {
-        padding: 1rem;
-        gap: 1rem;
-    }
-    
-    .card-header,
-    .card-body {
-        padding: 1rem;
-    }
-    
-    .donor-name {
-        font-size: 1.1rem;
-    }
-    
-    .donor-info-text {
-        font-size: 0.8rem;
-    }
-    
-    .status-badge {
-        font-size: 0.8rem;
-        padding: 0.4rem 0.8rem;
-    }
-    
-    .btn {
-        padding: 0.6rem 1rem;
-        font-size: 0.85rem;
-    }
-    
-    .pagination-container {
-        padding: 1rem;
-    }
-}
-    
-    .card-header,
-    .card-body {
-        padding: 1rem;
-    }
-    
-    .donor-name {
-        font-size: 1.1rem;
-    }
-    
-    .donor-info-text {
-        font-size: 0.8rem;
-    }
-    
-    .status-badge {
-        font-size: 0.8rem;
-        padding: 0.4rem 0.8rem;
-    }
-    
-    .btn {
-        padding: 0.6rem 1rem;
-        font-size: 0.85rem;
-    }
-    
-    .pagination-container {
-        padding: 1rem;
+        justify-content: center;
     }
 }

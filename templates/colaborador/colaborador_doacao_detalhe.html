@@ -1,12 +1,455 @@
 {% extends "colaborador/colaborador__base.html" %}
+
 {% block custom_css %}
-<!-- <link href="/static/css" rel="stylesheet"> -->
+<link href="/static/css/colaborador/colaborador_doacao_novo.css" rel="stylesheet">
+<link href="/static/css/doador/doador_doacoes_detalhes.css" rel="stylesheet">
+<style>
+    .hero-section-historico {
+        background: linear-gradient(135deg, rgba(35, 40, 47, 0.8), rgba(80, 80, 90, 0.7)), url('https://images.unsplash.com/photo-1524178232363-1fb2b075b655?auto=format&fit=crop') no-repeat center center;
+        background-size: cover;
+        color: white;
+        padding: 9rem 0 5rem;
+        text-align: center;
+        border-radius: 0 0 50px 50px;
+        min-height: 400px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-top: 0;
+    }
+    
+    .hero-content {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 0 2rem;
+    }
+
+    .hero-title {
+        font-family: 'Montserrat', sans-serif;
+        font-weight: 700;
+        font-size: 3.5rem;
+        margin-bottom: 1.5rem;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    }
+
+    .hero-subtitle {
+        font-size: 1.3rem;
+        font-weight: 300;
+        opacity: 0.95;
+        line-height: 1.6;
+        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+    }
+    
+    /* Botão de Triagem Estilizado */
+    .btn-triagem-action {
+        background: linear-gradient(135deg, #E63946 0%, #C62828 100%);
+        color: white;
+        padding: 0.9rem 2.5rem;
+        border-radius: 50px;
+        font-weight: 600;
+        font-size: 1rem;
+        border: none;
+        box-shadow: 0 4px 15px rgba(230, 57, 70, 0.3);
+        transition: all 0.3s ease;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        text-decoration: none;
+    }
+    
+    .btn-triagem-action:hover {
+        background: linear-gradient(135deg, #C62828 0%, #A01010 100%);
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(230, 57, 70, 0.4);
+        color: white;
+    }
+    
+    /* Botões de Download de PDF */
+    .btn-download-pdf {
+        background: linear-gradient(135deg, #2A9D2A 0%, #1F7A1F 100%);
+        color: white;
+        padding: 0.8rem 1.8rem;
+        border-radius: 10px;
+        font-weight: 600;
+        font-size: 0.95rem;
+        border: none;
+        box-shadow: 0 4px 12px rgba(42, 157, 42, 0.3);
+        transition: all 0.3s ease;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        text-decoration: none;
+        margin: 0.5rem;
+    }
+    
+    .btn-download-pdf:hover {
+        background: linear-gradient(135deg, #1F7A1F 0%, #155A15 100%);
+        transform: translateY(-2px);
+        box-shadow: 0 6px 16px rgba(42, 157, 42, 0.4);
+        color: white;
+    }
+    
+    .btn-download-pdf i {
+        font-size: 1.1rem;
+    }
+    
+    /* Área de Downloads */
+    .downloads-area {
+        background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+        border-radius: 12px;
+        padding: 2rem;
+        margin-top: 1.5rem;
+        border: 2px dashed #dee2e6;
+    }
+    
+    .downloads-area h5 {
+        color: #333;
+        font-weight: 600;
+        margin-bottom: 1.5rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+    
+    .downloads-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 1rem;
+    }
+</style>
 {% endblock %}
 
 {% block conteudo %}
-<h1>colaborador_doacao_detalhe</h1>
+{% set dias_semana = ['segunda', 'terça', 'quarta', 'quinta', 'sexta', 'sábado', 'domingo'] %}
+{% set meses = ['janeiro', 'fevereiro', 'março', 'abril', 'maio', 'junho', 'julho', 'agosto', 'setembro', 'outubro', 'novembro', 'dezembro'] %}
+
+<!-- Botão Voltar -->
+<a href="/colaborador/doacoes" class="back-arrow">
+    <i class="fas fa-arrow-left"></i>
+</a>
+
+<!-- Seção de Cabeçalho -->
+<section class="hero-section-historico">
+    <div class="container">
+        <div class="hero-content">
+            <h1 class="hero-title">
+                <i class="fas fa-tint"></i> Detalhes da Doação
+            </h1>
+            <p class="hero-subtitle">Informações completas sobre a doação #{{ doacao.cod_doacao }}</p>
+        </div>
+    </div>
+</section>
+
+<!-- Conteúdo Principal -->
+<div class="container mt-n5">
+    <div class="history-container">
+        
+        <!-- Status da Doação -->
+        <div class="detail-card">
+            <div class="detail-header">
+                <h4><i class="fas fa-info-circle me-2"></i>Status da Doação</h4>
+            </div>
+            <div class="text-center py-3">
+                <span class="status-badge-large status-{{ status_info.badge }}">
+                    <i class="fas {{ status_info.icone }} me-2"></i>{{ status_info.nome }}
+                </span>
+                <p class="mt-3 text-muted">{{ data_formatada }}</p>
+            </div>
+        </div>
+
+        <!-- Informações do Doador -->
+        <div class="detail-card">
+            <div class="detail-header">
+                <h4><i class="fas fa-user me-2"></i>Informações do Doador</h4>
+            </div>
+            <div class="info-row">
+                <span class="info-label">Nome:</span>
+                <span class="info-value">{{ usuario_doador.nome if usuario_doador else 'Não especificado' }}</span>
+            </div>
+            <div class="info-row">
+                <span class="info-label">CPF:</span>
+                <span class="info-value">{{ usuario_doador.cpf if usuario_doador else 'Não especificado' }}</span>
+            </div>
+            <div class="info-row">
+                <span class="info-label">Email:</span>
+                <span class="info-value">{{ usuario_doador.email if usuario_doador else 'Não especificado' }}</span>
+            </div>
+            <div class="info-row">
+                <span class="info-label">Telefone:</span>
+                <span class="info-value">{{ usuario_doador.telefone if usuario_doador else 'Não especificado' }}</span>
+            </div>
+            {% if usuario_doador %}
+            <div class="info-row">
+                <span class="info-label">Data de Nascimento:</span>
+                <span class="info-value">{{ usuario_doador.data_nascimento.strftime('%d/%m/%Y') if usuario_doador.data_nascimento else 'Não especificada' }}</span>
+            </div>
+            {% endif %}
+        </div>
+
+        <!-- Informações da Doação -->
+        <div class="detail-card">
+            <div class="detail-header">
+                <h4><i class="fas fa-tint me-2"></i>Dados da Doação</h4>
+            </div>
+            <div class="info-row">
+                <span class="info-label">Código da Doação:</span>
+                <span class="info-value">#{{ doacao.cod_doacao }}</span>
+            </div>
+            <div class="info-row">
+                <span class="info-label">Data e Hora:</span>
+                <span class="info-value">{{ data_formatada }}</span>
+            </div>
+            <div class="info-row">
+                <span class="info-label">Tipo Sanguíneo:</span>
+                <span class="info-value">
+                    <strong>{{ doador.tipo_sanguineo if doador else 'Não especificado' }}{{ doador.fator_rh if doador and doador.fator_rh else '' }}</strong>
+                </span>
+            </div>
+            {% if doacao.quantidade %}
+            <div class="info-row">
+                <span class="info-label">Quantidade Coletada:</span>
+                <span class="info-value">{{ doacao.quantidade }}ml</span>
+            </div>
+            {% endif %}
+        </div>
+
+        <!-- SEÇÃO ESPECÍFICA POR STATUS -->
+
+        {% if status == 0 %}
+        <!-- STATUS 0: AGUARDANDO TRIAGEM -->
+        <div class="detail-card">
+            <div class="detail-header">
+                <h4><i class="fas fa-clipboard-check me-2"></i>Aguardando Triagem</h4>
+            </div>
+            <div class="alert alert-custom alert-warning mb-0" style="border-color: #FF6B6B;">
+                <i class="fas fa-hourglass-start me-2"></i>
+                <strong>Próximo Passo:</strong> Esta doação aguarda realização da triagem clínica do doador.
+            </div>
+            <div class="mt-3">
+                <p class="text-muted">
+                    <i class="fas fa-info-circle me-2"></i>
+                    Durante a triagem, serão coletadas informações sobre o histórico médico do doador para garantir a segurança da doação.
+                </p>
+            </div>
+            <div class="mt-4">
+                <a href="/colaborador/doacao/triagem/{{ doacao.cod_doacao }}" class="btn btn-triagem-action">
+                    <i class="fas fa-clipboard-check me-2"></i>Ir para Triagem
+                </a>
+            </div>
+        </div>
+
+        {% elif status == 1 %}
+        <!-- STATUS 1: AGUARDANDO COLETA -->
+        <div class="detail-card">
+            <div class="detail-header">
+                <h4><i class="fas fa-hand-holding-heart me-2"></i>Aguardando Coleta</h4>
+            </div>
+            {% if prontuario %}
+            <div class="alert alert-custom alert-info mb-3" style="border-color: #4ECDC4;">
+                <i class="fas fa-check me-2"></i>
+                <strong>Triagem Realizada:</strong> O doador foi aprovado na triagem clínica.
+            </div>
+            {% endif %}
+            <div class="detail-header mt-3">
+                <h5><i class="fas fa-notes-medical me-2"></i>Resultado da Triagem</h5>
+            </div>
+            
+            {% if prontuario %}
+            <div class="row mt-3">
+                <div class="col-md-6">
+                    <h6><strong>Condições de Saúde:</strong></h6>
+                    <ul class="list-unstyled">
+                        {% if prontuario.diabetes %}
+                        <li><i class="fas fa-times-circle text-danger me-2"></i>Diabetes</li>
+                        {% endif %}
+                        {% if prontuario.hipertensao %}
+                        <li><i class="fas fa-times-circle text-danger me-2"></i>Hipertensão</li>
+                        {% endif %}
+                        {% if prontuario.cardiopatia %}
+                        <li><i class="fas fa-times-circle text-danger me-2"></i>Cardiopatia</li>
+                        {% endif %}
+                        {% if prontuario.cancer %}
+                        <li><i class="fas fa-times-circle text-danger me-2"></i>Histórico de Câncer</li>
+                        {% endif %}
+                        {% if prontuario.hepatite %}
+                        <li><i class="fas fa-times-circle text-danger me-2"></i>Hepatite</li>
+                        {% endif %}
+                        {% if prontuario.sintomas_gripais %}
+                        <li><i class="fas fa-times-circle text-danger me-2"></i>Sintomas Gripais</li>
+                        {% endif %}
+                        {% if prontuario.fumante %}
+                        <li><i class="fas fa-smoking text-warning me-2"></i>Fumante</li>
+                        {% endif %}
+                        {% if prontuario.alcool %}
+                        <li><i class="fas fa-wine-glass text-warning me-2"></i>Consumo Recente de Álcool</li>
+                        {% endif %}
+                        
+                        {% if not (prontuario.diabetes or prontuario.hipertensao or prontuario.cardiopatia or prontuario.cancer or prontuario.hepatite or prontuario.sintomas_gripais or prontuario.fumante or prontuario.alcool) %}
+                        <li><i class="fas fa-check-circle text-success me-2"></i>Nenhuma condição impeditiva detectada</li>
+                        {% endif %}
+                    </ul>
+                </div>
+                
+                <div class="col-md-6">
+                    <h6><strong>Outras Informações:</strong></h6>
+                    <ul class="list-unstyled">
+                        {% if prontuario.jejum is not none %}
+                        <li>
+                            <i class="fas {{ 'check-circle text-success' if not prontuario.jejum else 'times-circle text-danger' }} me-2"></i>
+                            {{ 'Não estava em jejum' if not prontuario.jejum else 'Estava em jejum' }}
+                        </li>
+                        {% endif %}
+                        {% if prontuario.medicamentos and prontuario.detalhes_medicamentos %}
+                        <li><i class="fas fa-pills text-info me-2"></i>Medicamentos: {{ prontuario.detalhes_medicamentos }}</li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </div>
+            {% endif %}
+            
+            <div class="mt-4 p-3 bg-light rounded">
+                <p class="mb-2">
+                    <i class="fas fa-info-circle me-2"></i>
+                    <strong>Próximo Passo:</strong> Proceder com a coleta de sangue.
+                </p>
+            </div>
+        </div>
+
+        {% elif status == 2 %}
+        <!-- STATUS 2: AGUARDANDO EXAMES -->
+        <div class="detail-card">
+            <div class="detail-header">
+                <h4><i class="fas fa-vial me-2"></i>Acompanhamento do Processo</h4>
+            </div>
+            
+            <div class="alert alert-custom alert-info mb-4" style="border-color: #FFD93D;">
+                <i class="fas fa-flask me-2"></i>
+                <strong>Sangue Coletado com Sucesso:</strong> A amostra foi enviada para análise laboratorial.
+            </div>
+
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div>
+                        <i class="fas fa-check text-success me-2"></i>
+                        <strong>Triagem Concluída</strong>
+                        <p class="text-muted mb-0">Doador aprovado</p>
+                        <small class="text-muted">Todas as verificações clínicas realizadas</small>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div>
+                        <i class="fas fa-check text-success me-2"></i>
+                        <strong>Coleta de Sangue Realizada</strong>
+                        <p class="text-muted mb-0">{{ data_formatada }}</p>
+                        <small class="text-muted">Amostra coletada com sucesso</small>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div>
+                        <i class="fas fa-vial text-primary me-2"></i>
+                        <strong>Análise em Andamento</strong>
+                        <p class="text-muted mb-0">Em processamento</p>
+                        <small class="text-muted">A amostra está sendo processada no laboratório</small>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div>
+                        <i class="fas fa-hourglass-half text-warning me-2"></i>
+                        <strong>Aguardando Resultados</strong>
+                        <p class="text-muted mb-0">Pendente</p>
+                        <small class="text-muted">Os resultados serão disponibilizados em 3 a 5 dias úteis</small>
+                    </div>
+                </div>
+            </div>
+
+            <div class="alert alert-custom alert-info mt-4" style="border-color: #FFD93D;">
+                <i class="fas fa-info-circle me-2"></i>
+                <strong>Previsão de Resultado:</strong> Os resultados dos exames ficam prontos em 3 a 5 dias úteis. Você será notificado assim que os resultados estiverem disponíveis.
+            </div>
+        </div>
+
+        {% elif status == 3 %}
+        <!-- STATUS 3: CONCLUÍDA -->
+        <div class="detail-card">
+            <div class="comprovante-box">
+                <i class="fas fa-certificate comprovante-icon"></i>
+                <h3 class="comprovante-title">Comprovante de Doação de Sangue</h3>
+                <p class="comprovante-subtitle">Doação registrada e validada pelo sistema Hemotec</p>
+                <p class="comprovante-subtitle">Este comprovante é válido em todo o território nacional</p>
+                
+                <div class="comprovante-info">
+                    <div class="comprovante-detail">
+                        <span class="comprovante-label">Doador:</span>
+                        <span class="comprovante-value">{{ usuario_doador.nome if usuario_doador else 'Não especificado' }}</span>
+                    </div>
+                    <div class="comprovante-detail">
+                        <span class="comprovante-label">CPF:</span>
+                        <span class="comprovante-value">{{ usuario_doador.cpf if usuario_doador else 'Não especificado' }}</span>
+                    </div>
+                    <div class="comprovante-detail">
+                        <span class="comprovante-label">Código da Doação:</span>
+                        <span class="comprovante-value">#{{ doacao.cod_doacao }}</span>
+                    </div>
+                    <div class="comprovante-detail">
+                        <span class="comprovante-label">Data e Hora:</span>
+                        <span class="comprovante-value">{{ data_formatada }}</span>
+                    </div>
+                    <div class="comprovante-detail">
+                        <span class="comprovante-label">Tipo Sanguíneo:</span>
+                        <span class="comprovante-value">{{ doador.tipo_sanguineo if doador else 'Não especificado' }}{{ doador.fator_rh if doador and doador.fator_rh else '' }}</span>
+                    </div>
+                    {% if doacao.quantidade %}
+                    <div class="comprovante-detail">
+                        <span class="comprovante-label">Quantidade:</span>
+                        <span class="comprovante-value">{{ doacao.quantidade }}ml</span>
+                    </div>
+                    {% endif %}
+                </div>
+
+                <div class="mt-3">
+                    <span class="comprovante-badge">
+                        <i class="fas fa-check-circle me-1"></i> Doação Validada
+                    </span>
+                    <span class="comprovante-badge">
+                        <i class="fas fa-shield-alt me-1"></i> Documento Oficial
+                    </span>
+                </div>
+            </div>
+        </div>
+
+        <div class="alert alert-custom alert-success mt-3" style="border-color: #6BCF7F;">
+            <i class="fas fa-check-circle me-2"></i>
+            <strong>Doação Concluída!</strong> Esta doação foi finalizada e os exames foram aprovados. O sangue foi liberado para uso no banco de sangue.
+        </div>
+        
+        <!-- Área de Downloads -->
+        <div class="downloads-area">
+            <h5><i class="fas fa-download me-2"></i>Downloads Disponíveis</h5>
+            <div class="downloads-grid">
+                <a href="/colaborador/doacao/comprovante/pdf/{{ doacao.cod_doacao }}" class="btn-download-pdf" target="_blank">
+                    <i class="fas fa-file-pdf"></i>
+                    <span>Baixar Comprovante de Doação</span>
+                </a>
+                <a href="/colaborador/doacao/exames/pdf/{{ doacao.cod_doacao }}" class="btn-download-pdf" target="_blank">
+                    <i class="fas fa-file-medical"></i>
+                    <span>Baixar Resultado dos Exames</span>
+                </a>
+            </div>
+        </div>
+
+        {% endif %}
+
+        <!-- Botão Voltar -->
+        <div class="text-center mt-4 mb-5">
+            <a href="/colaborador/doacoes" class="btn btn-outline-secondary">
+                <i class="fas fa-arrow-left me-2"></i>Voltar para Lista
+            </a>
+        </div>
+
+    </div>
+</div>
 {% endblock %}
 
 {% block custom_js %}
-<!-- <script src="/static/js"></script> -->
 {% endblock %}
+
