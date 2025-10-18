@@ -114,13 +114,15 @@
             {% endif %}
         </div>
 
-        <!-- Mensagem para quando não houver doações (usada pelo filtro JS) -->
+        <!-- Mensagem para quando não houver doações após filtro (usada pelo filtro JS) -->
+        {% if doacoes %}
         <div class="text-center p-5 no-donations-message" style="display: none;">
             <i class="fas fa-heart fa-3x text-muted mb-3"></i>
             <h4>Nenhuma doação encontrada</h4>
             <p>Não há doações com o filtro selecionado.</p>
             <a href="/doador/agendamento/adicionar" class="btn btn-primary">Fazer Primeira Doação</a>
         </div>
+        {% endif %}
     </div>
 </div>
 

@@ -1,12 +1,146 @@
 {% extends "colaborador/colaborador__base.html" %}
 {% block custom_css %}
-<!-- <link href="/static/css" rel="stylesheet"> -->
+<link href="/static/css/colaborador/colaborador_campanha.css" rel="stylesheet">
 {% endblock %}
 
 {% block conteudo %}
-<h1>colaborador_campanha</h1>
+<!-- Hero Section -->
+<section class="hero-section">
+    <div class="floating-elements">
+        <i class="fas fa-bullhorn floating-element" style="font-size: 3rem;"></i>
+        <i class="fas fa-heart floating-element" style="font-size: 2.5rem;"></i>
+        <i class="fas fa-users floating-element" style="font-size: 3.5rem;"></i>
+    </div>
+    <div class="container">
+        <div class="hero-content">
+            <h1 class="hero-title">Gestão de Campanhas</h1>
+            <p class="hero-subtitle">Gerencie as campanhas de doação e ajude a salvar vidas. Cada campanha faz a diferença!</p>
+            <a href="/colaborador/campanha/adicionar" class="btn btn-light btn-lg px-4 py-3 mt-3" style="border-radius: 25px; font-weight: 600;">
+                <i class="fas fa-plus me-2"></i>
+                Adicionar Nova Campanha
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- Filtros e Busca -->
+<section class="container">
+    <div class="campaign-filter fade-in">
+        <div class="row align-items-center">
+            <div class="col-md-6">
+                <div class="search-box">
+                    <i class="fas fa-search search-icon"></i>
+                    <input
+                        type="text"
+                        class="search-input"
+                        placeholder="Buscar campanhas..."
+                        id="searchInput"
+                    >
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="text-center">
+                    <button class="filter-btn active" data-filter="all">Todas</button>
+                    <button class="filter-btn" data-filter="active">Ativas</button>
+                    <button class="filter-btn" data-filter="upcoming">Próximas</button>
+                    <button class="filter-btn" data-filter="ended">Encerradas</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Lista de Campanhas -->
+<section class="container mb-5">
+    <div class="text-center mb-5">
+        <h2 class="section-title">Todas as Campanhas</h2>
+    </div>
+    <div class="row" id="campaignsList">
+        {% if campanhas %}
+            {% for campanha in campanhas %}
+        {% set status_campanha = 'upcoming' if campanha.data_inicio > hoje else ('active' if campanha.data_fim >= hoje else 'ended') %}
+        {% set status_texto = 'Próxima' if status_campanha == 'upcoming' else ('Ativa' if status_campanha == 'active' else 'Encerrada') %}
+        {% set status_class = 'status-upcoming' if status_campanha == 'upcoming' else ('status-active' if status_campanha == 'active' else 'status-ended') %}
+        <div class="col-md-6 col-lg-4 campaign-item fade-in mb-5" data-category="{{ status_campanha }}" data-title="{{ campanha.titulo|lower }}">
+            <div class="campaign-card">
+                <div class="position-relative">
+                    <img src="{{campanha.foto}}" class="card-img-top campaign-image" alt="{{campanha.titulo}}">
+                    <div class="campaign-status {{ status_class }}">
+                        {{ status_texto }}
+                    </div>
+                </div>
+                <div class="campaign-body">
+                    <h5 class="campaign-title">{{campanha.titulo}}</h5>
+                    <div class="campaign-meta">
+                        <i class="fas fa-calendar"></i>
+                        <span>
+                            {% if campanha.data_inicio and campanha.data_fim %}
+                                {{ campanha.data_inicio.strftime('%d/%m/%Y') }} - {{ campanha.data_fim.strftime('%d/%m/%Y') }}
+                            {% elif campanha.data_inicio %}
+                                Início: {{ campanha.data_inicio.strftime('%d/%m/%Y') }}
+                            {% endif %}
+                        </span>
+                    </div>
+                    <p>{{ campanha.descricao[:180] }}{% if campanha.descricao|length > 180 %}...{% endif %}</p>
+                    
+                    <div class="campaign-actions">
+                        <a href="/colaborador/campanha/detalhes/{{ campanha.cod_campanha }}" class="btn-campaign-view">
+                            <i class="fas fa-eye"></i>
+                            <span>Visualizar</span>
+                        </a>
+                        <div class="campaign-actions-secondary">
+                            <a href="/colaborador/campanha/editar/{{ campanha.cod_campanha }}" class="btn-campaign-edit" title="Editar">
+                                <i class="fas fa-edit"></i>
+                            </a>
+                            <a href="/colaborador/campanha/excluir/{{ campanha.cod_campanha }}" class="btn-campaign-delete" title="Excluir">
+                                <i class="fas fa-trash-alt"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+        {% else %}
+        <div class="col-12 text-center">
+            <div class="empty-state">
+                <i class="fas fa-bullhorn fa-3x text-muted mb-3"></i>
+                <h4 class="text-muted">Nenhuma campanha cadastrada</h4>
+                <p class="text-muted">Adicione a primeira campanha para começar!</p>
+                <a href="/colaborador/campanha/adicionar" class="btn btn-primary mt-3">
+                    <i class="fas fa-plus me-2"></i>Adicionar Campanha
+                </a>
+            </div>
+        </div>
+        {% endif %}        
+    </div>
+</section>
+
+<!-- Modal de Confirmação de Exclusão -->
+<div class="modal fade" id="deleteModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Confirmar Exclusão</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <div class="text-center py-3">
+                    <i class="fas fa-exclamation-triangle fa-3x text-warning mb-3"></i>
+                    <p>Tem certeza que deseja excluir esta campanha?</p>
+                    <p class="text-muted small">Esta ação não poderá ser desfeita.</p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-danger" id="confirmDeleteBtn">Excluir</button>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}
 
+<!-- Custom JavaScript -->
 {% block custom_js %}
-<!-- <script src="/static/js"></script> -->
+<script src="/static/js/colaborador/colaborador_campanha.js"></script>
 {% endblock %}

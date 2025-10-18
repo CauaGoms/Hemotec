@@ -7,7 +7,7 @@ from typing import Optional
 class Agendamento:
     cod_agendamento: int
     cod_doador: int
-    data_hora: datetime
+    data_hora: Optional[datetime]
     status: int
     tipo_agendamento: str
     local_agendamento: int

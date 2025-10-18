@@ -111,14 +111,14 @@
     border: 1px solid #e9ecef;
     border-left: 4px solid var(--hemotec-red);
     border-radius: 12px;
-    margin-bottom: 1.5rem;
+    margin-bottom: 1rem;
     overflow: hidden;
     transition: all 0.3s ease;
 }
 
 .appointment-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
     border-left-color: #8b0000;
 }
 
@@ -126,8 +126,8 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 1rem 1.5rem;
-    font-size: 0.95rem;
+    padding: 0.75rem 1.25rem;
+    font-size: 0.9rem;
     background-color: #f8f9fa;
 }
 
@@ -141,63 +141,65 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 1.5rem;
+    padding: 1rem 1.25rem;
 }
 
 .doador-info {
     display: flex;
     align-items: flex-start;
-    gap: 1.5rem;
+    gap: 1rem;
     flex: 1;
 }
 
 .doador-info .icon {
-    font-size: 3rem;
+    font-size: 2.5rem;
     color: var(--hemotec-red);
-    min-width: 50px;
+    min-width: 45px;
 }
 
 .doador-name {
     font-family: 'Montserrat', sans-serif;
     font-weight: 600;
     color: var(--hemotec-gray);
-    margin-bottom: 0.5rem;
-    font-size: 1.2rem;
+    margin-bottom: 0.4rem;
+    font-size: 1.1rem;
 }
 
 .doador-details {
     color: #6c757d;
-    margin-bottom: 0.5rem;
-    font-size: 0.95rem;
+    margin-bottom: 0.4rem;
+    font-size: 0.9rem;
 }
 
 .actions {
     display: flex;
     flex-direction: column;
-    gap: 0.75rem;
-    min-width: 220px;
+    gap: 0.5rem;
+    min-width: 180px;
 }
 
 .actions .btn {
     font-weight: 600;
     white-space: nowrap;
+    font-size: 0.85rem;
+    padding: 0.45rem 0.9rem;
 }
 
 /* Botão Confirmar Presença - DESTAQUE PRINCIPAL */
 .btn-confirmar {
     background: linear-gradient(135deg, #198754, #146c43);
     color: #fff;
-    border-radius: 10px;
-    font-weight: 700;
+    border-radius: 8px;
+    font-weight: 600;
     border: none;
-    padding: 0.65rem 1.2rem;
-    font-size: 0.95rem;
+    padding: 0.45rem 0.9rem;
+    font-size: 0.85rem;
     transition: all 0.3s ease;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: 0.4rem;
-    box-shadow: 0 3px 12px rgba(25, 135, 84, 0.25);
+    gap: 0.3rem;
+    box-shadow: 0 2px 8px rgba(25, 135, 84, 0.2);
     text-transform: uppercase;
     letter-spacing: 0.3px;
 }
@@ -205,8 +207,8 @@
 .btn-confirmar:hover {
     background: linear-gradient(135deg, #146c43, #0f5132);
     color: #fff;
-    transform: translateY(-2px) scale(1.03);
-    box-shadow: 0 6px 20px rgba(25, 135, 84, 0.35);
+    transform: translateY(-2px) scale(1.02);
+    box-shadow: 0 4px 15px rgba(25, 135, 84, 0.3);
 }
 
 .btn-confirmar:active {
@@ -216,16 +218,16 @@
 .btn-detalhes {
     background: #fff;
     color: var(--hemotec-gray);
-    border-radius: 8px;
+    border-radius: 7px;
     font-weight: 600;
     border: 2px solid #dee2e6;
-    padding: 0.55rem 1rem;
-    font-size: 0.9rem;
+    padding: 0.45rem 0.9rem;
+    font-size: 0.85rem;
     transition: all 0.3s;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: 0.3rem;
+    gap: 0.25rem;
 }
 
 .btn-detalhes:hover {
@@ -235,20 +237,48 @@
     transform: translateY(-2px);
 }
 
-/* Botão Cancelar */
-.btn-cancelar {
+/* Botão Editar */
+.btn-editar {
     background: #fff;
-    color: #dc3545;
-    border-radius: 8px;
+    color: #0d6efd;
+    border-radius: 7px;
     font-weight: 600;
-    border: 2px solid #dc3545;
-    padding: 0.55rem 1rem;
-    font-size: 0.9rem;
+    border: 2px solid #0d6efd;
+    padding: 0.45rem 0.9rem;
+    font-size: 0.85rem;
     transition: all 0.3s;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: 0.3rem;
+    gap: 0.25rem;
+    text-decoration: none;
+}
+
+.btn-editar:hover {
+    background: #0d6efd;
+    color: #fff;
+    border-color: #0d6efd;
+    transform: translateY(-2px);
+    box-shadow: 0 2px 8px rgba(13, 110, 253, 0.2);
+    text-decoration: none;
+}
+
+/* Botão Cancelar */
+.btn-cancelar {
+    background: #fff;
+    color: #dc3545;
+    border-radius: 7px;
+    font-weight: 600;
+    border: 2px solid #dc3545;
+    padding: 0.45rem 0.9rem;
+    font-size: 0.85rem;
+    transition: all 0.3s;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.25rem;
+    cursor: pointer;
+    text-decoration: none;
 }
 
 .btn-cancelar:hover {
@@ -256,7 +286,7 @@
     color: #fff;
     border-color: #dc3545;
     transform: translateY(-2px);
-    box-shadow: 0 3px 10px rgba(220, 53, 69, 0.25);
+    box-shadow: 0 2px 8px rgba(220, 53, 69, 0.2);
 }
 
 /* Responsividade da Hero Section */

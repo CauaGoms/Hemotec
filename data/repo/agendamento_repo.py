@@ -36,17 +36,26 @@ def obter_todos() -> list[Agendamento]:
         cursor = conn.cursor()
         cursor.execute(OBTER_TODOS)
         rows = cursor.fetchall()
-        agendamento = [
-            Agendamento(
+        agendamento = []
+        for row in rows:
+            # Tentar parse com hora, se falhar tentar apenas data
+            try:
+                data_hora = datetime.strptime(row["data_hora"], '%Y-%m-%d %H:%M:%S')
+            except ValueError:
+                try:
+                    data_hora = datetime.strptime(row["data_hora"], '%Y-%m-%d')
+                except ValueError:
+                    data_hora = None
+            
+            agendamento.append(Agendamento(
                 cod_agendamento=row["cod_agendamento"],
                 cod_colaborador=row["cod_colaborador"],
                 cod_doador=row["cod_doador"],
-                data_hora=datetime.strptime(row["data_hora"], '%Y-%m-%d %H:%M:%S'),
+                data_hora=data_hora,
                 status=row["status"],
                 tipo_agendamento=row["tipo_agendamento"],
                 local_agendamento=row["local_agendamento"]
-            )
-            for row in rows]
+            ))
         return agendamento
     
 def obter_por_id(cod_agendamento: int) -> Optional[Agendamento]:
@@ -55,11 +64,27 @@ def obter_por_id(cod_agendamento: int) -> Optional[Agendamento]:
         cursor.execute(OBTER_POR_ID, (cod_agendamento,))
         row = cursor.fetchone()
         if row:
+            # Debug: imprimir valor da data_hora do banco
+            print(f"DEBUG - data_hora do banco: '{row['data_hora']}' (tipo: {type(row['data_hora'])})")
+            
+            # Tentar parse com hora, se falhar tentar apenas data
+            try:
+                data_hora = datetime.strptime(row["data_hora"], '%Y-%m-%d %H:%M:%S')
+            except ValueError as e:
+                print(f"DEBUG - Erro ao fazer parse com hora: {e}")
+                try:
+                    data_hora = datetime.strptime(row["data_hora"], '%Y-%m-%d')
+                except ValueError as e2:
+                    print(f"DEBUG - Erro ao fazer parse só data: {e2}")
+                    data_hora = None
+            
+            print(f"DEBUG - data_hora após parse: {data_hora}")
+            
             return Agendamento(
                 cod_agendamento=row["cod_agendamento"],
                 cod_colaborador=row["cod_colaborador"],
                 cod_doador=row["cod_doador"],
-                data_hora=datetime.strptime(row["data_hora"], '%Y-%m-%d %H:%M:%S'),
+                data_hora=data_hora,
                 status=row["status"],
                 tipo_agendamento=row["tipo_agendamento"],
                 local_agendamento=row["local_agendamento"]

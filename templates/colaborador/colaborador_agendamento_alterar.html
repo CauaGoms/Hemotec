@@ -1,13 +1,281 @@
 {% extends "colaborador/colaborador__base.html" %}
 {% block custom_css %}
-<!-- <link href="/static/css" rel="stylesheet"> -->
+<link href="/static/css/doador/doador_agendamento_adicionar.css?v=2" rel="stylesheet">
+<style>
+    .info-antiga {
+        background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+        border-left: 5px solid #dc3545;
+        padding: 1.5rem;
+        border-radius: 10px;
+        margin-bottom: 2rem;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    }
+    
+    .info-antiga h4 {
+        color: #dc3545;
+        font-weight: 700;
+        margin-bottom: 1rem;
+        font-size: 1.2rem;
+    }
+    
+    .info-item {
+        display: flex;
+        align-items: center;
+        margin-bottom: 0.75rem;
+        padding: 0.5rem;
+        background: white;
+        border-radius: 8px;
+    }
+    
+    .info-item i {
+        color: #dc3545;
+        margin-right: 0.75rem;
+        font-size: 1.1rem;
+        width: 20px;
+        text-align: center;
+    }
+    
+    .info-item strong {
+        color: #495057;
+        margin-right: 0.5rem;
+    }
+</style>
 {% endblock %}
 
 {% block conteudo %}
-<h1>colaborador_agendamento_alterar</h1>
+<a href="/colaborador/agendamento" class="back-arrow">
+    <i class="fas fa-arrow-left"></i>
+</a>
+<!-- Hero Section -->
+<section class="hero-section">
+    <div class="container">
+        <div class="hero-header">
+            <div class="hero-content">
+                <h1 class="hero-title">
+                    Alterar Agendamento
+                </h1>
+                <p class="hero-subtitle">Modifique a data e horário da doação de forma simples e rápida.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Main Content -->
+<div class="container">
+    {% if agendamento %}
+    <!-- Informações do Agendamento Antigo -->
+    <div class="info-antiga fade-in" style="margin-top: 2rem;">
+        <h4><i class="fas fa-info-circle me-2"></i>Informações do Agendamento Atual</h4>
+        <div class="info-item">
+            <i class="fas fa-hospital"></i>
+            <strong>Local:</strong>
+            <span>{{ unidade.nome if unidade else 'Não especificado' }}</span>
+        </div>
+        <div class="info-item">
+            <i class="fas fa-calendar-alt"></i>
+            <strong>Data e Horário:</strong>
+            <span>{{ agendamento.data_hora.strftime('%d/%m/%Y às %H:%M') if agendamento.data_hora else 'Não especificado' }}</span>
+        </div>
+        {% if doador %}
+        <div class="info-item">
+            <i class="fas fa-user"></i>
+            <strong>Doador:</strong>
+            <span>{{ doador.usuario.nome if doador.usuario else 'Não especificado' }}</span>
+        </div>
+        {% endif %}
+    </div>
+    {% endif %}
+    
+    <div class="booking-wizard fade-in">
+        <!-- Progress Indicator Container -->
+        <div class="progress-container mb-5" style="display: flex; align-items: center; justify-content: center; gap: 2rem;">
+            <div class="progress-indicator" style="margin: 0 auto;">
+                <div class="progress-step active" data-step="1">
+                    <div class="step-circle">
+                        <i class="fas fa-map-marker-alt"></i>
+                    </div>
+                    <span class="step-label">Local</span>
+                </div>
+                <div class="progress-line"></div>
+                <div class="progress-step" data-step="2">
+                    <div class="step-circle">
+                        <i class="fas fa-calendar-alt"></i>
+                    </div>
+                    <span class="step-label">Data</span>
+                </div>
+                <div class="progress-line"></div>
+                <div class="progress-step" data-step="3">
+                    <div class="step-circle">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <span class="step-label">Horário</span>
+                </div>
+                <div class="progress-line"></div>
+                <div class="progress-step" data-step="4">
+                    <div class="step-circle">
+                        <i class="fas fa-check"></i>
+                    </div>
+                    <span class="step-label">Confirmar</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="row">
+        <!-- Sidebar com Hemocentros -->
+        <div class="col-lg-6">
+            <div class="selection-card">
+                <h3 class="section-title">
+                    <i class="fas fa-map-marker-alt me-2"></i>
+                    Escolha o Novo Hemocentro
+                </h3>
+                <div class="search-box mb-4">
+                    <div class="input-group">
+                        <span class="input-group-text">
+                            <i class="fas fa-search"></i>
+                        </span>
+                        <input type="text" class="form-control" placeholder="Buscar hemocentro...">
+                        <button class="btn btn-outline-danger" type="button">
+                            <i class="fas fa-location-arrow"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="location-list" id="location-list">
+                    {% if unidades %}
+                        {% for unidade_item in unidades %}
+                        <div class="location-card" 
+                             onclick="selectLocation({{ unidade_item.cod_unidade }}, this)" 
+                             data-cod="{{ unidade_item.cod_unidade }}"
+                             data-nome="{{ unidade_item.nome }}"
+                             data-latitude="{{ unidade_item.latitude }}"
+                             data-longitude="{{ unidade_item.longitude }}"
+                             style="display: none;">
+                            <div class="location-header">
+                                <h5>{{ unidade_item.nome }}</h5>
+                                <span class="distance-badge" data-distance-badge>Calculando...</span>
+                            </div>
+                            <div class="location-details">
+                                <div class="detail-item">
+                                    <i class="fas fa-map-marker-alt"></i>
+                                    {{ unidade_item.rua_unidade }} - {{ unidade_item.bairro_unidade }}
+                                </div>
+                                <div class="detail-item">
+                                    <i class="far fa-clock"></i>
+                                    Seg-Sex: 7h-18h
+                                </div>
+                                {% if unidade_item.telefone %}
+                                <div class="detail-item">
+                                    <i class="fas fa-phone"></i>
+                                    {{ unidade_item.telefone }}
+                                </div>
+                                {% endif %}
+                                <div class="amenities">
+                                    <span class="amenity-badge">
+                                        <i class="fas fa-parking"></i> Estacionamento
+                                    </span>
+                                    <span class="amenity-badge">
+                                        <i class="fas fa-wheelchair"></i> Acessível
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    {% else %}
+                        <p class="text-muted text-center py-4">Nenhuma unidade de coleta disponível no momento.</p>
+                    {% endif %}
+                </div>
+                <div class="info-card">
+                    <h6>
+                        <i class="fas fa-info-circle me-2"></i>Informações Importantes
+                    </h6>
+                    <ul class="info-list">
+                        <li>
+                            <i class="fas fa-check-circle"></i> Chegue 15 min antes do horário
+                        </li>
+                        <li>
+                            <i class="fas fa-check-circle"></i> Traga documento oficial com foto
+                        </li>
+                        <li>
+                            <i class="fas fa-check-circle"></i> Evite alimentos gordurosos
+                        </li>
+                        <li>
+                            <i class="fas fa-check-circle"></i> Beba bastante água no dia
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Main Content Area -->
+        <div class="col-lg-6">
+            <div class="main-content-card">
+                <div id="emptyState" class="empty-state">
+                    <i class="fas fa-map-marked-alt"></i>
+                    <h4>Selecione um Hemocentro</h4>
+                    <p>Escolha um dos hemocentros disponíveis para continuar com a alteração</p>
+                </div>
+                
+                <div id="selectedLocation" style="display: none;">
+                    <!-- Calendar Section -->
+                    <div class="calendar-section mb-4">
+                        <h3 class="section-title">
+                            <i class="far fa-calendar-alt me-2"></i>
+                            Escolha a Nova Data
+                        </h3>
+                        
+                        <div class="calendar-controls">
+                            <button class="btn btn-sm btn-outline-danger" onclick="changeMonth(-1)">
+                                <i class="fas fa-chevron-left"></i>
+                            </button>
+                            <h5 id="currentMonth" class="calendar-month">Agosto 2025</h5>
+                            <button class="btn btn-sm btn-outline-danger" onclick="changeMonth(1)">
+                                <i class="fas fa-chevron-right"></i>
+                            </button>
+                        </div>
+                        
+                        <div class="calendar-container">
+                            <div class="calendar-header">
+                                <div class="calendar-day-name">Dom</div>
+                                <div class="calendar-day-name">Seg</div>
+                                <div class="calendar-day-name">Ter</div>
+                                <div class="calendar-day-name">Qua</div>
+                                <div class="calendar-day-name">Qui</div>
+                                <div class="calendar-day-name">Sex</div>
+                                <div class="calendar-day-name">Sáb</div>
+                            </div>
+                            
+                            <div id="calendarDays" class="calendar-body">
+                                <!-- Dias serão preenchidos via JavaScript -->
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Time Section -->
+                    <div class="time-section mb-4">
+                        <h3 class="section-title">
+                            <i class="far fa-clock me-2"></i>
+                            Escolha o Novo Horário
+                        </h3>
+                        
+                        <div id="timeSlots" class="time-slots-container">
+                            <p class="empty-message">Selecione uma data para ver os horários disponíveis</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Confirmation Button -->
+                    <div class="confirmation-section">
+                        <button id="confirmBtn" class="btn btn-confirm" onclick="confirmAppointment()">
+                            <i class="fas fa-calendar-check me-2"></i>
+                            Confirmar Alteração
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}
 
 {% block custom_js %}
-<!-- <script src="/static/js">  
-</script> -->
+<script src="/static/js/colaborador/colaborador_agendamento_alterar.js"></script>
 {% endblock %}

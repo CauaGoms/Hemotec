@@ -1,174 +1,105 @@
 {% extends "doador/doador__base.html" %}
 
 {% block custom_css %}
-<link href="/static/css/doador/doador_agendamento_excluir.css" rel="stylesheet">
+<link href="/static/css/colaborador/colaborador_campanha_excluir.css" rel="stylesheet">
 {% endblock %}
 
 {% block conteudo %}
-<!-- Botão Voltar -->
-<a href="/doador/agendamento" class="back-arrow">
-    <i class="fas fa-arrow-left"></i>
-</a>
-
-<!-- Seção de Cabeçalho -->
-<section class="hero-section-excluir">
-    <div class="container">
-        <div class="hero-content">
-            <h1 class="hero-title">Excluir Agendamento</h1>
-            <p class="hero-subtitle">Confirme os dados do agendamento que deseja excluir.</p>
+<div class="delete-container">
+    <div class="delete-card">
+        <div class="delete-icon">
+            <i class="fas fa-exclamation-triangle"></i>
+        </div>
+        
+        <h1 class="delete-title">Confirmar Exclusão</h1>
+        
+        <div class="campaign-info">
+            <div class="campaign-preview">
+                <div class="campaign-placeholder">
+                    <i class="fas fa-calendar-alt"></i>
+                </div>
+            </div>
+            
+            <div class="campaign-details">
+                <h2 class="campaign-name">Agendamento de Doação</h2>
+                <div class="campaign-meta">
+                    <div class="meta-item">
+                        <i class="fas fa-calendar-day"></i>
+                        <span>
+                            {% if agendamento and agendamento.data_hora %}
+                                {{ agendamento.data_hora.strftime('%d/%m/%Y às %H:%M') }}
+                            {% else %}
+                                Sexta-feira, 27 de Junho de 2025 - 10:30
+                            {% endif %}
+                        </span>
+                    </div>
+                    <div class="meta-item">
+                        <i class="fas fa-hospital"></i>
+                        <span>
+                            {% if unidade %}
+                                {{ unidade.nome }}
+                            {% else %}
+                                Hemocentro Regional de Cachoeiro
+                            {% endif %}
+                        </span>
+                    </div>
+                    <div class="meta-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span>
+                            {% if unidade %}
+                                {{ unidade.rua_unidade }}, {{ unidade.bairro_unidade }}
+                            {% else %}
+                                Rua Dr. Raulino de Oliveira, 345 - Centro
+                            {% endif %}
+                        </span>
+                    </div>
+                </div>
+                <p class="campaign-description">
+                    {% if agendamento %}
+                        Status: {{ agendamento.status|title if agendamento.status else 'Agendado' }}
+                    {% endif %}
+                </p>
+            </div>
+        </div>
+        
+        <div class="warning-message">
+            <i class="fas fa-exclamation-circle"></i>
+            <div>
+                <strong>Atenção:</strong> Esta ação não pode ser desfeita. Ao excluir este agendamento, você perderá sua vaga e precisará agendar novamente caso deseje doar sangue.
+            </div>
+        </div>
+        
+        <div class="delete-actions">
+            <a href="/doador/agendamento" class="btn-cancel">
+                <i class="fas fa-times me-2"></i>Cancelar
+            </a>
+            <form method="POST" action="/doador/agendamento/excluir/{{ agendamento.id if agendamento else '0' }}/confirmar" style="margin: 0;">
+                <button type="submit" class="btn-confirm-delete">
+                    <i class="fas fa-trash me-2"></i>Sim, Excluir Agendamento
+                </button>
+            </form>
         </div>
     </div>
-</section>
-
-<!-- Conteúdo Principal -->
-<div class="container mt-n5">
-    <div class="exclusao-container">
-        <!-- Card de Confirmação -->
-        <div class="confirmation-card">
-            <div class="card-header">
-                <div class="warning-icon">
-                    <i class="fas fa-exclamation-triangle"></i>
-                </div>
-                <h3 class="card-title">Confirmar Exclusão</h3>
-                <p class="card-subtitle">Você está prestes a excluir o seguinte agendamento:</p>
-            </div>
-
-            <!-- Detalhes do Agendamento -->
-            <div class="appointment-details">
-                <div class="detail-item">
-                    <div class="detail-icon">
-                        <i class="fas fa-calendar-alt"></i>
-                    </div>
-                    <div class="detail-content">
-                        <h5>Data e Horário</h5>
-                        <p>Sexta-feira, 27 de Junho de 2025 - 10:30</p>
-                    </div>
-                </div>
-
-                <div class="detail-item">
-                    <div class="detail-icon">
-                        <i class="fas fa-hospital-alt"></i>
-                    </div>
-                    <div class="detail-content">
-                        <h5>Local</h5>
-                        <p>Hemocentro Regional de Cachoeiro</p>
-                        <span class="address">Rua Dr. Raulino de Oliveira, 345 - Centro</span>
-                    </div>
-                </div>
-
-                <div class="detail-item">
-                    <div class="detail-icon">
-                        <i class="fas fa-user"></i>
-                    </div>
-                    <div class="detail-content">
-                        <h5>Doador</h5>
-                        <p>João Silva</p>
-                        <span class="address">CPF: 123.456.789-00</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Aviso Importante -->
-            <div class="warning-message">
-                <div class="warning-content">
-                    <i class="fas fa-info-circle"></i>
-                    <div>
-                        <h6>Importante!</h6>
-                        <p>Esta ação não pode ser desfeita. Ao excluir este agendamento, você perderá sua vaga e precisará agendar novamente caso deseje doar sangue.</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Botões de Ação -->
-            <div class="action-buttons">
-                <a href="/doador/agendamento" class="btn btn-cancelar">
-                    <i class="fas fa-times me-2"></i>
-                    Cancelar
-                </a>
-                <button type="button" class="btn btn-excluir-confirmar" id="confirmarExclusao">
-                    <i class="fas fa-trash-alt me-2"></i>
-                    Confirmar Exclusão
-                </button>
-            </div>
-        </div>
-
-        <!-- Sugestão de Reagendamento -->
-        <div class="suggestion-card">
-            <div class="suggestion-content">
-                <div class="suggestion-icon">
+    
+    <!-- Sugestão de Reagendamento -->
+    <div class="delete-card mt-4">
+        <div class="campaign-info">
+            <div class="campaign-preview">
+                <div class="campaign-placeholder">
                     <i class="fas fa-calendar-plus"></i>
                 </div>
-                <div class="suggestion-text">
-                    <h5>Que tal reagendar?</h5>
-                    <p>Sua doação é muito importante! Se você não pode comparecer nesta data, que tal escolher uma nova data para sua doação?</p>
+            </div>
+            
+            <div class="campaign-details">
+                <h2 class="campaign-name">Que tal reagendar?</h2>
+                <p class="campaign-description">
+                    Sua doação é muito importante! Se você não pode comparecer nesta data, que tal escolher uma nova data para sua doação?
+                </p>
+                <div class="delete-actions" style="justify-content: flex-start; margin-top: 1rem;">
+                    <a href="/doador/agendamento/alterar/{{ agendamento.id if agendamento else '0' }}" class="btn-cancel" style="background: #dc3545; color: white;">
+                        <i class="fas fa-calendar-alt me-2"></i>Reagendar
+                    </a>
                 </div>
-                <a href="/doador/agendamento/alterar" class="btn btn-reagendar-sugestao">
-                    <i class="fas fa-calendar-alt me-2"></i>
-                    Reagendar
-                </a>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Modal de Confirmação Final -->
-<div class="modal fade" id="confirmacaoFinalModal" tabindex="-1" aria-labelledby="confirmacaoFinalModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header border-0">
-                <h5 class="modal-title" id="confirmacaoFinalModalLabel">
-                    <i class="fas fa-exclamation-triangle text-warning me-2"></i>
-                    Última Confirmação
-                </h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body text-center">
-                <div class="mb-3">
-                    <i class="fas fa-trash-alt fa-3x text-danger mb-3"></i>
-                </div>
-                <h6>Tem certeza absoluta?</h6>
-                <p class="text-muted">Esta ação excluirá permanentemente seu agendamento para <strong>Sexta-feira, 27 de Junho de 2025 - 10:30</strong>.</p>
-            </div>
-            <div class="modal-footer border-0 justify-content-center">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                    <i class="fas fa-arrow-left me-2"></i>
-                    Voltar
-                </button>
-                <button type="button" class="btn btn-danger" id="excluirDefinitivo">
-                    <i class="fas fa-trash-alt me-2"></i>
-                    Sim, Excluir
-                </button>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Modal de Sucesso -->
-<div class="modal fade" id="sucessoModal" tabindex="-1" aria-labelledby="sucessoModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header border-0">
-                <h5 class="modal-title" id="sucessoModalLabel">
-                    <i class="fas fa-check-circle text-success me-2"></i>
-                    Agendamento Excluído
-                </h5>
-            </div>
-            <div class="modal-body text-center">
-                <div class="mb-3">
-                    <i class="fas fa-check-circle fa-3x text-success mb-3"></i>
-                </div>
-                <h6>Agendamento excluído com sucesso!</h6>
-                <p class="text-muted">Seu agendamento foi removido. Você pode agendar uma nova doação a qualquer momento.</p>
-            </div>
-            <div class="modal-footer border-0 justify-content-center">
-                <a href="/doador/agendamento" class="btn btn-primary">
-                    <i class="fas fa-calendar-alt me-2"></i>
-                    Ver Agendamentos
-                </a>
-                <a href="/doador/agendamento/adicionar" class="btn btn-success">
-                    <i class="fas fa-plus me-2"></i>
-                    Novo Agendamento
-                </a>
             </div>
         </div>
     </div>
@@ -176,5 +107,5 @@
 {% endblock %}
 
 {% block custom_js %}
-<script src="/static/js/doador/doador_agendamento_excluir.js"></script>
+<!-- <script src="/static/js/doador/doador_agendamento_excluir.js"></script> -->
 {% endblock %}

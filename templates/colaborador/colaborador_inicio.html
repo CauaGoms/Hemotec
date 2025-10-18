@@ -1,13 +1,330 @@
 {% extends "colaborador/colaborador__base.html" %}
+
 {% block custom_css %}
-<!-- <link href="/static/css" rel="stylesheet"> -->
+<link href="/static/css/colaborador/colaborador_inicio.css" rel="stylesheet">
 {% endblock %}
 
 {% block conteudo %}
-<h1>colaborador_inicio</h1>
+<!-- Hero Section Melhorada -->
+<section class="hero-section">
+    <div class="container">
+        <div class="hero-content">
+            <div class="hero-badge">
+                <i class="fas fa-user-md me-2"></i>
+                Painel do Colaborador
+            </div>
+            <h1 class="hero-title">Bem-vindo, {{ usuario.nome if usuario else 'Colaborador' }}</h1>
+            <p class="hero-subtitle">Gerencie doações, agendamentos e campanhas de forma eficiente</p>
+            <div class="hero-info-cards">
+                <div class="info-card">
+                    <i class="fas fa-calendar-day"></i>
+                    <div class="info-content">
+                        <span class="info-label">Data</span>
+                        <span class="info-value" id="current-date"></span>
+                    </div>
+                </div>
+                <div class="info-card">
+                    <i class="fas fa-clock"></i>
+                    <div class="info-content">
+                        <span class="info-label">Hora</span>
+                        <span class="info-value" id="current-time"></span>
+                    </div>
+                </div>
+                <div class="info-card">
+                    <i class="fas fa-briefcase-medical"></i>
+                    <div class="info-content">
+                        <span class="info-label">Função</span>
+                        <span class="info-value">Colaborador</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<main class="container">
+    <!-- Ações Rápidas - AGORA PRIMEIRA SEÇÃO -->
+    <section class="quick-actions-section">
+        <div class="section-header">
+            <div class="section-title-group">
+                <h2 class="section-title">
+                    <i class="fas fa-bolt me-2"></i>
+                    Ações Rápidas
+                </h2>
+                <p class="section-subtitle">Acesse as principais funcionalidades com um clique</p>
+            </div>
+        </div>
+
+        <div class="row g-4">
+            <!-- Ação 1: Confirmar Presença -->
+            <div class="col-lg-3 col-md-6">
+                <div class="action-card" onclick="window.location.href='/colaborador/agendamento'">
+                    <div class="action-icon success">
+                        <i class="fas fa-user-check"></i>
+                    </div>
+                    <h4 class="action-title">Confirmar Presença</h4>
+                    <p class="action-description">Marcar presença de doador agendado</p>
+                </div>
+            </div>
+
+            <!-- Ação 2: Realizar Triagem -->
+            <div class="col-lg-3 col-md-6">
+                <div class="action-card" onclick="window.location.href='/colaborador/doacoes/triagem'">
+                    <div class="action-icon warning">
+                        <i class="fas fa-clipboard-check"></i>
+                    </div>
+                    <h4 class="action-title">Realizar Triagem</h4>
+                    <p class="action-description">Avaliar aptidão do doador</p>
+                </div>
+            </div>
+
+            <!-- Ação 3: Registrar Doação -->
+            <div class="col-lg-3 col-md-6">
+                <div class="action-card" onclick="window.location.href='/colaborador/doacoes/adicionar'">
+                    <div class="action-icon primary">
+                        <i class="fas fa-plus-circle"></i>
+                    </div>
+                    <h4 class="action-title">Registrar Doação</h4>
+                    <p class="action-description">Iniciar processo de doação</p>
+                </div>
+            </div>
+
+            <!-- Ação 4: Anexar Exame -->
+            <div class="col-lg-3 col-md-6">
+                <div class="action-card" onclick="window.location.href='/colaborador/doacoes'">
+                    <div class="action-icon info">
+                        <i class="fas fa-file-medical"></i>
+                    </div>
+                    <h4 class="action-title">Anexar Exame</h4>
+                    <p class="action-description">Adicionar resultados de exames</p>
+                </div>
+            </div>
+
+            <!-- Ação 5: Adicionar Agendamento -->
+            <div class="col-lg-3 col-md-6">
+                <div class="action-card" onclick="window.location.href='/colaborador/agendamento/adicionar'">
+                    <div class="action-icon accent">
+                        <i class="fas fa-calendar-plus"></i>
+                    </div>
+                    <h4 class="action-title">Adicionar Agendamento</h4>
+                    <p class="action-description">Criar novo agendamento</p>
+                </div>
+            </div>
+
+            <!-- Ação 6: Adicionar Campanha -->
+            <div class="col-lg-3 col-md-6">
+                <div class="action-card" onclick="window.location.href='/colaborador/campanha/adicionar'">
+                    <div class="action-icon purple">
+                        <i class="fas fa-megaphone"></i>
+                    </div>
+                    <h4 class="action-title">Adicionar Campanha</h4>
+                    <p class="action-description">Lançar nova campanha</p>
+                </div>
+            </div>
+
+            <!-- Ação 7: Disponibilidade de Horários -->
+            <div class="col-lg-3 col-md-6">
+                <div class="action-card" onclick="window.location.href='/colaborador/disponibilidade_coleta'">
+                    <div class="action-icon secondary">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <h4 class="action-title">Disponibilidade</h4>
+                    <p class="action-description">Gerenciar horários de coleta</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Agenda do Dia -->
+    <section class="agenda-section">
+        <div class="row g-4">
+            <!-- Agendamentos de Hoje -->
+            <div class="col-lg-6">
+                <div class="card agenda-card">
+                    <div class="card-header">
+                        <h3 class="card-title">
+                            <i class="fas fa-calendar-alt me-2"></i>
+                            Agendamentos de Hoje
+                        </h3>
+                        <span class="badge bg-primary">{{ agendamentos_hoje|length if agendamentos_hoje else 0 }}</span>
+                    </div>
+                    <div class="card-body">
+                        <div class="agenda-list">
+                            {% if agendamentos_hoje and agendamentos_hoje|length > 0 %}
+                                {% for agendamento in agendamentos_hoje %}
+                                <div class="agenda-item" onclick="window.location.href='/colaborador/agendamento'">
+                                    <div class="agenda-item-time">
+                                        <i class="fas fa-clock me-1"></i>
+                                        {{ agendamento.data_hora.strftime('%H:%M') if agendamento.data_hora else 'Sem horário' }}
+                                    </div>
+                                    <div class="agenda-item-title">
+                                        {{ agendamento.doador.nome if agendamento.doador else 'Doador não identificado' }}
+                                    </div>
+                                    <div class="agenda-item-details">
+                                        {% if agendamento.doador and agendamento.doador.tipo_sanguineo %}
+                                        <span class="badge bg-danger me-2">{{ agendamento.doador.tipo_sanguineo }}</span>
+                                        {% endif %}
+                                        <span class="badge {{ 'bg-success' if agendamento.status == 1 else 'bg-warning' }}">
+                                            {{ 'Confirmado' if agendamento.status == 1 else 'Pendente' }}
+                                        </span>
+                                    </div>
+                                </div>
+                                {% endfor %}
+                            {% else %}
+                                <div class="empty-state">
+                                    <i class="fas fa-calendar-times"></i>
+                                    <p>Nenhum agendamento para hoje</p>
+                                </div>
+                            {% endif %}
+                        </div>
+                        <a href="/colaborador/agendamento" class="btn btn-outline-primary btn-sm w-100 mt-3">
+                            Ver Todos os Agendamentos
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Doações em Andamento -->
+            <div class="col-lg-6">
+                <div class="card agenda-card">
+                    <div class="card-header">
+                        <h3 class="card-title">
+                            <i class="fas fa-heart-pulse me-2"></i>
+                            Doações em Andamento
+                        </h3>
+                        <span class="badge bg-warning">{{ doacoes_andamento|length if doacoes_andamento else 0 }}</span>
+                    </div>
+                    <div class="card-body">
+                        <div class="agenda-list">
+                            {% if doacoes_andamento and doacoes_andamento|length > 0 %}
+                                {% for doacao in doacoes_andamento %}
+                                <div class="agenda-item" style="border-left-color: #ffc107;" onclick="window.location.href='/colaborador/doacoes'">
+                                    <div class="agenda-item-time" style="color: #ffc107;">
+                                        <i class="fas fa-clock me-1"></i>
+                                        {{ doacao.data_doacao.strftime('%H:%M') if doacao.data_doacao else 'Sem horário' }}
+                                    </div>
+                                    <div class="agenda-item-title">
+                                        {{ doacao.doador.nome if doacao.doador else 'Doador não identificado' }}
+                                    </div>
+                                    <div class="agenda-item-details">
+                                        {% if doacao.tipo_sanguineo %}
+                                        <span class="badge bg-danger me-2">{{ doacao.tipo_sanguineo }}</span>
+                                        {% endif %}
+                                        <span class="badge bg-warning">
+                                            {% if doacao.status == 5 %}
+                                                Aguardando Triagem
+                                            {% elif doacao.status == 4 %}
+                                                Aguardando Coleta
+                                            {% elif doacao.status == 2 %}
+                                                Aguardando Exames
+                                            {% else %}
+                                                Em Andamento
+                                            {% endif %}
+                                        </span>
+                                    </div>
+                                </div>
+                                {% endfor %}
+                            {% else %}
+                                <div class="empty-state">
+                                    <i class="fas fa-hand-holding-heart"></i>
+                                    <p>Nenhuma doação em andamento</p>
+                                </div>
+                            {% endif %}
+                        </div>
+                        <a href="/colaborador/doacoes" class="btn btn-outline-warning btn-sm w-100 mt-3">
+                            Ver Todas as Doações
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Campanhas em Destaque -->
+    <section class="campanhas-section">
+        <div class="section-header">
+            <h2 class="section-title">
+                <i class="fas fa-star me-2"></i>
+                Campanhas em Destaque
+            </h2>
+            <a href="/colaborador/campanha" class="view-all-link">Ver todas <i class="fas fa-arrow-right"></i></a>
+        </div>
+
+        <div class="row g-4" id="campanhas-destaque">
+            {% if campanhas_ativas and campanhas_ativas|length > 0 %}
+                {% for campanha in campanhas_ativas[:3] %}
+                <div class="col-lg-4 col-md-6">
+                    <div class="card campanha-card h-100" onclick="window.location.href='/colaborador/campanha'">
+                        {% if campanha.foto %}
+                        <img src="{{ url_for('static', path=campanha.foto) }}" 
+                             class="card-img-top" 
+                             alt="{{ campanha.titulo }}"
+                             style="height: 200px; object-fit: cover;"
+                             onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                        <div class="bg-gradient-primary d-none align-items-center justify-content-center" style="height: 200px;">
+                            <i class="fas fa-bullhorn fa-3x text-white opacity-50"></i>
+                        </div>
+                        {% else %}
+                        <div class="bg-gradient-primary d-flex align-items-center justify-content-center" style="height: 200px;">
+                            <i class="fas fa-bullhorn fa-3x text-white opacity-50"></i>
+                        </div>
+                        {% endif %}
+                        <div class="card-body d-flex flex-column">
+                            <h5 class="card-title">{{ campanha.titulo }}</h5>
+                            <p class="card-text flex-grow-1">
+                                {{ campanha.descricao[:100] if campanha.descricao else 'Sem descrição' }}
+                                {% if campanha.descricao and campanha.descricao|length > 100 %}...{% endif %}
+                            </p>
+                            <div class="d-flex justify-content-between align-items-center mt-3">
+                                <div>
+                                    <small class="text-muted">
+                                        <i class="fas fa-calendar me-1"></i>
+                                        {{ campanha.data_inicio.strftime('%d/%m/%Y') if campanha.data_inicio else 'Sem data' }}
+                                        {% if campanha.data_fim %}
+                                        até {{ campanha.data_fim.strftime('%d/%m/%Y') }}
+                                        {% endif %}
+                                    </small>
+                                </div>
+                                <span class="badge bg-success">Ativa</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            {% else %}
+                <div class="col-12">
+                    <div class="empty-state-large">
+                        <i class="fas fa-bullhorn"></i>
+                        <p>Nenhuma campanha ativa no momento</p>
+                        <a href="/colaborador/campanha/adicionar" class="btn btn-primary">
+                            <i class="fas fa-plus me-2"></i>Criar Nova Campanha
+                        </a>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    </section>
+
+    <!-- Notificações Recentes -->
+    <section class="notifications-section">
+        <div class="section-header">
+            <h2 class="section-title">
+                <i class="fas fa-bell me-2"></i>
+                Notificações Recentes
+            </h2>
+            <a href="/colaborador/notificacao" class="view-all-link">Ver todas <i class="fas fa-arrow-right"></i></a>
+        </div>
+
+        <div class="notifications-container" id="notificacoes-lista">
+            <div class="empty-state">
+                <i class="fas fa-bell-slash"></i>
+                <p>Nenhuma notificação recente</p>
+            </div>
+        </div>
+    </section>
+</main>
 {% endblock %}
 
 {% block custom_js %}
-<!-- <script src="/static/js">  
-</script> -->
+<script src="/static/js/colaborador/colaborador_inicio.js"></script>
 {% endblock %}

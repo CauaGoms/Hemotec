@@ -5,6 +5,8 @@
 {% endblock %}
 
 {% block conteudo %}
+{% set dias_semana = ['Segunda-feira', 'Terça-feira', 'Quarta-feira', 'Quinta-feira', 'Sexta-feira', 'Sábado', 'Domingo'] %}
+{% set meses = ['janeiro', 'fevereiro', 'março', 'abril', 'maio', 'junho', 'julho', 'agosto', 'setembro', 'outubro', 'novembro', 'dezembro'] %}
 <!-- Botão Voltar -->
 <a href="/colaborador" class="back-arrow">
     <i class="fas fa-arrow-left"></i>
@@ -30,190 +32,88 @@
         <!-- Filtros de Horário -->
         <div class="d-flex justify-content-between align-items-center mb-4">
             <h3 class="mb-0">Lista de Agendamentos</h3>
-            <div class="dropdown">
-                <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="horarioFilter" data-bs-toggle="dropdown" aria-expanded="false">
-                    <i class="fas fa-clock me-2"></i>Filtrar por Horário
-                </button>
-                <ul class="dropdown-menu" aria-labelledby="horarioFilter">
-                    <li><a class="dropdown-item" href="#" data-horario="all">Todos os Horários</a></li>
-                    <li><a class="dropdown-item" href="#" data-horario="manha">Manhã (06:00 - 12:00)</a></li>
-                    <li><a class="dropdown-item" href="#" data-horario="tarde">Tarde (12:00 - 18:00)</a></li>
-                    <li><a class="dropdown-item" href="#" data-horario="noite">Noite (18:00 - 23:00)</a></li>
-                </ul>
+            <div class="d-flex gap-2">
+                <a href="/colaborador/agendamento/adicionar" class="btn btn-success">
+                    <i class="fas fa-plus me-2"></i>Adicionar
+                </a>
+                <div class="dropdown">
+                    <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="horarioFilter" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="fas fa-clock me-2"></i>Filtrar por Horário
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="horarioFilter">
+                        <li><a class="dropdown-item" href="#" data-horario="all">Todos os Horários</a></li>
+                        <li><a class="dropdown-item" href="#" data-horario="manha">Manhã (06:00 - 12:00)</a></li>
+                        <li><a class="dropdown-item" href="#" data-horario="tarde">Tarde (12:00 - 18:00)</a></li>
+                        <li><a class="dropdown-item" href="#" data-horario="noite">Noite (18:00 - 23:00)</a></li>
+                    </ul>
+                </div>
             </div>
         </div>
 
         <!-- Lista de Agendamentos -->
         <div id="agendamentos-list">
-            <!-- Card de Agendamento - Manhã -->
-            <div class="appointment-card" data-horario="manha" data-hora="09:00">
-                <div class="card-header">
-                    <strong class="date"><i class="fas fa-calendar-day me-2"></i>Terça-feira, 15 de Outubro de 2025 - 09:00</strong>
-                </div>
-                <div class="card-body">
-                    <div class="doador-info">
-                        <i class="fas fa-user-circle icon"></i>
-                        <div>
-                            <h5 class="doador-name">Maria Santos Silva</h5>
-                            <p class="doador-details">
-                                <span class="me-3"><i class="fas fa-tint me-1"></i> Tipo: A+</span>
-                                <span class="me-3"><i class="fas fa-phone me-1"></i> (28) 99999-8888</span>
-                                <span><i class="fas fa-envelope me-1"></i> maria.santos@email.com</span>
-                            </p>
-                            <small class="text-muted">
-                                <i class="fas fa-hospital me-1"></i> Hemocentro Regional - Rua Principal, 100
-                            </small>
+            {% if agendamentos_agendados %}
+                {% for agendamento, local_agendamento, doador in agendamentos_agendados %}
+                {% set hora = agendamento.data_hora.hour %}
+                {% if hora >= 6 and hora < 12 %}
+                    {% set periodo = "manha" %}
+                {% elif hora >= 12 and hora < 18 %}
+                    {% set periodo = "tarde" %}
+                {% else %}
+                    {% set periodo = "noite" %}
+                {% endif %}
+                <div class="appointment-card" data-horario="{{ periodo }}" data-hora="{{ agendamento.data_hora.strftime('%H:%M') }}">
+                    <div class="card-header">
+                        <strong class="date"><i class="fas fa-calendar-day me-2"></i>{{ dias_semana[agendamento.data_hora.weekday()] }}, {{ agendamento.data_hora.day }} de {{ meses[agendamento.data_hora.month - 1] }} de {{ agendamento.data_hora.year }} - {{ agendamento.data_hora.strftime('%H:%M') }}</strong>
+                    </div>
+                    <div class="card-body">
+                        <div class="doador-info">
+                            <i class="fas fa-user-circle icon"></i>
+                            <div>
+                                <h5 class="doador-name">
+                                    {% if doador and doador.usuario %}
+                                        {{ doador.usuario.nome }}
+                                    {% else %}
+                                        Doador não especificado
+                                    {% endif %}
+                                </h5>
+                                <p class="doador-details">
+                                    {% if doador and doador.doador and doador.doador.tipo_sanguineo %}
+                                    <span class="me-3"><i class="fas fa-tint me-1"></i> Tipo: {{ doador.doador.tipo_sanguineo }}{{ doador.doador.fator_rh }}</span>
+                                    {% endif %}
+                                    {% if doador and doador.usuario and doador.usuario.telefone %}
+                                    <span class="me-3"><i class="fas fa-phone me-1"></i> {{ doador.usuario.telefone }}</span>
+                                    {% endif %}
+                                    {% if doador and doador.usuario and doador.usuario.email %}
+                                    <span><i class="fas fa-envelope me-1"></i> {{ doador.usuario.email }}</span>
+                                    {% endif %}
+                                </p>
+                                <small class="text-muted">
+                                    <i class="fas fa-hospital me-1"></i> {{ local_agendamento.nome if local_agendamento else 'Local não especificado' }} - {{ local_agendamento.rua_unidade if local_agendamento else '' }}
+                                </small>
+                            </div>
+                        </div>
+                        <div class="actions">
+                            <button class="btn btn-confirmar" data-id="{{ agendamento.cod_agendamento }}" data-doador="{{ agendamento.cod_doador }}">
+                                <i class="fas fa-check-circle me-2"></i> Confirmar Presença
+                            </button>
+                            <a href="/colaborador/agendamento/alterar/{{ agendamento.cod_agendamento }}" class="btn btn-editar">
+                                <i class="fas fa-edit me-2"></i> Alterar
+                            </a>
+                            <a href="/colaborador/agendamento/excluir/{{ agendamento.cod_agendamento }}" class="btn btn-cancelar">
+                                <i class="fas fa-times-circle me-2"></i> Cancelar
+                            </a>
                         </div>
                     </div>
-                    <div class="actions">
-                        <button class="btn btn-confirmar" data-id="1">
-                            <i class="fas fa-check-circle me-2"></i> Confirmar Presença
-                        </button>
-                        <button class="btn btn-cancelar" data-id="1">
-                            <i class="fas fa-times-circle me-2"></i> Cancelar
-                        </button>
-                        <button class="btn btn-detalhes" data-id="1">
-                            <i class="fas fa-eye me-2"></i> Ver Detalhes
-                        </button>
-                    </div>
                 </div>
+                {% endfor %}
+            {% else %}
+            <div class="text-center p-5">
+                <i class="fas fa-calendar-times fa-3x text-muted mb-3"></i>
+                <h4>Nenhum agendamento futuro</h4>
+                <p>Não há agendamentos agendados no momento.</p>
             </div>
-
-            <!-- Card de Agendamento - Manhã -->
-            <div class="appointment-card" data-horario="manha" data-hora="10:30">
-                <div class="card-header">
-                    <strong class="date"><i class="fas fa-calendar-day me-2"></i>Terça-feira, 15 de Outubro de 2025 - 10:30</strong>
-                </div>
-                <div class="card-body">
-                    <div class="doador-info">
-                        <i class="fas fa-user-circle icon"></i>
-                        <div>
-                            <h5 class="doador-name">João Pedro Oliveira</h5>
-                            <p class="doador-details">
-                                <span class="me-3"><i class="fas fa-tint me-1"></i> Tipo: O-</span>
-                                <span class="me-3"><i class="fas fa-phone me-1"></i> (28) 99888-7777</span>
-                                <span><i class="fas fa-envelope me-1"></i> joao.pedro@email.com</span>
-                            </p>
-                            <small class="text-muted">
-                                <i class="fas fa-hospital me-1"></i> Unidade Móvel - Shopping Center
-                            </small>
-                        </div>
-                    </div>
-                    <div class="actions">
-                        <button class="btn btn-confirmar" data-id="2">
-                            <i class="fas fa-check-circle me-2"></i> Confirmar Presença
-                        </button>
-                        <button class="btn btn-cancelar" data-id="2">
-                            <i class="fas fa-times-circle me-2"></i> Cancelar
-                        </button>
-                        <button class="btn btn-detalhes" data-id="2">
-                            <i class="fas fa-eye me-2"></i> Ver Detalhes
-                        </button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Card de Agendamento - Tarde -->
-            <div class="appointment-card" data-horario="tarde" data-hora="14:00">
-                <div class="card-header">
-                    <strong class="date"><i class="fas fa-calendar-day me-2"></i>Terça-feira, 15 de Outubro de 2025 - 14:00</strong>
-                </div>
-                <div class="card-body">
-                    <div class="doador-info">
-                        <i class="fas fa-user-circle icon"></i>
-                        <div>
-                            <h5 class="doador-name">Ana Carolina Ferreira</h5>
-                            <p class="doador-details">
-                                <span class="me-3"><i class="fas fa-tint me-1"></i> Tipo: B+</span>
-                                <span class="me-3"><i class="fas fa-phone me-1"></i> (28) 98777-6666</span>
-                                <span><i class="fas fa-envelope me-1"></i> ana.ferreira@email.com</span>
-                            </p>
-                            <small class="text-muted">
-                                <i class="fas fa-hospital me-1"></i> Hemocentro Regional - Rua Principal, 100
-                            </small>
-                        </div>
-                    </div>
-                    <div class="actions">
-                        <button class="btn btn-confirmar" data-id="3">
-                            <i class="fas fa-check-circle me-2"></i> Confirmar Presença
-                        </button>
-                        <button class="btn btn-cancelar" data-id="3">
-                            <i class="fas fa-times-circle me-2"></i> Cancelar
-                        </button>
-                        <button class="btn btn-detalhes" data-id="3">
-                            <i class="fas fa-eye me-2"></i> Ver Detalhes
-                        </button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Card de Agendamento - Tarde -->
-            <div class="appointment-card" data-horario="tarde" data-hora="16:30">
-                <div class="card-header">
-                    <strong class="date"><i class="fas fa-calendar-day me-2"></i>Terça-feira, 15 de Outubro de 2025 - 16:30</strong>
-                </div>
-                <div class="card-body">
-                    <div class="doador-info">
-                        <i class="fas fa-user-circle icon"></i>
-                        <div>
-                            <h5 class="doador-name">Carlos Eduardo Souza</h5>
-                            <p class="doador-details">
-                                <span class="me-3"><i class="fas fa-tint me-1"></i> Tipo: AB+</span>
-                                <span class="me-3"><i class="fas fa-phone me-1"></i> (28) 97666-5555</span>
-                                <span><i class="fas fa-envelope me-1"></i> carlos.souza@email.com</span>
-                            </p>
-                            <small class="text-muted">
-                                <i class="fas fa-hospital me-1"></i> Unidade Móvel - Shopping Center
-                            </small>
-                        </div>
-                    </div>
-                    <div class="actions">
-                        <button class="btn btn-confirmar" data-id="4">
-                            <i class="fas fa-check-circle me-2"></i> Confirmar Presença
-                        </button>
-                        <button class="btn btn-cancelar" data-id="4">
-                            <i class="fas fa-times-circle me-2"></i> Cancelar
-                        </button>
-                        <button class="btn btn-detalhes" data-id="4">
-                            <i class="fas fa-eye me-2"></i> Ver Detalhes
-                        </button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Card de Agendamento - Noite -->
-            <div class="appointment-card" data-horario="noite" data-hora="19:00">
-                <div class="card-header">
-                    <strong class="date"><i class="fas fa-calendar-day me-2"></i>Terça-feira, 15 de Outubro de 2025 - 19:00</strong>
-                </div>
-                <div class="card-body">
-                    <div class="doador-info">
-                        <i class="fas fa-user-circle icon"></i>
-                        <div>
-                            <h5 class="doador-name">Patricia Lima Santos</h5>
-                            <p class="doador-details">
-                                <span class="me-3"><i class="fas fa-tint me-1"></i> Tipo: O+</span>
-                                <span class="me-3"><i class="fas fa-phone me-1"></i> (28) 96555-4444</span>
-                                <span><i class="fas fa-envelope me-1"></i> patricia.lima@email.com</span>
-                            </p>
-                            <small class="text-muted">
-                                <i class="fas fa-hospital me-1"></i> Hemocentro Regional - Rua Principal, 100
-                            </small>
-                        </div>
-                    </div>
-                    <div class="actions">
-                        <button class="btn btn-confirmar" data-id="5">
-                            <i class="fas fa-check-circle me-2"></i> Confirmar Presença
-                        </button>
-                        <button class="btn btn-cancelar" data-id="5">
-                            <i class="fas fa-times-circle me-2"></i> Cancelar
-                        </button>
-                        <button class="btn btn-detalhes" data-id="5">
-                            <i class="fas fa-eye me-2"></i> Ver Detalhes
-                        </button>
-                    </div>
-                </div>
-            </div>
+            {% endif %}
         </div>
 
         <!-- Mensagem para quando não houver agendamentos -->

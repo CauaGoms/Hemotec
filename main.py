@@ -96,6 +96,7 @@ from routes.colaborador.colaborador_agendamento import router as colaborador_age
 from routes.colaborador.colaborador_agendamento_adicionar import router as colaborador_agendamento_adicionar_router
 from routes.colaborador.colaborador_agendamento_alterar import router as colaborador_agendamento_alterar_router
 from routes.colaborador.colaborador_agendamento_excluir import router as colaborador_agendamento_excluir_router
+from routes.colaborador.debug_agendamento import router as debug_agendamento_router
 from routes.colaborador.colaborador_doacao import router as colaborador_doacao_router
 from routes.colaborador.colaborador_doacao_adicionar import router as colaborador_doacao_adicionar_router
 from routes.colaborador.colaborador_doacao_alterar import router as colaborador_doacao_alterar_router
@@ -216,6 +217,7 @@ app.include_router(colaborador_campanha_alterar_router)
 app.include_router(colaborador_campanha_excluir_router)
 app.include_router(colaborador_campanha_detalhe_router)
 app.include_router(colaborador_notificacao_router)
+app.include_router(debug_agendamento_router)
 app.include_router(colaborador_agendamento_router)
 app.include_router(colaborador_agendamento_adicionar_router)
 app.include_router(colaborador_agendamento_alterar_router)

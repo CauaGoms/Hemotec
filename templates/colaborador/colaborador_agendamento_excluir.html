@@ -1,10 +1,85 @@
 {% extends "colaborador/colaborador__base.html" %}
 {% block custom_css %}
-<!-- <link href="/static/css" rel="stylesheet"> -->
+<link href="/static/css/colaborador/colaborador_campanha_excluir.css" rel="stylesheet">
 {% endblock %}
 
 {% block conteudo %}
-<h1>colaborador_agendamento_excluir</h1>
+<div class="delete-container">
+    <div class="delete-card">
+        <div class="delete-icon">
+            <i class="fas fa-exclamation-triangle"></i>
+        </div>
+        
+        <h1 class="delete-title">Confirmar Exclusão</h1>
+        
+        <div class="campaign-info">
+            <div class="campaign-preview">
+                <div class="campaign-placeholder">
+                    <i class="fas fa-calendar-alt"></i>
+                </div>
+            </div>
+            
+            <div class="campaign-details">
+                <h2 class="campaign-name">Agendamento de Doação</h2>
+                <div class="campaign-meta">
+                    <div class="meta-item">
+                        <i class="fas fa-calendar-day"></i>
+                        <span>
+                            {% if agendamento and agendamento.data_hora %}
+                                {{ agendamento.data_hora.strftime('%d/%m/%Y às %H:%M') }}
+                            {% else %}
+                                Data não disponível
+                            {% endif %}
+                        </span>
+                    </div>
+                    <div class="meta-item">
+                        <i class="fas fa-user"></i>
+                        <span>
+                            {% if doador and doador.usuario %}
+                                {{ doador.usuario.nome }}
+                            {% else %}
+                                Doador não especificado
+                            {% endif %}
+                        </span>
+                    </div>
+                    <div class="meta-item">
+                        <i class="fas fa-hospital"></i>
+                        <span>
+                            {% if unidade %}
+                                {{ unidade.nome }}
+                            {% else %}
+                                Unidade não especificada
+                            {% endif %}
+                        </span>
+                    </div>
+                </div>
+                <p class="campaign-description">
+                    {% if agendamento %}
+                        Status: {{ 'Concluído' if agendamento.status == 1 else 'Agendado' }}
+                    {% endif %}
+                </p>
+            </div>
+        </div>
+        
+        <div class="warning-message">
+            <i class="fas fa-exclamation-circle"></i>
+            <div>
+                <strong>Atenção:</strong> Esta ação não pode ser desfeita. O agendamento será permanentemente removido do sistema.
+            </div>
+        </div>
+        
+        <div class="delete-actions">
+            <a href="/colaborador/agendamento" class="btn-cancel">
+                <i class="fas fa-times me-2"></i>Cancelar
+            </a>
+            <form method="POST" action="/colaborador/agendamento/excluir/{{ agendamento.cod_agendamento if agendamento else '0' }}/confirmar" style="margin: 0;">
+                <button type="submit" class="btn-confirm-delete">
+                    <i class="fas fa-trash me-2"></i>Sim, Excluir Agendamento
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
 {% endblock %}
 
 {% block custom_js %}

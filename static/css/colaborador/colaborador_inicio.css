@@ -1,0 +1,813 @@
+/* ========================================
+   COLABORADOR INÍCIO - ESTILOS
+   ======================================== */
+
+:root {
+    --hemotec-red: #e02020;
+    --hemotec-dark-red: #c01010;
+    --hemotec-light-red: #ff4040;
+    --hemotec-bg-light: #f8f9fa;
+    --hemotec-text-dark: #333333;
+    --hemotec-accent: #0066cc;
+    --hemotec-success: #28a745;
+    --hemotec-warning: #ffc107;
+    --hemotec-info: #17a2b8;
+}
+
+/* ========================================
+   HERO SECTION MELHORADA
+   ======================================== */
+.hero-section {
+    background: linear-gradient(135deg, #e02020 0%, #b81818 50%, #8b0000 100%);
+    color: white;
+    padding: 100px 0 70px;
+    margin-bottom: 50px;
+    position: relative;
+    overflow: hidden;
+}
+
+.hero-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+        radial-gradient(circle at 20% 50%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 80% 80%, rgba(255, 255, 255, 0.08) 0%, transparent 50%),
+        url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    opacity: 1;
+    animation: backgroundMove 20s ease-in-out infinite;
+}
+
+@keyframes backgroundMove {
+    0%, 100% { transform: translateX(0) translateY(0); }
+    50% { transform: translateX(20px) translateY(20px); }
+}
+
+.hero-content {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.hero-badge {
+    display: inline-block;
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+    padding: 8px 20px;
+    border-radius: 50px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin-bottom: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    animation: fadeInDown 0.8s ease-out;
+}
+
+.hero-title {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 3rem;
+    font-weight: 700;
+    margin-bottom: 15px;
+    text-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    animation: fadeInUp 0.8s ease-out 0.2s both;
+}
+
+.hero-subtitle {
+    font-size: 1.3rem;
+    opacity: 0.95;
+    margin-bottom: 35px;
+    font-weight: 300;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    animation: fadeInUp 0.8s ease-out 0.4s both;
+}
+
+.hero-info-cards {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+    animation: fadeInUp 0.8s ease-out 0.6s both;
+}
+
+.info-card {
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    padding: 20px 30px;
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    transition: all 0.3s ease;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+.info-card:hover {
+    background: rgba(255, 255, 255, 0.25);
+    transform: translateY(-5px);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
+}
+
+.info-card i {
+    font-size: 2rem;
+    opacity: 0.9;
+}
+
+.info-content {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+}
+
+.info-label {
+    font-size: 0.75rem;
+    opacity: 0.8;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 600;
+    margin-bottom: 3px;
+}
+
+.info-value {
+    font-size: 1.1rem;
+    font-weight: 700;
+    font-family: 'Montserrat', sans-serif;
+}
+
+/* ========================================
+   ESTATÍSTICAS RÁPIDAS
+   ======================================== */
+.stats-section {
+    margin-top: -40px;
+    margin-bottom: 50px;
+    position: relative;
+    z-index: 10;
+}
+
+.stat-card {
+    background: white;
+    border-radius: 15px;
+    padding: 30px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s ease;
+    border: none;
+    position: relative;
+    overflow: hidden;
+    height: 100%;
+}
+
+.stat-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background: linear-gradient(90deg, var(--hemotec-red), var(--hemotec-light-red));
+    transition: height 0.3s ease;
+}
+
+.stat-card.stat-primary::before {
+    background: linear-gradient(90deg, #007bff, #0056b3);
+}
+
+.stat-card.stat-warning::before {
+    background: linear-gradient(90deg, #ffc107, #ff9800);
+}
+
+.stat-card.stat-success::before {
+    background: linear-gradient(90deg, #28a745, #20c997);
+}
+
+.stat-card.stat-info::before {
+    background: linear-gradient(90deg, #17a2b8, #138496);
+}
+
+.stat-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.stat-card:hover::before {
+    height: 100%;
+    opacity: 0.05;
+}
+
+.stat-icon {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    margin-bottom: 20px;
+    background: linear-gradient(135deg, var(--hemotec-red), var(--hemotec-light-red));
+    color: white;
+}
+
+.stat-primary .stat-icon {
+    background: linear-gradient(135deg, #007bff, #0056b3);
+}
+
+.stat-warning .stat-icon {
+    background: linear-gradient(135deg, #ffc107, #ff9800);
+}
+
+.stat-success .stat-icon {
+    background: linear-gradient(135deg, #28a745, #20c997);
+}
+
+.stat-info .stat-icon {
+    background: linear-gradient(135deg, #17a2b8, #138496);
+}
+
+.stat-content {
+    text-align: center;
+}
+
+.stat-number {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--hemotec-text-dark);
+    margin-bottom: 5px;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.stat-label {
+    font-size: 0.95rem;
+    color: #6c757d;
+    margin-bottom: 15px;
+    font-weight: 500;
+}
+
+.stat-link {
+    color: var(--hemotec-red);
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.stat-link:hover {
+    color: var(--hemotec-dark-red);
+    gap: 8px;
+}
+
+.stat-primary .stat-link {
+    color: #007bff;
+}
+
+.stat-primary .stat-link:hover {
+    color: #0056b3;
+}
+
+.stat-warning .stat-link {
+    color: #ff9800;
+}
+
+.stat-warning .stat-link:hover {
+    color: #e68900;
+}
+
+.stat-success .stat-link {
+    color: #28a745;
+}
+
+.stat-success .stat-link:hover {
+    color: #20c997;
+}
+
+.stat-info .stat-link {
+    color: #17a2b8;
+}
+
+.stat-info .stat-link:hover {
+    color: #138496;
+}
+
+/* ========================================
+   AÇÕES RÁPIDAS
+   ======================================== */
+.quick-actions-section {
+    margin-bottom: 50px;
+}
+
+.section-header {
+    margin-bottom: 35px;
+}
+
+.section-title-group {
+    text-align: center;
+}
+
+.section-title {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--hemotec-text-dark);
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.section-subtitle {
+    color: #6c757d;
+    font-size: 1rem;
+    margin-bottom: 0;
+}
+
+.action-card {
+    background: white;
+    border-radius: 15px;
+    padding: 30px 20px;
+    text-align: center;
+    box-shadow: 0 3px 15px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s ease;
+    cursor: pointer;
+    border: 2px solid transparent;
+    height: 100%;
+    min-height: 200px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.action-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.15);
+    border-color: var(--hemotec-red);
+}
+
+.action-icon {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    margin: 0 auto 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.5rem;
+    color: white;
+    transition: all 0.3s ease;
+}
+
+.action-icon.primary {
+    background: linear-gradient(135deg, var(--hemotec-red), var(--hemotec-light-red));
+}
+
+.action-icon.warning {
+    background: linear-gradient(135deg, #ffc107, #ff9800);
+}
+
+.action-icon.success {
+    background: linear-gradient(135deg, #28a745, #20c997);
+}
+
+.action-icon.info {
+    background: linear-gradient(135deg, #17a2b8, #138496);
+}
+
+.action-icon.accent {
+    background: linear-gradient(135deg, #007bff, #0056b3);
+}
+
+.action-icon.purple {
+    background: linear-gradient(135deg, #6f42c1, #8b5cf6);
+}
+
+.action-icon.secondary {
+    background: linear-gradient(135deg, #6c757d, #5a6268);
+}
+
+.action-card:hover .action-icon {
+    transform: scale(1.15) rotate(5deg);
+}
+
+.action-title {
+    font-size: 1.15rem;
+    font-weight: 600;
+    color: var(--hemotec-text-dark);
+    margin-bottom: 10px;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.action-description {
+    font-size: 0.9rem;
+    color: #6c757d;
+    margin-bottom: 0;
+    line-height: 1.5;
+}
+
+/* ========================================
+   AGENDA DO DIA
+   ======================================== */
+.agenda-section {
+    margin-bottom: 50px;
+}
+
+.agenda-card {
+    border: none;
+    border-radius: 15px;
+    box-shadow: 0 3px 15px rgba(0, 0, 0, 0.08);
+    height: 100%;
+}
+
+.agenda-card .card-header {
+    background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+    border-bottom: 2px solid #dee2e6;
+    padding: 20px;
+    border-radius: 15px 15px 0 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.agenda-card .card-title {
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: var(--hemotec-text-dark);
+    margin-bottom: 0;
+    display: flex;
+    align-items: center;
+}
+
+.agenda-card .card-body {
+    padding: 20px;
+}
+
+.agenda-list {
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+.agenda-item {
+    background: #f8f9fa;
+    border-left: 4px solid var(--hemotec-red);
+    padding: 15px;
+    margin-bottom: 12px;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+.agenda-item:hover {
+    background: #e9ecef;
+    transform: translateX(5px);
+}
+
+.agenda-item-time {
+    font-size: 0.85rem;
+    color: var(--hemotec-red);
+    font-weight: 600;
+    margin-bottom: 5px;
+}
+
+.agenda-item-title {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--hemotec-text-dark);
+    margin-bottom: 5px;
+}
+
+.agenda-item-details {
+    font-size: 0.85rem;
+    color: #6c757d;
+}
+
+.empty-state {
+    text-align: center;
+    padding: 60px 20px;
+    color: #adb5bd;
+}
+
+.empty-state i {
+    font-size: 4rem;
+    margin-bottom: 15px;
+    opacity: 0.5;
+}
+
+.empty-state p {
+    font-size: 1rem;
+    margin-bottom: 0;
+}
+
+/* ========================================
+   CAMPANHAS EM DESTAQUE
+   ======================================== */
+.campanhas-section {
+    margin-bottom: 50px;
+}
+
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.view-all-link {
+    color: var(--hemotec-red);
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.view-all-link:hover {
+    color: var(--hemotec-dark-red);
+    gap: 8px;
+}
+
+.campanha-card {
+    background: white;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 3px 15px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s ease;
+}
+
+.campanha-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.campanha-image {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.campanha-body {
+    padding: 20px;
+}
+
+.campanha-title {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--hemotec-text-dark);
+    margin-bottom: 10px;
+}
+
+.campanha-description {
+    font-size: 0.9rem;
+    color: #6c757d;
+    margin-bottom: 15px;
+}
+
+.campanha-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.85rem;
+    color: #6c757d;
+}
+
+.empty-state-large {
+    text-align: center;
+    padding: 80px 20px;
+    background: #f8f9fa;
+    border-radius: 15px;
+}
+
+.empty-state-large i {
+    font-size: 5rem;
+    color: #dee2e6;
+    margin-bottom: 20px;
+}
+
+.empty-state-large p {
+    font-size: 1.1rem;
+    color: #6c757d;
+    margin-bottom: 20px;
+}
+
+/* ========================================
+   NOTIFICAÇÕES RECENTES
+   ======================================== */
+.notifications-section {
+    margin-bottom: 50px;
+}
+
+.notifications-container {
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 3px 15px rgba(0, 0, 0, 0.08);
+    padding: 20px;
+}
+
+.notification-item {
+    display: flex;
+    gap: 15px;
+    padding: 15px;
+    border-bottom: 1px solid #e9ecef;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.notification-item:last-child {
+    border-bottom: none;
+}
+
+.notification-item:hover {
+    background: #f8f9fa;
+}
+
+.notification-icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    color: white;
+    flex-shrink: 0;
+}
+
+.notification-icon.primary {
+    background: linear-gradient(135deg, #007bff, #0056b3);
+}
+
+.notification-icon.warning {
+    background: linear-gradient(135deg, #ffc107, #ff9800);
+}
+
+.notification-icon.success {
+    background: linear-gradient(135deg, #28a745, #20c997);
+}
+
+.notification-icon.info {
+    background: linear-gradient(135deg, #17a2b8, #138496);
+}
+
+.notification-content {
+    flex: 1;
+}
+
+.notification-title {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--hemotec-text-dark);
+    margin-bottom: 5px;
+}
+
+.notification-message {
+    font-size: 0.9rem;
+    color: #6c757d;
+    margin-bottom: 5px;
+}
+
+.notification-time {
+    font-size: 0.8rem;
+    color: #adb5bd;
+}
+
+/* ========================================
+   RESPONSIVIDADE
+   ======================================== */
+@media (max-width: 992px) {
+    .hero-title {
+        font-size: 2.2rem;
+    }
+
+    .hero-subtitle {
+        font-size: 1.1rem;
+    }
+
+    .section-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+    }
+
+    .stat-number {
+        font-size: 2rem;
+    }
+
+    .info-card {
+        padding: 15px 20px;
+    }
+}
+
+@media (max-width: 768px) {
+    .hero-section {
+        padding: 80px 0 50px;
+    }
+
+    .hero-title {
+        font-size: 1.9rem;
+    }
+
+    .hero-subtitle {
+        font-size: 1rem;
+    }
+
+    .section-title {
+        font-size: 1.5rem;
+    }
+
+    .stat-card {
+        padding: 20px;
+    }
+
+    .action-card {
+        padding: 25px;
+        min-height: 180px;
+    }
+
+    .hero-info-cards {
+        gap: 15px;
+    }
+
+    .info-card {
+        flex: 1 1 100%;
+        min-width: 250px;
+    }
+}
+
+/* ========================================
+   ANIMAÇÕES
+   ======================================== */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes pulse {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.05);
+    }
+}
+
+.stat-card,
+.action-card,
+.agenda-card,
+.campanha-card {
+    animation: fadeInUp 0.6s ease-out;
+}
+
+.stat-card:nth-child(1) { animation-delay: 0.1s; }
+.stat-card:nth-child(2) { animation-delay: 0.2s; }
+.stat-card:nth-child(3) { animation-delay: 0.3s; }
+.stat-card:nth-child(4) { animation-delay: 0.4s; }
+
+.action-card:nth-child(1) { animation-delay: 0.1s; }
+.action-card:nth-child(2) { animation-delay: 0.2s; }
+.action-card:nth-child(3) { animation-delay: 0.3s; }
+.action-card:nth-child(4) { animation-delay: 0.4s; }
+.action-card:nth-child(5) { animation-delay: 0.5s; }
+.action-card:nth-child(6) { animation-delay: 0.6s; }
+.action-card:nth-child(7) { animation-delay: 0.7s; }
+
+/* ========================================
+   SCROLLBAR CUSTOMIZADA
+   ======================================== */
+.agenda-list::-webkit-scrollbar {
+    width: 8px;
+}
+
+.agenda-list::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+}
+
+.agenda-list::-webkit-scrollbar-thumb {
+    background: var(--hemotec-red);
+    border-radius: 10px;
+}
+
+.agenda-list::-webkit-scrollbar-thumb:hover {
+    background: var(--hemotec-dark-red);
+}

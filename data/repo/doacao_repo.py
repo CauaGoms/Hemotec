@@ -50,16 +50,26 @@ def obter_todos() -> list[Doacao]:
         cursor = conn.cursor()
         cursor.execute(OBTER_TODOS)
         rows = cursor.fetchall()
-        doacao = [
-            Doacao(
+        doacao = []
+        for row in rows:
+            # Tentar parse com hora, se falhar tentar apenas data
+            try:
+                data_hora = datetime.strptime(row["data_hora"], '%Y-%m-%d %H:%M:%S')
+            except ValueError:
+                try:
+                    data_hora = datetime.strptime(row["data_hora"], '%Y-%m-%d')
+                except ValueError:
+                    data_hora = None
+            
+            doacao.append(Doacao(
                 cod_doacao=row["cod_doacao"],
                 cod_doador=row["cod_doador"],
                 cod_agendamento=row["cod_agendamento"],
-                data_hora=datetime.strptime(row["data_hora"], '%Y-%m-%d %H:%M:%S'),
+                data_hora=data_hora,
                 quantidade=row["quantidade"],
                 status=row["status"],
-                observacoes=row["observacoes"])  
-                for row in rows]
+                observacoes=row["observacoes"]
+            ))
         return doacao
     
 def obter_por_id(cod_doacao: int) -> Optional[Doacao]:
@@ -68,11 +78,20 @@ def obter_por_id(cod_doacao: int) -> Optional[Doacao]:
         cursor.execute(OBTER_POR_ID, (cod_doacao,))
         row = cursor.fetchone()
         if row:
+            # Tentar parse com hora, se falhar tentar apenas data
+            try:
+                data_hora = datetime.strptime(row["data_hora"], '%Y-%m-%d %H:%M:%S')
+            except ValueError:
+                try:
+                    data_hora = datetime.strptime(row["data_hora"], '%Y-%m-%d')
+                except ValueError:
+                    data_hora = None
+            
             return Doacao(
                 cod_doacao=row["cod_doacao"],
                 cod_doador=row["cod_doador"],
                 cod_agendamento=row["cod_agendamento"],
-                data_hora=datetime.strptime(row["data_hora"], '%Y-%m-%d %H:%M:%S'),
+                data_hora=data_hora,
                 quantidade=row["quantidade"],
                 status=row["status"],
                 observacoes=row["observacoes"]

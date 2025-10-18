@@ -40,9 +40,10 @@ document.addEventListener('DOMContentLoaded', function() {
     // Função para confirmar presença
     const botoesConfirmar = document.querySelectorAll('.btn-confirmar');
     botoesConfirmar.forEach(botao => {
-        botao.addEventListener('click', function() {
+        botao.addEventListener('click', async function() {
             const agendamentoId = this.getAttribute('data-id');
-            mostrarModalConfirmarPresenca(agendamentoId);
+            const doadorId = this.getAttribute('data-doador');
+            mostrarModalConfirmarPresenca(agendamentoId, doadorId);
         });
     });
 
@@ -55,72 +56,89 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // Função para mostrar modal de confirmação de presença
-    function mostrarModalConfirmarPresenca(agendamentoId) {
-        const modalContent = document.getElementById('modalConfirmarContent');
-        
-        // Simulação de dados do agendamento (em produção, buscar via AJAX)
-        const agendamento = {
-            id: agendamentoId,
-            doador: 'Maria Santos Silva',
-            data: '15/10/2025 09:00',
-            tipo: 'A+',
-            local: 'Hemocentro Regional'
-        };
-        
-        modalContent.innerHTML = `
-            <div class="text-center mb-3">
-                <i class="fas fa-user-check fa-3x text-success mb-3"></i>
-                <h5>Confirmar presença do doador?</h5>
-            </div>
-            <div class="alert alert-info">
-                <strong>Doador:</strong> ${agendamento.doador}<br>
-                <strong>Data/Hora:</strong> ${agendamento.data}<br>
-                <strong>Tipo Sanguíneo:</strong> ${agendamento.tipo}<br>
-                <strong>Local:</strong> ${agendamento.local}
-            </div>
-            <p class="text-muted mb-0">
-                <i class="fas fa-info-circle me-1"></i>
-                Ao confirmar, o status do agendamento será atualizado e o doador poderá iniciar o processo de doação.
-            </p>
-        `;
-        
-        const modal = new bootstrap.Modal(document.getElementById('confirmarPresencaModal'));
-        modal.show();
-        
-        // Configurar ação do botão de confirmação
-        const btnConfirmar = document.getElementById('btnConfirmarPresenca');
-        btnConfirmar.onclick = function() {
-            confirmarPresenca(agendamentoId);
+    // Função para confirmar presença - cria doação
+    async function confirmarPresenca(agendamentoId, doadorId) {
+        // Fechar o modal primeiro
+        const modal = bootstrap.Modal.getInstance(document.getElementById('confirmarPresencaModal'));
+        if (modal) {
             modal.hide();
-        };
+        }
+
+        try {
+            const response = await fetch('/api/colaborador/agendamento/confirmar-presenca', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    cod_agendamento: parseInt(agendamentoId),
+                    cod_doador: parseInt(doadorId)
+                })
+            });
+
+            const data = await response.json();
+
+            if (data.success) {
+                // Mostrar toast de sucesso
+                mostrarToast('Presença confirmada! Doação criada com sucesso.', 'success');
+                
+                // Remover o card da lista após confirmação
+                const card = document.querySelector(`.btn-confirmar[data-id="${agendamentoId}"]`).closest('.appointment-card');
+                
+                // Animação de fade out
+                card.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+                card.style.opacity = '0';
+                card.style.transform = 'scale(0.9)';
+                
+                setTimeout(() => {
+                    card.remove();
+                    
+                    // Verificar se ainda há agendamentos
+                    const totalCards = document.querySelectorAll('.appointment-card').length;
+                    if (totalCards === 0) {
+                        location.reload();
+                    }
+                }, 500);
+            } else {
+                mostrarToast('Erro ao confirmar presença: ' + (data.message || 'Erro desconhecido'), 'error');
+            }
+        } catch (error) {
+            console.error('Erro:', error);
+            mostrarToast('Erro ao confirmar presença. Tente novamente.', 'error');
+        }
     }
 
-    // Função para confirmar presença (simulação)
-    function confirmarPresenca(agendamentoId) {
-        // Em produção, fazer requisição AJAX para confirmar no backend
-        console.log('Confirmando presença do agendamento:', agendamentoId);
+    // Função para mostrar modal de confirmação de presença
+    function mostrarModalConfirmarPresenca(agendamentoId, doadorId) {
+        const modalContent = document.getElementById('modalConfirmarContent');
         
-        // Mostrar toast de sucesso
-        mostrarToast('Presença confirmada com sucesso!', 'success');
-        
-        // Remover o card da lista após confirmação (simulação)
+        // Buscar informações do card
         const card = document.querySelector(`.btn-confirmar[data-id="${agendamentoId}"]`).closest('.appointment-card');
+        const doadorNome = card.querySelector('.doador-name').textContent;
+        const dataHora = card.querySelector('.date').textContent.replace('📅', '').trim();
         
-        // Animação de fade out
-        card.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
-        card.style.opacity = '0';
-        card.style.transform = 'scale(0.9)';
+        modalContent.innerHTML = `
+            <div class="text-center">
+                <i class="fas fa-user-check fa-3x text-success mb-3"></i>
+                <h5>Confirmar Presença do Doador</h5>
+                <p class="mb-3">Ao confirmar a presença, uma nova doação será criada para:</p>
+                <div class="alert alert-info">
+                    <strong><i class="fas fa-user me-2"></i>${doadorNome}</strong><br>
+                    <small><i class="fas fa-calendar me-2"></i>${dataHora}</small>
+                </div>
+                <p class="text-muted small">Esta ação irá marcar o agendamento como concluído e criar um novo registro de doação.</p>
+            </div>
+        `;
         
-        setTimeout(() => {
-            card.remove();
-            
-            // Verificar se ainda há agendamentos
-            const totalCards = document.querySelectorAll('.appointment-card').length;
-            if (totalCards === 0) {
-                document.querySelector('.no-agendamentos-message').style.display = 'block';
-            }
-        }, 500);
+        // Configurar evento do botão de confirmação
+        const btnConfirmar = document.getElementById('btnConfirmarPresenca');
+        btnConfirmar.onclick = async function() {
+            await confirmarPresenca(agendamentoId, doadorId);
+        };
+        
+        // Mostrar modal
+        const modal = new bootstrap.Modal(document.getElementById('confirmarPresencaModal'));
+        modal.show();
     }
 
     // Função para mostrar modal de cancelamento

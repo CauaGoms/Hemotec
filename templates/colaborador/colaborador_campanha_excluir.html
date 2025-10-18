@@ -1,10 +1,71 @@
 {% extends "colaborador/colaborador__base.html" %}
 {% block custom_css %}
-<!-- <link href="/static/css" rel="stylesheet"> -->
+<link href="/static/css/colaborador/colaborador_campanha_excluir.css" rel="stylesheet">
 {% endblock %}
 
 {% block conteudo %}
-<h1>colaborador_campanha_excluir</h1>
+<div class="delete-container">
+    <div class="delete-card">
+        <div class="delete-icon">
+            <i class="fas fa-exclamation-triangle"></i>
+        </div>
+        
+        <h1 class="delete-title">Confirmar Exclusão</h1>
+        
+        <div class="campaign-info">
+            <div class="campaign-preview">
+                {% if campanha.foto %}
+                <img src="{{ campanha.foto }}" alt="{{ campanha.titulo }}" class="campaign-image">
+                {% else %}
+                <div class="campaign-placeholder">
+                    <i class="fas fa-image"></i>
+                </div>
+                {% endif %}
+            </div>
+            
+            <div class="campaign-details">
+                <h2 class="campaign-name">{{ campanha.titulo }}</h2>
+                <div class="campaign-meta">
+                    <div class="meta-item">
+                        <i class="fas fa-calendar-alt"></i>
+                        <span>
+                            {% if campanha.data_inicio and campanha.data_fim %}
+                                {{ campanha.data_inicio.strftime('%d/%m/%Y') }} - {{ campanha.data_fim.strftime('%d/%m/%Y') }}
+                            {% elif campanha.data_inicio %}
+                                Início: {{ campanha.data_inicio.strftime('%d/%m/%Y') }}
+                            {% endif %}
+                        </span>
+                    </div>
+                    <div class="meta-item">
+                        <i class="fas fa-info-circle"></i>
+                        <span class="status-badge {{ 'status-active' if campanha.status == 'ativa' or campanha.status == 'Ativa' else 'status-inactive' }}">
+                            {{ campanha.status|title if campanha.status else 'Indefinido' }}
+                        </span>
+                    </div>
+                </div>
+                <p class="campaign-description">{{ campanha.descricao[:200] }}{% if campanha.descricao|length > 200 %}...{% endif %}</p>
+            </div>
+        </div>
+        
+        <div class="warning-message">
+            <i class="fas fa-exclamation-circle"></i>
+            <div>
+                <strong>Atenção:</strong> Esta ação não pode ser desfeita. A campanha será permanentemente removida do sistema.
+            </div>
+        </div>
+        
+        <div class="delete-actions">
+            <a href="/colaborador/campanha" class="btn-cancel">
+                <i class="fas fa-times me-2"></i>Cancelar
+            </a>
+            <form method="POST" action="/colaborador/campanha/excluir/{{ campanha.cod_campanha }}/confirmar" style="margin: 0;">
+                <button type="submit" class="btn-confirm-delete">
+                    <i class="fas fa-trash me-2"></i>Sim, Excluir Campanha
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
 {% endblock %}
 
 {% block custom_js %}
