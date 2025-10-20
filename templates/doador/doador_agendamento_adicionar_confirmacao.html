@@ -97,7 +97,9 @@
 {% block custom_js %}
 <script>
     // Passa o cod_usuario do backend para o JavaScript
-    window.COD_DOADOR = {{ usuario.cod_usuario }};
+    // Funciona com dicionário ou objeto
+    window.COD_DOADOR = {{ usuario.get('cod_usuario') if usuario else 'null' }};
+    console.log('COD_DOADOR definido como:', window.COD_DOADOR);
 </script>
 <script src="/static/js/doador/doador_agendamento_adicionar_confirmacao.js"></script>
 {% endblock %}

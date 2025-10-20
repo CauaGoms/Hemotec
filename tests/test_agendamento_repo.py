@@ -31,7 +31,7 @@ class TestAgendamentoRepo:
         id_colaborador = colaborador_repo.inserir(colaborador_exemplo)
 
         agendamento_repo.criar_tabela()
-        agendamento_exemplo.cod_doador = id_doador
+        agendamento_exemplo.cod_usuario = id_usuario
         agendamento_exemplo.cod_colaborador = id_colaborador
 
         #Act
@@ -41,7 +41,7 @@ class TestAgendamentoRepo:
         assert dados_db is not None, "A assinatura inserida não deveria ser None"
         assert dados_db.cod_agendamento == id_tabela_inserida, "O ID do colaborador inserido não confere"
         assert dados_db.cod_colaborador == id_colaborador, "O ID do colaborador inserido não confere"
-        assert dados_db.cod_doador == id_doador, "O ID do colaborador inserido não confere"
+        assert dados_db.cod_usuario == id_usuario, "O ID do usuário inserido não confere"
         assert dados_db.data_hora.strftime('%Y-%m-%d %H:%M:%S') == "2025-01-01 01:00:00", "A data/hora não confere"
         assert dados_db.status == 1, "O ID do colaborador inserido não confere"
         assert dados_db.tipo_agendamento == "tipo_agendamento teste", "O ID do colaborador inserido não confere"
@@ -66,7 +66,7 @@ class TestAgendamentoRepo:
         id_colaborador = colaborador_repo.inserir(colaborador_exemplo)
 
         agendamento_repo.criar_tabela()
-        agendamento_exemplo.cod_doador = id_doador
+        agendamento_exemplo.cod_usuario = id_usuario
         agendamento_exemplo.cod_colaborador = id_colaborador
 
         #Act
@@ -114,7 +114,7 @@ class TestAgendamentoRepo:
         id_colaborador = colaborador_repo.inserir(colaborador_exemplo)
 
         agendamento_repo.criar_tabela()
-        agendamento_exemplo.cod_doador = id_doador
+        agendamento_exemplo.cod_usuario = id_usuario
         agendamento_exemplo.cod_colaborador = id_colaborador
 
         id_tabela_inserida = agendamento_repo.inserir(agendamento_exemplo)                   
@@ -168,7 +168,7 @@ class TestAgendamentoRepo:
 
         agendamento_repo.criar_tabela()
         for i, agendamento in enumerate(lista_agendamentos_exemplo):
-            agendamento.cod_doador = doador_ids[i]
+            agendamento.cod_usuario = doador_ids[i]
             agendamento.cod_colaborador = colaborador_ids[i]
             agendamento_repo.inserir(agendamento)
         #Act
@@ -238,7 +238,7 @@ class TestAgendamentoRepo:
         id_colaborador = colaborador_repo.inserir(colaborador_exemplo)
 
         agendamento_repo.criar_tabela()
-        agendamento_exemplo.cod_doador = id_doador
+        agendamento_exemplo.cod_usuario = id_usuario
         agendamento_exemplo.cod_colaborador = id_colaborador
         id_tabela_inserida = agendamento_repo.inserir(agendamento_exemplo)
            
@@ -248,7 +248,7 @@ class TestAgendamentoRepo:
         assert dados_db is not None, "O agendamento retornado não deveria ser None"
         assert dados_db.cod_agendamento == id_tabela_inserida, "O ID do agendamento não confere"
         assert dados_db.cod_colaborador == id_colaborador, "O ID do colaborador não confere"
-        assert dados_db.cod_doador == id_doador, "O ID do doador não confere"
+        assert dados_db.cod_usuario == id_usuario, "O ID do usuário não confere"
         assert dados_db.data_hora == datetime(2025, 1, 1, 1, 0), "A data e hora do agendamento não confere"
         assert dados_db.status == 1, "O status não confere"
         assert dados_db.tipo_agendamento == "tipo_agendamento teste", "O tipo de agendamento não confere"

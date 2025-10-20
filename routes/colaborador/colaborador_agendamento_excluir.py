@@ -17,9 +17,9 @@ async def get_colaborador_agendamento_excluir(request: Request, id_agendamento: 
     if agendamento:
         if agendamento.local_agendamento:
             unidade = unidade_coleta_repo.obter_por_id(agendamento.local_agendamento)
-        if agendamento.cod_doador:
-            doador = doador_repo.obter_por_id(agendamento.cod_doador)
-            usuario_doador = usuario_repo.obter_por_id(agendamento.cod_doador)
+        if agendamento.cod_usuario:
+            doador = doador_repo.obter_por_id(agendamento.cod_usuario)
+            usuario_doador = usuario_repo.obter_por_id(agendamento.cod_usuario)
             doador_completo = {
                 'doador': doador,
                 'usuario': usuario_doador
@@ -31,7 +31,7 @@ async def get_colaborador_agendamento_excluir(request: Request, id_agendamento: 
         agendamento_dict = {
             'cod_agendamento': agendamento.cod_agendamento,
             'cod_colaborador': agendamento.cod_colaborador,
-            'cod_doador': agendamento.cod_doador,
+            'cod_usuario': agendamento.cod_usuario,
             'data_hora': str(agendamento.data_hora) if agendamento.data_hora else None,  # Simples: "2025-10-21 09:00:00"
             'status': agendamento.status,
             'tipo_agendamento': agendamento.tipo_agendamento,

@@ -273,7 +273,9 @@
 {% block custom_js %}
 <script>
     // Define cod_usuario globalmente para uso no JavaScript
-    window.cod_usuario = {{ usuario.cod_usuario if usuario and usuario.cod_usuario else 'null' }};
+    // Funciona com dicionário ou objeto
+    window.cod_usuario = {{ usuario.get('cod_usuario') if usuario else 'null' }};
+    console.log('cod_usuario definido como:', window.cod_usuario);
 </script>
 <script src="/static/js/doador/doador_agendamento_adicionar.js?v=2"></script>
 {% endblock %}

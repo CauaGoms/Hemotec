@@ -49,7 +49,7 @@ async def debug_agendamento(id_agendamento: int):
         return JSONResponse({
             "cod_agendamento": agendamento.cod_agendamento,
             "cod_colaborador": agendamento.cod_colaborador,
-            "cod_doador": agendamento.cod_doador,
+            "cod_usuario": agendamento.cod_usuario,
             "data_hora": str(agendamento.data_hora) if agendamento.data_hora else None,
             "data_hora_type": str(type(agendamento.data_hora)),
             "data_hora_formatted": data_hora_formatted,
