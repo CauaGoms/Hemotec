@@ -26,7 +26,7 @@ async def get_colaborador_agendamento_adicionar(request: Request, usuario_logado
 
 @router.get("/api/colaborador/buscar-doadores")
 @requer_autenticacao(["colaborador"])
-async def buscar_doadores(query: str = Query(...), usuario_logado: dict = None):
+async def buscar_doadores(request: Request, query: str = Query(...), usuario_logado: dict = None):
     """
     Busca doadores por nome ou CPF
     """
