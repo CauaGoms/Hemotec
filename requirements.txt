@@ -9,6 +9,8 @@ passlib[bcrypt]
 python-jose[cryptography]
 Pillow
 reportlab
+mailersend
+python-dotenv
 
 # Dependências de teste
 pytest
