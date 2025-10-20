@@ -11,6 +11,7 @@ from dtos.usuario_dtos import CriarUsuarioDTO
 from util.auth_decorator import criar_sessao, requer_autenticacao
 from util.flash_messages import informar_sucesso, informar_erro
 from util.security import criar_hash_senha, verificar_senha
+from util.email_service import enviar_email_verificacao, gerar_codigo_verificacao
 
 router = APIRouter()
 templates = Jinja2Templates(directory="templates")
@@ -30,6 +31,26 @@ async def post_login(
             "publico/publico_login.html",
             {"request": request, "erro": "Email ou senha inválidos"}
         )
+
+    # Verificar se o email foi verificado (apenas para doadores)
+    if usuario.perfil and usuario.perfil.strip().lower() == "doador":
+        dados_verificacao = usuario_repo.obter_dados_verificacao(email)
+        
+        if dados_verificacao and not dados_verificacao["email_verificado"]:
+            # Email não verificado - redirecionar para verificação
+            # Verificar se ainda tem código válido, senão gerar novo
+            if not dados_verificacao["codigo_verificacao"]:
+                codigo = gerar_codigo_verificacao()
+                data_codigo = datetime.now().isoformat()
+                usuario_repo.atualizar_codigo_verificacao(email, codigo, data_codigo)
+                enviar_email_verificacao(email, usuario.nome, codigo)
+            
+            # Armazenar na sessão temporária
+            request.session["email_pendente_verificacao"] = email
+            request.session["nome_pendente_verificacao"] = usuario.nome
+            
+            informar_erro(request, "Você precisa verificar seu email antes de acessar a plataforma.")
+            return RedirectResponse("/verificar-email", status.HTTP_303_SEE_OTHER)
 
     # Criar sessão
     usuario_dict = {
@@ -147,8 +168,25 @@ async def post_cadastro(
             usuario_id = usuario_repo.inserir(usuario)
             print(f"Usuário inserido, id: {usuario_id}")
 
-            informar_sucesso(request, f"Cadastro realizado com sucesso! Bem-vindo(a), {dados.nome}!")
-            return RedirectResponse("/validar_telefone", status.HTTP_303_SEE_OTHER)
+            # Gerar código de verificação
+            codigo = gerar_codigo_verificacao()
+            data_codigo = datetime.now().isoformat()
+            
+            # Atualizar código no banco
+            usuario_repo.atualizar_codigo_verificacao(dados.email, codigo, data_codigo)
+            
+            # Enviar email de verificação
+            email_enviado = enviar_email_verificacao(dados.email, dados.nome, codigo)
+            
+            if not email_enviado:
+                print(f"⚠ Aviso: Erro ao enviar email de verificação para {dados.email}")
+            
+            # Armazenar informações na sessão temporária para a página de verificação
+            request.session["email_pendente_verificacao"] = dados.email
+            request.session["nome_pendente_verificacao"] = dados.nome
+            
+            informar_sucesso(request, f"Cadastro realizado! Verifique seu email para continuar.")
+            return RedirectResponse("/verificar-email", status.HTTP_303_SEE_OTHER)
         except sqlite3.IntegrityError as ie:
             # Tratamento comum: e-mail já existe (constraint UNIQUE)
             msg = str(ie)

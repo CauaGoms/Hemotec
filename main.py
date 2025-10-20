@@ -153,6 +153,7 @@ from routes.rotas_teste.doador_estoque import router as doador_estoque_teste_rou
 
 #Importando routers de atenticação
 from routes.auth_routes import router as auth_router
+from routes.verificar_email_routes import router as verificar_email_router
 
 cidade_repo.criar_tabela()
 horario_funcionamento_repo.criar_tabela()
@@ -282,6 +283,7 @@ app.include_router(doador_estoque_teste_router)
 
 #routers de autenticação
 app.include_router(auth_router)
+app.include_router(verificar_email_router)
 
 if __name__ == "__main__":
     uvicorn.run(app="main:app", host="127.0.0.1", port=8000, reload=True)
