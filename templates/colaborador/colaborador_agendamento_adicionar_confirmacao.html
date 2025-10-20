@@ -1,0 +1,84 @@
+{% extends "colaborador/colaborador__base.html" %}
+
+{% block custom_css %}
+<link href="/static/css/doador/doador_agendamento_adicionar_confirmacao.css" rel="stylesheet">
+{% endblock %}
+
+{% block conteudo %}
+<!-- Seção de Cabeçalho -->
+<section class="hero-section-confirmacao d-flex align-items-center">
+    <div class="container">
+        <div class="hero-content text-center">
+            <i class="fas fa-check-circle fa-4x text-white mb-3 animated-icon"></i>
+            <h1 class="hero-title">Agendamento Confirmado!</h1>
+            <p class="hero-subtitle">O agendamento do doador foi criado com sucesso.</p>
+        </div>
+    </div>
+</section>
+<!-- Conteúdo Principal -->
+<div class="container mt-5">
+    <!-- Adicionado espaço entre a seção de cabeçalho e o resumo do agendamento -->
+    <div class="confirmation-container fade-in">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="card shadow-lg">
+                    <div class="card-header text-center">
+                        <h3 class="section-title mb-0">
+                            <i class="fas fa-calendar-check me-2"></i>Resumo do Agendamento
+                        </h3>
+                    </div>
+                    <div class="card-body p-4">
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <div class="info-item">
+                                    <strong class="info-label">
+                                        <i class="fas fa-hospital me-2"></i>Hemocentro
+                                    </strong>
+                                    <p id="confirm-location" class="info-value">Hemocentro Regional de Cachoeiro</p>
+                                    <p id="confirm-address" class="info-sub-value">Rua Dr. Raulino de Oliveira, 345 - Centro</p>
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <div class="info-item">
+                                    <strong class="info-label">
+                                        <i class="fas fa-calendar-alt me-2"></i>Data e Horário
+                                    </strong>
+                                    <p id="confirm-datetime" class="info-value">Sexta-feira, 27 de Junho de 2025 às 10:30</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="alert alert-info mt-3" role="alert">
+                            <h5 class="alert-heading">
+                                <i class="fas fa-info-circle"></i> Lembretes Importantes
+                            </h5>
+                            <ul>
+                                <li>Certifique-se de que o doador chegue com 15 minutos de antecedência.</li>
+                                <li>Confirme se o doador possui documento oficial com foto (RG, CNH, etc.).</li>
+                                <li>Lembre o doador de se alimentar bem e evitar comidas gordurosas antes da doação.</li>
+                                <li>Recomende beber bastante água durante o dia.</li>
+                            </ul>
+                        </div>
+                        <!-- Botões de Navegação -->
+                        <div class="d-flex justify-content-center flex-wrap mt-4">
+                            <a href="/colaborador/agendamento" class="btn btn-outline-secondary m-2">
+                                <i class="fas fa-calendar-alt me-2"></i>Ver Agendamentos
+                            </a>
+                            <a href="/colaborador" class="btn btn-outline-secondary m-2">
+                                <i class="fas fa-home me-2"></i>Voltar para a Home
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block custom_js %}
+<script>
+    // Variável global para armazenar o cod_doador da URL
+    window.COD_DOADOR_SELECIONADO = null;
+</script>
+<script src="/static/js/colaborador/colaborador_agendamento_adicionar_confirmacao.js"></script>
+{% endblock %}
