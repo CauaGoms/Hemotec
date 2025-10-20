@@ -11,6 +11,7 @@ Pillow
 reportlab
 mailersend
 python-dotenv
+resend>=0.8.0
 
 # Dependências de teste
 pytest

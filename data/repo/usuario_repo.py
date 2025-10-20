@@ -269,6 +269,46 @@ def obter_todos_por_perfil(perfil: str) -> list[Usuario]:
         return usuarios
 
 
+def atualizar_codigo_verificacao(email: str, codigo: str, data_codigo: str) -> bool:
+    """Atualiza o código de verificação do usuário"""
+    with get_connection() as conn:
+        cursor = conn.cursor()
+        cursor.execute(
+            "UPDATE usuario SET codigo_verificacao=?, data_codigo_verificacao=? WHERE email=?",
+            (codigo, data_codigo, email)
+        )
+        return cursor.rowcount > 0
+
+
+def marcar_email_verificado(email: str) -> bool:
+    """Marca o email do usuário como verificado"""
+    with get_connection() as conn:
+        cursor = conn.cursor()
+        cursor.execute(
+            "UPDATE usuario SET email_verificado=1, codigo_verificacao=NULL, data_codigo_verificacao=NULL WHERE email=?",
+            (email,)
+        )
+        return cursor.rowcount > 0
+
+
+def obter_dados_verificacao(email: str) -> Optional[dict]:
+    """Obtém os dados de verificação do usuário (código e data)"""
+    with get_connection() as conn:
+        cursor = conn.cursor()
+        cursor.execute(
+            "SELECT codigo_verificacao, data_codigo_verificacao, email_verificado FROM usuario WHERE email=?",
+            (email,)
+        )
+        row = cursor.fetchone()
+        if row:
+            return {
+                "codigo_verificacao": row["codigo_verificacao"],
+                "data_codigo_verificacao": row["data_codigo_verificacao"],
+                "email_verificado": row["email_verificado"]
+            }
+        return None
+
+
 """def inserir_dados_iniciais(conexao: Connection) -> None:
     # Verifica se já existem categorias na tabela
     lista = obter_todos()
