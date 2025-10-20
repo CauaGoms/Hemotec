@@ -15,7 +15,7 @@ async def debug_agendamento(request: Request, id_agendamento: int, usuario_logad
     
     return JSONResponse(content={
         "cod_agendamento": agendamento.cod_agendamento,
-        "cod_doador": agendamento.cod_doador,
+        "cod_usuario": agendamento.cod_usuario,
         "cod_colaborador": agendamento.cod_colaborador,
         "data_hora": str(agendamento.data_hora) if agendamento.data_hora else None,
         "data_hora_type": str(type(agendamento.data_hora)),
