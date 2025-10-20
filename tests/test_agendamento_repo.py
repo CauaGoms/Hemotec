@@ -1,6 +1,6 @@
 from data.repo import usuario_repo, cidade_repo, agendamento_repo, doador_repo, colaborador_repo
 from data.model.agendamento_model import Agendamento
-from data.util.database import get_connection
+from util.database import get_connection
 from datetime import datetime
 
 class TestAgendamentoRepo:

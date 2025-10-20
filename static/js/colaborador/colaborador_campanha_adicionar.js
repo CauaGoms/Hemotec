@@ -364,19 +364,50 @@ document.addEventListener('DOMContentLoaded', function() {
         submitBtn.classList.add('loading');
         submitBtn.disabled = true;
         
-        // Simular envio (substituir por chamada real à API)
-        setTimeout(() => {
+        // Preparar FormData
+        const formDataObj = new FormData();
+        formDataObj.append('titulo', document.getElementById('titulo').value);
+        formDataObj.append('descricao', document.getElementById('descricao').value);
+        formDataObj.append('data_inicio', document.getElementById('data_inicio').value);
+        formDataObj.append('data_fim', document.getElementById('data_fim').value);
+        if (selectedFile) {
+            formDataObj.append('foto', selectedFile);
+        }
+        
+        // Fazer POST para o servidor
+        fetch('/api/colaborador/campanha/adicionar', {
+            method: 'POST',
+            body: formDataObj
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            return response.json();
+        })
+        .then(data => {
             submitBtn.classList.remove('loading');
             submitBtn.disabled = false;
             
-            // Mostrar modal de sucesso
-            successModal.show();
-            
-            // Limpar formulário após sucesso
-            setTimeout(() => {
-                resetForm();
-            }, 2000);
-        }, 2000);
+            if (data.success) {
+                // Mostrar modal de sucesso
+                successModal.show();
+                
+                // Limpar formulário após sucesso
+                setTimeout(() => {
+                    resetForm();
+                    // Redirecionar para lista de campanhas
+                    window.location.href = '/colaborador/campanha';
+                }, 2000);
+            } else {
+                showAlert('Erro', data.message || 'Erro ao criar campanha', 'error');
+            }
+        })
+        .catch(error => {
+            submitBtn.classList.remove('loading');
+            submitBtn.disabled = false;
+            showAlert('Erro', error.message || 'Erro ao criar campanha', 'error');
+        });
     }
     
     // Resetar formulário

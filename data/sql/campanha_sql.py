@@ -22,7 +22,7 @@ FROM campanha c
 
 UPDATE = """
 UPDATE campanha
-SET titulo = ?, descricao = ?, data_inicio = ?, data_fim = ?, status = ?
+SET titulo = ?, descricao = ?, data_inicio = ?, data_fim = ?, status = ?, foto = ?
 WHERE cod_campanha = ?;
 """
 
