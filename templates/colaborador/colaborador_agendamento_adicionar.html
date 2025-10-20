@@ -20,6 +20,62 @@
         </div>
     </div>
 </section>
+
+<!-- Seção de Busca de Doadores -->
+<div class="container mt-5 mb-5">
+    <div class="card shadow-sm border-0">
+        <div class="card-body p-4">
+            <h4 class="card-title mb-3">
+                <i class="fas fa-search me-2 text-danger"></i>
+                Buscar Doador
+            </h4>
+            <p class="text-muted small mb-3">Digite o nome ou CPF do doador para criar um agendamento</p>
+            
+            <div class="input-group input-group-lg">
+                <input type="text" 
+                       class="form-control" 
+                       id="inputBuscaDoador" 
+                       placeholder="Digite o nome ou CPF do doador..."
+                       autocomplete="off">
+                <button class="btn btn-outline-danger" 
+                        type="button" 
+                        onclick="limparBuscaDoador()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <!-- Resultados da busca -->
+            <div id="resultadosBusca" class="mt-3" style="display: none;">
+                <div class="list-group" id="listaDoadores">
+                    <!-- Será preenchido pelo JavaScript -->
+                </div>
+            </div>
+            
+            <!-- Mensagem de vazio -->
+            <div id="mensagemVazio" class="alert alert-info mt-3" style="display: none;">
+                <i class="fas fa-info-circle me-2"></i>
+                Digite o nome ou CPF para buscar um doador
+            </div>
+            
+            <!-- Doador selecionado -->
+            <div id="doadorSelecionado" class="alert alert-success mt-3" style="display: none;">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <strong id="nomeSelecionado"></strong><br>
+                        <small id="cpfSelecionado" class="text-muted"></small>
+                    </div>
+                    <button class="btn btn-sm btn-outline-danger" onclick="deselecionarDoador()">
+                        <i class="fas fa-times"></i> Limpar
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Campo oculto com ID do doador -->
+            <input type="hidden" id="codDoadorSelecionado" value="">
+        </div>
+    </div>
+</div>
+
 <!-- Main Content -->
 <div class="container">
     <div class="booking-wizard fade-in">
@@ -261,4 +317,171 @@
 
 {% block custom_js %}
 <script src="/static/js/doador/doador_agendamento_adicionar.js?v=2"></script>
+
+<script>
+// Variáveis globais para busca de doadores
+let timeoutBusca = null;
+
+// Event listener para busca de doadores
+document.getElementById('inputBuscaDoador').addEventListener('input', function() {
+    clearTimeout(timeoutBusca);
+    const query = this.value.trim();
+    
+    // Limpar resultados se campo vazio
+    if (!query) {
+        document.getElementById('resultadosBusca').style.display = 'none';
+        document.getElementById('mensagemVazio').style.display = 'block';
+        return;
+    }
+    
+    // Fazer busca com debounce de 300ms
+    timeoutBusca = setTimeout(() => {
+        buscarDoadores(query);
+    }, 300);
+});
+
+// Função para buscar doadores no backend
+async function buscarDoadores(query) {
+    try {
+        const response = await fetch(`/api/colaborador/buscar-doadores?query=${encodeURIComponent(query)}`);
+        const data = await response.json();
+        
+        if (data.success && data.doadores && data.doadores.length > 0) {
+            exibirResultados(data.doadores);
+            document.getElementById('resultadosBusca').style.display = 'block';
+            document.getElementById('mensagemVazio').style.display = 'none';
+        } else {
+            document.getElementById('resultadosBusca').style.display = 'none';
+            document.getElementById('mensagemVazio').style.display = 'block';
+            document.getElementById('mensagemVazio').innerHTML = '<i class="fas fa-search me-2"></i>Nenhum doador encontrado';
+        }
+    } catch (error) {
+        console.error('Erro ao buscar doadores:', error);
+        document.getElementById('mensagemVazio').style.display = 'block';
+        document.getElementById('mensagemVazio').innerHTML = '<i class="fas fa-exclamation-triangle me-2"></i>Erro ao buscar doadores';
+    }
+}
+
+// Função para exibir resultados da busca
+function exibirResultados(doadores) {
+    const listaDoadores = document.getElementById('listaDoadores');
+    listaDoadores.innerHTML = '';
+    
+    doadores.forEach(doador => {
+        const item = document.createElement('button');
+        item.type = 'button';
+        item.className = 'list-group-item list-group-item-action';
+        item.innerHTML = `
+            <div class="d-flex w-100 justify-content-between align-items-start">
+                <div class="text-start flex-grow-1">
+                    <h6 class="mb-1">
+                        <i class="fas fa-user me-2 text-danger"></i>
+                        ${escapeHtml(doador.nome)}
+                    </h6>
+                    <div class="row small text-muted">
+                        <div class="col-md-6">
+                            <i class="fas fa-id-card me-1"></i>
+                            <strong>CPF:</strong> ${formatarCPF(doador.cpf)}
+                        </div>
+                        <div class="col-md-6">
+                            <i class="fas fa-phone me-1"></i>
+                            <strong>Telefone:</strong> ${formatarTelefone(doador.telefone)}
+                        </div>
+                    </div>
+                    <div class="small text-muted">
+                        <i class="fas fa-envelope me-1"></i>
+                        ${escapeHtml(doador.email)}
+                    </div>
+                </div>
+                <span class="badge ${doador.is_doador ? 'bg-success' : 'bg-secondary'} ms-2 mt-1">
+                    ${doador.is_doador ? 'Doador Ativo' : 'Novo Doador'}
+                </span>
+            </div>
+        `;
+        item.onclick = () => selecionarDoador(doador);
+        listaDoadores.appendChild(item);
+    });
+}
+
+// Função para selecionar um doador
+function selecionarDoador(doador) {
+    document.getElementById('codDoadorSelecionado').value = doador.cod_usuario;
+    document.getElementById('nomeSelecionado').textContent = escapeHtml(doador.nome);
+    document.getElementById('cpfSelecionado').textContent = `CPF: ${formatarCPF(doador.cpf)} | Telefone: ${formatarTelefone(doador.telefone)}`;
+    
+    // Esconder resultados e mostrar seleção
+    document.getElementById('resultadosBusca').style.display = 'none';
+    document.getElementById('doadorSelecionado').style.display = 'block';
+    document.getElementById('mensagemVazio').style.display = 'none';
+    document.getElementById('inputBuscaDoador').value = '';
+    
+    // Scroll para seção de agendamento
+    document.querySelector('.booking-wizard').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+// Função para desselecionar doador
+function deselecionarDoador() {
+    document.getElementById('codDoadorSelecionado').value = '';
+    document.getElementById('doadorSelecionado').style.display = 'none';
+    document.getElementById('inputBuscaDoador').value = '';
+    document.getElementById('inputBuscaDoador').focus();
+}
+
+// Função para limpar busca
+function limparBuscaDoador() {
+    document.getElementById('inputBuscaDoador').value = '';
+    document.getElementById('resultadosBusca').style.display = 'none';
+    document.getElementById('mensagemVazio').style.display = 'block';
+    document.getElementById('inputBuscaDoador').focus();
+}
+
+// Função para formatar CPF
+function formatarCPF(cpf) {
+    if (!cpf) return 'Não informado';
+    const cleaned = cpf.replace(/\D/g, '');
+    if (cleaned.length !== 11) return cpf;
+    return cleaned.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4');
+}
+
+// Função para formatar telefone
+function formatarTelefone(telefone) {
+    if (!telefone) return 'Não informado';
+    const cleaned = telefone.replace(/\D/g, '');
+    if (cleaned.length === 11) {
+        return cleaned.replace(/(\d{2})(\d{5})(\d{4})/, '($1) $2-$3');
+    } else if (cleaned.length === 10) {
+        return cleaned.replace(/(\d{2})(\d{4})(\d{4})/, '($1) $2-$3');
+    }
+    return telefone;
+}
+
+// Função para escapar HTML
+function escapeHtml(text) {
+    if (!text) return '';
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
+}
+
+// Impedir submit do formulário se não houver doador selecionado
+document.addEventListener('DOMContentLoaded', function() {
+    const confirmBtn = document.getElementById('confirmBtn');
+    if (confirmBtn) {
+        const confirmBtnOriginal = confirmBtn.onclick;
+        confirmBtn.onclick = function() {
+            const codDoador = document.getElementById('codDoadorSelecionado').value;
+            if (!codDoador) {
+                alert('Por favor, selecione um doador antes de confirmar o agendamento');
+                return;
+            }
+            // Sobrescrever a variável global cod_usuario com o codDoador selecionado
+            window.cod_usuario = parseInt(codDoador);
+            console.log('Usando cod_usuario do doador selecionado:', window.cod_usuario);
+            if (typeof confirmBtnOriginal === 'function') {
+                confirmBtnOriginal.call(this);
+            }
+        };
+    }
+});
+</script>
 {% endblock %}

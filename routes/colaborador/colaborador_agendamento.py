@@ -5,6 +5,7 @@ from fastapi.responses import JSONResponse
 from pydantic import BaseModel
 from data.repo import agendamento_repo, unidade_coleta_repo, doador_repo, doacao_repo, usuario_repo
 from data.model.doacao_model import Doacao
+from data.model.doador_model import Doador
 from util.auth_decorator import requer_autenticacao
 
 router = APIRouter()
@@ -55,10 +56,46 @@ async def get_colaborador_agendamento(request: Request, usuario_logado: dict = N
 @requer_autenticacao(["colaborador"])
 async def confirmar_presenca_agendamento(request: Request, cod_agendamento: int = Body(...), cod_doador: int = Body(...), usuario_logado: dict = None):
     try:
-        # Criar nova doação
+        # Verificar se o agendamento existe
+        agendamento = agendamento_repo.obter_por_id(cod_agendamento)
+        if not agendamento:
+            return JSONResponse(content={
+                "success": False,
+                "message": f"Agendamento com código {cod_agendamento} não encontrado."
+            }, status_code=400)
+        
+        # Usar o cod_usuario do agendamento (doador da lista)
+        cod_usuario_agendamento = agendamento.cod_usuario
+        
+        # Verificar se o doador (usuário do agendamento) existe na tabela doador
+        doador = doador_repo.obter_por_id(cod_usuario_agendamento)
+        
+        # Se o doador não existe, criar um novo registro
+        if not doador:
+            novo_doador = Doador(
+                cod_doador=cod_usuario_agendamento,
+                tipo_sanguineo='O',  # valor padrão
+                fator_rh='+',  # valor padrão
+                elegivel='sim',
+                altura=1.70,
+                peso=70,
+                profissao='Não informado',
+                contato_emergencia='Não informado',
+                telefone_emergencia='Não informado'
+            )
+            try:
+                doador_repo.inserir(novo_doador)
+                print(f"✅ Doador criado automaticamente: cod_doador={cod_usuario_agendamento}")
+            except Exception as e:
+                return JSONResponse(content={
+                    "success": False,
+                    "message": f"Erro ao criar doador: {str(e)}"
+                }, status_code=500)
+        
+        # Criar nova doação com o cod_doador correto
         nova_doacao = Doacao(
             cod_doacao=None,  # Será gerado pelo banco de dados
-            cod_doador=cod_doador,
+            cod_doador=cod_usuario_agendamento,
             cod_agendamento=cod_agendamento,
             data_hora=datetime.datetime.now(),
             quantidade=0,  # Será preenchido posteriormente
@@ -70,10 +107,8 @@ async def confirmar_presenca_agendamento(request: Request, cod_agendamento: int 
         doacao_repo.inserir(nova_doacao)
         
         # Atualizar status do agendamento para concluído
-        agendamento = agendamento_repo.obter_por_id(cod_agendamento)
-        if agendamento:
-            agendamento.status = 1  # Concluído
-            agendamento_repo.update(agendamento)
+        agendamento.status = 1  # Concluído
+        agendamento_repo.update(agendamento)
         
         return JSONResponse(content={
             "success": True,
@@ -82,5 +117,5 @@ async def confirmar_presenca_agendamento(request: Request, cod_agendamento: int 
     except Exception as e:
         return JSONResponse(content={
             "success": False,
-            "message": str(e)
+            "message": f"Erro ao confirmar presença: {str(e)}"
         }, status_code=500)
