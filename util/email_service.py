@@ -7,9 +7,10 @@ from datetime import datetime, timedelta
 from typing import Optional
 
 # Configuração do Resend
-RESEND_API_KEY = os.getenv("re_AYaBRPa8_3cw1yj3pb7XA2NMWKwqkqtFG")
-SENDER_EMAIL = "pihemotec@gmail.com"
-SENDER_NAME = "Hemotec"
+RESEND_API_KEY = os.getenv("RESEND_API_KEY", "re_AYaBRPa8_3cw1yj3pb7XA2NMWKwqkqtFG")
+SENDER_EMAIL = os.getenv("SENDER_EMAIL", "pihemotec@gmail.com")
+SENDER_NAME = os.getenv("SENDER_NAME", "Hemotec")
+DEBUG = os.getenv("DEBUG", "True").lower() == "true"  # Modo desenvolvimento
 
 def gerar_codigo_verificacao() -> str:
     """Gera um código de verificação de 6 dígitos"""
@@ -27,6 +28,19 @@ def enviar_email_verificacao(email: str, nome: str, codigo: str) -> bool:
     Returns:
         True se o email foi enviado com sucesso, False caso contrário
     """
+    # Modo desenvolvimento: apenas simula envio
+    if DEBUG:
+        print(f"")
+        print(f"{'='*60}")
+        print(f"📧 MODO DESENVOLVIMENTO - EMAIL NÃO ENVIADO")
+        print(f"{'='*60}")
+        print(f"Para: {email}")
+        print(f"Nome: {nome}")
+        print(f"Código de Verificação: {codigo}")
+        print(f"{'='*60}")
+        print(f"")
+        return True
+    
     try:
         import resend
         
