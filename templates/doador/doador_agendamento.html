@@ -23,6 +23,8 @@
 <!-- Conteúdo Principal -->
 <div class="container mt-n5">
     <div class="history-container">
+        <!-- Mensagens de feedback -->
+        <div id="mensagem-feedback"></div>
         <!-- Botão para Novo Agendamento -->
         <div class="d-flex justify-content-between align-items-center mb-4 agendamento-header">
             <h3 class="mb-0">Próximos Agendamentos</h3>
@@ -38,7 +40,8 @@
             <div class="appointment-card upcoming">
                 <div class="card-header">
                     <span class="status-badge upcoming-badge">
-                        <i class="fas fa-clock me-1"></i> Agendado
+                        <i class="fas fa-clock me-1"></i>
+                        Agendado
                     </span>
                     <strong class="date">
                         {{ dias_semana[agendamento.data_hora.weekday()] }}, {{ agendamento.data_hora.day }} de {{ meses[agendamento.data_hora.month - 1] }} de {{ agendamento.data_hora.year }} - {{ agendamento.data_hora.strftime('%H:%M') }}
@@ -53,36 +56,36 @@
                         </div>
                     </div>
                     <div class="actions">
-                        <a href="/doador/agendamento/alterar/{{ agendamento.id }}" class="btn btn-reagendar">
+                        <a href="/doador/agendamento/alterar/{{ agendamento.cod_agendamento }}" class="btn btn-reagendar">
                             <i class="fas fa-calendar-alt me-1"></i>
                             Reagendar
                         </a>
-                        <a href="/doador/agendamento/excluir/{{ agendamento.id }}" class="btn btn-excluir">
+                        <a href="/doador/agendamento/excluir/{{ agendamento.cod_agendamento }}" class="btn btn-excluir">
                             <i class="fas fa-times-circle me-1"></i>
                             Excluir
                         </a>
                     </div>
                 </div>
             </div>
-                {% endfor %}
+            {% endfor %}
             {% else %}
             <div class="text-center p-5 no-appointments-message">
                 <i class="fas fa-calendar-plus fa-3x text-muted mb-3"></i>
                 <h4>Nenhum agendamento futuro</h4>
                 <p>Que tal salvar vidas? Sua doação é muito importante.</p>
                 <a href="/doador/agendamento/adicionar" class="btn btn-novo-agendamento" style="width: fit-content !important; max-width: 400px; padding: 10px 20px; display: inline-block;">
-                <i class="fas fa-calendar-plus me-2"></i>
-                Novo Agendamento
-            </a>
+                    <i class="fas fa-calendar-plus me-2"></i>
+                    Novo Agendamento
+                </a>
             </div>
             {% endif %}
-            
             <h3 class="mb-3 mt-5">Agendamentos Anteriores</h3>
             {% for agendamento, local_agendamento in agendamentos_concluidos %}
             <div class="appointment-card completed">
                 <div class="card-header">
                     <span class="status-badge completed-badge">
-                        <i class="fas fa-check-circle me-1"></i> Concluído
+                        <i class="fas fa-check-circle me-1"></i>
+                        Concluído
                     </span>
                     <strong class="date">
                         {{ dias_semana[agendamento.data_hora.weekday()] }}, {{ agendamento.data_hora.day }} de {{ meses[agendamento.data_hora.month - 1] }} de {{ agendamento.data_hora.year }} - {{ agendamento.data_hora.strftime('%H:%M') }}
@@ -101,10 +104,11 @@
             {% endfor %}
             
             {% for agendamento, local_agendamento in agendamentos_atrasados %}
-            <div class="appointment-card completed">
+            <div class="appointment-card overdue">
                 <div class="card-header">
-                    <span class="status-badge completed-badge">
-                        <i class="fas fa-check-circle me-1"></i> Atrasado
+                    <span class="status-badge overdue-badge">
+                        <i class="fas fa-exclamation-triangle me-1"></i>
+                        Atrasado
                     </span>
                     <strong class="date">
                         {{ dias_semana[agendamento.data_hora.weekday()] }}, {{ agendamento.data_hora.day }} de {{ meses[agendamento.data_hora.month - 1] }} de {{ agendamento.data_hora.year }} - {{ agendamento.data_hora.strftime('%H:%M') }}
@@ -164,5 +168,45 @@
 {% endblock %}
 
 {% block custom_js %}
+<script>
+    // Verifica se há mensagem de sucesso ou erro na URL
+    document.addEventListener('DOMContentLoaded', function() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const sucesso = urlParams.get('sucesso');
+        const erro = urlParams.get('erro');
+        const mensagemDiv = document.getElementById('mensagem-feedback');
+        
+        if (sucesso === 'agendamento_excluido') {
+            mensagemDiv.innerHTML = `
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    <i class="fas fa-check-circle me-2"></i>
+                    <strong>Sucesso!</strong> Agendamento excluído com sucesso.
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            `;
+            // Remove o parâmetro da URL
+            window.history.replaceState({}, document.title, window.location.pathname);
+        } else if (erro) {
+            let mensagem = 'Erro ao processar sua solicitação.';
+            if (erro === 'agendamento_nao_encontrado') {
+                mensagem = 'Agendamento não encontrado.';
+            } else if (erro === 'sem_permissao') {
+                mensagem = 'Você não tem permissão para excluir este agendamento.';
+            } else if (erro === 'falha_exclusao') {
+                mensagem = 'Falha ao excluir o agendamento. Tente novamente.';
+            }
+            
+            mensagemDiv.innerHTML = `
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <i class="fas fa-exclamation-circle me-2"></i>
+                    <strong>Erro!</strong> ${mensagem}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            `;
+            // Remove o parâmetro da URL
+            window.history.replaceState({}, document.title, window.location.pathname);
+        }
+    });
+</script>
 <script src="/static/js/doador/doador_agendamento.js"></script>
 {% endblock %}

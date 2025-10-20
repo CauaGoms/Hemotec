@@ -10,16 +10,13 @@
         <div class="delete-icon">
             <i class="fas fa-exclamation-triangle"></i>
         </div>
-        
         <h1 class="delete-title">Confirmar Exclusão</h1>
-        
         <div class="campaign-info">
             <div class="campaign-preview">
                 <div class="campaign-placeholder">
                     <i class="fas fa-calendar-alt"></i>
                 </div>
             </div>
-            
             <div class="campaign-details">
                 <h2 class="campaign-name">Agendamento de Doação</h2>
                 <div class="campaign-meta">
@@ -61,26 +58,26 @@
                 </p>
             </div>
         </div>
-        
         <div class="warning-message">
             <i class="fas fa-exclamation-circle"></i>
             <div>
-                <strong>Atenção:</strong> Esta ação não pode ser desfeita. Ao excluir este agendamento, você perderá sua vaga e precisará agendar novamente caso deseje doar sangue.
+                <strong>Atenção:</strong>
+                Esta ação não pode ser desfeita. Ao excluir este agendamento, você perderá sua vaga e precisará agendar novamente caso deseje doar sangue.
             </div>
         </div>
-        
         <div class="delete-actions">
             <a href="/doador/agendamento" class="btn-cancel">
-                <i class="fas fa-times me-2"></i>Cancelar
+                <i class="fas fa-times me-2"></i>
+                Cancelar
             </a>
-            <form method="POST" action="/doador/agendamento/excluir/{{ agendamento.id if agendamento else '0' }}/confirmar" style="margin: 0;">
+            <form method="POST" action="/doador/agendamento/excluir/{{ agendamento.cod_agendamento if agendamento else '0' }}/confirmar" style="margin: 0;">
                 <button type="submit" class="btn-confirm-delete">
-                    <i class="fas fa-trash me-2"></i>Sim, Excluir Agendamento
+                    <i class="fas fa-trash me-2"></i>
+                    Sim, Excluir Agendamento
                 </button>
             </form>
         </div>
     </div>
-    
     <!-- Sugestão de Reagendamento -->
     <div class="delete-card mt-4">
         <div class="campaign-info">
@@ -89,15 +86,15 @@
                     <i class="fas fa-calendar-plus"></i>
                 </div>
             </div>
-            
             <div class="campaign-details">
                 <h2 class="campaign-name">Que tal reagendar?</h2>
                 <p class="campaign-description">
                     Sua doação é muito importante! Se você não pode comparecer nesta data, que tal escolher uma nova data para sua doação?
                 </p>
                 <div class="delete-actions" style="justify-content: flex-start; margin-top: 1rem;">
-                    <a href="/doador/agendamento/alterar/{{ agendamento.id if agendamento else '0' }}" class="btn-cancel" style="background: #dc3545; color: white;">
-                        <i class="fas fa-calendar-alt me-2"></i>Reagendar
+                    <a href="/doador/agendamento/alterar/{{ agendamento.cod_agendamento if agendamento else '0' }}" class="btn-cancel" style="background: #dc3545; color: white;">
+                        <i class="fas fa-calendar-alt me-2"></i>
+                        Reagendar
                     </a>
                 </div>
             </div>

@@ -161,15 +161,15 @@ INSERT INTO notificacao (cod_adm, tipo, mensagem, status, data_envio, titulo) VA
 (7, 'Campanha', 'Participe da nova campanha de doação de sangue "Doe Sangue, Salve Vidas".', 1, '2025-10-01', 'Doe Sangue'),
 (8, 'Agradecimento', 'Obrigado por sua doação de sangue! Sua contribuição é muito importante.', 1, '2025-10-01', 'Sua Doação é Importante');
 
-INSERT INTO colaborador (funcao) VALUES
-('Enfermeiro'),
-('Técnico de Laboratório');
+INSERT INTO colaborador (cod_colaborador, funcao) VALUES
+(5, 'Enfermeiro'),
+(6, 'Técnico de Laboratório');
 
 INSERT INTO doador (cod_doador, tipo_sanguineo, fator_rh, elegivel, altura, peso, profissao, contato_emergencia, telefone_emergencia) VALUES
 (1, 'O', 'negativo', 'elegivel', 1.75, 70.0, 'Estudante', 'Maria Silva', '11988887777'),
 (2, 'A', 'positivo', 'elegivel', 1.80, 80.0, 'Engenheiro', 'João Souza', '11977776666');
 
-INSERT INTO agendamento (cod_colaborador, cod_doador, data_hora, status, tipo_agendamento, local_agendamento) VALUES
+INSERT INTO agendamento (cod_colaborador, cod_usuario, data_hora, status, tipo_agendamento, local_agendamento) VALUES
 (5, 1, '2023-10-05 10:00:00', 1, 'presencial', 1),
 (NULL, 2, '2023-10-06 14:00:00', 1, 'online', 2),
 (NULL, 1, '2023-10-07 09:00:00', 1, 'online', 1),

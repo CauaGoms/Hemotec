@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Request
+from fastapi import APIRouter, Request, HTTPException
 from fastapi.templating import Jinja2Templates
 from data.repo import unidade_coleta_repo
 from typing import Dict, Any
@@ -78,3 +78,54 @@ async def get_api_estoque_unidade(cod_unidade: int):
             "error": str(e),
             "success": False
         }
+
+
+@router.get("/api/publico/usuario-info")
+async def get_usuario_info(request: Request):
+    """
+    API para obter informações do usuário logado da sessão
+    """
+    try:
+        usuario_logado = request.session.get("usuario_logado")
+        
+        if not usuario_logado:
+            raise HTTPException(status_code=401, detail="Usuário não autenticado")
+        
+        return {
+            "success": True,
+            "cod_usuario": usuario_logado.get("cod_usuario"),
+            "nome": usuario_logado.get("nome"),
+            "tipo_usuario": usuario_logado.get("tipo_usuario")
+        }
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Erro ao obter informações do usuário: {str(e)}")
+
+
+@router.get("/api/publico/unidade/{cod_unidade}")
+async def get_unidade_info(cod_unidade: int):
+    """
+    API para obter informações de uma unidade de coleta específica
+    """
+    try:
+        unidade = unidade_coleta_repo.obter_por_id(cod_unidade)
+        
+        if not unidade:
+            raise HTTPException(status_code=404, detail="Unidade não encontrada")
+        
+        return {
+            "success": True,
+            "cod_unidade": unidade.cod_unidade,
+            "nome": unidade.nome,
+            "rua_unidade": unidade.rua_unidade,
+            "bairro_unidade": unidade.bairro_unidade,
+            "cep_unidade": unidade.cep_unidade,
+            "telefone": unidade.telefone,
+            "latitude": unidade.latitude,
+            "longitude": unidade.longitude
+        }
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Erro ao obter informações da unidade: {str(e)}")

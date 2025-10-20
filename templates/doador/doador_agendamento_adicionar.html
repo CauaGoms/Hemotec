@@ -80,63 +80,72 @@
                 <div class="location-list" id="location-list">
                     {% if unidades %}
                         {% for unidade in unidades %}
-                        <div class="location-card" 
-                             onclick="selectLocation({{ unidade.cod_unidade }}, this)" 
-                             data-cod="{{ unidade.cod_unidade }}"
-                             data-nome="{{ unidade.nome }}"
-                             data-latitude="{{ unidade.latitude }}"
-                             data-longitude="{{ unidade.longitude }}"
-                             style="display: none;">
-                            <div class="location-header">
-                                <h5>{{ unidade.nome }}</h5>
-                                <span class="distance-badge" data-distance-badge>Calculando...</span>
+                    <div
+                        class="location-card"
+                        onclick="selectLocation({{ unidade.cod_unidade }}, this)"
+                        data-cod="{{ unidade.cod_unidade }}"
+                        data-nome="{{ unidade.nome }}"
+                        data-latitude="{{ unidade.latitude }}"
+                        data-longitude="{{ unidade.longitude }}"
+                        style="display: none;"
+                    >
+                        <div class="location-header">
+                            <h5>{{ unidade.nome }}</h5>
+                            <span class="distance-badge" data-distance-badge>Calculando...</span>
+                        </div>
+                        <div class="location-details">
+                            <div class="detail-item">
+                                <i class="fas fa-map-marker-alt"></i>
+                                {{ unidade.rua_unidade }} - {{ unidade.bairro_unidade }}
                             </div>
-                            <div class="location-details">
-                                <div class="detail-item">
-                                    <i class="fas fa-map-marker-alt"></i>
-                                    {{ unidade.rua_unidade }} - {{ unidade.bairro_unidade }}
-                                </div>
-                                <div class="detail-item">
-                                    <i class="far fa-clock"></i>
-                                    Seg-Sex: 7h-18h
-                                </div>
-                                {% if unidade.telefone %}
-                                <div class="detail-item">
-                                    <i class="fas fa-phone"></i>
-                                    {{ unidade.telefone }}
-                                </div>
-                                {% endif %}
-                                <div class="amenities">
-                                    <span class="amenity-badge">
-                                        <i class="fas fa-parking"></i> Estacionamento
-                                    </span>
-                                    <span class="amenity-badge">
-                                        <i class="fas fa-wheelchair"></i> Acessível
-                                    </span>
-                                </div>
+                            <div class="detail-item">
+                                <i class="far fa-clock"></i>
+                                Seg-Sex: 7h-18h
+                            </div>
+                            {% if unidade.telefone %}
+                            <div class="detail-item">
+                                <i class="fas fa-phone"></i>
+                                {{ unidade.telefone }}
+                            </div>
+                            {% endif %}
+                            <div class="amenities">
+                                <span class="amenity-badge">
+                                    <i class="fas fa-parking"></i>
+                                    Estacionamento
+                                </span>
+                                <span class="amenity-badge">
+                                    <i class="fas fa-wheelchair"></i>
+                                    Acessível
+                                </span>
                             </div>
                         </div>
-                        {% endfor %}
+                    </div>
+                    {% endfor %}
                     {% else %}
-                        <p class="text-muted text-center py-4">Nenhuma unidade de coleta disponível no momento.</p>
+                    <p class="text-muted text-center py-4">Nenhuma unidade de coleta disponível no momento.</p>
                     {% endif %}
                 </div>
                 <div class="info-card">
                     <h6>
-                        <i class="fas fa-info-circle me-2"></i>Informações Importantes
+                        <i class="fas fa-info-circle me-2"></i>
+                        Informações Importantes
                     </h6>
                     <ul class="info-list">
                         <li>
-                            <i class="fas fa-check-circle"></i> Chegue 15 min antes do horário
+                            <i class="fas fa-check-circle"></i>
+                            Chegue 15 min antes do horário
                         </li>
                         <li>
-                            <i class="fas fa-check-circle"></i> Traga documento oficial com foto
+                            <i class="fas fa-check-circle"></i>
+                            Traga documento oficial com foto
                         </li>
                         <li>
-                            <i class="fas fa-check-circle"></i> Evite alimentos gordurosos
+                            <i class="fas fa-check-circle"></i>
+                            Evite alimentos gordurosos
                         </li>
                         <li>
-                            <i class="fas fa-check-circle"></i> Beba bastante água no dia
+                            <i class="fas fa-check-circle"></i>
+                            Beba bastante água no dia
                         </li>
                     </ul>
                 </div>
@@ -262,5 +271,9 @@
 {% endblock %}
 <!-- Custom JavaScript -->
 {% block custom_js %}
+<script>
+    // Define cod_usuario globalmente para uso no JavaScript
+    window.cod_usuario = {{ usuario.cod_usuario if usuario and usuario.cod_usuario else 'null' }};
+</script>
 <script src="/static/js/doador/doador_agendamento_adicionar.js?v=2"></script>
 {% endblock %}

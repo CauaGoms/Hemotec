@@ -3,6 +3,7 @@ from sqlite3 import Connection
 from typing import Optional
 from data.model.agendamento_model import Agendamento
 from data.sql.agendamento_sql import *
+from data.sql.agendamento_sql import OBTER_PENDENTES_POR_USUARIO
 from util.database import get_connection
 from datetime import datetime
 
@@ -22,7 +23,7 @@ def inserir(agendamento: Agendamento) -> Optional[int]:
         cursor = conn.cursor()
         cursor.execute(INSERIR, (
             agendamento.cod_colaborador,
-            agendamento.cod_doador,
+            agendamento.cod_usuario,  # Alterado de cod_doador para cod_usuario
             agendamento.data_hora,
             agendamento.status,
             agendamento.tipo_agendamento,
@@ -50,13 +51,41 @@ def obter_todos() -> list[Agendamento]:
             agendamento.append(Agendamento(
                 cod_agendamento=row["cod_agendamento"],
                 cod_colaborador=row["cod_colaborador"],
-                cod_doador=row["cod_doador"],
+                cod_usuario=row["cod_usuario"],  # Alterado de cod_doador para cod_usuario
                 data_hora=data_hora,
                 status=row["status"],
                 tipo_agendamento=row["tipo_agendamento"],
                 local_agendamento=row["local_agendamento"]
             ))
         return agendamento
+    
+def obter_por_usuario_status(cod_usuario: int, status: int) -> list[Agendamento]:
+    """
+    Retorna lista de agendamentos de um usuário com determinado status (ex: pendente).
+    """
+    with get_connection() as conn:
+        cursor = conn.cursor()
+        cursor.execute(OBTER_PENDENTES_POR_USUARIO, (cod_usuario, status))
+        rows = cursor.fetchall()
+        agendamentos = []
+        for row in rows:
+            try:
+                data_hora = datetime.strptime(row["data_hora"], '%Y-%m-%d %H:%M:%S')
+            except ValueError:
+                try:
+                    data_hora = datetime.strptime(row["data_hora"], '%Y-%m-%d')
+                except ValueError:
+                    data_hora = None
+            agendamentos.append(Agendamento(
+                cod_agendamento=row["cod_agendamento"],
+                cod_colaborador=row["cod_colaborador"],
+                cod_usuario=row["cod_usuario"],
+                data_hora=data_hora,
+                status=row["status"],
+                tipo_agendamento=row["tipo_agendamento"],
+                local_agendamento=row["local_agendamento"]
+            ))
+        return agendamentos
     
 def obter_por_id(cod_agendamento: int) -> Optional[Agendamento]:
     with get_connection() as conn:
@@ -88,7 +117,7 @@ def obter_por_id(cod_agendamento: int) -> Optional[Agendamento]:
             return Agendamento(
                 cod_agendamento=row["cod_agendamento"],
                 cod_colaborador=row["cod_colaborador"],
-                cod_doador=row["cod_doador"],
+                cod_usuario=row["cod_usuario"],  # Alterado de cod_doador para cod_usuario
                 data_hora=data_hora,
                 status=row["status"],
                 tipo_agendamento=row["tipo_agendamento"],

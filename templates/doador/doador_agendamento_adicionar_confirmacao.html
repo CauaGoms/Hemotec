@@ -15,34 +15,42 @@
         </div>
     </div>
 </section>
-
 <!-- Conteúdo Principal -->
-<div class="container mt-5"> <!-- Adicionado espaço entre a seção de cabeçalho e o resumo do agendamento -->
+<div class="container mt-5">
+    <!-- Adicionado espaço entre a seção de cabeçalho e o resumo do agendamento -->
     <div class="confirmation-container fade-in">
         <div class="row justify-content-center">
             <div class="col-lg-8">
                 <div class="card shadow-lg">
                     <div class="card-header text-center">
-                        <h3 class="section-title mb-0"><i class="fas fa-calendar-check me-2"></i>Resumo do Agendamento</h3>
+                        <h3 class="section-title mb-0">
+                            <i class="fas fa-calendar-check me-2"></i>Resumo do Agendamento
+                        </h3>
                     </div>
                     <div class="card-body p-4">
                         <div class="row">
                             <div class="col-md-6 mb-3">
                                 <div class="info-item">
-                                    <strong class="info-label"><i class="fas fa-hospital me-2"></i>Hemocentro</strong>
+                                    <strong class="info-label">
+                                        <i class="fas fa-hospital me-2"></i>Hemocentro
+                                    </strong>
                                     <p id="confirm-location" class="info-value">Hemocentro Regional de Cachoeiro</p>
                                     <p id="confirm-address" class="info-sub-value">Rua Dr. Raulino de Oliveira, 345 - Centro</p>
                                 </div>
                             </div>
                             <div class="col-md-6 mb-3">
                                 <div class="info-item">
-                                    <strong class="info-label"><i class="fas fa-calendar-alt me-2"></i>Data e Horário</strong>
+                                    <strong class="info-label">
+                                        <i class="fas fa-calendar-alt me-2"></i>Data e Horário
+                                    </strong>
                                     <p id="confirm-datetime" class="info-value">Sexta-feira, 27 de Junho de 2025 às 10:30</p>
                                 </div>
                             </div>
                         </div>
                         <div class="alert alert-info mt-3" role="alert">
-                            <h5 class="alert-heading"><i class="fas fa-info-circle"></i> Lembretes Importantes</h5>
+                            <h5 class="alert-heading">
+                                <i class="fas fa-info-circle"></i> Lembretes Importantes
+                            </h5>
                             <ul>
                                 <li>Chegue com 15 minutos de antecedência.</li>
                                 <li>Leve um documento oficial com foto (RG, CNH, etc.).</li>
@@ -52,8 +60,12 @@
                         </div>
                         <!-- Botões de Navegação -->
                         <div class="d-flex justify-content-center flex-wrap mt-4">
-                            <a href="/doador/agendamento" class="btn btn-outline-secondary m-2"><i class="fas fa-calendar-alt me-2"></i>Ver Meus Agendamentos</a>
-                            <a href="/doador" class="btn btn-outline-secondary m-2"><i class="fas fa-home me-2"></i>Voltar para a Home</a>
+                            <a href="/doador/agendamento" class="btn btn-outline-secondary m-2">
+                                <i class="fas fa-calendar-alt me-2"></i>Ver Meus Agendamentos
+                            </a>
+                            <a href="/doador" class="btn btn-outline-secondary m-2">
+                                <i class="fas fa-home me-2"></i>Voltar para a Home
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -61,20 +73,31 @@
         </div>
     </div>
 </div>
-
 <!-- Seção de Compartilhamento -->
 <div class="container text-center my-5">
     <h4 class="share-title">Incentive outras pessoas a doar!</h4>
     <p>Compartilhe seu gesto de solidariedade nas redes sociais.</p>
     <div class="social-share-icons">
-        <a href="#" class="social-icon facebook"><i class="fab fa-facebook-f"></i></a>
-        <a href="#" class="social-icon twitter"><i class="fab fa-twitter"></i></a>
-        <a href="#" class="social-icon whatsapp"><i class="fab fa-whatsapp"></i></a>
-        <a href="#" class="social-icon instagram"><i class="fab fa-instagram"></i></a>
+        <a href="#" class="social-icon facebook">
+            <i class="fab fa-facebook-f"></i>
+        </a>
+        <a href="#" class="social-icon twitter">
+            <i class="fab fa-twitter"></i>
+        </a>
+        <a href="#" class="social-icon whatsapp">
+            <i class="fab fa-whatsapp"></i>
+        </a>
+        <a href="#" class="social-icon instagram">
+            <i class="fab fa-instagram"></i>
+        </a>
     </div>
 </div>
 {% endblock %}
 
 {% block custom_js %}
+<script>
+    // Passa o cod_usuario do backend para o JavaScript
+    window.COD_DOADOR = {{ usuario.cod_usuario }};
+</script>
 <script src="/static/js/doador/doador_agendamento_adicionar_confirmacao.js"></script>
 {% endblock %}

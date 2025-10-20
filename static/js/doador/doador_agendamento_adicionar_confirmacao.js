@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', async function () {
     // Função para buscar parâmetros da URL
     const getUrlParameter = (name) => {
         name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
@@ -7,34 +7,96 @@ document.addEventListener('DOMContentLoaded', function() {
         return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
     };
 
-    // Tenta obter dados da URL. Se não houver, usa dados de exemplo.
-    const locationName = getUrlParameter('location') || 'Hemocentro Regional de Cachoeiro';
-    const address = getUrlParameter('address') || 'Rua Dr. Raulino de Oliveira, 345 - Centro';
-    const date = getUrlParameter('date') || 'Sexta-feira, 27 de Junho de 2025';
-    const time = getUrlParameter('time') || '10:30';
+    // Obtém os dados necessários da URL
+    const codUnidade = getUrlParameter('unidade');
+    const codAgenda = getUrlParameter('cod_agenda');
+    const data = getUrlParameter('data');
+    const horario = getUrlParameter('horario');
 
-    // Seleciona os elementos da página de confirmação
-    const confirmLocationEl = document.getElementById('confirm-location');
-    const confirmAddressEl = document.getElementById('confirm-address');
-    const confirmDateTimeEl = document.getElementById('confirm-datetime');
-
-    // Preenche os elementos com os dados do agendamento
-    if (confirmLocationEl) {
-        confirmLocationEl.textContent = locationName;
-    }
-    if (confirmAddressEl) {
-        confirmAddressEl.textContent = address;
-    }
-    if (confirmDateTimeEl) {
-        confirmDateTimeEl.textContent = `${date} às ${time}`;
+    // Verifica se todos os parâmetros estão presentes
+    if (!codUnidade || !codAgenda || !data || !horario) {
+        alert('Dados do agendamento incompletos. Por favor, tente novamente.');
+        window.location.href = '/doador/agendamento/adicionar';
+        return;
     }
 
-    // Adiciona a classe 'visible' para iniciar a animação de fade-in
-    const confirmationContainer = document.querySelector('.confirmation-container');
-    if (confirmationContainer) {
-        // Um pequeno atraso para garantir que a página esteja pronta para a transição
-        setTimeout(() => {
-            confirmationContainer.classList.add('visible');
-        }, 100);
+    // Verifica se o cod_doador foi passado pelo template
+    if (!window.COD_DOADOR) {
+        alert('Erro: usuário não identificado. Por favor, faça login novamente.');
+        window.location.href = '/doador/agendamento/adicionar';
+        return;
+    }
+
+    try {
+        const codUsuario = window.COD_DOADOR;  // Na verdade é cod_usuario
+
+        // Cria o agendamento via API
+        const response = await fetch('/api/doador/agendamento/criar', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                cod_usuario: codUsuario,  // Alterado de cod_doador para cod_usuario
+                cod_agenda: parseInt(codAgenda),
+                data: data,
+                horario: horario
+            })
+        });
+
+        const result = await response.json();
+
+        if (!response.ok) {
+            throw new Error(result.detail || 'Erro ao criar agendamento');
+        }
+
+        // Se chegou aqui, o agendamento foi criado com sucesso
+        console.log('Agendamento criado com sucesso:', result);
+
+        // Busca informações da unidade para exibir
+        const unidadeResponse = await fetch(`/api/publico/unidade/${codUnidade}`);
+        let locationName = 'Hemocentro';
+        let address = '';
+
+        if (unidadeResponse.ok) {
+            const unidade = await unidadeResponse.json();
+            locationName = unidade.nome || 'Hemocentro';
+            address = `${unidade.rua_unidade || ''} - ${unidade.bairro_unidade || ''}`;
+        }
+
+        // Formata a data para exibição
+        const [ano, mes, dia] = data.split('-');
+        const dataObj = new Date(ano, mes - 1, dia);
+        const diasSemana = ['Domingo', 'Segunda-feira', 'Terça-feira', 'Quarta-feira', 'Quinta-feira', 'Sexta-feira', 'Sábado'];
+        const meses = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'];
+        const dataFormatada = `${diasSemana[dataObj.getDay()]}, ${dia} de ${meses[dataObj.getMonth()]} de ${ano}`;
+
+        // Atualiza os elementos da página com os dados
+        const confirmLocationEl = document.getElementById('confirm-location');
+        const confirmAddressEl = document.getElementById('confirm-address');
+        const confirmDateTimeEl = document.getElementById('confirm-datetime');
+
+        if (confirmLocationEl) {
+            confirmLocationEl.textContent = locationName;
+        }
+        if (confirmAddressEl) {
+            confirmAddressEl.textContent = address;
+        }
+        if (confirmDateTimeEl) {
+            confirmDateTimeEl.textContent = `${dataFormatada} às ${horario}`;
+        }
+
+        // Adiciona a classe 'visible' para iniciar a animação de fade-in
+        const confirmationContainer = document.querySelector('.confirmation-container');
+        if (confirmationContainer) {
+            setTimeout(() => {
+                confirmationContainer.classList.add('visible');
+            }, 100);
+        }
+
+    } catch (error) {
+        console.error('Erro ao processar agendamento:', error);
+        alert(`Erro ao confirmar agendamento: ${error.message}. Tente novamente.`);
+        window.location.href = '/doador/agendamento/adicionar';
     }
 });
