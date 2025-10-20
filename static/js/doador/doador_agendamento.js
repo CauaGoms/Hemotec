@@ -31,6 +31,7 @@ let selectedLocation = null;
 let selectedDate = null;
 let selectedTime = null;
 let currentDate = new Date(); // Inicializa com a data atual
+let datasDisponiveisNoMes = []; // Armazena os dias do mês que têm horários disponíveis
 
 // Atualizar indicador de progresso
 function updateProgressStep(step) {
@@ -75,9 +76,34 @@ function selectLocation(locationId, element) {
 }
 
 // Atualizar o calendário
-function updateCalendar() {
+async function updateCalendar() {
     const monthNames = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
     document.getElementById('currentMonth').textContent = `${monthNames[currentDate.getMonth()]} ${currentDate.getFullYear()}`;
+
+    // Buscar datas disponíveis da API se houver unidade selecionada
+    if (selectedLocation) {
+        try {
+            const mes = currentDate.getMonth() + 1; // JavaScript usa 0-11, API usa 1-12
+            const ano = currentDate.getFullYear();
+            console.log(`Buscando datas disponíveis: unidade=${selectedLocation}, mes=${mes}, ano=${ano}`);
+            const response = await fetch(`/api/agenda/datas-disponiveis?cod_unidade=${selectedLocation}&mes=${mes}&ano=${ano}`);
+            const data = await response.json();
+            console.log('Datas disponíveis recebidas:', data);
+
+            if (data.success) {
+                datasDisponiveisNoMes = data.datas;
+                console.log('Dias disponíveis no mês:', datasDisponiveisNoMes);
+            } else {
+                datasDisponiveisNoMes = [];
+            }
+        } catch (error) {
+            console.error('Erro ao buscar datas disponíveis:', error);
+            datasDisponiveisNoMes = [];
+        }
+    } else {
+        console.log('Nenhuma unidade selecionada');
+        datasDisponiveisNoMes = [];
+    }
 
     const firstDay = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1);
     const lastDay = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0);
@@ -87,49 +113,30 @@ function updateCalendar() {
     today.setHours(0, 0, 0, 0);
 
     let calendarHTML = '';
-    
+
     // Gerar todas as semanas (6 semanas para cobrir todos os casos)
     for (let week = 0; week < 6; week++) {
         for (let dayOfWeek = 0; dayOfWeek < 7; dayOfWeek++) {
             const dayNumber = week * 7 + dayOfWeek - startingDay + 1;
-            
+
             if (dayNumber <= 0 || dayNumber > daysInMonth) {
                 // Dias vazios (mês anterior ou próximo)
                 calendarHTML += '<div class="calendar-day-empty"></div>';
             } else {
                 const dayDate = new Date(currentDate.getFullYear(), currentDate.getMonth(), dayNumber);
 
-                // Verificar disponibilidade baseada no hemocentro selecionado
-                let isAvailable = true;
-                let availabilityReason = '';
-                
-                if (selectedLocation === 3) { 
-                    // Unidade móvel só funciona Ter e Qui
-                    isAvailable = dayDate.getDay() === 2 || dayDate.getDay() === 4;
-                    if (!isAvailable) availabilityReason = 'Unidade fechada';
-                } else if (selectedLocation === 2) {
-                    // Hospital Santa Casa não funciona nos fins de semana
-                    isAvailable = dayDate.getDay() !== 0 && dayDate.getDay() !== 6;
-                    if (!isAvailable) availabilityReason = 'Fim de semana';
-                } else if (selectedLocation === 1) {
-                    // Hemocentro Regional não funciona aos domingos
-                    isAvailable = dayDate.getDay() !== 0;
-                    if (!isAvailable) availabilityReason = 'Fechado aos domingos';
-                }
+                // Verificar se a data está na lista de datas disponíveis da API
+                const isAvailable = datasDisponiveisNoMes.includes(dayNumber);
 
                 // Verificar se é uma data passada
                 const isPast = dayDate < today;
-                if (isPast) {
-                    isAvailable = false;
-                    availabilityReason = 'Data passada';
-                }
 
                 // Verificar se é hoje
                 const isToday = dayDate.getTime() === today.getTime();
-                
+
                 // Verificar se está selecionado
-                const isSelected = selectedDate && 
-                    selectedDate.getDate() === dayNumber && 
+                const isSelected = selectedDate &&
+                    selectedDate.getDate() === dayNumber &&
                     selectedDate.getMonth() === currentDate.getMonth() &&
                     selectedDate.getFullYear() === currentDate.getFullYear();
 
@@ -143,10 +150,17 @@ function updateCalendar() {
 
                 const clickHandler = (isPast || !isAvailable) ? '' : `selectDay(${dayNumber}, this)`;
 
+                let titleText = 'Clique para selecionar';
+                if (isPast) {
+                    titleText = 'Data passada';
+                } else if (!isAvailable) {
+                    titleText = 'Sem horários disponíveis';
+                }
+
                 calendarHTML += `
                     <div class="${dayClasses}" 
                          onclick="${clickHandler}"
-                         title="${!isAvailable ? availabilityReason : 'Clique para selecionar'}"
+                         title="${titleText}"
                          data-day="${dayNumber}">
                         ${dayNumber}
                         ${isToday ? '<div class="today-indicator">•</div>' : ''}
@@ -154,7 +168,7 @@ function updateCalendar() {
                 `;
             }
         }
-        
+
         // Se chegamos ao final do mês e não precisamos de mais semanas, pare
         if (week * 7 + 7 - startingDay > daysInMonth) {
             break;
@@ -168,9 +182,9 @@ function updateCalendar() {
 function changeMonth(direction) {
     const newDate = new Date(currentDate.getFullYear(), currentDate.getMonth() + direction, 1);
     const today = new Date();
-    
+
     // Não permitir navegar para meses passados
-    if (newDate.getFullYear() < today.getFullYear() || 
+    if (newDate.getFullYear() < today.getFullYear() ||
         (newDate.getFullYear() === today.getFullYear() && newDate.getMonth() < today.getMonth())) {
         return;
     }
@@ -179,9 +193,9 @@ function changeMonth(direction) {
     updateCalendar();
 
     // Resetar seleções de data e horário se a data selecionada não estiver mais no mês atual
-    if (selectedDate && 
-        (selectedDate.getMonth() !== currentDate.getMonth() || 
-         selectedDate.getFullYear() !== currentDate.getFullYear())) {
+    if (selectedDate &&
+        (selectedDate.getMonth() !== currentDate.getMonth() ||
+            selectedDate.getFullYear() !== currentDate.getFullYear())) {
         selectedDate = null;
         selectedTime = null;
         updateProgressStep(2);
@@ -200,10 +214,10 @@ function selectDay(day, element) {
 
     selectedDate = new Date(currentDate.getFullYear(), currentDate.getMonth(), day);
     selectedTime = null;
-    
+
     // Atualizar indicador de progresso
     updateProgressStep(3);
-    
+
     document.getElementById('confirmBtn').disabled = true;
     document.getElementById('confirmBtn').classList.add('disabled');
 
@@ -211,7 +225,7 @@ function selectDay(day, element) {
     document.querySelectorAll('.calendar-day').forEach(dayEl => {
         dayEl.classList.remove('selected');
     });
-    
+
     // Adicionar seleção ao dia clicado
     element.classList.add('selected');
 
@@ -226,46 +240,65 @@ function selectDay(day, element) {
 }
 
 // Gerar horários disponíveis
-function generateTimeSlots() {
-    let timeSlotsHTML = '';
+async function generateTimeSlots() {
+    const timeSlotsContainer = document.getElementById('timeSlots');
+    timeSlotsContainer.innerHTML = '<p class="empty-message">Carregando horários...</p>';
 
-    // Horários baseados no hemocentro selecionado
-    let slots = [];
-    if (selectedLocation === 1) { // Hemocentro Regional
-        if (selectedDate.getDay() === 6) { // Sábado
-            slots = ["07:00", "08:00", "09:00", "10:00", "11:00"];
-        } else { // Dias de semana
-            slots = ["07:00", "08:00", "09:00", "10:00", "11:00", "14:00", "15:00", "16:00", "17:00"];
-        }
-    } else if (selectedLocation === 2) { // Hospital Santa Casa
-        slots = ["08:00", "09:00", "10:00", "11:00", "14:00", "15:00", "16:00"];
-    } else if (selectedLocation === 3) { // Unidade Móvel
-        slots = ["09:00", "10:00", "11:00", "12:00", "13:00", "14:00"];
+    if (!selectedDate || !selectedLocation) {
+        timeSlotsContainer.innerHTML = '<p class="empty-message">Selecione uma data para ver os horários disponíveis</p>';
+        return;
     }
 
-    // Adicionar alguns horários indisponíveis (simulação)
-    const unavailableSlots = ["09:00", "14:00"];
+    try {
+        // Formatar data no formato YYYY-MM-DD
+        const ano = selectedDate.getFullYear();
+        const mes = String(selectedDate.getMonth() + 1).padStart(2, '0');
+        const dia = String(selectedDate.getDate()).padStart(2, '0');
+        const dataFormatada = `${ano}-${mes}-${dia}`;
 
-    slots.forEach(slot => {
-        const isUnavailable = unavailableSlots.includes(slot);
-        timeSlotsHTML += `
-            <div class="time-slot ${isUnavailable ? 'unavailable' : ''} ${selectedTime === slot ? 'selected' : ''}" 
-                 onclick="${isUnavailable ? '' : `selectTime('${slot}', this)`}">
-                ${slot}
-            </div>
-        `;
-    });
+        console.log(`Buscando horários: unidade=${selectedLocation}, data=${dataFormatada}`);
 
-    document.getElementById('timeSlots').innerHTML = timeSlotsHTML;
+        // Buscar horários disponíveis da API
+        const response = await fetch(`/api/agenda/horarios-disponiveis?cod_unidade=${selectedLocation}&data=${dataFormatada}`);
+        const data = await response.json();
+        console.log('Horários recebidos:', data);
+
+        if (!data.success || !data.data || data.data.length === 0) {
+            console.log('Nenhum horário disponível');
+            timeSlotsContainer.innerHTML = '<p class="empty-message">Nenhum horário disponível para esta data</p>';
+            return;
+        }
+
+        // Renderizar horários disponíveis
+        let timeSlotsHTML = '';
+        data.data.forEach(horario => {
+            const isSelected = selectedTime === horario.hora;
+            timeSlotsHTML += `
+                <div class="time-slot ${isSelected ? 'selected' : ''}" 
+                     onclick="selectTime('${horario.hora}', this)"
+                     data-cod-agenda="${horario.cod_agenda}"
+                     title="${horario.disponiveis} vaga(s) disponível(eis)">
+                    ${horario.hora}
+                    <small class="vagas-info">${horario.disponiveis}/${horario.vagas}</small>
+                </div>
+            `;
+        });
+
+        timeSlotsContainer.innerHTML = timeSlotsHTML;
+
+    } catch (error) {
+        console.error('Erro ao buscar horários disponíveis:', error);
+        timeSlotsContainer.innerHTML = '<p class="empty-message">Erro ao carregar horários. Tente novamente.</p>';
+    }
 }
 
 // Selecionar um horário
 function selectTime(time, element) {
     selectedTime = time;
-    
+
     // Atualizar indicador de progresso
     updateProgressStep(4);
-    
+
     document.getElementById('confirmBtn').disabled = false;
     document.getElementById('confirmBtn').classList.remove('disabled');
 
@@ -292,7 +325,7 @@ function initializePage() {
     // Definir data inicial como o mês atual
     const today = new Date();
     currentDate = new Date(today.getFullYear(), today.getMonth(), 1);
-    
+
     // Se já existe um hemocentro selecionado, atualizar o calendário
     if (selectedLocation) {
         updateCalendar();
@@ -300,3 +333,9 @@ function initializePage() {
 }
 
 document.addEventListener('DOMContentLoaded', initializePage);
+
+// Expor funções ao escopo global para permitir override em páginas específicas
+window.selectLocation = selectLocation;
+window.selectDay = selectDay;
+window.selectTime = selectTime;
+window.confirmAppointment = confirmAppointment;

@@ -186,6 +186,16 @@
             `;
             // Remove o parâmetro da URL
             window.history.replaceState({}, document.title, window.location.pathname);
+        } else if (sucesso === 'agendamento_alterado') {
+            mensagemDiv.innerHTML = `
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    <i class="fas fa-check-circle me-2"></i>
+                    <strong>Sucesso!</strong> Agendamento alterado com sucesso.
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            `;
+            // Remove o parâmetro da URL
+            window.history.replaceState({}, document.title, window.location.pathname);
         } else if (erro) {
             let mensagem = 'Erro ao processar sua solicitação.';
             if (erro === 'agendamento_nao_encontrado') {

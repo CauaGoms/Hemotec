@@ -13,7 +13,11 @@ async def get_doador_agendamento(request: Request, usuario_logado: dict = None):
     agendamentos_concluidos = []
     agendamentos_agendados = []
     agendamentos_atrasados = []
-    agendamentos = agendamento_repo.obter_todos()
+    
+    # Buscar apenas os agendamentos do doador logado
+    cod_usuario = usuario_logado['cod_usuario']
+    agendamentos = agendamento_repo.obter_por_usuario(cod_usuario)
+    
     for agendamento in agendamentos:
         id_local_agendamento = agendamento.local_agendamento
         local_agendamento = unidade_coleta_repo.obter_por_id(id_local_agendamento)

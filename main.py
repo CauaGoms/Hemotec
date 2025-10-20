@@ -85,6 +85,9 @@ from routes.doador.doador_agendamentos_adicionar import router as doador_agendam
 from routes.doador.doador_agendamentos_adicionar_confirmacao import router as doador_agendamento_adicionar_confirmacao_router
 from routes.doador.doador_agendamento_api import router as doador_agendamento_api_router
 
+# Importando os routers de API
+from routes.api.api_agenda import router as api_agenda_router
+
 # Importando os routers do colaborador
 from routes.colaborador.colaborador import router as colaborador_router
 from routes.colaborador.colaborador_campanha import router as colaborador_campanha_router
@@ -210,6 +213,9 @@ app.include_router(doador_agendamento_alterar_router)
 app.include_router(doador_agendamento_adicionar_router)
 app.include_router(doador_agendamento_adicionar_confirmacao_router)
 app.include_router(doador_agendamento_api_router)
+
+#routers de API
+app.include_router(api_agenda_router)
 
 #routers do colaborador
 app.include_router(colaborador_router)

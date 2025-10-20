@@ -13,16 +13,35 @@
         </div>
     </div>
 </section>
-
 <!-- Conteúdo Principal -->
 <div class="container mt-n5">
     <div class="reschedule-container">
+        <!-- Formulário para submeter alterações -->
+        <form
+            id="form-alterar-agendamento"
+            method="POST"
+            action="/doador/agendamento/alterar/{{ agendamento.cod_agendamento if agendamento else '' }}"
+            enctype="application/x-www-form-urlencoded"
+            style="display: none;"
+        >
+            <input type="hidden" name="data_hora" id="input-data-hora">
+            <input type="hidden" name="local_agendamento" id="input-local-agendamento">
+        </form>
         <!-- Resumo da Alteração (logo abaixo do cabeçalho) -->
         <div class="summary-card mb-4">
-            <h4 class="summary-title"><i class="fas fa-exchange-alt me-2"></i>Resumo da Alteração</h4>
+            <h4 class="summary-title">
+                <i class="fas fa-exchange-alt me-2"></i>
+                Resumo da Alteração
+            </h4>
             <div class="summary-item">
                 <span class="summary-label">Agendamento Atual:</span>
-                <p id="current-appointment" class="summary-value current">Sexta, 27 de Junho de 2025 - 10:30</p>
+                <p id="current-appointment" class="summary-value current">
+                    {% set dias_semana = ['Segunda-feira', 'Terça-feira', 'Quarta-feira', 'Quinta-feira', 'Sexta-feira', 'Sábado', 'Domingo'] %}
+                    {% set meses = ['janeiro', 'fevereiro', 'março', 'abril', 'maio', 'junho', 'julho', 'agosto', 'setembro', 'outubro', 'novembro', 'dezembro'] %}
+                    {% if agendamento %}
+                        {{ dias_semana[agendamento.data_hora.weekday()] }}, {{ agendamento.data_hora.day }} de {{ meses[agendamento.data_hora.month - 1] }} de {{ agendamento.data_hora.year }} - {{ agendamento.data_hora.strftime('%H:%M') }}
+                    {% endif %}
+                </p>
             </div>
             <hr>
             <div class="summary-item">
@@ -38,102 +57,84 @@
                         <i class="fas fa-map-marker-alt me-2"></i>
                         Escolha o Hemocentro
                     </h3>
-                    
                     <div class="search-box mb-4">
                         <div class="input-group">
-                            <span class="input-group-text"><i class="fas fa-search"></i></span>
+                            <span class="input-group-text">
+                                <i class="fas fa-search"></i>
+                            </span>
                             <input type="text" class="form-control" placeholder="Buscar hemocentro...">
                             <button class="btn btn-outline-danger" type="button">
                                 <i class="fas fa-location-arrow"></i>
                             </button>
                         </div>
                     </div>
-                    
                     <div class="location-list">
-                        <div class="location-card" onclick="selectLocation(1, this)">
+                        {% if unidades %}
+                            {% for unidade in unidades %}
+                        <div
+                            class="location-card {% if agendamento and unidade.cod_unidade == agendamento.local_agendamento %}active{% endif %}"
+                            onclick="selectLocation({{ unidade.cod_unidade }}, this)"
+                            data-unidade-id="{{ unidade.cod_unidade }}"
+                            data-unidade-nome="{{ unidade.nome }}"
+                            data-unidade-endereco="{{ unidade.rua_unidade }}, {{ unidade.bairro_unidade }}"
+                        >
                             <div class="location-header">
-                                <h5>Hemocentro Regional de Cachoeiro</h5>
-                                <span class="distance-badge">1.2 km</span>
+                                <h5>{{ unidade.nome }}</h5>
                             </div>
                             <div class="location-details">
                                 <div class="detail-item">
                                     <i class="fas fa-map-marker-alt"></i>
-                                    Rua Dr. Raulino de Oliveira, 345 - Centro
+                                    {{ unidade.rua_unidade }}, {{ unidade.bairro_unidade }}
                                 </div>
+                                {% if unidade.telefone_unidade %}
                                 <div class="detail-item">
-                                    <i class="far fa-clock"></i>
-                                    Seg-Sex: 7h-18h | Sáb: 7h-12h
+                                    <i class="fas fa-phone"></i>
+                                    {{ unidade.telefone_unidade }}
                                 </div>
-                                <div class="amenities">
-                                    <span class="amenity-badge"><i class="fas fa-parking"></i> Estacionamento</span>
-                                    <span class="amenity-badge"><i class="fas fa-wheelchair"></i> Acessível</span>
-                                </div>
+                                {% endif %}
                             </div>
                         </div>
-                        
-                        <div class="location-card" onclick="selectLocation(2, this)">
-                            <div class="location-header">
-                                <h5>Hospital Santa Casa</h5>
-                                <span class="distance-badge">2.5 km</span>
-                            </div>
-                            <div class="location-details">
-                                <div class="detail-item">
-                                    <i class="fas fa-map-marker-alt"></i>
-                                    Av. Beira Rio, 1200 - Independência
-                                </div>
-                                <div class="detail-item">
-                                    <i class="far fa-clock"></i>
-                                    Seg-Sex: 8h-17h
-                                </div>
-                                <div class="amenities">
-                                    <span class="amenity-badge"><i class="fas fa-parking"></i> Estacionamento</span>
-                                </div>
-                            </div>
+                        {% endfor %}
+                        {% else %}
+                        <div class="text-center p-4">
+                            <p class="text-muted">Nenhuma unidade de coleta disponível</p>
                         </div>
-                        
-                        <div class="location-card" onclick="selectLocation(3, this)">
-                            <div class="location-header">
-                                <h5>Unidade Móvel - Praça Jerônimo Monteiro</h5>
-                                <span class="distance-badge special">3.1 km</span>
-                            </div>
-                            <div class="location-details">
-                                <div class="detail-item">
-                                    <i class="fas fa-map-marker-alt"></i>
-                                    Praça Jerônimo Monteiro - Centro
-                                </div>
-                                <div class="detail-item">
-                                    <i class="far fa-clock"></i>
-                                    Ter e Qui: 9h-15h
-                                </div>
-                                <div class="amenities">
-                                    <span class="amenity-badge special"><i class="fas fa-bus"></i> Unidade Móvel</span>
-                                </div>
-                            </div>
-                        </div>
+                        {% endif %}
                     </div>
-                    
                     <div class="info-card">
-                        <h6><i class="fas fa-info-circle me-2"></i>Informações Importantes</h6>
+                        <h6>
+                            <i class="fas fa-info-circle me-2"></i>
+                            Informações Importantes
+                        </h6>
                         <ul class="info-list">
-                            <li><i class="fas fa-check-circle"></i> Chegue 15 min antes do horário</li>
-                            <li><i class="fas fa-check-circle"></i> Traga documento oficial com foto</li>
-                            <li><i class="fas fa-check-circle"></i> Evite alimentos gordurosos</li>
-                            <li><i class="fas fa-check-circle"></i> Beba bastante água no dia</li>
+                            <li>
+                                <i class="fas fa-check-circle"></i>
+                                Chegue 15 min antes do horário
+                            </li>
+                            <li>
+                                <i class="fas fa-check-circle"></i>
+                                Traga documento oficial com foto
+                            </li>
+                            <li>
+                                <i class="fas fa-check-circle"></i>
+                                Evite alimentos gordurosos
+                            </li>
+                            <li>
+                                <i class="fas fa-check-circle"></i>
+                                Beba bastante água no dia
+                            </li>
                         </ul>
                     </div>
                 </div>
             </div>
-            
             <!-- Main Content Area -->
             <div class="col-lg-6">
-                
                 <div class="main-content-card">
                     <div id="emptyState" class="empty-state">
                         <i class="fas fa-map-marked-alt"></i>
                         <h4>Selecione um Hemocentro</h4>
                         <p>Escolha um dos hemocentros disponíveis para continuar com seu agendamento</p>
                     </div>
-                    
                     <div id="selectedLocation" style="display: none;">
                         <!-- Calendar Section -->
                         <div class="calendar-section mb-4">
@@ -141,7 +142,6 @@
                                 <i class="far fa-calendar-alt me-2"></i>
                                 Escolha a Data
                             </h3>
-                            
                             <div class="calendar-controls">
                                 <button class="btn btn-sm btn-outline-danger" onclick="changeMonth(-1)">
                                     <i class="fas fa-chevron-left"></i>
@@ -151,7 +151,6 @@
                                     <i class="fas fa-chevron-right"></i>
                                 </button>
                             </div>
-                            
                             <div class="calendar-container">
                                 <div class="calendar-header">
                                     <div class="calendar-day-name">Dom</div>
@@ -162,25 +161,20 @@
                                     <div class="calendar-day-name">Sex</div>
                                     <div class="calendar-day-name">Sáb</div>
                                 </div>
-                                
                                 <div id="calendarDays" class="calendar-body">
-                                    <!-- Dias serão preenchidos via JavaScript -->
-                                </div>
+                                    <!-- Dias serão preenchidos via JavaScript --></div>
                             </div>
                         </div>
-                        
                         <!-- Time Section -->
                         <div class="time-section mb-4">
                             <h3 class="section-title">
                                 <i class="far fa-clock me-2"></i>
                                 Escolha o Horário
                             </h3>
-                            
                             <div id="timeSlots" class="time-slots-container">
                                 <p class="empty-message">Selecione uma data para ver os horários disponíveis</p>
                             </div>
                         </div>
-                        
                         <!-- Confirmation Button -->
                         <div class="confirmation-section">
                             <button id="confirmBtn" class="btn btn-confirm" onclick="confirmAppointment()">
@@ -195,7 +189,6 @@
     </div>
 </div>
 {% endblock %}
-
 <!-- Custom JavaScript -->
 {% block custom_js %}
 <script src="/static/js/doador/doador_agendamento.js"></script>

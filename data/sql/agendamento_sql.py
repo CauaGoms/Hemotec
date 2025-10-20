@@ -28,7 +28,7 @@ LEFT JOIN colaborador c ON a.cod_colaborador = c.cod_colaborador
 
 UPDATE = """
 UPDATE agendamento
-SET data_hora = ?, status = ?, tipo_agendamento = ?
+SET data_hora = ?, status = ?, tipo_agendamento = ?, local_agendamento = ?
 WHERE cod_agendamento = ?;
 """
 
@@ -50,4 +50,10 @@ OBTER_PENDENTES_POR_USUARIO = """
 SELECT a.cod_agendamento, a.cod_colaborador, a.cod_usuario, a.data_hora, a.status, a.tipo_agendamento, a.local_agendamento
 FROM agendamento a
 WHERE a.cod_usuario = ? AND a.status = ?;
+"""
+
+OBTER_POR_USUARIO = """
+SELECT a.cod_agendamento, a.cod_colaborador, a.cod_usuario, a.data_hora, a.status, a.tipo_agendamento, a.local_agendamento
+FROM agendamento a
+WHERE a.cod_usuario = ?;
 """
