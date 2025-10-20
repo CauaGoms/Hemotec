@@ -21,8 +21,8 @@ async def get_colaborador_agendamento(request: Request, usuario_logado: dict = N
     for agendamento in agendamentos:
         id_local_agendamento = agendamento.local_agendamento
         local_agendamento = unidade_coleta_repo.obter_por_id(id_local_agendamento)
-        doador = doador_repo.obter_por_id(agendamento.cod_doador) if agendamento.cod_doador else None
-        usuario_doador = usuario_repo.obter_por_id(agendamento.cod_doador) if agendamento.cod_doador else None
+        doador = doador_repo.obter_por_id(agendamento.cod_usuario) if agendamento.cod_usuario else None
+        usuario_doador = usuario_repo.obter_por_id(agendamento.cod_usuario) if agendamento.cod_usuario else None
         
         # Criar objeto combinado com dados do doador e usuário
         doador_completo = {
