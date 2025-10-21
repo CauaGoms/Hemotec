@@ -1,12 +1,665 @@
 {% extends "colaborador/colaborador__base.html" %}
 {% block custom_css %}
-<!-- <link href="/static/css" rel="stylesheet"> -->
+<style>
+    :root {
+        --hemotec-red: #e02020;
+        --hemotec-dark-red: #c01010;
+        --hemotec-light-red: #ff4040;
+        --hemotec-bg-light: #f8f9fa;
+        --hemotec-text-dark: #333333;
+        --hemotec-accent: #0066cc;
+        --hemotec-success: #28a745;
+        --hemotec-warning: #ffc107;
+        --hemotec-danger: #dc3545;
+        --hemotec-border: #e9ecef;
+        --hemotec-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        --hemotec-shadow-hover: 0 8px 15px rgba(0, 0, 0, 0.15);
+        --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    body {
+        background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+        min-height: 100vh;
+    }
+
+    .main-content {
+        min-height: calc(100vh - 200px);
+        background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+        padding-bottom: 2rem;
+        padding-top: 80px;
+    }
+
+    .page-header {
+        margin-bottom: 2rem;
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+    }
+
+    .btn-back {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 50px;
+        height: 50px;
+        background: white;
+        border: 2px solid var(--hemotec-border);
+        border-radius: 12px;
+        color: var(--hemotec-text-dark);
+        text-decoration: none;
+        transition: var(--transition-smooth);
+        box-shadow: var(--hemotec-shadow);
+    }
+
+    .btn-back:hover {
+        background: var(--hemotec-red);
+        color: white;
+        border-color: var(--hemotec-red);
+        transform: translateY(-2px);
+        box-shadow: var(--hemotec-shadow-hover);
+    }
+
+    .page-title {
+        font-family: 'Montserrat', sans-serif;
+        font-weight: 700;
+        font-size: 2rem;
+        color: var(--hemotec-text-dark);
+        margin: 0;
+    }
+
+    .page-subtitle {
+        color: #6c757d;
+        font-size: 1.1rem;
+        margin: 0.5rem 0 0 0;
+        font-weight: 400;
+    }
+
+    .form-container {
+        background: white;
+        border-radius: 20px;
+        box-shadow: var(--hemotec-shadow);
+        overflow: hidden;
+        transition: var(--transition-smooth);
+        padding: 2.5rem;
+    }
+
+    .form-container:hover {
+        box-shadow: var(--hemotec-shadow-hover);
+    }
+
+    .form-section {
+        margin-bottom: 2rem;
+    }
+
+    .form-section-title {
+        font-size: 1.4rem;
+        font-weight: 700;
+        color: var(--hemotec-text-dark);
+        margin-bottom: 1.5rem;
+        padding-bottom: 1rem;
+        border-bottom: 2px solid var(--hemotec-border);
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .form-section-title i {
+        color: var(--hemotec-red);
+    }
+
+    .form-group {
+        margin-bottom: 1rem;
+    }
+
+    .form-label {
+        font-weight: 600;
+        color: var(--hemotec-text-dark);
+        margin-bottom: 0.5rem;
+        display: flex;
+        align-items: center;
+        gap: 0.3rem;
+    }
+
+    .form-label .required {
+        color: var(--hemotec-red);
+    }
+
+    .form-control {
+        border: 1px solid var(--hemotec-border);
+        border-radius: 8px;
+        padding: 0.75rem;
+        font-size: 1rem;
+        transition: var(--transition-smooth);
+    }
+
+    .form-control:focus {
+        border-color: var(--hemotec-red);
+        box-shadow: 0 0 0 0.2rem rgba(224, 32, 32, 0.15);
+    }
+
+    .form-control:disabled {
+        background-color: #f8f9fa;
+        cursor: not-allowed;
+    }
+
+    .form-check {
+        display: flex;
+        align-items: center;
+        margin-bottom: 0.75rem;
+    }
+
+    .form-check-input {
+        width: 1.25rem;
+        height: 1.25rem;
+        margin-right: 0.75rem;
+        cursor: pointer;
+        accent-color: var(--hemotec-red);
+    }
+
+    .form-check-label {
+        cursor: pointer;
+        margin-bottom: 0;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .info-box {
+        background: #f0f8ff;
+        border-left: 4px solid var(--hemotec-accent);
+        padding: 1rem;
+        border-radius: 8px;
+        margin-top: 1rem;
+    }
+
+    .info-box i {
+        color: var(--hemotec-accent);
+    }
+
+    .badge {
+        display: inline-block;
+        padding: 0.4rem 0.8rem;
+        border-radius: 8px;
+        font-size: 0.85rem;
+        font-weight: 600;
+        margin: 0.25rem;
+    }
+
+    .badge-success {
+        background: #d4edda;
+        color: #155724;
+    }
+
+    .badge-danger {
+        background: #f8d7da;
+        color: #721c24;
+    }
+
+    .badge-warning {
+        background: #fff3cd;
+        color: #856404;
+    }
+
+    .alert {
+        padding: 1rem;
+        border-radius: 8px;
+        margin-bottom: 1rem;
+    }
+
+    .alert-danger {
+        background: #f8d7da;
+        border: 1px solid #f5c6cb;
+        color: #721c24;
+    }
+
+    .btn-container {
+        display: flex;
+        gap: 1rem;
+        margin-top: 2rem;
+        justify-content: space-between;
+    }
+
+    .btn {
+        padding: 0.75rem 1.5rem;
+        font-weight: 600;
+        border-radius: 8px;
+        transition: var(--transition-smooth);
+        border: none;
+        cursor: pointer;
+        font-size: 1rem;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .btn-primary {
+        background: var(--hemotec-red);
+        color: white;
+    }
+
+    .btn-primary:hover {
+        background: var(--hemotec-dark-red);
+        transform: translateY(-2px);
+        box-shadow: var(--hemotec-shadow-hover);
+        text-decoration: none;
+        color: white;
+    }
+
+    .btn-outline-secondary {
+        background: white;
+        color: #6c757d;
+        border: 2px solid var(--hemotec-border);
+    }
+
+    .btn-outline-secondary:hover {
+        background: #f8f9fa;
+        border-color: #adb5bd;
+        text-decoration: none;
+        color: #6c757d;
+    }
+
+    .form-text {
+        display: block;
+        margin-top: 0.25rem;
+        font-size: 0.875rem;
+        color: #6c757d;
+    }
+
+    .row {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 1rem;
+    }
+
+    .row.single {
+        grid-template-columns: 1fr;
+    }
+
+    .exame-card {
+        background: #f8f9fa;
+        border: 2px solid var(--hemotec-border);
+        border-radius: 12px;
+        padding: 1.5rem;
+        margin-bottom: 1rem;
+        transition: var(--transition-smooth);
+    }
+
+    .exame-card:hover {
+        border-color: var(--hemotec-red);
+        box-shadow: var(--hemotec-shadow);
+    }
+
+    .exame-title {
+        font-weight: 700;
+        color: var(--hemotec-text-dark);
+        margin-bottom: 1rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 1.1rem;
+    }
+
+    .exame-title i {
+        color: var(--hemotec-red);
+    }
+
+    .exame-options {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 0.75rem;
+    }
+
+    .file-input-wrapper {
+        position: relative;
+    }
+
+    .form-control[type="file"] {
+        padding: 0.75rem;
+        cursor: pointer;
+    }
+
+    .form-control[type="file"]::file-selector-button {
+        background: var(--hemotec-red);
+        color: white;
+        padding: 0.5rem 1rem;
+        border: none;
+        border-radius: 6px;
+        font-weight: 600;
+        cursor: pointer;
+        margin-right: 1rem;
+        transition: var(--transition-smooth);
+    }
+
+    .form-control[type="file"]::file-selector-button:hover {
+        background: var(--hemotec-dark-red);
+    }
+
+    @media (max-width: 768px) {
+        .page-title {
+            font-size: 1.5rem;
+        }
+
+        .form-container {
+            padding: 1.5rem;
+        }
+
+        .btn-container {
+            flex-direction: column;
+        }
+
+        .btn {
+            width: 100%;
+            justify-content: center;
+        }
+
+        .exame-options {
+            grid-template-columns: 1fr;
+        }
+    }
+</style>
 {% endblock %}
 
 {% block conteudo %}
-<h1>colaborador_doacao_anexar_resultado</h1>
+<!-- Conteúdo Principal -->
+<div class="main-content">
+    <div class="container">
+        <!-- Header da Página -->
+        <div class="page-header">
+            <a href="/colaborador/doacoes" class="btn-back">
+                <i class="fas fa-arrow-left"></i>
+            </a>
+            <div>
+                <h1 class="page-title">
+                    <i class="fas fa-microscope me-2"></i>
+                    Anexar Resultados de Exames
+                </h1>
+                <p class="page-subtitle">Registre os resultados dos testes laboratoriais</p>
+            </div>
+        </div>
+
+        <!-- Formulário -->
+        <div class="form-container">
+            {% if not doacao %}
+            <div class="form-section">
+                <div class="alert alert-danger">
+                    <i class="fas fa-exclamation-circle me-2"></i>
+                    <strong>Erro: Doação não encontrada</strong>
+                    <p class="mb-0 mt-2">A doação solicitada não existe ou não está aguardando exames.</p>
+                </div>
+                <div class="btn-container">
+                    <a href="/colaborador/doacoes" class="btn btn-outline-secondary">
+                        <i class="fas fa-arrow-left me-2"></i>Voltar
+                    </a>
+                </div>
+            </div>
+            {% else %}
+            <form method="POST" action="/colaborador/doacao/anexar_resultado/{{ doacao.cod_doacao }}" enctype="multipart/form-data">
+                <!-- Seção 1: Informações da Doação -->
+                <div class="form-section">
+                    <h3 class="form-section-title">
+                        <i class="fas fa-user-check"></i>
+                        Informações da Doação
+                    </h3>
+
+                    <div class="row single">
+                        <div class="form-group">
+                            <label class="form-label">
+                                <i class="fas fa-user"></i>
+                                Doador
+                            </label>
+                            <input type="text" class="form-control" value="{{ usuario_doador.nome if usuario_doador else 'Doador desconhecido' }}" disabled>
+                            {% if usuario_doador and usuario_doador.cpf %}
+                            <small class="form-text">CPF: {{ usuario_doador.cpf }}</small>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    {% if doador %}
+                    <div class="row">
+                        <div class="form-group">
+                            <label class="form-label">
+                                <i class="fas fa-tint"></i>
+                                Tipo Sanguíneo
+                            </label>
+                            <input type="text" class="form-control" value="{{ doador.tipo_sanguineo }}{% if doador.fator_rh %}{{ doador.fator_rh }}{% endif %}" disabled>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">
+                                <i class="fas fa-flask-vial"></i>
+                                Quantidade Coletada
+                            </label>
+                            <input type="text" class="form-control" value="{{ doacao.quantidade }}ml" disabled>
+                        </div>
+                    </div>
+                    {% endif %}
+
+                    <div class="info-box">
+                        <i class="fas fa-info-circle me-2"></i>
+                        <strong>Doador:</strong> {{ usuario_doador.nome if usuario_doador else "N/A" }}
+                    </div>
+                </div>
+
+                <!-- Seção 2: Resultados dos Exames -->
+                <div class="form-section">
+                    <h3 class="form-section-title">
+                        <i class="fas fa-vial"></i>
+                        Resultados dos Testes Laboratoriais
+                    </h3>
+
+                    <!-- Exame HIV -->
+                    <div class="exame-card">
+                        <div class="exame-title">
+                            <i class="fas fa-shield-virus"></i>
+                            HIV (Vírus da Imunodeficiência Humana)
+                        </div>
+                        <div class="exame-options">
+                            <label class="form-check">
+                                <input class="form-check-input" type="radio" name="exame_hiv" value="aprovado" required>
+                                <span class="form-check-label">
+                                    <i class="fas fa-check-circle" style="color: var(--hemotec-success);"></i>
+                                    Aprovado
+                                </span>
+                            </label>
+                            <label class="form-check">
+                                <input class="form-check-input" type="radio" name="exame_hiv" value="reprovado" required>
+                                <span class="form-check-label">
+                                    <i class="fas fa-times-circle" style="color: var(--hemotec-danger);"></i>
+                                    Reprovado
+                                </span>
+                            </label>
+                            <label class="form-check">
+                                <input class="form-check-input" type="radio" name="exame_hiv" value="inconcluso" required>
+                                <span class="form-check-label">
+                                    <i class="fas fa-question-circle" style="color: var(--hemotec-warning);"></i>
+                                    Inconclusivo
+                                </span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Exame Hepatite B -->
+                    <div class="exame-card">
+                        <div class="exame-title">
+                            <i class="fas fa-viruses"></i>
+                            Hepatite B
+                        </div>
+                        <div class="exame-options">
+                            <label class="form-check">
+                                <input class="form-check-input" type="radio" name="exame_hepatite_b" value="aprovado" required>
+                                <span class="form-check-label">
+                                    <i class="fas fa-check-circle" style="color: var(--hemotec-success);"></i>
+                                    Aprovado
+                                </span>
+                            </label>
+                            <label class="form-check">
+                                <input class="form-check-input" type="radio" name="exame_hepatite_b" value="reprovado" required>
+                                <span class="form-check-label">
+                                    <i class="fas fa-times-circle" style="color: var(--hemotec-danger);"></i>
+                                    Reprovado
+                                </span>
+                            </label>
+                            <label class="form-check">
+                                <input class="form-check-input" type="radio" name="exame_hepatite_b" value="inconcluso" required>
+                                <span class="form-check-label">
+                                    <i class="fas fa-question-circle" style="color: var(--hemotec-warning);"></i>
+                                    Inconclusivo
+                                </span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Exame Hepatite C -->
+                    <div class="exame-card">
+                        <div class="exame-title">
+                            <i class="fas fa-viruses"></i>
+                            Hepatite C
+                        </div>
+                        <div class="exame-options">
+                            <label class="form-check">
+                                <input class="form-check-input" type="radio" name="exame_hepatite_c" value="aprovado" required>
+                                <span class="form-check-label">
+                                    <i class="fas fa-check-circle" style="color: var(--hemotec-success);"></i>
+                                    Aprovado
+                                </span>
+                            </label>
+                            <label class="form-check">
+                                <input class="form-check-input" type="radio" name="exame_hepatite_c" value="reprovado" required>
+                                <span class="form-check-label">
+                                    <i class="fas fa-times-circle" style="color: var(--hemotec-danger);"></i>
+                                    Reprovado
+                                </span>
+                            </label>
+                            <label class="form-check">
+                                <input class="form-check-input" type="radio" name="exame_hepatite_c" value="inconcluso" required>
+                                <span class="form-check-label">
+                                    <i class="fas fa-question-circle" style="color: var(--hemotec-warning);"></i>
+                                    Inconclusivo
+                                </span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Exame Sífilis -->
+                    <div class="exame-card">
+                        <div class="exame-title">
+                            <i class="fas fa-microscope"></i>
+                            Sífilis
+                        </div>
+                        <div class="exame-options">
+                            <label class="form-check">
+                                <input class="form-check-input" type="radio" name="exame_sifilis" value="aprovado" required>
+                                <span class="form-check-label">
+                                    <i class="fas fa-check-circle" style="color: var(--hemotec-success);"></i>
+                                    Aprovado
+                                </span>
+                            </label>
+                            <label class="form-check">
+                                <input class="form-check-input" type="radio" name="exame_sifilis" value="reprovado" required>
+                                <span class="form-check-label">
+                                    <i class="fas fa-times-circle" style="color: var(--hemotec-danger);"></i>
+                                    Reprovado
+                                </span>
+                            </label>
+                            <label class="form-check">
+                                <input class="form-check-input" type="radio" name="exame_sifilis" value="inconcluso" required>
+                                <span class="form-check-label">
+                                    <i class="fas fa-question-circle" style="color: var(--hemotec-warning);"></i>
+                                    Inconclusivo
+                                </span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="info-box">
+                        <i class="fas fa-info-circle me-2"></i>
+                        <strong>Nota:</strong> Todos os exames devem ser preenchidos para que a doação seja concluída.
+                    </div>
+                </div>
+
+                <!-- Seção 3: Arquivo do Exame -->
+                <div class="form-section">
+                    <h3 class="form-section-title">
+                        <i class="fas fa-file-pdf"></i>
+                        Arquivo do Exame
+                    </h3>
+
+                    <div class="row single">
+                        <div class="form-group">
+                            <label for="arquivo_exame" class="form-label">
+                                <i class="fas fa-upload"></i>
+                                Selecione o arquivo do exame
+                            </label>
+                            <div class="file-input-wrapper">
+                                <input type="file" class="form-control" id="arquivo_exame" name="arquivo_exame" 
+                                       accept=".pdf,.doc,.docx,.xls,.xlsx,.jpg,.jpeg,.png" required>
+                                <small class="form-text">
+                                    <i class="fas fa-info-circle me-1"></i>
+                                    Formatos aceitos: PDF, DOC, DOCX, XLS, XLSX, JPG, JPEG, PNG
+                                </small>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="info-box">
+                        <i class="fas fa-file-circle-check me-2"></i>
+                        <strong>Upload de Arquivo:</strong> Carregue o arquivo de resultado do exame laboratorial em um dos formatos aceitos.
+                    </div>
+                </div>
+
+                <!-- Seção 4: Observações Adicionais -->
+                <div class="form-section">
+                    <h3 class="form-section-title">
+                        <i class="fas fa-sticky-note"></i>
+                        Observações Adicionais
+                    </h3>
+
+                    <div class="row single">
+                        <div class="form-group">
+                            <label for="observacoes_exames" class="form-label">
+                                <i class="fas fa-pen-to-square"></i>
+                                Observações dos Exames
+                            </label>
+                            <textarea class="form-control" id="observacoes_exames" name="observacoes_exames" 
+                                      rows="4" placeholder="Adicione informações adicionais sobre os exames, se necessário..."></textarea>
+                            <small class="form-text">Campo opcional - Use para anotações importantes</small>
+                        </div>
+                    </div>
+
+                    <div class="info-box">
+                        <i class="fas fa-arrow-right me-2"></i>
+                        <strong>Próximo Status:</strong> A doação será marcada como <strong>Concluída</strong> após salvar.
+                    </div>
+                </div>
+
+                <!-- Seção 4: Confirmação -->
+                <div class="form-section">
+                    <h3 class="form-section-title">
+                        <i class="fas fa-check-circle"></i>
+                        Confirmação
+                    </h3>
+
+                    <p style="color: #6c757d; margin-bottom: 1.5rem;">
+                        Verifique todos os resultados dos exames antes de confirmar. Uma vez salvo, a doação será concluída e os dados serão finalizados.
+                    </p>
+
+                    <div class="btn-container">
+                        <a href="/colaborador/doacoes" class="btn btn-outline-secondary">
+                            <i class="fas fa-times me-2"></i>Cancelar
+                        </a>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-save me-2"></i>Salvar Exames
+                        </button>
+                    </div>
+                </div>
+            </form>
+            {% endif %}
+        </div>
+    </div>
+</div>
 {% endblock %}
 
 {% block custom_js %}
-<!-- <script src="/static/js"></script> -->
+<!-- Scripts adicionais podem ser adicionados aqui -->
 {% endblock %}

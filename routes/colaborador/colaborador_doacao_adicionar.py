@@ -11,31 +11,26 @@ from util.database import get_connection
 router = APIRouter()
 templates = Jinja2Templates(directory="templates")
 
-@router.get("/colaborador/doacao/adicionar")
+@router.get("/colaborador/doacao/adicionar/{cod_doacao}")
 @requer_autenticacao(["colaborador"])
-async def get_colaborador_doacao_adicionar(request: Request, usuario_logado: dict = None):
+async def get_colaborador_doacao_adicionar(request: Request, cod_doacao: int, usuario_logado: dict = None):
     """
     Exibe o formulário para inserir informações de doação.
-    A doação deve ter sido criada previamente no agendamento.
+    Acessa uma doação específica que está no status aguardando_doacao (status 1).
     """
     try:
-        # Obter lista de agendamentos pendentes de doação
-        agendamentos = agendamento_repo.obter_todos()
-        agendamentos_pendentes = []
+        # Obter a doação específica
+        doacao = doacao_repo.obter_por_id(cod_doacao)
+        if not doacao:
+            raise HTTPException(status_code=404, detail="Doação não encontrada")
         
-        for agendamento in agendamentos:
-            # Verificar se existe doação para este agendamento
-            doacoes = doacao_repo.obter_todos()
-            doacao_existe = any(d.cod_agendamento == agendamento.cod_agendamento for d in doacoes)
-            
-            if not doacao_existe and agendamento.status == 1:  # Status 1 = confirmado
-                doador = doador_repo.obter_por_id(agendamento.cod_usuario)
-                usuario_doador = usuario_repo.obter_por_id(agendamento.cod_usuario)
-                agendamentos_pendentes.append({
-                    "agendamento": agendamento,
-                    "doador": doador,
-                    "usuario": usuario_doador
-                })
+        # Verificar se está no status correto (aguardando coleta)
+        if doacao.status != 1:
+            raise HTTPException(status_code=400, detail="Esta doação não está aguardando coleta")
+        
+        # Obter dados do doador
+        doador = doador_repo.obter_por_id(doacao.cod_doador)
+        usuario_doador = usuario_repo.obter_por_id(doacao.cod_doador)
         
         response = templates.TemplateResponse(
             "colaborador/colaborador_doacao_adicionar.html",
@@ -43,19 +38,25 @@ async def get_colaborador_doacao_adicionar(request: Request, usuario_logado: dic
                 "request": request,
                 "active_page": "doacoes",
                 "usuario": usuario_logado,
-                "agendamentos": agendamentos_pendentes
+                "doacao": doacao,
+                "doador": doador,
+                "usuario_doador": usuario_doador
             }
         )
         return response
+    except HTTPException:
+        raise
     except Exception as e:
         print(f"Erro ao obter página de adição de doação: {e}")
+        import traceback
+        traceback.print_exc()
         raise HTTPException(status_code=500, detail=str(e))
 
-@router.post("/colaborador/doacao/adicionar")
+@router.post("/colaborador/doacao/adicionar/{cod_doacao}")
 @requer_autenticacao(["colaborador"])
 async def post_colaborador_doacao_adicionar(
     request: Request,
-    cod_agendamento: int = Form(...),
+    cod_doacao: int,
     data_hora: str = Form(...),
     quantidade: int = Form(...),
     observacoes: str = Form(""),
@@ -63,13 +64,13 @@ async def post_colaborador_doacao_adicionar(
 ):
     """
     Completa a informação da doação (data_hora, quantidade, observações)
-    e altera o status para 3 (concluída).
+    e altera o status para 2 (aguardando exames).
     """
     try:
-        # Validar agendamento
-        agendamento = agendamento_repo.obter_por_id(cod_agendamento)
-        if not agendamento:
-            raise HTTPException(status_code=404, detail="Agendamento não encontrado")
+        # Validar doação
+        doacao = doacao_repo.obter_por_id(cod_doacao)
+        if not doacao:
+            raise HTTPException(status_code=404, detail="Doação não encontrada")
         
         # Converter data_hora string para datetime
         try:
@@ -81,23 +82,20 @@ async def post_colaborador_doacao_adicionar(
         if quantidade <= 0 or quantidade > 500:
             raise HTTPException(status_code=400, detail="Quantidade deve ser entre 1 e 500ml")
         
-        # Criar nova doação com status 3 (concluída)
-        doacao = Doacao(
-            cod_doacao=None,
-            cod_doador=agendamento.cod_usuario,
-            cod_agendamento=cod_agendamento,
+        # Atualizar doação com dados de coleta e status 2 (aguardando exames)
+        doacao_atualizada = Doacao(
+            cod_doacao=cod_doacao,
+            cod_doador=doacao.cod_doador,
+            cod_agendamento=doacao.cod_agendamento,
             data_hora=data_hora_obj,
             quantidade=quantidade,
-            status=3,  # Status 3 = concluída
+            status=2,  # Status 2 = aguardando exames
             observacoes=observacoes
         )
         
-        with get_connection() as conn:
-            cursor = conn.cursor()
-            cod_doacao = doacao_repo.inserir(doacao, cursor)
-            conn.commit()
+        sucesso = doacao_repo.update(doacao_atualizada)
         
-        if cod_doacao:
+        if sucesso:
             return RedirectResponse(url=f"/colaborador/doacao/detalhe/{cod_doacao}", status_code=303)
         else:
             raise HTTPException(status_code=500, detail="Erro ao salvar doação")
@@ -105,7 +103,7 @@ async def post_colaborador_doacao_adicionar(
     except HTTPException:
         raise
     except Exception as e:
-        print(f"Erro ao inserir doação: {e}")
+        print(f"Erro ao inserir dados de doação: {e}")
         import traceback
         traceback.print_exc()
         raise HTTPException(status_code=500, detail=str(e))
