@@ -4,104 +4,430 @@
 {% endblock %}
 
 {% block corpo %}
-<a href="/visualizar_plano" class="back-arrow"><i class="fas fa-arrow-left"></i></a>
+<a href="/visualizar_plano" class="back-arrow">
+    <i class="fas fa-arrow-left"></i>
+</a>
 <div class="register-container" style="position: relative;">
     <a href="/">
         <img src="/static/img/logo_vermelha.svg" alt="Hemotec Logo" class="logo-register">
     </a>
     <h2 class="register-title">Cadastro de Gestor</h2>
-
-    <form method="post" action="/visualizar_plano">
+    <form method="post" action="/finalizar_cadastro">
         <!-- Seção 1: Dados Pessoais do Gestor -->
         <div class="form-section" id="cadastroSection1">
             <h3>Dados Pessoais do Gestor</h3>
             <div class="mb-3">
-                <input type="text" class="form-control" id="nome_gestor" placeholder="Nome Completo do Gestor" required name="nome_gestor">
+                <input
+                    type="text"
+                    class="form-control {% if erros and erros.get('nome_gestor') %}is-invalid{% endif %}"
+                    id="nome_gestor"
+                    placeholder="Nome Completo do Gestor"
+                    required
+                    name="nome_gestor"
+                    value="{{ dados.nome_gestor if dados else (possivel_gestor.nome_possivel_gestor if possivel_gestor else '') }}"
+                >
+                {% if erros and erros.get('nome_gestor') %}
+                <div class="invalid-feedback">{{ erros.get('nome_gestor') }}</div>
+                {% endif %}
             </div>
             <div class="mb-3">
-                <input type="text" class="form-control" id="cpf_gestor" placeholder="CPF do Gestor" required name="cpf_gestor">
+                <input
+                    type="text"
+                    class="form-control {% if erros and erros.get('cpf_gestor') %}is-invalid{% endif %}"
+                    id="cpf_gestor"
+                    placeholder="CPF do Gestor"
+                    required
+                    name="cpf_gestor"
+                    value="{{ dados.cpf_gestor if dados else '' }}"
+                >
+                {% if erros and erros.get('cpf_gestor') %}
+                <div class="invalid-feedback">{{ erros.get('cpf_gestor') }}</div>
+                {% endif %}
             </div>
             <div class="mb-3">
-                <input type="email" class="form-control" id="email_gestor" placeholder="Email Pessoal do Gestor" required name="email_gestor">
+                <input
+                    type="email"
+                    class="form-control {% if erros and erros.get('email_gestor') %}is-invalid{% endif %}"
+                    id="email_gestor"
+                    placeholder="Email Pessoal do Gestor"
+                    required
+                    name="email_gestor"
+                    value="{{ dados.email_gestor if dados else (possivel_gestor.email_possivel_gestor if possivel_gestor else '') }}"
+                >
+                {% if erros and erros.get('email_gestor') %}
+                <div class="invalid-feedback">{{ erros.get('email_gestor') }}</div>
+                {% endif %}
             </div>
             <div class="mb-3">
-                <input type="tel" class="form-control" id="telefone_gestor" placeholder="Telefone do Gestor" name="telefone_gestor">
+                <input
+                    type="tel"
+                    class="form-control {% if erros and erros.get('telefone_gestor') %}is-invalid{% endif %}"
+                    id="telefone_gestor"
+                    placeholder="Telefone do Gestor"
+                    name="telefone_gestor"
+                    value="{{ dados.telefone_gestor if dados else (possivel_gestor.telefone_possivel_gestor if possivel_gestor else '') }}"
+                >
+                {% if erros and erros.get('telefone_gestor') %}
+                <div class="invalid-feedback">{{ erros.get('telefone_gestor') }}</div>
+                {% endif %}
             </div>
-                <div class="d-flex justify-content-end mt-4">
-                    <button type="button" class="btn btn-register btn-maior" id="cadastroNextBtn1" onclick="cadastroChangeStep(1)">
-                        Próximo <i class="fas fa-arrow-right ms-2"></i>
-                    </button>
-                </div>
+            <div class="mb-3">
+                <input
+                    type="date"
+                    class="form-control {% if erros and erros.get('data_nascimento_gestor') %}is-invalid{% endif %}"
+                    id="data_nascimento_gestor"
+                    placeholder="Data de Nascimento"
+                    required
+                    name="data_nascimento_gestor"
+                    value="{{ dados.data_nascimento_gestor if dados else '' }}"
+                >
+                {% if erros and erros.get('data_nascimento_gestor') %}
+                <div class="invalid-feedback">{{ erros.get('data_nascimento_gestor') }}</div>
+                {% endif %}
+            </div>
+            <div class="mb-3">
+                <select class="form-control {% if erros and erros.get('genero_gestor') %}is-invalid{% endif %}" id="genero_gestor" required name="genero_gestor">
+                    <option value="">Selecione o Gênero</option>
+                    <option value="M" {% if dados and dados.genero_gestor == 'M' %}selected{% endif %}>Masculino</option>
+                    <option value="F" {% if dados and dados.genero_gestor == 'F' %}selected{% endif %}>Feminino</option>
+                    <option value="O" {% if dados and dados.genero_gestor == 'O' %}selected{% endif %}>Outro</option>
+                </select>
+                {% if erros and erros.get('genero_gestor') %}
+                <div class="invalid-feedback">{{ erros.get('genero_gestor') }}</div>
+                {% endif %}
+            </div>
+            <div class="d-flex justify-content-end mt-4">
+                <button
+                    type="button"
+                    class="btn btn-register btn-maior"
+                    id="cadastroNextBtn1"
+                    onclick="cadastroChangeStep(1)"
+                >
+                    Próximo
+                    <i class="fas fa-arrow-right ms-2"></i>
+                </button>
+            </div>
         </div>
-
         <!-- Seção 2: Informações da Instituição -->
         <div class="form-section" id="cadastroSection2" style="display: none;">
             <h3>Informações da Instituição</h3>
             <div class="mb-3">
-                <input type="text" class="form-control" id="razao_social" placeholder="Razão Social da Instituição" required name="razao_social">
+                <input
+                    type="text"
+                    class="form-control {% if erros and erros.get('razao_social') %}is-invalid{% endif %}"
+                    id="razao_social"
+                    placeholder="Razão Social da Instituição"
+                    required
+                    name="razao_social"
+                    value="{{ dados.razao_social if dados else '' }}"
+                >
+                {% if erros and erros.get('razao_social') %}
+                <div class="invalid-feedback">{{ erros.get('razao_social') }}</div>
+                {% endif %}
             </div>
             <div class="mb-3">
-                <input type="text" class="form-control" id="cnpj_instituicao" placeholder="CNPJ da Instituição" required name="cnpj_instituicao">
+                <input
+                    type="text"
+                    class="form-control {% if erros and erros.get('cnpj_instituicao') %}is-invalid{% endif %}"
+                    id="cnpj_instituicao"
+                    placeholder="CNPJ da Instituição"
+                    required
+                    name="cnpj_instituicao"
+                    value="{{ dados.cnpj_instituicao if dados else '' }}"
+                >
+                {% if erros and erros.get('cnpj_instituicao') %}
+                <div class="invalid-feedback">{{ erros.get('cnpj_instituicao') }}</div>
+                {% endif %}
             </div>
             <div class="mb-3">
-                <input type="email" class="form-control" id="email_institucional" placeholder="Email Institucional" required name="email_institucional">
+                <input
+                    type="email"
+                    class="form-control {% if erros and erros.get('email_institucional') %}is-invalid{% endif %}"
+                    id="email_institucional"
+                    placeholder="Email Institucional"
+                    required
+                    name="email_institucional"
+                    value="{{ dados.email_institucional if dados else '' }}"
+                >
+                {% if erros and erros.get('email_institucional') %}
+                <div class="invalid-feedback">{{ erros.get('email_institucional') }}</div>
+                {% endif %}
+            </div>
+            <div class="mb-3">
+                <input
+                    type="tel"
+                    class="form-control {% if erros and erros.get('telefone_instituicao') %}is-invalid{% endif %}"
+                    id="telefone_instituicao"
+                    placeholder="Telefone da Instituição"
+                    required
+                    name="telefone_instituicao"
+                    value="{{ dados.telefone_instituicao if dados else '' }}"
+                >
+                {% if erros and erros.get('telefone_instituicao') %}
+                <div class="invalid-feedback">{{ erros.get('telefone_instituicao') }}</div>
+                {% endif %}
             </div>
             <div class="d-flex justify-content-between mt-4">
                 <div style="display: flex; gap: 10px; width: 100%;">
-                    <button type="button" class="btn btn-outline-danger btn-sml" id="cadastroPrevBtn" onclick="cadastroChangeStep(-1)">
-                        <i class="fas fa-arrow-left me-2"></i> Anterior
+                    <button
+                        type="button"
+                        class="btn btn-outline-danger btn-sml"
+                        id="cadastroPrevBtn"
+                        onclick="cadastroChangeStep(-1)"
+                    >
+                        <i class="fas fa-arrow-left me-2"></i>
+                        Anterior
                     </button>
-                    <button type="button" class="btn btn-register btn-sml" id="cadastroNextBtn" onclick="cadastroChangeStep(1)">
-                        Próximo <i class="fas fa-arrow-right ms-2"></i>
+                    <button
+                        type="button"
+                        class="btn btn-register btn-sml"
+                        id="cadastroNextBtn"
+                        onclick="cadastroChangeStep(1)"
+                    >
+                        Próximo
+                        <i class="fas fa-arrow-right ms-2"></i>
                     </button>
                 </div>
             </div>
         </div>
-
         <!-- Seção 2.1: Endereço Instituição -->
-    <div class="form-section" id="cadastroSection3" style="display: none;">
+        <div class="form-section" id="cadastroSection3" style="display: none;">
             <h3>Endereço Instituição</h3>
             <div class="mb-3">
-                <input type="text" class="form-control" id="cep_instituicao" placeholder="CEP" maxlength="9" required name="cep_instituicao">
+                <input
+                    type="text"
+                    class="form-control {% if erros and erros.get('cep_instituicao') %}is-invalid{% endif %}"
+                    id="cep_instituicao"
+                    placeholder="CEP"
+                    maxlength="9"
+                    required
+                    name="cep_instituicao"
+                    value="{{ dados.cep_instituicao if dados else '' }}"
+                >
+                {% if erros and erros.get('cep_instituicao') %}
+                <div class="invalid-feedback">{{ erros.get('cep_instituicao') }}</div>
+                {% endif %}
             </div>
             <div class="mb-3">
-                <input type="text" class="form-control" id="rua_instituicao" placeholder="Rua" required name="rua_instituicao">
+                <input
+                    type="text"
+                    class="form-control {% if erros and erros.get('rua_instituicao') %}is-invalid{% endif %}"
+                    id="rua_instituicao"
+                    placeholder="Rua"
+                    required
+                    name="rua_instituicao"
+                    value="{{ dados.rua_instituicao if dados else '' }}"
+                >
+                {% if erros and erros.get('rua_instituicao') %}
+                <div class="invalid-feedback">{{ erros.get('rua_instituicao') }}</div>
+                {% endif %}
             </div>
             <div class="mb-3">
-                <input type="text" class="form-control" id="bairro_instituicao" placeholder="Bairro" required name="bairro_instituicao">
+                <input
+                    type="text"
+                    class="form-control {% if erros and erros.get('bairro_instituicao') %}is-invalid{% endif %}"
+                    id="bairro_instituicao"
+                    placeholder="Bairro"
+                    required
+                    name="bairro_instituicao"
+                    value="{{ dados.bairro_instituicao if dados else '' }}"
+                >
+                {% if erros and erros.get('bairro_instituicao') %}
+                <div class="invalid-feedback">{{ erros.get('bairro_instituicao') }}</div>
+                {% endif %}
             </div>
             <div class="mb-3">
-                <input type="text" class="form-control" id="cidade_instituicao" placeholder="Cidade" required name="cidade_instituicao">
+                <input
+                    type="text"
+                    class="form-control {% if erros and erros.get('cidade_instituicao') %}is-invalid{% endif %}"
+                    id="cidade_instituicao"
+                    placeholder="Cidade"
+                    required
+                    name="cidade_instituicao"
+                    value="{{ dados.cidade_instituicao if dados else '' }}"
+                >
+                {% if erros and erros.get('cidade_instituicao') %}
+                <div class="invalid-feedback">{{ erros.get('cidade_instituicao') }}</div>
+                {% endif %}
+            </div>
+            <div class="mb-3">
+                <input
+                    type="text"
+                    class="form-control {% if erros and erros.get('estado_instituicao') %}is-invalid{% endif %}"
+                    id="estado_instituicao"
+                    placeholder="Estado (UF)"
+                    maxlength="2"
+                    required
+                    name="estado_instituicao"
+                    value="{{ dados.estado_instituicao if dados else '' }}"
+                >
+                {% if erros and erros.get('estado_instituicao') %}
+                <div class="invalid-feedback">{{ erros.get('estado_instituicao') }}</div>
+                {% endif %}
             </div>
             <div class="d-flex justify-content-between mt-4">
                 <div style="display: flex; gap: 10px; width: 100%;">
-                    <button type="button" class="btn btn-outline-danger btn-sml" id="cadastroPrevBtn" onclick="cadastroChangeStep(-1)">
-                        <i class="fas fa-arrow-left me-2"></i> Anterior
+                    <button
+                        type="button"
+                        class="btn btn-outline-danger btn-sml"
+                        id="cadastroPrevBtn"
+                        onclick="cadastroChangeStep(-1)"
+                    >
+                        <i class="fas fa-arrow-left me-2"></i>
+                        Anterior
                     </button>
-                    <button type="button" class="btn btn-register btn-sml" id="cadastroNextBtn" onclick="cadastroChangeStep(1)">
-                        Próximo <i class="fas fa-arrow-right ms-2"></i>
+                    <button
+                        type="button"
+                        class="btn btn-register btn-sml"
+                        id="cadastroNextBtn"
+                        onclick="cadastroChangeStep(1)"
+                    >
+                        Próximo
+                        <i class="fas fa-arrow-right ms-2"></i>
                     </button>
                 </div>
             </div>
         </div>
-
-        <!-- Seção 3: Senha -->
-    <div class="form-section" id="cadastroSection4" style="display: none;">
-            <h3>Crie sua Senha de Acesso</h3>
+        <!-- Seção 4: Endereço do Gestor -->
+        <div class="form-section" id="cadastroSection4" style="display: none;">
+            <h3>Endereço do Gestor</h3>
             <div class="mb-3">
-                <input type="password" class="form-control" id="senha" placeholder="Crie uma senha" required name="senha">
+                <input
+                    type="text"
+                    class="form-control {% if erros and erros.get('cep_gestor') %}is-invalid{% endif %}"
+                    id="cep_gestor"
+                    placeholder="CEP"
+                    maxlength="9"
+                    required
+                    name="cep_gestor"
+                    value="{{ dados.cep_gestor if dados else '' }}"
+                >
+                {% if erros and erros.get('cep_gestor') %}
+                <div class="invalid-feedback">{{ erros.get('cep_gestor') }}</div>
+                {% endif %}
             </div>
             <div class="mb-3">
-                <input type="password" class="form-control" id="confirmar_senha" placeholder="Confirme sua senha" required>
+                <input
+                    type="text"
+                    class="form-control {% if erros and erros.get('rua_gestor') %}is-invalid{% endif %}"
+                    id="rua_gestor"
+                    placeholder="Rua"
+                    required
+                    name="rua_gestor"
+                    value="{{ dados.rua_gestor if dados else '' }}"
+                >
+                {% if erros and erros.get('rua_gestor') %}
+                <div class="invalid-feedback">{{ erros.get('rua_gestor') }}</div>
+                {% endif %}
+            </div>
+            <div class="mb-3">
+                <input
+                    type="text"
+                    class="form-control {% if erros and erros.get('bairro_gestor') %}is-invalid{% endif %}"
+                    id="bairro_gestor"
+                    placeholder="Bairro"
+                    required
+                    name="bairro_gestor"
+                    value="{{ dados.bairro_gestor if dados else '' }}"
+                >
+                {% if erros and erros.get('bairro_gestor') %}
+                <div class="invalid-feedback">{{ erros.get('bairro_gestor') }}</div>
+                {% endif %}
+            </div>
+            <div class="mb-3">
+                <input
+                    type="text"
+                    class="form-control {% if erros and erros.get('cidade_gestor') %}is-invalid{% endif %}"
+                    id="cidade_gestor"
+                    placeholder="Cidade"
+                    required
+                    name="cidade_gestor"
+                    value="{{ dados.cidade_gestor if dados else '' }}"
+                >
+                {% if erros and erros.get('cidade_gestor') %}
+                <div class="invalid-feedback">{{ erros.get('cidade_gestor') }}</div>
+                {% endif %}
+            </div>
+            <div class="mb-3">
+                <input
+                    type="text"
+                    class="form-control {% if erros and erros.get('estado_gestor') %}is-invalid{% endif %}"
+                    id="estado_gestor"
+                    placeholder="Estado (UF)"
+                    maxlength="2"
+                    required
+                    name="estado_gestor"
+                    value="{{ dados.estado_gestor if dados else '' }}"
+                >
+                {% if erros and erros.get('estado_gestor') %}
+                <div class="invalid-feedback">{{ erros.get('estado_gestor') }}</div>
+                {% endif %}
+            </div>
+            <div class="d-flex justify-content-between mt-4">
+                <div style="display: flex; gap: 10px; width: 100%;">
+                    <button
+                        type="button"
+                        class="btn btn-outline-danger btn-sml"
+                        id="cadastroPrevBtn"
+                        onclick="cadastroChangeStep(-1)"
+                    >
+                        <i class="fas fa-arrow-left me-2"></i>
+                        Anterior
+                    </button>
+                    <button
+                        type="button"
+                        class="btn btn-register btn-sml"
+                        id="cadastroNextBtn"
+                        onclick="cadastroChangeStep(1)"
+                    >
+                        Próximo
+                        <i class="fas fa-arrow-right ms-2"></i>
+                    </button>
+                </div>
             </div>
         </div>
-
-            <!-- Botão de finalizar cadastro, exibido apenas na última etapa -->
-            <div class="d-flex justify-content-end mt-4">
-                <button type="submit" class="btn btn-register btn-maior" id="cadastroSubmitBtn" style="display: none; ">
-                    <i class="fas fa-check me-2"></i> Finalizar Cadastro
-                </button>
+        <!-- Seção 5: Senha -->
+        <div class="form-section" id="cadastroSection5" style="display: none;">
+            <h3>Crie sua Senha de Acesso</h3>
+            <div class="mb-3">
+                <input
+                    type="password"
+                    class="form-control {% if erros and erros.get('senha') %}is-invalid{% endif %}"
+                    id="senha"
+                    placeholder="Crie uma senha (mínimo 6 caracteres, incluindo números e letras)"
+                    required
+                    name="senha"
+                >
+                {% if erros and erros.get('senha') %}
+                <div class="invalid-feedback">{{ erros.get('senha') }}</div>
+                {% endif %}
+                <small class="form-text text-muted">Sua senha deve ter pelo menos 6 caracteres e conter números e letras.</small>
             </div>
+            <div class="mb-3">
+                <input
+                    type="password"
+                    class="form-control {% if erros and erros.get('confirmar_senha') %}is-invalid{% endif %}"
+                    id="confirmar_senha"
+                    placeholder="Confirme sua senha"
+                    required
+                >
+                {% if erros and erros.get('confirmar_senha') %}
+                <div class="invalid-feedback">{{ erros.get('confirmar_senha') }}</div>
+                {% endif %}
+            </div>
+        </div>
+        <!-- Botão de finalizar cadastro, exibido apenas na última etapa -->
+        <div class="d-flex justify-content-end mt-4">
+            <button
+                type="submit"
+                class="btn btn-register btn-maior"
+                id="cadastroSubmitBtn"
+                style="display: none; "
+            >
+                <i class="fas fa-check me-2"></i>
+                Finalizar Cadastro
+            </button>
+        </div>
     </form>
 </div>
 {% endblock %}

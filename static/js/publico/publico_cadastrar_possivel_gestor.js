@@ -1,19 +1,19 @@
 // JS para navegação entre etapas do formulário multi-step
 
 // Função para validar e ir para a próxima página (escopo global)
-window.validarEProximo = function() {
+window.validarEProximo = function () {
     const nomeEl = document.getElementById('nome');
     const cargoEl = document.getElementById('cargo');
     const emailEl = document.getElementById('email');
     const telefoneEl = document.getElementById('telefone');
-    
+
     const nome = nomeEl ? nomeEl.value.trim() : '';
     const cargo = cargoEl ? cargoEl.value : '';
     const email = emailEl ? emailEl.value.trim() : '';
     const telefone = telefoneEl ? telefoneEl.value.trim() : '';
-    
+
     let valid = true;
-    
+
     // Validação do nome - mínimo 3 caracteres
     if (!nome) {
         markInvalid(nomeEl, 'Por favor, preencha seu nome completo.');
@@ -28,9 +28,9 @@ window.validarEProximo = function() {
     } else {
         clearInvalid(nomeEl);
     }
-    
+
     if (!valid) return;
-    
+
     // Validação do cargo
     if (!cargo || cargo === '') {
         markInvalid(cargoEl, 'Por favor, selecione seu cargo.');
@@ -40,9 +40,9 @@ window.validarEProximo = function() {
     } else {
         clearInvalid(cargoEl);
     }
-    
+
     if (!valid) return;
-    
+
     // Validação do email
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!email) {
@@ -58,9 +58,9 @@ window.validarEProximo = function() {
     } else {
         clearInvalid(emailEl);
     }
-    
+
     if (!valid) return;
-    
+
     // Validação do telefone
     const telefoneDigits = telefone.replace(/\D/g, '');
     if (!telefone) {
@@ -76,11 +76,54 @@ window.validarEProximo = function() {
     } else {
         clearInvalid(telefoneEl);
     }
-    
+
     if (!valid) return;
-    
-    // Se todas as validações passarem, redireciona para a próxima página
-    window.location.href = '/visualizar_plano';
+
+    // Se todas as validações passarem, enviar via AJAX para o servidor
+    const formData = new FormData();
+    formData.append('nome', nome);
+    formData.append('cargo', cargo);
+    formData.append('email', email);
+    // Enviar apenas dígitos para o servidor
+    const telefoneOnlyDigits = telefone.replace(/\D/g, '');
+    formData.append('telefone', telefoneOnlyDigits);
+
+    const btn = document.getElementById('btnProximo');
+    if (btn) {
+        const original = btn.innerHTML;
+        btn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Enviando...';
+        btn.disabled = true;
+
+        fetch('/cadastrar_possivel_gestor', {
+            method: 'POST',
+            body: formData,
+        })
+            .then(async res => {
+                btn.innerHTML = original;
+                btn.disabled = false;
+                if (!res.ok) {
+                    const data = await res.json().catch(() => ({}));
+                    throw new Error(data.message || 'Erro ao enviar formulário');
+                }
+                return res.json();
+            })
+            .then(data => {
+                // Se inserido com sucesso, redirecionar para finalizar cadastro com id
+                if (data && data.success) {
+                    const id = data.id;
+                    window.location.href = `/finalizar_cadastro?possivel_id=${encodeURIComponent(id)}`;
+                } else {
+                    if (window.showWarning) window.showWarning(data.message || 'Erro ao enviar.');
+                }
+            })
+            .catch(err => {
+                console.error('Erro ao enviar possivel gestor:', err);
+                if (window.showWarning) window.showWarning(err.message || 'Erro ao enviar formulário.');
+            });
+    } else {
+        // Fallback: redirecionar
+        window.location.href = '/visualizar_plano';
+    }
 };
 
 // Helper: marcar campo como inválido e mostrar mensagem inline
@@ -129,7 +172,7 @@ document.addEventListener('DOMContentLoaded', function () {
     // Adicionar event listener ao botão Próximo
     const btnProximo = document.getElementById('btnProximo');
     if (btnProximo) {
-        btnProximo.addEventListener('click', function() {
+        btnProximo.addEventListener('click', function () {
             if (typeof window.validarEProximo === 'function') {
                 window.validarEProximo();
             }
@@ -140,10 +183,10 @@ document.addEventListener('DOMContentLoaded', function () {
         // Validação completa dos campos obrigatórios
         const activeStep = steps[currentStep];
         const requiredFields = activeStep.querySelectorAll('[required]');
-        
+
         for (let field of requiredFields) {
             const value = field.value.trim();
-            
+
             // Validação do nome - mínimo 3 caracteres
             if (field.id === 'nome') {
                 if (!value) {
@@ -160,7 +203,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     clearInvalid(field);
                 }
             }
-            
+
             // Validação do email
             else if (field.id === 'email') {
                 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -178,7 +221,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     clearInvalid(field);
                 }
             }
-            
+
             // Validação do telefone
             else if (field.id === 'telefone') {
                 const telefoneDigits = value.replace(/\D/g, '');
@@ -196,7 +239,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     clearInvalid(field);
                 }
             }
-            
+
             // Validação do cargo (select)
             else if (field.id === 'cargo') {
                 if (!value || value === '') {
@@ -208,7 +251,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     clearInvalid(field);
                 }
             }
-            
+
             // Validação genérica para outros campos
             else if (!value) {
                 field.classList.add('is-invalid');
@@ -218,7 +261,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 field.classList.remove('is-invalid');
             }
         }
-        
+
         if (currentStep < steps.length - 1) {
             showStep(currentStep + 1);
         }
@@ -232,7 +275,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Inicializa mostrando o primeiro passo
     showStep(0);
-    
+
     // Máscara de telefone
     const telefoneEl = document.getElementById('telefone');
     if (telefoneEl) {
@@ -249,7 +292,7 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         });
     }
-    
+
     // Validação em tempo real do nome
     const nomeEl = document.getElementById('nome');
     if (nomeEl) {
@@ -262,7 +305,7 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         });
     }
-    
+
     // Validação em tempo real do email
     const emailEl = document.getElementById('email');
     if (emailEl) {
@@ -276,7 +319,7 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         });
     }
-    
+
     // Validação em tempo real do telefone
     if (telefoneEl) {
         telefoneEl.addEventListener('blur', function (e) {

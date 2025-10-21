@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     initializePricingCards();
     setupCardInteractions();
     setupPlanSelection();
@@ -9,11 +9,11 @@ document.addEventListener('DOMContentLoaded', function() {
 // Inicialização dos cards de preços
 function initializePricingCards() {
     const cards = document.querySelectorAll('.pricing-card, .enterprise-card');
-    
+
     cards.forEach((card, index) => {
         // Adicionar delay de animação escalonado
         card.style.animationDelay = `${index * 0.1}s`;
-        
+
         // Adicionar efeito de entrada
         card.classList.add('animate-in');
     });
@@ -23,13 +23,13 @@ function initializePricingCards() {
 function setupCardInteractions() {
     const pricingCards = document.querySelectorAll('.pricing-card');
     const enterpriseCard = document.querySelector('.enterprise-card');
-    
+
     // Interações dos cards de preços
     pricingCards.forEach(card => {
         setupCardHoverEffects(card);
         setupCardClickEffects(card);
     });
-    
+
     // Interações do card enterprise
     if (enterpriseCard) {
         setupEnterpriseCardEffects(enterpriseCard);
@@ -41,13 +41,13 @@ function setupCardHoverEffects(card) {
     const planIcon = card.querySelector('.plan-icon');
     const features = card.querySelectorAll('.feature-item');
     const selectBtn = card.querySelector('.select-plan-btn');
-    
-    card.addEventListener('mouseenter', function() {
+
+    card.addEventListener('mouseenter', function () {
         // Efeito de rotação no ícone
         if (planIcon) {
             planIcon.style.transform = 'scale(1.1) rotate(5deg)';
         }
-        
+
         // Animação escalonada das features
         features.forEach((feature, index) => {
             setTimeout(() => {
@@ -55,31 +55,31 @@ function setupCardHoverEffects(card) {
                 feature.style.background = 'rgba(224, 32, 32, 0.02)';
             }, index * 50);
         });
-        
+
         // Efeito de pulso no botão
         if (selectBtn) {
             selectBtn.style.transform = 'translateY(-3px) scale(1.02)';
         }
-        
+
         // Adicionar classe de hover
         card.classList.add('card-hovered');
     });
-    
-    card.addEventListener('mouseleave', function() {
+
+    card.addEventListener('mouseleave', function () {
         // Resetar transformações
         if (planIcon) {
             planIcon.style.transform = '';
         }
-        
+
         features.forEach(feature => {
             feature.style.transform = '';
             feature.style.background = '';
         });
-        
+
         if (selectBtn) {
             selectBtn.style.transform = '';
         }
-        
+
         // Remover classe de hover
         card.classList.remove('card-hovered');
     });
@@ -87,15 +87,15 @@ function setupCardHoverEffects(card) {
 
 // Efeitos de clique dos cards
 function setupCardClickEffects(card) {
-    card.addEventListener('click', function(e) {
+    card.addEventListener('click', function (e) {
         // Não executar se clicou no botão
         if (e.target.closest('.select-plan-btn')) {
             return;
         }
-        
+
         // Efeito de ripple
         createRippleEffect(card, e);
-        
+
         // Destacar card selecionado
         highlightSelectedCard(card);
     });
@@ -108,7 +108,7 @@ function createRippleEffect(element, event) {
     const size = Math.max(rect.width, rect.height);
     const x = event.clientX - rect.left - size / 2;
     const y = event.clientY - rect.top - size / 2;
-    
+
     ripple.style.cssText = `
         position: absolute;
         width: ${size}px;
@@ -122,10 +122,10 @@ function createRippleEffect(element, event) {
         pointer-events: none;
         z-index: 1;
     `;
-    
+
     element.style.position = 'relative';
     element.appendChild(ripple);
-    
+
     // Remover ripple após animação
     setTimeout(() => {
         ripple.remove();
@@ -135,15 +135,15 @@ function createRippleEffect(element, event) {
 // Destacar card selecionado
 function highlightSelectedCard(selectedCard) {
     const allCards = document.querySelectorAll('.pricing-card');
-    
+
     // Remover destaque de todos os cards
     allCards.forEach(card => {
         card.classList.remove('selected');
     });
-    
+
     // Adicionar destaque ao card selecionado
     selectedCard.classList.add('selected');
-    
+
     // Efeito de confirmação visual
     showSelectionFeedback(selectedCard);
 }
@@ -151,7 +151,7 @@ function highlightSelectedCard(selectedCard) {
 // Mostrar feedback de seleção
 function showSelectionFeedback(card) {
     const planName = card.querySelector('.plan-name').textContent;
-    
+
     // Criar notificação temporária
     const notification = document.createElement('div');
     notification.style.cssText = `
@@ -172,14 +172,14 @@ function showSelectionFeedback(card) {
         <i class="fas fa-check-circle me-2"></i>
         Plano ${planName} selecionado!
     `;
-    
+
     document.body.appendChild(notification);
-    
+
     // Animar entrada
     setTimeout(() => {
         notification.style.transform = 'translateX(0)';
     }, 100);
-    
+
     // Remover após 3 segundos
     setTimeout(() => {
         notification.style.transform = 'translateX(100%)';
@@ -193,13 +193,13 @@ function showSelectionFeedback(card) {
 function setupEnterpriseCardEffects(card) {
     const features = card.querySelectorAll('.enterprise-feature');
     const icon = card.querySelector('.enterprise-icon');
-    
-    card.addEventListener('mouseenter', function() {
+
+    card.addEventListener('mouseenter', function () {
         // Efeito de rotação no ícone
         if (icon) {
             icon.style.transform = 'scale(1.1) rotate(-5deg)';
         }
-        
+
         // Animação das features
         features.forEach((feature, index) => {
             setTimeout(() => {
@@ -208,12 +208,12 @@ function setupEnterpriseCardEffects(card) {
             }, index * 100);
         });
     });
-    
-    card.addEventListener('mouseleave', function() {
+
+    card.addEventListener('mouseleave', function () {
         if (icon) {
             icon.style.transform = '';
         }
-        
+
         features.forEach(feature => {
             feature.style.transform = '';
             feature.style.color = '';
@@ -225,21 +225,21 @@ function setupEnterpriseCardEffects(card) {
 function setupPlanSelection() {
     const selectButtons = document.querySelectorAll('.select-plan-btn');
     const enterpriseBtn = document.querySelector('.enterprise-btn');
-    
+
     selectButtons.forEach(button => {
-        button.addEventListener('click', function(e) {
+        button.addEventListener('click', function (e) {
             e.stopPropagation();
-            
+
             const card = this.closest('.pricing-card');
             const planName = card.querySelector('.plan-name').textContent;
             const planData = card.getAttribute('data-plan');
-            
+
             handlePlanSelection(planData, planName, this);
         });
     });
-    
+
     if (enterpriseBtn) {
-        enterpriseBtn.addEventListener('click', function(e) {
+        enterpriseBtn.addEventListener('click', function (e) {
             e.stopPropagation();
             handleEnterpriseContact(this);
         });
@@ -252,13 +252,13 @@ function handlePlanSelection(planData, planName, button) {
     const originalText = button.innerHTML;
     button.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Processando...';
     button.disabled = true;
-    
+
     // Simular processamento
     setTimeout(() => {
         // Restaurar botão
         button.innerHTML = originalText;
         button.disabled = false;
-        
+
         // Mostrar modal de confirmação ou redirecionar
         showPlanConfirmation(planData, planName);
     }, 1500);
@@ -269,11 +269,11 @@ function handleEnterpriseContact(button) {
     const originalText = button.innerHTML;
     button.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Conectando...';
     button.disabled = true;
-    
+
     setTimeout(() => {
         button.innerHTML = originalText;
         button.disabled = false;
-        
+
         showEnterpriseModal();
     }, 1000);
 }
@@ -295,7 +295,7 @@ function showPlanConfirmation(planData, planName) {
             </button>
         </div>
     `);
-    
+
     showModal(modal);
 }
 
@@ -329,7 +329,7 @@ function showEnterpriseModal() {
             </button>
         </div>
     `);
-    
+
     showModal(modal);
 }
 
@@ -343,7 +343,7 @@ function createModal(content) {
             ${content}
         </div>
     `;
-    
+
     // Adicionar estilos do modal
     if (!document.getElementById('modal-styles')) {
         const styles = document.createElement('style');
@@ -460,14 +460,14 @@ function createModal(content) {
         `;
         document.head.appendChild(styles);
     }
-    
+
     return modal;
 }
 
 // Mostrar modal
 function showModal(modal) {
     document.body.appendChild(modal);
-    
+
     setTimeout(() => {
         modal.style.opacity = '1';
         modal.querySelector('.modal-content').style.transform = 'scale(1)';
@@ -480,7 +480,7 @@ function closeModal() {
     if (modal) {
         modal.style.opacity = '0';
         modal.querySelector('.modal-content').style.transform = 'scale(0.8)';
-        
+
         setTimeout(() => {
             modal.remove();
         }, 300);
@@ -490,35 +490,14 @@ function closeModal() {
 // Prosseguir para checkout
 function proceedToCheckout(planData) {
     closeModal();
-    
-    // Simular redirecionamento
-    const notification = document.createElement('div');
-    notification.style.cssText = `
-        position: fixed;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        background: white;
-        padding: 2rem;
-        border-radius: 15px;
-        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-        z-index: 10001;
-        text-align: center;
-    `;
-    notification.innerHTML = `
-        <i class="fas fa-spinner fa-spin fa-2x text-primary mb-3"></i>
-        <h5>Redirecionando para checkout...</h5>
-        <p class="text-muted">Aguarde um momento</p>
-    `;
-    
-    document.body.appendChild(notification);
-    
-    setTimeout(() => {
-        notification.remove();
-        // Aqui você redirecionaria para a página de checkout
-        // window.location.href = `/checkout?plan=${planData}`;
-        console.log(`Redirecionando para checkout do plano: ${planData}`);
-    }, 2000);
+    // Redirecionar para finalizar cadastro, incluindo o plano como query param
+    try {
+        const encoded = encodeURIComponent(planData);
+        window.location.href = `/finalizar_cadastro?plan=${encoded}`;
+    } catch (err) {
+        // Fallback: log e permanecer na página
+        console.error('Erro ao redirecionar para finalizar_cadastro', err);
+    }
 }
 
 // Abrir formulário de contato
@@ -534,7 +513,7 @@ function setupScrollAnimations() {
         threshold: 0.1,
         rootMargin: '0px 0px -50px 0px'
     };
-    
+
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
@@ -542,7 +521,7 @@ function setupScrollAnimations() {
             }
         });
     }, observerOptions);
-    
+
     // Observar elementos para animação
     const animatedElements = document.querySelectorAll('.pricing-card, .enterprise-card');
     animatedElements.forEach(el => observer.observe(el));
@@ -551,12 +530,12 @@ function setupScrollAnimations() {
 // Configurar efeito parallax
 function setupParallaxEffect() {
     const heroSection = document.querySelector('.hero-section');
-    
+
     if (heroSection) {
         window.addEventListener('scroll', () => {
             const scrolled = window.pageYOffset;
             const rate = scrolled * -0.5;
-            
+
             heroSection.style.transform = `translateY(${rate}px)`;
         });
     }
