@@ -190,18 +190,14 @@ async def criar_agendamento(request: CriarAgendamentoRequest):
         from data.repo import usuario_repo, doacao_repo
         sys.stderr.write(f"DEBUG - Dados recebidos: cod_usuario={request.cod_usuario}, cod_agenda={request.cod_agenda}, data={request.data}, horario={request.horario}\n")
         sys.stderr.flush()
-        
-        # Combina data e horário para criar datetime ANTES de validar conflitos
-        data_hora_str = f"{request.data} {request.horario}:00"
-        data_hora = datetime.strptime(data_hora_str, '%Y-%m-%d %H:%M:%S')
-        
-        # Verifica se já existe agendamento pendente para o usuário NA MESMA DATA E HORA
+        # Verifica se já existe agendamento pendente para o usuário
         agendamentos_pendentes = agendamento_repo.obter_por_usuario_status(request.cod_usuario, status=0)
         if agendamentos_pendentes:
-            # Verifica se há conflito na mesma data/hora
-            for agendamento_existente in agendamentos_pendentes:
-                if agendamento_existente.data_hora == data_hora:
-                    raise HTTPException(status_code=400, detail="Você já possui um agendamento para este horário. Aguarde ou cancele antes de criar outro.")
+            raise HTTPException(status_code=400, detail="Você já possui um agendamento pendente. Aguarde ou cancele antes de criar outro.")
+        
+        # Combina data e horário para criar datetime
+        data_hora_str = f"{request.data} {request.horario}:00"
+        data_hora = datetime.strptime(data_hora_str, '%Y-%m-%d %H:%M:%S')
         
         # Verifica se o usuário existe
         from data.repo import usuario_repo
