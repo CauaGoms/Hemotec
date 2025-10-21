@@ -23,6 +23,3 @@ class Usuario:
     token_redefinicao: Optional[str] = None
     data_token: Optional[str] = None
     estado_usuario: Optional[str] = None
-    email_verificado: Optional[int] = 0
-    codigo_verificacao: Optional[str] = None
-    data_codigo_verificacao: Optional[str] = None
