@@ -9,8 +9,12 @@
         --hemotec-text-dark: #333333;
         --hemotec-accent: #0066cc;
         --hemotec-success: #28a745;
-        --shadow-light: 0 2px 10px rgba(0, 0, 0, 0.08);
-        --shadow-medium: 0 4px 20px rgba(0, 0, 0, 0.12);
+        --hemotec-warning: #ffc107;
+        --hemotec-danger: #dc3545;
+        --hemotec-border: #e9ecef;
+        --hemotec-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        --hemotec-shadow-hover: 0 8px 15px rgba(0, 0, 0, 0.15);
+        --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
     body {
@@ -18,82 +22,72 @@
         min-height: 100vh;
     }
 
-    /* Hero Section */
-    .hero-section {
-        background: linear-gradient(135deg, rgba(35, 40, 47, 0.8), rgba(80, 80, 90, 0.7)), url('https://images.unsplash.com/photo-1584308666744-24d5f400f6f0?auto=format&fit=crop') no-repeat center center;
-        background-size: cover;
-        color: white;
-        padding: 4rem 0 3rem;
-        text-align: center;
-        border-radius: 0 0 30px 30px;
-        min-height: 280px;
+    .main-content {
+        min-height: calc(100vh - 200px);
+        background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+        padding-bottom: 2rem;
+        padding-top: 80px;
+    }
+
+    .page-header {
+        margin-bottom: 2rem;
         display: flex;
         align-items: center;
+        gap: 1rem;
+    }
+
+    .btn-back {
+        display: inline-flex;
+        align-items: center;
         justify-content: center;
-        position: relative;
-        overflow: hidden;
+        width: 50px;
+        height: 50px;
+        background: white;
+        border: 2px solid var(--hemotec-border);
+        border-radius: 12px;
+        color: var(--hemotec-text-dark);
+        text-decoration: none;
+        transition: var(--transition-smooth);
+        box-shadow: var(--hemotec-shadow);
     }
 
-    .hero-content {
-        max-width: 800px;
-        position: relative;
-        z-index: 2;
-    }
-
-    .hero-title {
-        font-size: 2.5rem;
-        font-weight: 700;
-        margin-bottom: 0.5rem;
-        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-    }
-
-    .hero-subtitle {
-        font-size: 1.1rem;
-        color: rgba(255, 255, 255, 0.9);
-        font-weight: 300;
-        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
-    }
-
-    /* Back Arrow */
-    .back-arrow {
-        display: inline-block;
-        width: 40px;
-        height: 40px;
+    .btn-back:hover {
         background: var(--hemotec-red);
         color: white;
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        margin: 20px;
-        text-decoration: none;
-        transition: all 0.3s ease;
-        box-shadow: var(--shadow-light);
-        position: relative;
-        z-index: 10;
+        border-color: var(--hemotec-red);
+        transform: translateY(-2px);
+        box-shadow: var(--hemotec-shadow-hover);
     }
 
-    .back-arrow:hover {
-        background: var(--hemotec-dark-red);
-        transform: translateX(-3px);
-        text-decoration: none;
-        box-shadow: var(--shadow-medium);
+    .page-title {
+        font-family: 'Montserrat', sans-serif;
+        font-weight: 700;
+        font-size: 2rem;
+        color: var(--hemotec-text-dark);
+        margin: 0;
     }
 
-    /* Container */
-    .container {
-        max-width: 700px;
-        margin-top: -30px;
-        position: relative;
-        z-index: 5;
+    .page-subtitle {
+        color: #6c757d;
+        font-size: 1.1rem;
+        margin: 0.5rem 0 0 0;
+        font-weight: 400;
     }
 
-    /* Form Card */
-    .form-card {
+    .form-container {
         background: white;
-        border-radius: 15px;
-        padding: 2rem;
-        box-shadow: var(--shadow-medium);
+        border-radius: 20px;
+        box-shadow: var(--hemotec-shadow);
+        overflow: hidden;
+        transition: var(--transition-smooth);
+        padding: 2.5rem;
+    }
+
+    .form-container:hover {
+        box-shadow: var(--hemotec-shadow-hover);
+    }
+
+    .form-section {
         margin-bottom: 2rem;
     }
 
@@ -103,7 +97,7 @@
         color: var(--hemotec-text-dark);
         margin-bottom: 1.5rem;
         padding-bottom: 1rem;
-        border-bottom: 2px solid var(--hemotec-red);
+        border-bottom: 2px solid var(--hemotec-border);
         display: flex;
         align-items: center;
         gap: 0.5rem;
@@ -113,8 +107,7 @@
         color: var(--hemotec-red);
     }
 
-    /* Form Groups */
-    .mb-3 {
+    .form-group {
         margin-bottom: 1rem;
     }
 
@@ -131,130 +124,36 @@
         color: var(--hemotec-red);
     }
 
-    .form-control,
-    .form-select {
-        border: 1px solid #dee2e6;
+    .form-control {
+        border: 1px solid var(--hemotec-border);
         border-radius: 8px;
         padding: 0.75rem;
         font-size: 1rem;
-        transition: all 0.3s ease;
+        transition: var(--transition-smooth);
     }
 
-    .form-control:focus,
-    .form-select:focus {
+    .form-control:focus {
         border-color: var(--hemotec-red);
         box-shadow: 0 0 0 0.2rem rgba(224, 32, 32, 0.15);
     }
 
-    /* Info Box */
+    .form-control:disabled {
+        background-color: #f8f9fa;
+        cursor: not-allowed;
+    }
+
     .info-box {
         background: #f0f8ff;
         border-left: 4px solid var(--hemotec-accent);
         padding: 1rem;
         border-radius: 8px;
-        margin-top: 1.5rem;
+        margin-top: 1rem;
     }
 
     .info-box i {
         color: var(--hemotec-accent);
     }
 
-    .info-box strong {
-        color: var(--hemotec-text-dark);
-    }
-
-    /* Agendamento Selector */
-    .agendamento-selector {
-        margin-bottom: 2rem;
-    }
-
-    .agendamento-list {
-        display: flex;
-        flex-direction: column;
-        gap: 1rem;
-    }
-
-    .agendamento-item {
-        border: 2px solid #dee2e6;
-        border-radius: 8px;
-        padding: 1rem;
-        cursor: pointer;
-        transition: all 0.3s ease;
-    }
-
-    .agendamento-item:hover {
-        border-color: var(--hemotec-red);
-        background: #f8f9fa;
-    }
-
-    .agendamento-item.selected {
-        border-color: var(--hemotec-red);
-        background: rgba(224, 32, 32, 0.05);
-    }
-
-    .agendamento-item input[type="radio"] {
-        margin-right: 1rem;
-    }
-
-    .agendamento-info {
-        margin-left: 2rem;
-    }
-
-    .agendamento-info h6 {
-        margin-bottom: 0.25rem;
-        font-weight: 600;
-        color: var(--hemotec-text-dark);
-    }
-
-    .agendamento-info small {
-        color: #6c757d;
-    }
-
-    /* Botões */
-    .btn-container {
-        display: flex;
-        gap: 1rem;
-        margin-top: 2rem;
-        justify-content: space-between;
-    }
-
-    .btn {
-        padding: 0.75rem 1.5rem;
-        font-weight: 600;
-        border-radius: 8px;
-        transition: all 0.3s ease;
-        border: none;
-        cursor: pointer;
-        font-size: 1rem;
-    }
-
-    .btn-primary {
-        background: var(--hemotec-red);
-        color: white;
-    }
-
-    .btn-primary:hover {
-        background: var(--hemotec-dark-red);
-        transform: translateY(-2px);
-        box-shadow: var(--shadow-medium);
-        text-decoration: none;
-        color: white;
-    }
-
-    .btn-outline-secondary {
-        background: white;
-        color: #6c757d;
-        border: 2px solid #dee2e6;
-    }
-
-    .btn-outline-secondary:hover {
-        background: #f8f9fa;
-        border-color: #adb5bd;
-        text-decoration: none;
-        color: #6c757d;
-    }
-
-    /* Error Message */
     .alert {
         padding: 1rem;
         border-radius: 8px;
@@ -267,13 +166,60 @@
         color: #721c24;
     }
 
-    .alert-warning {
-        background: #fff3cd;
-        border: 1px solid #ffeaa7;
-        color: #856404;
+    .btn-container {
+        display: flex;
+        gap: 1rem;
+        margin-top: 2rem;
+        justify-content: space-between;
     }
 
-    /* Row and Cols */
+    .btn {
+        padding: 0.75rem 1.5rem;
+        font-weight: 600;
+        border-radius: 8px;
+        transition: var(--transition-smooth);
+        border: none;
+        cursor: pointer;
+        font-size: 1rem;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .btn-primary {
+        background: var(--hemotec-red);
+        color: white;
+    }
+
+    .btn-primary:hover {
+        background: var(--hemotec-dark-red);
+        transform: translateY(-2px);
+        box-shadow: var(--hemotec-shadow-hover);
+        text-decoration: none;
+        color: white;
+    }
+
+    .btn-outline-secondary {
+        background: white;
+        color: #6c757d;
+        border: 2px solid var(--hemotec-border);
+    }
+
+    .btn-outline-secondary:hover {
+        background: #f8f9fa;
+        border-color: #adb5bd;
+        text-decoration: none;
+        color: #6c757d;
+    }
+
+    .form-text {
+        display: block;
+        margin-top: 0.25rem;
+        font-size: 0.875rem;
+        color: #6c757d;
+    }
+
     .row {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -284,13 +230,12 @@
         grid-template-columns: 1fr;
     }
 
-    /* Responsive */
     @media (max-width: 768px) {
-        .hero-title {
-            font-size: 1.8rem;
+        .page-title {
+            font-size: 1.5rem;
         }
 
-        .form-card {
+        .form-container {
             padding: 1.5rem;
         }
 
@@ -300,165 +245,162 @@
 
         .btn {
             width: 100%;
+            justify-content: center;
         }
     }
 </style>
 {% endblock %}
 
 {% block conteudo %}
-<!-- Back Arrow -->
-<a href="/colaborador/doacoes" class="back-arrow">
-    <i class="fas fa-arrow-left"></i>
-</a>
-
-<!-- Hero Section -->
-<section class="hero-section">
+<!-- Conteúdo Principal -->
+<div class="main-content">
     <div class="container">
-        <div class="hero-content">
-            <h1 class="hero-title">
-                <i class="fas fa-droplet me-2"></i>
-                Inserir Dados de Doação
-            </h1>
-            <p class="hero-subtitle">Complete as informações da doação de sangue</p>
-        </div>
-    </div>
-</section>
-
-<!-- Main Content -->
-<div class="container">
-    {% if not agendamentos %}
-    <div class="form-card">
-        <div class="alert alert-warning">
-            <i class="fas fa-info-circle me-2"></i>
-            <strong>Nenhum agendamento pendente</strong>
-            <p class="mb-0 mt-2">Não existem agendamentos confirmados sem doação registrada.</p>
-        </div>
-        <div class="btn-container">
-            <a href="/colaborador/doacoes" class="btn btn-outline-secondary">
-                <i class="fas fa-arrow-left me-2"></i>Voltar
+        <!-- Header da Página -->
+        <div class="page-header">
+            <a href="/colaborador/doacoes" class="btn-back">
+                <i class="fas fa-arrow-left"></i>
             </a>
+            <div>
+                <h1 class="page-title">
+                    <i class="fas fa-droplet me-2"></i>
+                    Inserir Dados de Doação
+                </h1>
+                <p class="page-subtitle">Complete as informações da doação de sangue</p>
+            </div>
         </div>
-    </div>
-    {% else %}
-    <form method="POST" action="/colaborador/doacao/adicionar">
-        <!-- Seção 1: Seleção de Agendamento -->
-        <div class="form-card">
-            <h3 class="form-section-title">
-                <i class="fas fa-calendar"></i>
-                1. Selecione o Agendamento
-            </h3>
 
-            <div class="agendamento-selector">
-                <div class="agendamento-list">
-                    {% for item in agendamentos %}
-                    <label class="agendamento-item" onclick="this.querySelector('input').checked = true;">
-                        <input type="radio" name="cod_agendamento" value="{{ item.agendamento.cod_agendamento }}" required>
-                        <div class="agendamento-info">
-                            <h6>{{ item.usuario.nome if item.usuario else "Doador desconhecido" }}</h6>
-                            <small>
-                                <i class="fas fa-phone me-1"></i> {{ item.usuario.telefone if item.usuario else "N/A" }}
-                            </small>
-                            <br>
-                            <small>
-                                <i class="fas fa-calendar-alt me-1"></i>
-                                {% if item.agendamento.data_hora %}
-                                    {{ item.agendamento.data_hora.strftime('%d/%m/%Y às %H:%M') }}
-                                {% else %}
-                                    Data não definida
-                                {% endif %}
-                            </small>
-                            {% if item.doador %}
-                            <br>
-                            <small>
-                                <i class="fas fa-tint me-1"></i> {{ item.doador.tipo_sanguineo }}{% if item.doador.fator_rh %}{{ item.doador.fator_rh }}{% endif %}
-                            </small>
+        <!-- Formulário -->
+        <div class="form-container">
+            {% if not doacao %}
+            <div class="form-section">
+                <div class="alert alert-danger">
+                    <i class="fas fa-exclamation-circle me-2"></i>
+                    <strong>Erro: Doação não encontrada</strong>
+                    <p class="mb-0 mt-2">A doação solicitada não existe ou não está disponível para coleta.</p>
+                </div>
+                <div class="btn-container">
+                    <a href="/colaborador/doacoes" class="btn btn-outline-secondary">
+                        <i class="fas fa-arrow-left me-2"></i>Voltar
+                    </a>
+                </div>
+            </div>
+            {% else %}
+            <form method="POST" action="/colaborador/doacao/adicionar/{{ doacao.cod_doacao }}">
+                <!-- Seção 1: Informações do Doador -->
+                <div class="form-section">
+                    <h3 class="form-section-title">
+                        <i class="fas fa-user-check"></i>
+                        Informações do Doador
+                    </h3>
+
+                    <div class="row single">
+                        <div class="form-group">
+                            <label class="form-label">
+                                <i class="fas fa-user"></i>
+                                Doador
+                            </label>
+                            <input type="text" class="form-control" value="{{ usuario_doador.nome if usuario_doador else 'Doador desconhecido' }}" disabled>
+                            {% if usuario_doador and usuario_doador.cpf %}
+                            <small class="form-text">CPF: {{ usuario_doador.cpf }}</small>
                             {% endif %}
                         </div>
-                    </label>
-                    {% endfor %}
-                </div>
-            </div>
+                    </div>
 
-            <div class="info-box">
-                <i class="fas fa-info-circle me-2"></i>
-                <strong>Dica:</strong> Selecione o agendamento do doador para o qual deseja registrar a doação.
-            </div>
+                    {% if doador %}
+                    <div class="row">
+                        <div class="form-group">
+                            <label class="form-label">
+                                <i class="fas fa-tint"></i>
+                                Tipo Sanguíneo
+                            </label>
+                            <input type="text" class="form-control" value="{{ doador.tipo_sanguineo }}{% if doador.fator_rh %}{{ doador.fator_rh }}{% endif %}" disabled>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">
+                                <i class="fas fa-ruler"></i>
+                                Altura/Peso
+                            </label>
+                            <input type="text" class="form-control" value="{{ doador.altura }}cm / {{ doador.peso }}kg" disabled>
+                        </div>
+                    </div>
+                    {% endif %}
+
+                    <div class="info-box">
+                        <i class="fas fa-info-circle me-2"></i>
+                        <strong>Doador:</strong> {{ usuario_doador.nome if usuario_doador else "N/A" }}
+                    </div>
+                </div>
+
+                <!-- Seção 2: Dados da Coleta -->
+                <div class="form-section">
+                    <h3 class="form-section-title">
+                        <i class="fas fa-vial"></i>
+                        Dados da Coleta
+                    </h3>
+
+                    <div class="row single">
+                        <div class="form-group">
+                            <label for="data_hora" class="form-label">
+                                <i class="fas fa-clock"></i>
+                                Data e Hora <span class="required">*</span>
+                            </label>
+                            <input type="datetime-local" class="form-control" id="data_hora" name="data_hora" required>
+                            <small class="form-text">Informe a data e hora exata da coleta</small>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="form-group">
+                            <label for="quantidade" class="form-label">
+                                <i class="fas fa-flask-vial"></i>
+                                Quantidade (ml) <span class="required">*</span>
+                            </label>
+                            <input type="number" class="form-control" id="quantidade" name="quantidade" 
+                                   min="1" max="500" value="450" required placeholder="Ex: 450">
+                            <small class="form-text">Quantidade em mililitros (típico: 450ml)</small>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="observacoes" class="form-label">
+                                <i class="fas fa-sticky-note"></i>
+                                Observações
+                            </label>
+                            <textarea class="form-control" id="observacoes" name="observacoes" 
+                                      rows="3" placeholder="Digite observações adicionais se necessário..."></textarea>
+                            <small class="form-text">Informações opcionais sobre a coleta</small>
+                        </div>
+                    </div>
+
+                    <div class="info-box">
+                        <i class="fas fa-arrow-right me-2"></i>
+                        <strong>Próximo Status:</strong> A doação será movida para <strong>Aguardando Exames</strong> após salvar.
+                    </div>
+                </div>
+
+                <!-- Seção 3: Confirmação -->
+                <div class="form-section">
+                    <h3 class="form-section-title">
+                        <i class="fas fa-check-circle"></i>
+                        Confirmação
+                    </h3>
+
+                    <p style="color: #6c757d; margin-bottom: 1.5rem;">
+                        Verifique todos os dados antes de confirmar o registro da coleta. Após salvar, a doação será movida para a etapa de exames.
+                    </p>
+
+                    <div class="btn-container">
+                        <a href="/colaborador/doacoes" class="btn btn-outline-secondary">
+                            <i class="fas fa-times me-2"></i>Cancelar
+                        </a>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-save me-2"></i>Salvar Coleta
+                        </button>
+                    </div>
+                </div>
+            </form>
+            {% endif %}
         </div>
-
-        <!-- Seção 2: Dados da Doação -->
-        <div class="form-card">
-            <h3 class="form-section-title">
-                <i class="fas fa-vial"></i>
-                2. Dados da Doação
-            </h3>
-
-            <div class="row single">
-                <div class="mb-3">
-                    <label for="data_hora" class="form-label">
-                        <i class="fas fa-clock"></i>
-                        Data e Hora <span class="required">*</span>
-                    </label>
-                    <input type="datetime-local" class="form-control" id="data_hora" name="data_hora" required>
-                    <small class="text-muted d-block mt-1">
-                        <i class="fas fa-info-circle"></i> Informe a data e hora exata da coleta
-                    </small>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="mb-3">
-                    <label for="quantidade" class="form-label">
-                        <i class="fas fa-flask-vial"></i>
-                        Quantidade (ml) <span class="required">*</span>
-                    </label>
-                    <input type="number" class="form-control" id="quantidade" name="quantidade" 
-                           min="1" max="500" value="450" required
-                           placeholder="Ex: 450">
-                    <small class="text-muted d-block mt-1">
-                        <i class="fas fa-info-circle"></i> Quantidade em mililitros (típico: 450ml)
-                    </small>
-                </div>
-
-                <div class="mb-3">
-                    <label for="observacoes" class="form-label">
-                        <i class="fas fa-sticky-note"></i>
-                        Observações
-                    </label>
-                    <textarea class="form-control" id="observacoes" name="observacoes" 
-                              rows="3" placeholder="Digite observações adicionais se necessário..."></textarea>
-                    <small class="text-muted d-block mt-1">
-                        <i class="fas fa-info-circle"></i> Informações opcionais sobre a coleta
-                    </small>
-                </div>
-            </div>
-
-            <div class="info-box">
-                <i class="fas fa-heart me-2"></i>
-                <strong>Status da Doação:</strong> Será marcada como <strong>Concluída</strong> após salvar.
-            </div>
-        </div>
-
-        <!-- Seção 3: Confirmação -->
-        <div class="form-card">
-            <h3 class="form-section-title">
-                <i class="fas fa-check-circle"></i>
-                3. Confirmação
-            </h3>
-
-            <p class="text-muted mb-3">
-                Verifique todos os dados antes de confirmar o registro da doação. Após salvar, a doação será marcada como concluída.
-            </p>
-
-            <div class="btn-container">
-                <a href="/colaborador/doacoes" class="btn btn-outline-secondary">
-                    <i class="fas fa-times me-2"></i>Cancelar
-                </a>
-                <button type="submit" class="btn btn-primary">
-                    <i class="fas fa-save me-2"></i>Salvar Doação
-                </button>
-            </div>
-        </div>
-    </form>
-    {% endif %}
+    </div>
 </div>
 {% endblock %}
