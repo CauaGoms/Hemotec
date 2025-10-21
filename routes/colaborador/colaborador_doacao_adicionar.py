@@ -1,84 +1,111 @@
-from datetime import date
-from fastapi import APIRouter, Form, Request
+from datetime import datetime
+from fastapi import APIRouter, Form, Request, HTTPException
 from fastapi.responses import RedirectResponse
 from fastapi.templating import Jinja2Templates
 
-from data.model.doador_model import Doador
-from data.model.prontuario_model import Prontuario
-from data.repo import doador_repo, prontuario_repo, usuario_repo
+from data.model.doacao_model import Doacao
+from data.repo import doacao_repo, doador_repo, usuario_repo, agendamento_repo
+from util.auth_decorator import requer_autenticacao
 from util.database import get_connection
 
 router = APIRouter()
 templates = Jinja2Templates(directory="templates")
 
 @router.get("/colaborador/doacao/adicionar")
-async def get_colaborador_doacao_adicionar(request: Request):
-    response = templates.TemplateResponse("colaborador/colaborador_doacao_adicionar.html", {"request": request, "active_page": "doacoes"})
-    return response
+@requer_autenticacao(["colaborador"])
+async def get_colaborador_doacao_adicionar(request: Request, usuario_logado: dict = None):
+    """
+    Exibe o formulário para inserir informações de doação.
+    A doação deve ter sido criada previamente no agendamento.
+    """
+    try:
+        # Obter lista de agendamentos pendentes de doação
+        agendamentos = agendamento_repo.obter_todos()
+        agendamentos_pendentes = []
+        
+        for agendamento in agendamentos:
+            # Verificar se existe doação para este agendamento
+            doacoes = doacao_repo.obter_todos()
+            doacao_existe = any(d.cod_agendamento == agendamento.cod_agendamento for d in doacoes)
+            
+            if not doacao_existe and agendamento.status == 1:  # Status 1 = confirmado
+                doador = doador_repo.obter_por_id(agendamento.cod_usuario)
+                usuario_doador = usuario_repo.obter_por_id(agendamento.cod_usuario)
+                agendamentos_pendentes.append({
+                    "agendamento": agendamento,
+                    "doador": doador,
+                    "usuario": usuario_doador
+                })
+        
+        response = templates.TemplateResponse(
+            "colaborador/colaborador_doacao_adicionar.html",
+            {
+                "request": request,
+                "active_page": "doacoes",
+                "usuario": usuario_logado,
+                "agendamentos": agendamentos_pendentes
+            }
+        )
+        return response
+    except Exception as e:
+        print(f"Erro ao obter página de adição de doação: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
 
 @router.post("/colaborador/doacao/adicionar")
+@requer_autenticacao(["colaborador"])
 async def post_colaborador_doacao_adicionar(
     request: Request,
-    altura: float = Form(...),
-    peso: int = Form(...),
-    tipo_sanguineo: str = Form(...),
-    profissao: str = Form(...),
-    contato_emergencia: str = Form(...),
-    telefone_emergencia: str = Form(...),
-    diabetes: bool = Form(False),
-    hipertensao: bool = Form(False),
-    cardiopatia: bool = Form(False),
-    cancer: bool = Form(False),
-    nenhuma: bool = Form(False),
-    outros: bool = Form(False),
-    medicamentos: str = Form("Nenhum"),
-    fumante: str = Form("Não"),
-    alcool: str = Form("Não"),
-    atividade_fisica: str = Form("Não"),
-    jejum: str = Form(False),
-    sono: str = Form(False),
-    bebida: str = Form(False),
-    sintomas_gripais: str = Form(False),
-    tatuagem: str = Form(False),
-    termos: str = Form(False),
-    alerta: str = Form(False)
+    cod_agendamento: int = Form(...),
+    data_hora: str = Form(...),
+    quantidade: int = Form(...),
+    observacoes: str = Form(""),
+    usuario_logado: dict = None
 ):
-    # 1. Obtenha o identificador do usuário logado a partir da sessão
-    email_usuario = request.session.get("user_email")
-    if not email_usuario:
-        raise Exception("Usuário não está logado.")
-
-    # 2. Busque o usuário no banco
-    usuario = usuario_repo.obter_por_email(email_usuario)
-    if not usuario:
-        raise Exception("Usuário não encontrado.")
-
-    data_atualizacao = date.today().isoformat()
-    prontuario = Prontuario(
-        0, 0, data_atualizacao, data_atualizacao, diabetes, hipertensao, cardiopatia, cancer, nenhuma, outros,
-        medicamentos, fumante, alcool, atividade_fisica, jejum, sono, bebida, sintomas_gripais, tatuagem, termos, alerta
-    )
-
-    elegivel = True  # Defina a elegibilidade como True por padrão
-
-    # extraindo o fator Rh do tipo sanguíneo
-    fator_rh = ""
-    if tipo_sanguineo.endswith("+"):
-        fator_rh = "+"
-    elif tipo_sanguineo.endswith("-"):
-        fator_rh = "-"
-
-    # 3. Crie o doador usando os dados do usuário buscado
-    doador = Doador(
-        0, 0, 0, tipo_sanguineo, fator_rh, elegivel, altura, peso, profissao, contato_emergencia, telefone_emergencia
-    )
-
-    with get_connection() as conn:
-        cursor = conn.cursor()
-        prontuario_id = prontuario_repo.inserir(prontuario, cursor)
-        doador_id = doador_repo.inserir(doador, cursor)
-        conn.commit()
-    if prontuario_id is None or doador_id is None:
-        raise Exception("Erro ao cadastrar prontuario ou doador.")
-    else:
-        return RedirectResponse("/doador", status_code=303)
+    """
+    Completa a informação da doação (data_hora, quantidade, observações)
+    e altera o status para 3 (concluída).
+    """
+    try:
+        # Validar agendamento
+        agendamento = agendamento_repo.obter_por_id(cod_agendamento)
+        if not agendamento:
+            raise HTTPException(status_code=404, detail="Agendamento não encontrado")
+        
+        # Converter data_hora string para datetime
+        try:
+            data_hora_obj = datetime.fromisoformat(data_hora)
+        except ValueError:
+            raise HTTPException(status_code=400, detail="Formato de data inválido")
+        
+        # Validar quantidade
+        if quantidade <= 0 or quantidade > 500:
+            raise HTTPException(status_code=400, detail="Quantidade deve ser entre 1 e 500ml")
+        
+        # Criar nova doação com status 3 (concluída)
+        doacao = Doacao(
+            cod_doacao=None,
+            cod_doador=agendamento.cod_usuario,
+            cod_agendamento=cod_agendamento,
+            data_hora=data_hora_obj,
+            quantidade=quantidade,
+            status=3,  # Status 3 = concluída
+            observacoes=observacoes
+        )
+        
+        with get_connection() as conn:
+            cursor = conn.cursor()
+            cod_doacao = doacao_repo.inserir(doacao, cursor)
+            conn.commit()
+        
+        if cod_doacao:
+            return RedirectResponse(url=f"/colaborador/doacao/detalhe/{cod_doacao}", status_code=303)
+        else:
+            raise HTTPException(status_code=500, detail="Erro ao salvar doação")
+    
+    except HTTPException:
+        raise
+    except Exception as e:
+        print(f"Erro ao inserir doação: {e}")
+        import traceback
+        traceback.print_exc()
+        raise HTTPException(status_code=500, detail=str(e))

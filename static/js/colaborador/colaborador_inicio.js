@@ -338,78 +338,9 @@ function createCampaignCard(campanha) {
 // FUNÇÃO: CARREGAR NOTIFICAÇÕES RECENTES
 // ========================================
 async function loadRecentNotifications() {
-    try {
-        // TODO: Substituir por chamada real à API
-        // const response = await fetch('/api/colaborador/notificacoes/recentes');
-        // const notificacoes = await response.json();
-        
-        // Dados simulados (remover quando integrar com backend)
-        const notificacoes = [
-            {
-                id: 1,
-                tipo: 'agendamento',
-                titulo: 'Novo Agendamento',
-                mensagem: 'Maria Silva agendou doação para amanhã às 09:00',
-                tempo: 'Há 5 minutos',
-                icone: 'calendar-check',
-                cor: 'primary'
-            },
-            {
-                id: 2,
-                tipo: 'doacao',
-                titulo: 'Doação Concluída',
-                mensagem: 'Doação de João Santos foi processada com sucesso',
-                tempo: 'Há 15 minutos',
-                icone: 'check-circle',
-                cor: 'success'
-            },
-            {
-                id: 3,
-                tipo: 'estoque',
-                titulo: 'Estoque Baixo',
-                mensagem: 'Estoque de sangue tipo O- está abaixo do nível crítico',
-                tempo: 'Há 1 hora',
-                icone: 'exclamation-triangle',
-                cor: 'warning'
-            }
-        ];
-        
-        const container = document.getElementById('notificacoes-lista');
-        
-        if (notificacoes && notificacoes.length > 0) {
-            container.innerHTML = '';
-            
-            notificacoes.slice(0, 5).forEach(notificacao => {
-                const item = createNotificationItem(notificacao);
-                container.appendChild(item);
-            });
-        }
-        
-    } catch (error) {
-        console.error('Erro ao carregar notificações:', error);
-    }
-}
-
-// ========================================
-// FUNÇÃO: CRIAR ITEM DE NOTIFICAÇÃO
-// ========================================
-function createNotificationItem(notificacao) {
-    const div = document.createElement('div');
-    div.className = 'notification-item';
-    div.onclick = () => window.location.href = '/colaborador/notificacao';
-    
-    div.innerHTML = `
-        <div class="notification-icon ${notificacao.cor}">
-            <i class="fas fa-${notificacao.icone}"></i>
-        </div>
-        <div class="notification-content">
-            <div class="notification-title">${notificacao.titulo}</div>
-            <div class="notification-message">${notificacao.mensagem}</div>
-            <div class="notification-time">${notificacao.tempo}</div>
-        </div>
-    `;
-    
-    return div;
+    // Notificações agora são renderizadas pelo servidor (Jinja2)
+    // Esta função está desativada para não sobrescrever os dados do banco
+    // Se precisar carregar via API, descomentar e ajustar conforme necessário
 }
 
 // ========================================

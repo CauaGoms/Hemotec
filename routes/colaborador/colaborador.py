@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Request
 from fastapi.templating import Jinja2Templates
-from data.repo import usuario_repo, agendamento_repo, doacao_repo, campanha_repo
+from data.repo import usuario_repo, agendamento_repo, doacao_repo, campanha_repo, notificacao_repo
 from datetime import date, datetime
 
 router = APIRouter()
@@ -36,14 +36,21 @@ async def get_colaborador_home(request: Request):
             if doacao.status in [2, 4, 5]:  # Status de doações em andamento
                 doacoes_andamento.append(doacao)
     
-    # Obter campanhas ativas (status 1 = ativa)
+    # Obter campanhas ativas (data_fim >= hoje e data_inicio <= hoje)
     todas_campanhas = campanha_repo.obter_todos()
     campanhas_ativas = []
     
     if todas_campanhas:
         for campanha in todas_campanhas:
-            if campanha.status == 1:  # Campanha ativa
+            if campanha.data_inicio <= hoje and campanha.data_fim >= hoje:
                 campanhas_ativas.append(campanha)
+    
+    # Ordenar por data_inicio (mais recentes primeiro) e limitar a 3
+    campanhas_ativas = sorted(campanhas_ativas, key=lambda x: x.data_inicio, reverse=True)[:3]
+    
+    # Buscar as 3 notificações mais recentes
+    todas_notificacoes = notificacao_repo.obter_todos()
+    notificacoes_recentes = sorted(todas_notificacoes, key=lambda x: x.data_envio, reverse=True)[:3] if todas_notificacoes else []
     
     response = templates.TemplateResponse("colaborador/colaborador_inicio.html", {
         "request": request, 
@@ -51,6 +58,8 @@ async def get_colaborador_home(request: Request):
         "usuario": usuario,
         "agendamentos_hoje": agendamentos_hoje,
         "doacoes_andamento": doacoes_andamento,
-        "campanhas_ativas": campanhas_ativas
+        "campanhas_ativas": campanhas_ativas,
+        "notificacoes_recentes": notificacoes_recentes,
+        "now": datetime.now
     })
     return response

@@ -1,0 +1,293 @@
+{% extends "colaborador/colaborador__base.html" %}
+{% block custom_css %}
+<link href="/static/css/doador/doador_dados_cadastrais.css" rel="stylesheet">
+{% endblock %}
+
+{% block conteudo %}
+<main class="container" style="padding-top: 100px;">
+    <div class="profile-header">
+        <div class="profile-header-content text-center">
+            <div class="d-flex justify-content-center">
+                <img
+                    id="foto-atual"
+                    src="{{ '/static/uploads/usuarios/user_default.jpg' if not usuario.foto else usuario.foto }}"
+                    class="profile-avatar rounded-circle mb-3"
+                    style="width: 200px; height: 200px; object-fit: cover; border: 3px solid #dee2e6;"
+                    alt="Foto do perfil"
+                >
+            </div>
+            <div id="preview-foto-container" style="display: none;">
+                <div class="d-flex justify-content-center">
+                    <img
+                        id="preview-foto"
+                        src=""
+                        class="profile-avatar rounded-circle mb-2"
+                        style="width: 200px; height: 200px; object-fit: cover; border: 3px solid #6ee7b7;"
+                        alt="Preview da nova foto"
+                    >
+                </div>
+                <div class="small foto-selecionada-light mb-2">
+                    <i class="bi-check-circle"></i>
+                    Nova foto selecionada
+                </div>
+            </div>
+            <form action="/colaborador/meu_perfil/alterar-foto" method="post" enctype="multipart/form-data">
+                <div class="mb-2 d-flex justify-content-center">
+                    <div style="width: 250px;">
+                        <div class="custom-file-upload">
+                            <input
+                                type="file"
+                                id="foto"
+                                name="foto"
+                                accept="image/*"
+                                style="display:none;"
+                            >
+                            <div class="d-flex gap-2">
+                                <button
+                                    type="button"
+                                    id="btn-selecionar-foto"
+                                    class="btn btn-alterar-foto w-100"
+                                    onclick="document.getElementById('foto').click();"
+                                >
+                                    <i class="bi-camera"></i>
+                                    Selecionar Nova Foto
+                                </button>
+                                <button
+                                    type="button"
+                                    class="btn btn-cancelar-foto w-100"
+                                    id="btn-cancelar"
+                                    onclick="cancelarSelecao()"
+                                    style="display: none;"
+                                >
+                                    <i class="bi-x"></i>
+                                    Cancelar
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <button
+                    type="submit"
+                    class="d-none"
+                    id="btn-alterar"
+                    disabled
+                >
+                    <i class="bi-camera"></i>
+                    Alterar Foto
+                </button>
+            </form>
+            <h2 class="profile-name">{{usuario.nome}}</h2>
+            <p class="profile-role">{{ usuario.perfil|capitalize }}</p>
+        </div>
+    </div>
+    <ul class="nav nav-tabs profile-tabs" id="profileTab" role="tablist">
+        <li class="nav-item" role="presentation">
+            <button
+                class="nav-link active"
+                id="info-tab"
+                data-bs-toggle="tab"
+                data-bs-target="#info"
+                type="button"
+                role="tab"
+                aria-controls="info"
+                aria-selected="true"
+            >
+                <i class="fas fa-user-circle me-2"></i>
+                Informações Gerais
+            </button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button
+                class="nav-link"
+                id="settings-tab"
+                data-bs-toggle="tab"
+                data-bs-target="#settings"
+                type="button"
+                role="tab"
+                aria-controls="settings"
+                aria-selected="false"
+            >
+                <i class="fas fa-lock me-2"></i>
+                Segurança
+            </button>
+        </li>
+    </ul>
+    <!-- Tab Content -->
+    <div class="tab-content" id="profileTabContent">
+        <!-- Informações Tab -->
+        <div
+            class="tab-pane fade show active"
+            id="info"
+            role="tabpanel"
+            aria-labelledby="info-tab"
+        >
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="profile-card">
+                        <div class="card-header profile-card-header d-flex justify-content-between align-items-center">
+                            <span>
+                                <i class="fas fa-id-card me-2"></i>
+                                Informações Pessoais
+                            </span>
+                            <button class="edit-btn" onclick="editProfile()">
+                                <i class="fas fa-pencil-alt"></i>
+                            </button>
+                        </div>
+                        <div class="card-body profile-card-body">
+                            <div class="profile-info-item">
+                                <div class="profile-info-icon">
+                                    <i class="fas fa-user"></i>
+                                </div>
+                                <div class="profile-info-content">
+                                    <div class="profile-info-label">Nome Completo</div>
+                                    <div class="profile-info-value">{{doador.usuario.nome if doador and doador.usuario else usuario.nome}}</div>
+                                </div>
+                            </div>
+                            <div class="profile-info-item">
+                                <div class="profile-info-icon">
+                                    <i class="fas fa-envelope"></i>
+                                </div>
+                                <div class="profile-info-content">
+                                    <div class="profile-info-label">E-mail</div>
+                                    <div class="profile-info-value">{{doador.usuario.email if doador and doador.usuario else usuario.email}}</div>
+                                </div>
+                            </div>
+                            <div class="profile-info-item">
+                                <div class="profile-info-icon">
+                                    <i class="fas fa-id-card"></i>
+                                </div>
+                                <div class="profile-info-content">
+                                    <div class="profile-info-label">CPF</div>
+                                    <div class="profile-info-value">{{usuario.cpf}}</div>
+                                </div>
+                            </div>
+                            <div class="profile-info-item">
+                                <div class="profile-info-icon">
+                                    <i class="fas fa-phone"></i>
+                                </div>
+                                <div class="profile-info-content">
+                                    <div class="profile-info-label">Telefone</div>
+                                    <div class="profile-info-value">{{usuario.telefone}}</div>
+                                </div>
+                            </div>
+                            <div class="profile-info-item">
+                                <div class="profile-info-icon">
+                                    <i class="fas fa-birthday-cake"></i>
+                                </div>
+                                <div class="profile-info-content">
+                                    <div class="profile-info-label">Data de Nascimento</div>
+                                    <div class="profile-info-value">{{usuario.data_nascimento}}</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12">
+                    <div class="profile-card">
+                        <div class="card-header profile-card-header d-flex justify-content-between align-items-center">
+                            <span>
+                                <i class="fas fa-briefcase me-2"></i>
+                                Endereço
+                            </span>
+                            <button class="edit-btn" onclick="editEnderecoInfo()">
+                                <i class="fas fa-pencil-alt"></i>
+                            </button>
+                        </div>
+                        <div class="card-body profile-card-body">
+                            <div class="row">
+                                <div class="profile-info-item">
+                                    <div class="profile-info-icon">
+                                        <i class="fas fa-mail-bulk"></i>
+                                    </div>
+                                    <div class="profile-info-content">
+                                        <div class="profile-info-label">CEP</div>
+                                        <div class="profile-info-value">{{usuario.cep_usuario}}</div>
+                                    </div>
+                                </div>
+                                <div class="profile-info-item">
+                                    <div class="profile-info-icon">
+                                        <i class="fas fa-road"></i>
+                                    </div>
+                                    <div class="profile-info-content">
+                                        <div class="profile-info-label">Rua</div>
+                                        <div class="profile-info-value">{{usuario.rua_usuario}}</div>
+                                    </div>
+                                </div>
+                                <div class="profile-info-item">
+                                    <div class="profile-info-icon">
+                                        <i class="fas fa-home"></i>
+                                    </div>
+                                    <div class="profile-info-content">
+                                        <div class="profile-info-label">Bairro</div>
+                                        <div class="profile-info-value">{{usuario.bairro_usuario}}</div>
+                                    </div>
+                                </div>
+                                <div class="profile-info-item">
+                                    <div class="profile-info-icon">
+                                        <i class="fas fa-city"></i>
+                                    </div>
+                                    <div class="profile-info-content">
+                                        <div class="profile-info-label">Cidade</div>
+                                        <div class="profile-info-value">{{cidade.nome_cidade}}</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Segurança Tab -->
+        <div
+            class="tab-pane fade"
+            id="settings"
+            role="tabpanel"
+            aria-labelledby="settings-tab"
+        >
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="profile-card">
+                        <div class="card-header profile-card-header">
+                            <i class="fas fa-lock me-2"></i>
+                            Segurança da Conta
+                        </div>
+                        <div class="card-body profile-card-body">
+                            <div class="profile-info-item">
+                                <div class="profile-info-icon">
+                                    <i class="fas fa-key"></i>
+                                </div>
+                                <div class="profile-info-content">
+                                    <div class="profile-info-label">Senha</div>
+                                    <div class="profile-info-value">••••••••</div>
+                                    <a href="/usuario/alterar_senha">
+                                        <button class="btn btn-sm btn-outline-danger mt-2">
+                                            Alterar Senha
+                                        </button>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="profile-info-item">
+                                <div class="profile-info-icon">
+                                    <i class="fas fa-shield-alt"></i>
+                                </div>
+                                <div class="profile-info-content">
+                                    <div class="profile-info-label">Autenticação de Dois Fatores</div>
+                                    <div class="profile-info-value">Desativada</div>
+                                    <div class="form-check form-switch mt-2">
+                                        <input class="form-check-input" type="checkbox" id="twoFactorSwitch">
+                                        <label class="form-check-label" for="twoFactorSwitch">Ativar autenticação de dois fatores</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+{% endblock %}
+<!-- Custom JavaScript -->
+{% block custom_js %}
+<script src="/static/js/doador/doador_dados_cadastrais.js"></script>
+{% endblock %}
