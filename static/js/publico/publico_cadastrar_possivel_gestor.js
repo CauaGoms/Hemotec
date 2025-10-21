@@ -108,10 +108,12 @@ window.validarEProximo = function () {
                 return res.json();
             })
             .then(data => {
-                // Se inserido com sucesso, redirecionar para finalizar cadastro com id
+                // Se inserido com sucesso, redirecionar para visualizar plano
                 if (data && data.success) {
+                    // Salvar o ID no sessionStorage para uso posterior
                     const id = data.id;
-                    window.location.href = `/finalizar_cadastro?possivel_id=${encodeURIComponent(id)}`;
+                    sessionStorage.setItem('possivel_gestor_id', id);
+                    window.location.href = '/visualizar_plano';
                 } else {
                     if (window.showWarning) window.showWarning(data.message || 'Erro ao enviar.');
                 }

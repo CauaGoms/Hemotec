@@ -490,10 +490,17 @@ function closeModal() {
 // Prosseguir para checkout
 function proceedToCheckout(planData) {
     closeModal();
-    // Redirecionar para finalizar cadastro, incluindo o plano como query param
+    // Redirecionar para finalizar cadastro, incluindo o plano e possivel_gestor_id como query params
     try {
         const encoded = encodeURIComponent(planData);
-        window.location.href = `/finalizar_cadastro?plan=${encoded}`;
+        // Pegar o ID do possível gestor do sessionStorage
+        const possivelId = sessionStorage.getItem('possivel_gestor_id');
+
+        if (possivelId) {
+            window.location.href = `/finalizar_cadastro?plan=${encoded}&possivel_id=${encodeURIComponent(possivelId)}`;
+        } else {
+            window.location.href = `/finalizar_cadastro?plan=${encoded}`;
+        }
     } catch (err) {
         // Fallback: log e permanecer na página
         console.error('Erro ao redirecionar para finalizar_cadastro', err);
