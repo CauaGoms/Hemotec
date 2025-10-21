@@ -70,9 +70,22 @@ async def post_login(
     return RedirectResponse("/", status.HTTP_303_SEE_OTHER)
 
 @router.get("/usuario/sair")
-async def logout(request: Request):
+async def logout_usuario_sair(request: Request):
+    """Limpa completamente a sessão do usuário"""
     request.session.clear()
-    return RedirectResponse("/", status.HTTP_303_SEE_OTHER)
+    response = RedirectResponse("/", status.HTTP_303_SEE_OTHER)
+    # Garantir que o cookie de sessão seja removido
+    response.delete_cookie(key="session")
+    return response
+
+@router.get("/logout")
+async def logout(request: Request):
+    """Limpa completamente a sessão do usuário (rota alternativa)"""
+    request.session.clear()
+    response = RedirectResponse("/", status.HTTP_303_SEE_OTHER)
+    # Garantir que o cookie de sessão seja removido
+    response.delete_cookie(key="session")
+    return response
 
 @router.post("/cadastrar")
 async def post_cadastro(

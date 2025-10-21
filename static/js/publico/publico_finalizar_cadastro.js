@@ -39,7 +39,7 @@ function cadastroValidateCurrentStep() {
     for (let field of requiredFields) {
         if (!field.value.trim()) {
             field.classList.add('is-invalid');
-            showFieldError(field, 'Este campo é obrigatório.');
+            showFieldError(field, 'Este campo é obrigatório');
             hasError = true;
         }
     }
@@ -49,42 +49,42 @@ function cadastroValidateCurrentStep() {
         // Validar nome
         const nome = document.getElementById('nome_gestor');
         if (nome.value.trim().length < 3) {
-            showFieldError(nome, 'O nome deve ter pelo menos 3 caracteres.');
+            showFieldError(nome, 'O nome deve ter pelo menos 3 caracteres');
             hasError = true;
         }
 
         // Validar CPF
         const cpf = document.getElementById('cpf_gestor');
         if (!validarCPF(cpf.value)) {
-            showFieldError(cpf, 'CPF inválido.');
+            showFieldError(cpf, 'CPF inválido');
             hasError = true;
         }
 
         // Validar email
         const email = document.getElementById('email_gestor');
         if (!validarEmail(email.value)) {
-            showFieldError(email, 'Email inválido.');
+            showFieldError(email, 'Email inválido');
             hasError = true;
         }
 
         // Validar telefone (opcional, mas se preenchido deve ser válido)
         const telefone = document.getElementById('telefone_gestor');
         if (telefone.value.trim() && !validarTelefone(telefone.value)) {
-            showFieldError(telefone, 'Telefone inválido. Use o formato (XX) XXXXX-XXXX.');
+            showFieldError(telefone, 'Telefone inválido - use (XX) XXXXX-XXXX');
             hasError = true;
         }
 
         // Validar data de nascimento
         const dataNasc = document.getElementById('data_nascimento_gestor');
         if (!validarIdade(dataNasc.value)) {
-            showFieldError(dataNasc, 'Você deve ter pelo menos 18 anos.');
+            showFieldError(dataNasc, 'Você deve ter pelo menos 18 anos');
             hasError = true;
         }
 
         // Validar gênero
         const genero = document.getElementById('genero_gestor');
         if (!genero.value) {
-            showFieldError(genero, 'Selecione um gênero.');
+            showFieldError(genero, 'Selecione um gênero');
             hasError = true;
         }
     }
@@ -93,28 +93,28 @@ function cadastroValidateCurrentStep() {
         // Validar razão social
         const razao = document.getElementById('razao_social');
         if (razao.value.trim().length < 3) {
-            showFieldError(razao, 'A razão social deve ter pelo menos 3 caracteres.');
+            showFieldError(razao, 'A razão social deve ter pelo menos 3 caracteres');
             hasError = true;
         }
 
         // Validar CNPJ
         const cnpj = document.getElementById('cnpj_instituicao');
         if (!validarCNPJ(cnpj.value)) {
-            showFieldError(cnpj, 'CNPJ inválido.');
+            showFieldError(cnpj, 'CNPJ inválido');
             hasError = true;
         }
 
         // Validar email institucional
         const emailInst = document.getElementById('email_institucional');
         if (!validarEmail(emailInst.value)) {
-            showFieldError(emailInst, 'Email institucional inválido.');
+            showFieldError(emailInst, 'Email institucional inválido');
             hasError = true;
         }
 
         // Validar telefone institucional (opcional)
         const telefoneInst = document.getElementById('telefone_instituicao');
         if (telefoneInst.value.trim() && !validarTelefone(telefoneInst.value)) {
-            showFieldError(telefoneInst, 'Telefone institucional inválido.');
+            showFieldError(telefoneInst, 'Telefone inválido - use (XX) XXXXX-XXXX');
             hasError = true;
         }
     }
@@ -123,14 +123,14 @@ function cadastroValidateCurrentStep() {
         // Validar CEP instituição
         const cep = document.getElementById('cep_instituicao');
         if (!validarCEP(cep.value)) {
-            showFieldError(cep, 'CEP inválido. Use o formato XXXXX-XXX.');
+            showFieldError(cep, 'CEP inválido - use o formato XXXXX-XXX');
             hasError = true;
         }
 
         // Validar estado
         const estado = document.getElementById('estado_instituicao');
         if (estado.value.length !== 2) {
-            showFieldError(estado, 'Estado deve ter 2 letras (UF).');
+            showFieldError(estado, 'Estado deve ter 2 letras (UF)');
             hasError = true;
         }
     }
@@ -139,14 +139,14 @@ function cadastroValidateCurrentStep() {
         // Validar CEP gestor
         const cepGestor = document.getElementById('cep_gestor');
         if (!validarCEP(cepGestor.value)) {
-            showFieldError(cepGestor, 'CEP inválido. Use o formato XXXXX-XXX.');
+            showFieldError(cepGestor, 'CEP inválido - use o formato XXXXX-XXX');
             hasError = true;
         }
 
         // Validar estado
         const estadoGestor = document.getElementById('estado_gestor');
         if (estadoGestor.value.length !== 2) {
-            showFieldError(estadoGestor, 'Estado deve ter 2 letras (UF).');
+            showFieldError(estadoGestor, 'Estado deve ter 2 letras (UF)');
             hasError = true;
         }
     }
@@ -157,13 +157,13 @@ function cadastroValidateCurrentStep() {
 
         // Validar senha
         if (!validarSenha(senha.value)) {
-            showFieldError(senha, 'A senha deve ter pelo menos 6 caracteres, incluindo números e letras.');
+            showFieldError(senha, 'A senha deve ter pelo menos 6 caracteres, incluindo números e letras');
             hasError = true;
         }
 
         // Validar confirmação
         if (senha.value !== confirmar.value) {
-            showFieldError(confirmar, 'As senhas não coincidem.');
+            showFieldError(confirmar, 'As senhas não coincidem');
             hasError = true;
         }
     }
@@ -187,8 +187,44 @@ function showFieldError(field, message) {
         feedback.className = 'invalid-feedback';
         field.parentElement.appendChild(feedback);
     }
+
+    // Aplicar estilos
+    feedback.style.fontSize = '0.875rem';
+    feedback.style.fontWeight = '500';
+    feedback.style.marginTop = '0.5rem';
+    feedback.style.marginBottom = '0.75rem';
+    feedback.style.textAlign = 'center';
+    feedback.style.color = '#dc3545';
+    feedback.style.padding = '0.6rem 0.5rem';
+    feedback.style.backgroundColor = '#f8d7da';
+    feedback.style.borderRadius = '0.375rem';
+    feedback.style.border = '1px solid #f5c2c7';
+
     feedback.textContent = message;
     feedback.style.display = 'block';
+
+    // Animação suave ao exibir erro
+    feedback.style.animation = 'fadeInError 0.3s ease-in';
+}// Adicionar animação CSS via JavaScript
+if (!document.getElementById('error-animation-style')) {
+    const style = document.createElement('style');
+    style.id = 'error-animation-style';
+    style.textContent = `
+        @keyframes fadeInError {
+            from {
+                opacity: 0;
+                transform: translateY(-5px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .invalid-feedback {
+            animation: fadeInError 0.3s ease-in;
+        }
+    `;
+    document.head.appendChild(style);
 }
 
 function validarCPF(cpf) {
@@ -285,93 +321,169 @@ function validarSenha(senha) {
 }
 
 // Máscara simples para CPF do gestor
-document.getElementById('cpf_gestor').addEventListener('input', function (e) {
-    let value = e.target.value.replace(/\D/g, '');
-    value = value.replace(/(\d{3})(\d)/, '$1.$2');
-    value = value.replace(/(\d{3})(\d)/, '$1.$2');
-    value = value.replace(/(\d{3})(\d{1,2})$/, '$1-$2');
-    e.target.value = value;
-});
-
 // Máscara para telefone do gestor
-document.getElementById('telefone_gestor').addEventListener('input', function (e) {
-    let value = e.target.value.replace(/\D/g, '');
-    if (value.length <= 2) {
-        e.target.value = value ? `(${value}` : '';
-    } else if (value.length <= 6) {
-        e.target.value = `(${value.slice(0, 2)}) ${value.slice(2)}`;
-    } else if (value.length <= 10) {
-        e.target.value = `(${value.slice(0, 2)}) ${value.slice(2, 6)}-${value.slice(6)}`;
-    } else {
-        e.target.value = `(${value.slice(0, 2)}) ${value.slice(2, 7)}-${value.slice(7, 11)}`;
-    }
-});
-
-// Formatar telefone_gestor inicial (se preenchido pelo servidor sem máscara)
+// Máscara simples para CNPJ
+// Máscara para telefone da instituição
+// Máscara para CEP do gestor
+// Máscara para CEP da instituição
+// Remover erro quando o usuário começar a corrigir
+// Preenchimento automático de endereço pelo CEP da instituição
+// Preenchimento automático de endereço pelo CEP do gestor
 document.addEventListener('DOMContentLoaded', function () {
-    const telEl = document.getElementById('telefone_gestor');
-    if (telEl && telEl.value) {
-        let digits = telEl.value.replace(/\D/g, '');
-        if (digits.length > 0) {
-            if (digits.length <= 2) {
-                telEl.value = `(${digits}`;
-            } else if (digits.length <= 6) {
-                telEl.value = `(${digits.slice(0, 2)}) ${digits.slice(2)}`;
-            } else if (digits.length <= 10) {
-                telEl.value = `(${digits.slice(0, 2)}) ${digits.slice(2, 6)}-${digits.slice(6)}`;
+    // Máscara para CPF
+    const cpfGestor = document.getElementById('cpf_gestor');
+    if (cpfGestor) {
+        cpfGestor.addEventListener('input', function (e) {
+            let value = e.target.value.replace(/\D/g, '');
+            value = value.replace(/(\d{3})(\d)/, '$1.$2');
+            value = value.replace(/(\d{3})(\d)/, '$1.$2');
+            value = value.replace(/(\d{3})(\d{1,2})$/, '$1-$2');
+            e.target.value = value;
+        });
+    }
+
+    // Máscara para telefone do gestor
+    const telefoneGestor = document.getElementById('telefone_gestor');
+    if (telefoneGestor) {
+        telefoneGestor.addEventListener('input', function (e) {
+            let value = e.target.value.replace(/\D/g, '');
+            if (value.length <= 2) {
+                e.target.value = value ? `(${value}` : '';
+            } else if (value.length <= 6) {
+                e.target.value = `(${value.slice(0, 2)}) ${value.slice(2)}`;
+            } else if (value.length <= 10) {
+                e.target.value = `(${value.slice(0, 2)}) ${value.slice(2, 6)}-${value.slice(6)}`;
             } else {
-                telEl.value = `(${digits.slice(0, 2)}) ${digits.slice(2, 7)}-${digits.slice(7, 11)}`;
+                e.target.value = `(${value.slice(0, 2)}) ${value.slice(2, 7)}-${value.slice(7, 11)}`;
+            }
+        });
+
+        // Formatar telefone inicial se já preenchido
+        if (telefoneGestor.value) {
+            let digits = telefoneGestor.value.replace(/\D/g, '');
+            if (digits.length > 0) {
+                if (digits.length <= 2) {
+                    telefoneGestor.value = `(${digits}`;
+                } else if (digits.length <= 6) {
+                    telefoneGestor.value = `(${digits.slice(0, 2)}) ${digits.slice(2)}`;
+                } else if (digits.length <= 10) {
+                    telefoneGestor.value = `(${digits.slice(0, 2)}) ${digits.slice(2, 6)}-${digits.slice(6)}`;
+                } else {
+                    telefoneGestor.value = `(${digits.slice(0, 2)}) ${digits.slice(2, 7)}-${digits.slice(7, 11)}`;
+                }
             }
         }
     }
-});
 
-// Máscara simples para CNPJ
-document.getElementById('cnpj_instituicao').addEventListener('input', function (e) {
-    let value = e.target.value.replace(/\D/g, '');
-    value = value.replace(/^(\d{2})(\d)/, '$1.$2');
-    value = value.replace(/^(\d{2})\.(\d{3})(\d)/, '$1.$2.$3');
-    value = value.replace(/\.(\d{3})(\d)/, '.$1/$2');
-    value = value.replace(/(\d{4})(\d)/, '$1-$2');
-    e.target.value = value;
-});
-
-// Máscara para telefone da instituição
-document.getElementById('telefone_instituicao').addEventListener('input', function (e) {
-    let value = e.target.value.replace(/\D/g, '');
-    if (value.length <= 2) {
-        e.target.value = value ? `(${value}` : '';
-    } else if (value.length <= 6) {
-        e.target.value = `(${value.slice(0, 2)}) ${value.slice(2)}`;
-    } else if (value.length <= 10) {
-        e.target.value = `(${value.slice(0, 2)}) ${value.slice(2, 6)}-${value.slice(6)}`;
-    } else {
-        e.target.value = `(${value.slice(0, 2)}) ${value.slice(2, 7)}-${value.slice(7, 11)}`;
+    // Máscara para CNPJ
+    const cnpjInstituicao = document.getElementById('cnpj_instituicao');
+    if (cnpjInstituicao) {
+        cnpjInstituicao.addEventListener('input', function (e) {
+            let value = e.target.value.replace(/\D/g, '');
+            value = value.replace(/^(\d{2})(\d)/, '$1.$2');
+            value = value.replace(/^(\d{2})\.(\d{3})(\d)/, '$1.$2.$3');
+            value = value.replace(/\.(\d{3})(\d)/, '.$1/$2');
+            value = value.replace(/(\d{4})(\d)/, '$1-$2');
+            e.target.value = value;
+        });
     }
-});
 
-// Máscara para CEP do gestor
-document.getElementById('cep_gestor').addEventListener('input', function (e) {
-    let value = e.target.value.replace(/\D/g, '');
-    if (value.length <= 5) {
-        e.target.value = value;
-    } else {
-        e.target.value = `${value.slice(0, 5)}-${value.slice(5, 8)}`;
+    // Máscara para telefone da instituição
+    const telefoneInstituicao = document.getElementById('telefone_instituicao');
+    if (telefoneInstituicao) {
+        telefoneInstituicao.addEventListener('input', function (e) {
+            let value = e.target.value.replace(/\D/g, '');
+            if (value.length <= 2) {
+                e.target.value = value ? `(${value}` : '';
+            } else if (value.length <= 6) {
+                e.target.value = `(${value.slice(0, 2)}) ${value.slice(2)}`;
+            } else if (value.length <= 10) {
+                e.target.value = `(${value.slice(0, 2)}) ${value.slice(2, 6)}-${value.slice(6)}`;
+            } else {
+                e.target.value = `(${value.slice(0, 2)}) ${value.slice(2, 7)}-${value.slice(7, 11)}`;
+            }
+        });
     }
-});
 
-// Máscara para CEP da instituição
-document.getElementById('cep_instituicao').addEventListener('input', function (e) {
-    let value = e.target.value.replace(/\D/g, '');
-    if (value.length <= 5) {
-        e.target.value = value;
-    } else {
-        e.target.value = `${value.slice(0, 5)}-${value.slice(5, 8)}`;
+    // Máscara para CEP do gestor
+    const cepGestor = document.getElementById('cep_gestor');
+    if (cepGestor) {
+        cepGestor.addEventListener('input', function (e) {
+            let value = e.target.value.replace(/\D/g, '');
+            if (value.length <= 5) {
+                e.target.value = value;
+            } else {
+                e.target.value = `${value.slice(0, 5)}-${value.slice(5, 8)}`;
+            }
+        });
+
+        // ViaCEP para endereço do gestor
+        cepGestor.addEventListener('blur', function (e) {
+            const cep = e.target.value.replace(/\D/g, '');
+            if (cep.length === 8) {
+                fetch(`https://viacep.com.br/ws/${cep}/json/`)
+                    .then(response => response.json())
+                    .then(data => {
+                        if (!data.erro) {
+                            document.getElementById('rua_gestor').value = data.logradouro || '';
+                            document.getElementById('bairro_gestor').value = data.bairro || '';
+                            document.getElementById('cidade_gestor').value = data.localidade || '';
+                            document.getElementById('estado_gestor').value = data.uf || '';
+                        } else {
+                            document.getElementById('rua_gestor').value = '';
+                            document.getElementById('bairro_gestor').value = '';
+                            document.getElementById('cidade_gestor').value = '';
+                            document.getElementById('estado_gestor').value = '';
+                            if (window.showWarning) window.showWarning('CEP não encontrado.');
+                        }
+                    })
+                    .catch(() => {
+                        if (window.showError) window.showError('Erro ao buscar o CEP.');
+                    });
+            }
+        });
     }
-});
 
-// Remover erro quando o usuário começar a corrigir
-document.addEventListener('DOMContentLoaded', function () {
+    // Máscara para CEP da instituição
+    const cepInstituicao = document.getElementById('cep_instituicao');
+    if (cepInstituicao) {
+        cepInstituicao.addEventListener('input', function (e) {
+            let value = e.target.value.replace(/\D/g, '');
+            if (value.length <= 5) {
+                e.target.value = value;
+            } else {
+                e.target.value = `${value.slice(0, 5)}-${value.slice(5, 8)}`;
+            }
+        });
+
+        // ViaCEP para endereço da instituição
+        cepInstituicao.addEventListener('blur', function (e) {
+            const cep = e.target.value.replace(/\D/g, '');
+            if (cep.length === 8) {
+                fetch(`https://viacep.com.br/ws/${cep}/json/`)
+                    .then(response => response.json())
+                    .then(data => {
+                        if (!data.erro) {
+                            document.getElementById('rua_instituicao').value = data.logradouro || '';
+                            document.getElementById('bairro_instituicao').value = data.bairro || '';
+                            document.getElementById('cidade_instituicao').value = data.localidade || '';
+                            document.getElementById('estado_instituicao').value = data.uf || '';
+                        } else {
+                            document.getElementById('rua_instituicao').value = '';
+                            document.getElementById('bairro_instituicao').value = '';
+                            document.getElementById('cidade_instituicao').value = '';
+                            document.getElementById('estado_instituicao').value = '';
+                            if (window.showWarning) window.showWarning('CEP não encontrado.');
+                        }
+                    })
+                    .catch(() => {
+                        if (window.showError) window.showError('Erro ao buscar o CEP.');
+                    });
+            }
+        });
+    }
+
+    // Remover erro quando o usuário começar a corrigir
     const allInputs = document.querySelectorAll('input, select');
     allInputs.forEach(input => {
         input.addEventListener('input', function () {
@@ -384,92 +496,43 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         });
     });
-});
 
-// Validação final do formulário
-document.querySelector('form').addEventListener('submit', function (e) {
-    // Validar todos os steps antes do envio
-    let formValid = true;
+    // Validação final do formulário
+    const form = document.querySelector('form');
+    if (form) {
+        form.addEventListener('submit', function (e) {
+            // Validar todos os steps antes do envio
+            let formValid = true;
 
-    // Salvar step atual
-    const currentStep = cadastroStep;
+            // Salvar step atual
+            const currentStep = cadastroStep;
 
-    // Validar cada step
-    for (let step = 1; step <= cadastroTotalSteps; step++) {
-        cadastroStep = step;
-        if (!cadastroValidateCurrentStep()) {
-            formValid = false;
-            // Voltar para o primeiro step com erro
-            if (step < currentStep) {
-                document.getElementById(`cadastroSection${currentStep}`).style.display = 'none';
-                document.getElementById(`cadastroSection${step}`).style.display = 'block';
-                cadastroUpdateButtons();
+            // Validar cada step
+            for (let step = 1; step <= cadastroTotalSteps; step++) {
+                cadastroStep = step;
+                if (!cadastroValidateCurrentStep()) {
+                    formValid = false;
+                    // Voltar para o primeiro step com erro
+                    if (step < currentStep) {
+                        document.getElementById(`cadastroSection${currentStep}`).style.display = 'none';
+                        document.getElementById(`cadastroSection${step}`).style.display = 'block';
+                        cadastroUpdateButtons();
+                    }
+                    break;
+                }
             }
-            break;
-        }
-    }
 
-    // Restaurar step original
-    cadastroStep = currentStep;
+            // Restaurar step original
+            cadastroStep = currentStep;
 
-    if (!formValid) {
-        e.preventDefault();
-        if (window.showWarning) window.showWarning('Por favor, corrija os erros no formulário.');
-        return false;
-    }
+            if (!formValid) {
+                e.preventDefault();
+                if (window.showWarning) window.showWarning('Por favor, corrija os erros no formulário.');
+                return false;
+            }
 
-    // Formulário válido - deixar enviar
-    return true;
-});
-
-// Preenchimento automático de endereço pelo CEP da instituição
-document.getElementById('cep_instituicao').addEventListener('blur', function (e) {
-    const cep = e.target.value.replace(/\D/g, '');
-    if (cep.length === 8) {
-        fetch(`https://viacep.com.br/ws/${cep}/json/`)
-            .then(response => response.json())
-            .then(data => {
-                if (!data.erro) {
-                    document.getElementById('rua_instituicao').value = data.logradouro || '';
-                    document.getElementById('bairro_instituicao').value = data.bairro || '';
-                    document.getElementById('cidade_instituicao').value = data.localidade || '';
-                    document.getElementById('estado_instituicao').value = data.uf || '';
-                } else {
-                    document.getElementById('rua_instituicao').value = '';
-                    document.getElementById('bairro_instituicao').value = '';
-                    document.getElementById('cidade_instituicao').value = '';
-                    document.getElementById('estado_instituicao').value = '';
-                    if (window.showWarning) window.showWarning('CEP não encontrado.');
-                }
-            })
-            .catch(() => {
-                if (window.showError) window.showError('Erro ao buscar o CEP.');
-            });
-    }
-});
-
-// Preenchimento automático de endereço pelo CEP do gestor
-document.getElementById('cep_gestor').addEventListener('blur', function (e) {
-    const cep = e.target.value.replace(/\D/g, '');
-    if (cep.length === 8) {
-        fetch(`https://viacep.com.br/ws/${cep}/json/`)
-            .then(response => response.json())
-            .then(data => {
-                if (!data.erro) {
-                    document.getElementById('rua_gestor').value = data.logradouro || '';
-                    document.getElementById('bairro_gestor').value = data.bairro || '';
-                    document.getElementById('cidade_gestor').value = data.localidade || '';
-                    document.getElementById('estado_gestor').value = data.uf || '';
-                } else {
-                    document.getElementById('rua_gestor').value = '';
-                    document.getElementById('bairro_gestor').value = '';
-                    document.getElementById('cidade_gestor').value = '';
-                    document.getElementById('estado_gestor').value = '';
-                    if (window.showWarning) window.showWarning('CEP não encontrado.');
-                }
-            })
-            .catch(() => {
-                if (window.showError) window.showError('Erro ao buscar o CEP.');
-            });
+            // Formulário válido - deixar enviar
+            return true;
+        });
     }
 });

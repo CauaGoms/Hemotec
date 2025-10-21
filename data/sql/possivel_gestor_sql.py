@@ -2,7 +2,7 @@ CRIAR_TABELA = """
 CREATE TABLE IF NOT EXISTS possivel_gestor (
 cod_possivel_gestor INTEGER PRIMARY KEY AUTOINCREMENT,
 nome_possivel_gestor TEXT NOT NULL,
-email_possivel_gestor TEXT NOT NULL UNIQUE,
+email_possivel_gestor TEXT NOT NULL,
 telefone_possivel_gestor TEXT NOT NULL,
 cargo_possivel_gestor TEXT NOT NULL
 )
