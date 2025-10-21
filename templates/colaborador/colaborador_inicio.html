@@ -69,7 +69,7 @@
 
             <!-- Ação 2: Realizar Triagem -->
             <div class="col-lg-3 col-md-6">
-                <div class="action-card" onclick="window.location.href='/colaborador/doacoes/triagem'">
+                <div class="action-card" onclick="window.location.href='/colaborador/doacoes'">
                     <div class="action-icon warning">
                         <i class="fas fa-clipboard-check"></i>
                     </div>
@@ -80,7 +80,7 @@
 
             <!-- Ação 3: Registrar Doação -->
             <div class="col-lg-3 col-md-6">
-                <div class="action-card" onclick="window.location.href='/colaborador/doacoes/adicionar'">
+                <div class="action-card" onclick="window.location.href='/colaborador/doacoes'">
                     <div class="action-icon primary">
                         <i class="fas fa-plus-circle"></i>
                     </div>
@@ -115,7 +115,7 @@
             <div class="col-lg-3 col-md-6">
                 <div class="action-card" onclick="window.location.href='/colaborador/campanha/adicionar'">
                     <div class="action-icon purple">
-                        <i class="fas fa-megaphone"></i>
+                        <i class="fas fa-plus-circle"></i>
                     </div>
                     <h4 class="action-title">Adicionar Campanha</h4>
                     <p class="action-description">Lançar nova campanha</p>
@@ -130,6 +130,17 @@
                     </div>
                     <h4 class="action-title">Disponibilidade</h4>
                     <p class="action-description">Gerenciar horários de coleta</p>
+                </div>
+            </div>
+
+            <!-- Ação 8: Funcionalidade em Desenvolvimento -->
+            <div class="col-lg-3 col-md-6">
+                <div class="action-card disabled" style="opacity: 0.7; cursor: not-allowed;">
+                    <div class="action-icon" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); position: relative;">
+                        <i class="fas fa-wrench"></i>
+                    </div>
+                    <h4 class="action-title">Funcionalidade em Desenvolvimento</h4>
+                    <p class="action-description">Novas features chegando em breve!</p>
                 </div>
             </div>
         </div>
@@ -245,18 +256,18 @@
         <div class="section-header">
             <h2 class="section-title">
                 <i class="fas fa-star me-2"></i>
-                Campanhas em Destaque
+                Campanhas Recentes
             </h2>
             <a href="/colaborador/campanha" class="view-all-link">Ver todas <i class="fas fa-arrow-right"></i></a>
         </div>
 
-        <div class="row g-4" id="campanhas-destaque">
+        <div class="row g-4">
             {% if campanhas_ativas and campanhas_ativas|length > 0 %}
-                {% for campanha in campanhas_ativas[:3] %}
+                {% for campanha in campanhas_ativas %}
                 <div class="col-lg-4 col-md-6">
                     <div class="card campanha-card h-100" onclick="window.location.href='/colaborador/campanha'">
                         {% if campanha.foto %}
-                        <img src="{{ url_for('static', path=campanha.foto) }}" 
+                        <img src="{{ campanha.foto }}" 
                              class="card-img-top" 
                              alt="{{ campanha.titulo }}"
                              style="height: 200px; object-fit: cover;"
@@ -307,18 +318,107 @@
 
     <!-- Notificações Recentes -->
     <section class="notifications-section">
-        <div class="section-header">
-            <h2 class="section-title">
-                <i class="fas fa-bell me-2"></i>
-                Notificações Recentes
-            </h2>
-            <a href="/colaborador/notificacao" class="view-all-link">Ver todas <i class="fas fa-arrow-right"></i></a>
-        </div>
-
-        <div class="notifications-container" id="notificacoes-lista">
-            <div class="empty-state">
-                <i class="fas fa-bell-slash"></i>
-                <p>Nenhuma notificação recente</p>
+        <div class="container">
+            <div class="card border-0 shadow-lg" style="border-radius: 20px; background: #fff;">
+                <div class="card-body p-4">
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <h5 class="section-title mb-0 fw-bold" style="color: #2c3e50; font-size: 1.4rem;">
+                            <i class="fas fa-bell me-3" style="color: #e02020;"></i>
+                            Notificações Recentes
+                        </h5>
+                        <a href="/colaborador/notificacao" class="btn btn-outline-danger" style="border-radius: 25px; padding: 8px 20px; font-size: 0.9rem; text-decoration: none;">
+                            <i class="fas fa-eye me-2"></i>
+                            Ver todas
+                        </a>
+                    </div>
+                    <div class="notifications-container" id="notificacoes-lista">
+                        {% if notificacoes_recentes and notificacoes_recentes|length > 0 %}
+                            {% for notif in notificacoes_recentes %}
+                                {% set tipo_lower = notif.tipo.lower() if notif.tipo else 'geral' %}
+                                {% if tipo_lower == 'estoque' %}
+                                    {% set cor_borda = '#e02020' %}
+                                    {% set cor_fundo = 'linear-gradient(135deg, #fff5f5 0%, #fff 100%)' %}
+                                    {% set cor_icone_bg = '#fee2e2' %}
+                                    {% set icone = 'exclamation-triangle' %}
+                                    {% set cor_icone = 'text-danger' %}
+                                {% elif tipo_lower == 'campanha' %}
+                                    {% set cor_borda = '#22c55e' %}
+                                    {% set cor_fundo = 'linear-gradient(135deg, #f0fdf4 0%, #fff 100%)' %}
+                                    {% set cor_icone_bg = '#dcfce7' %}
+                                    {% set icone = 'bullhorn' %}
+                                    {% set cor_icone = 'text-success' %}
+                                {% elif tipo_lower == 'agendamento' %}
+                                    {% set cor_borda = '#3b82f6' %}
+                                    {% set cor_fundo = 'linear-gradient(135deg, #eff6ff 0%, #fff 100%)' %}
+                                    {% set cor_icone_bg = '#dbeafe' %}
+                                    {% set icone = 'calendar-alt' %}
+                                    {% set cor_icone = 'text-info' %}
+                                {% elif tipo_lower == 'doacao' %}
+                                    {% set cor_borda = '#f59e0b' %}
+                                    {% set cor_fundo = 'linear-gradient(135deg, #fffbeb 0%, #fff 100%)' %}
+                                    {% set cor_icone_bg = '#fef3c7' %}
+                                    {% set icone = 'heart-pulse' %}
+                                    {% set cor_icone = 'text-warning' %}
+                                {% else %}
+                                    {% set cor_borda = '#6b7280' %}
+                                    {% set cor_fundo = 'linear-gradient(135deg, #f9fafb 0%, #fff 100%)' %}
+                                    {% set cor_icone_bg = '#e5e7eb' %}
+                                    {% set icone = 'bell' %}
+                                    {% set cor_icone = 'text-secondary' %}
+                                {% endif %}
+                            <div class="notification-item modern-notification" style="background: {{ cor_fundo }}; border-radius: 12px; padding: 20px; margin-bottom: 15px; border-left: 4px solid {{ cor_borda }}; box-shadow: 0 2px 10px rgba(0,0,0,0.05); transition: transform 0.3s ease; cursor: pointer;" onclick="window.location.href='/colaborador/notificacao'">
+                                <div class="d-flex justify-content-between align-items-start">
+                                    <div class="flex-grow-1">
+                                        <div class="d-flex align-items-center mb-2">
+                                            <div class="notification-icon" style="background: {{ cor_icone_bg }}; width: 40px; height: 40px; border-radius: 10px; display: flex; align-items: center; justify-content: center; margin-right: 12px;">
+                                                <i class="fas fa-{{ icone }} {{ cor_icone }}"></i>
+                                            </div>
+                                            <div>
+                                                <h6 class="mb-1 fw-bold" style="color: #2c3e50;">{{ notif.titulo }}</h6>
+                                                <small class="text-muted" id="data-notif-{{ loop.index }}"></small>
+                                            </div>
+                                        </div>
+                                        <p class="mb-0 text-muted" style="font-size: 0.95rem; line-height: 1.5; margin-left: 52px;">
+                                            {{ notif.mensagem }}
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <script>
+                                // Formatar data para "Há X horas/dias"
+                                (function() {
+                                    const dataStr = "{{ notif.data_envio }}";
+                                    const data = new Date(dataStr);
+                                    const agora = new Date();
+                                    const diffMs = agora - data;
+                                    const diffHoras = Math.floor(diffMs / (1000 * 60 * 60));
+                                    const diffDias = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+                                    
+                                    let textoData;
+                                    if (diffHoras < 1) {
+                                        textoData = 'Agora mesmo';
+                                    } else if (diffHoras < 24) {
+                                        textoData = `Há ${diffHoras} hora${diffHoras > 1 ? 's' : ''}`;
+                                    } else if (diffDias === 1) {
+                                        textoData = 'Ontem';
+                                    } else if (diffDias < 7) {
+                                        textoData = `Há ${diffDias} dias`;
+                                    } else {
+                                        textoData = data.toLocaleDateString('pt-BR');
+                                    }
+                                    
+                                    document.getElementById('data-notif-{{ loop.index }}').textContent = textoData;
+                                })();
+                            </script>
+                            {% endfor %}
+                        {% else %}
+                            <div class="text-center py-4">
+                                <i class="fas fa-bell-slash fa-3x text-muted mb-3"></i>
+                                <p class="text-muted">Nenhuma notificação no momento</p>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
             </div>
         </div>
     </section>

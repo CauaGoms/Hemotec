@@ -1,11 +1,313 @@
 {% extends "colaborador/colaborador__base.html" %}
 {% block custom_css %}
-<link href="/static/css/colaborador/colaborador_doacao_adicionar.css" rel="stylesheet">
+<style>
+    :root {
+        --hemotec-red: #e02020;
+        --hemotec-dark-red: #c01010;
+        --hemotec-light-red: #ff4040;
+        --hemotec-bg-light: #f8f9fa;
+        --hemotec-text-dark: #333333;
+        --hemotec-accent: #0066cc;
+        --hemotec-success: #28a745;
+        --shadow-light: 0 2px 10px rgba(0, 0, 0, 0.08);
+        --shadow-medium: 0 4px 20px rgba(0, 0, 0, 0.12);
+    }
+
+    body {
+        background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+        min-height: 100vh;
+    }
+
+    /* Hero Section */
+    .hero-section {
+        background: linear-gradient(135deg, rgba(35, 40, 47, 0.8), rgba(80, 80, 90, 0.7)), url('https://images.unsplash.com/photo-1584308666744-24d5f400f6f0?auto=format&fit=crop') no-repeat center center;
+        background-size: cover;
+        color: white;
+        padding: 4rem 0 3rem;
+        text-align: center;
+        border-radius: 0 0 30px 30px;
+        min-height: 280px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .hero-content {
+        max-width: 800px;
+        position: relative;
+        z-index: 2;
+    }
+
+    .hero-title {
+        font-size: 2.5rem;
+        font-weight: 700;
+        margin-bottom: 0.5rem;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    }
+
+    .hero-subtitle {
+        font-size: 1.1rem;
+        color: rgba(255, 255, 255, 0.9);
+        font-weight: 300;
+        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Back Arrow */
+    .back-arrow {
+        display: inline-block;
+        width: 40px;
+        height: 40px;
+        background: var(--hemotec-red);
+        color: white;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 20px;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        box-shadow: var(--shadow-light);
+        position: relative;
+        z-index: 10;
+    }
+
+    .back-arrow:hover {
+        background: var(--hemotec-dark-red);
+        transform: translateX(-3px);
+        text-decoration: none;
+        box-shadow: var(--shadow-medium);
+    }
+
+    /* Container */
+    .container {
+        max-width: 700px;
+        margin-top: -30px;
+        position: relative;
+        z-index: 5;
+    }
+
+    /* Form Card */
+    .form-card {
+        background: white;
+        border-radius: 15px;
+        padding: 2rem;
+        box-shadow: var(--shadow-medium);
+        margin-bottom: 2rem;
+    }
+
+    .form-section-title {
+        font-size: 1.4rem;
+        font-weight: 700;
+        color: var(--hemotec-text-dark);
+        margin-bottom: 1.5rem;
+        padding-bottom: 1rem;
+        border-bottom: 2px solid var(--hemotec-red);
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .form-section-title i {
+        color: var(--hemotec-red);
+    }
+
+    /* Form Groups */
+    .mb-3 {
+        margin-bottom: 1rem;
+    }
+
+    .form-label {
+        font-weight: 600;
+        color: var(--hemotec-text-dark);
+        margin-bottom: 0.5rem;
+        display: flex;
+        align-items: center;
+        gap: 0.3rem;
+    }
+
+    .form-label .required {
+        color: var(--hemotec-red);
+    }
+
+    .form-control,
+    .form-select {
+        border: 1px solid #dee2e6;
+        border-radius: 8px;
+        padding: 0.75rem;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+    }
+
+    .form-control:focus,
+    .form-select:focus {
+        border-color: var(--hemotec-red);
+        box-shadow: 0 0 0 0.2rem rgba(224, 32, 32, 0.15);
+    }
+
+    /* Info Box */
+    .info-box {
+        background: #f0f8ff;
+        border-left: 4px solid var(--hemotec-accent);
+        padding: 1rem;
+        border-radius: 8px;
+        margin-top: 1.5rem;
+    }
+
+    .info-box i {
+        color: var(--hemotec-accent);
+    }
+
+    .info-box strong {
+        color: var(--hemotec-text-dark);
+    }
+
+    /* Agendamento Selector */
+    .agendamento-selector {
+        margin-bottom: 2rem;
+    }
+
+    .agendamento-list {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .agendamento-item {
+        border: 2px solid #dee2e6;
+        border-radius: 8px;
+        padding: 1rem;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    .agendamento-item:hover {
+        border-color: var(--hemotec-red);
+        background: #f8f9fa;
+    }
+
+    .agendamento-item.selected {
+        border-color: var(--hemotec-red);
+        background: rgba(224, 32, 32, 0.05);
+    }
+
+    .agendamento-item input[type="radio"] {
+        margin-right: 1rem;
+    }
+
+    .agendamento-info {
+        margin-left: 2rem;
+    }
+
+    .agendamento-info h6 {
+        margin-bottom: 0.25rem;
+        font-weight: 600;
+        color: var(--hemotec-text-dark);
+    }
+
+    .agendamento-info small {
+        color: #6c757d;
+    }
+
+    /* Botões */
+    .btn-container {
+        display: flex;
+        gap: 1rem;
+        margin-top: 2rem;
+        justify-content: space-between;
+    }
+
+    .btn {
+        padding: 0.75rem 1.5rem;
+        font-weight: 600;
+        border-radius: 8px;
+        transition: all 0.3s ease;
+        border: none;
+        cursor: pointer;
+        font-size: 1rem;
+    }
+
+    .btn-primary {
+        background: var(--hemotec-red);
+        color: white;
+    }
+
+    .btn-primary:hover {
+        background: var(--hemotec-dark-red);
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-medium);
+        text-decoration: none;
+        color: white;
+    }
+
+    .btn-outline-secondary {
+        background: white;
+        color: #6c757d;
+        border: 2px solid #dee2e6;
+    }
+
+    .btn-outline-secondary:hover {
+        background: #f8f9fa;
+        border-color: #adb5bd;
+        text-decoration: none;
+        color: #6c757d;
+    }
+
+    /* Error Message */
+    .alert {
+        padding: 1rem;
+        border-radius: 8px;
+        margin-bottom: 1rem;
+    }
+
+    .alert-danger {
+        background: #f8d7da;
+        border: 1px solid #f5c6cb;
+        color: #721c24;
+    }
+
+    .alert-warning {
+        background: #fff3cd;
+        border: 1px solid #ffeaa7;
+        color: #856404;
+    }
+
+    /* Row and Cols */
+    .row {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 1rem;
+    }
+
+    .row.single {
+        grid-template-columns: 1fr;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+        .hero-title {
+            font-size: 1.8rem;
+        }
+
+        .form-card {
+            padding: 1.5rem;
+        }
+
+        .btn-container {
+            flex-direction: column;
+        }
+
+        .btn {
+            width: 100%;
+        }
+    }
+</style>
 {% endblock %}
 
 {% block conteudo %}
 <!-- Back Arrow -->
-<a href="/doador" class="back-arrow">
+<a href="/colaborador/doacoes" class="back-arrow">
     <i class="fas fa-arrow-left"></i>
 </a>
 
@@ -14,428 +316,149 @@
     <div class="container">
         <div class="hero-content">
             <h1 class="hero-title">
-                <i class="fas fa-heart animated-icon me-3"></i>
-                Primeira Doação
+                <i class="fas fa-droplet me-2"></i>
+                Inserir Dados de Doação
             </h1>
-            <p class="hero-subtitle">Complete seu cadastro e torne-se um doador de sangue. Sua generosidade pode salvar vidas!</p>
+            <p class="hero-subtitle">Complete as informações da doação de sangue</p>
         </div>
     </div>
 </section>
 
+<!-- Main Content -->
 <div class="container">
-    <!-- Progress Indicator -->
-    <div class="progress-container fade-in">
-        <div class="step-progress">
-            <div class="step active">
-                <div class="step-number">1</div>
-                <div class="step-label">Informações Pessoais</div>
-                <div class="step-connector"></div>
-            </div>
-            <div class="step">
-                <div class="step-number">2</div>
-                <div class="step-label">Histórico Médico</div>
-                <div class="step-connector"></div>
-            </div>
-            <div class="step">
-                <div class="step-number">3</div>
-                <div class="step-label">Elegibilidade</div>
-                <div class="step-connector"></div>
-            </div>
-            <div class="step">
-                <div class="step-number">4</div>
-                <div class="step-label">Confirmação</div>
-            </div>
+    {% if not agendamentos %}
+    <div class="form-card">
+        <div class="alert alert-warning">
+            <i class="fas fa-info-circle me-2"></i>
+            <strong>Nenhum agendamento pendente</strong>
+            <p class="mb-0 mt-2">Não existem agendamentos confirmados sem doação registrada.</p>
         </div>
-    </div>
-
-    <form id="donationForm">
-        <!-- Seção 1: Informações Pessoais Complementares -->
-        <div class="form-section slide-in" id="section1">
-            <h3 class="section-title">
-                <i class="fas fa-user-plus"></i>
-                Informações Pessoais Complementares
-            </h3>
-            
-            <div class="row">
-                <div class="col-md-6 mb-3">
-                    <label for="altura" class="form-label">Altura (cm) *</label>
-                    <input type="number" class="form-control" id="altura" min="140" max="220" required>
-                </div>
-                <div class="col-md-6 mb-3">
-                    <label for="peso" class="form-label">Peso (kg) *</label>
-                    <input type="number" class="form-control" id="peso" min="50" max="200" required>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-md-6 mb-3">
-                    <label for="tipoSanguineo" class="form-label">Tipo Sanguíneo</label>
-                    <select class="form-select" id="tipoSanguineo">
-                        <option value="">Não sei meu tipo sanguíneo</option>
-                        <option value="A+">A+</option>
-                        <option value="A-">A-</option>
-                        <option value="B+">B+</option>
-                        <option value="B-">B-</option>
-                        <option value="AB+">AB+</option>
-                        <option value="AB-">AB-</option>
-                        <option value="O+">O+</option>
-                        <option value="O-">O-</option>
-                    </select>
-                    <div class="form-text">Se não souber, descobriremos durante os exames.</div>
-                </div>
-                <div class="col-md-6 mb-3">
-                    <label for="profissao" class="form-label">Profissão *</label>
-                    <input type="text" class="form-control" id="profissao" required>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-md-6 mb-3">
-                    <label for="contatoEmergencia" class="form-label">Contato de Emergência *</label>
-                    <input type="text" class="form-control" id="contatoEmergencia" placeholder="Nome completo" required>
-                </div>
-                <div class="col-md-6 mb-3">
-                    <label for="telefoneEmergencia" class="form-label">Telefone de Emergência *</label>
-                    <input type="tel" class="form-control" id="telefoneEmergencia" placeholder="(00) 00000-0000" required>
-                </div>
-            </div>
-
-            <div class="info-box">
-                <h6><i class="fas fa-info-circle me-2"></i>Informação Importante</h6>
-                <p class="mb-0">Todas as informações fornecidas são confidenciais e utilizadas apenas para garantir sua segurança e a qualidade do sangue doado.</p>
-            </div>
-        </div>
-
-        <!-- Seção 2: Histórico Médico -->
-        <div class="form-section slide-in" id="section2" style="display: none;">
-            <h3 class="section-title">
-                <i class="fas fa-stethoscope"></i>
-                Histórico Médico e Hábitos
-            </h3>
-
-            <div class="mb-4">
-                <h5 class="mb-3">Condições Médicas Atuais</h5>
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="form-check mb-2">
-                            <input class="form-check-input" type="checkbox" id="diabetes">
-                            <label class="form-check-label" for="diabetes">Diabetes</label>
-                        </div>
-                        <div class="form-check mb-2">
-                            <input class="form-check-input" type="checkbox" id="hipertensao">
-                            <label class="form-check-label" for="hipertensao">Hipertensão</label>
-                        </div>
-                        <div class="form-check mb-2">
-                            <input class="form-check-input" type="checkbox" id="cardiopatia">
-                            <label class="form-check-label" for="cardiopatia">Problemas cardíacos</label>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-check mb-2">
-                            <input class="form-check-input" type="checkbox" id="cancer">
-                            <label class="form-check-label" for="cancer">Histórico de câncer</label>
-                        </div>
-                        <div class="form-check mb-2">
-                            <input class="form-check-input" type="checkbox" id="nenhuma">
-                            <label class="form-check-label" for="nenhuma">Nenhuma das anteriores</label>
-                        </div>
-                        <div class="form-check mb-2">
-                            <input class="form-check-input" type="checkbox" id="outros">
-                            <label class="form-check-label" for="outros">Outros</label>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="mb-4">
-                <label for="medicamentos" class="form-label">Medicamentos em uso regular</label>
-                <textarea class="form-control" id="medicamentos" rows="3" placeholder="Liste todos os medicamentos que você toma regularmente, incluindo vitaminas e suplementos"></textarea>
-            </div>
-
-            <div class="mb-4">
-                <h5 class="mb-3">Hábitos de Vida</h5>
-                <div class="row">
-                    <div class="col-md-4 mb-3">
-                        <label for="fumante" class="form-label">Você fuma?</label>
-                        <select class="form-select" id="fumante">
-                            <option value="nao">Não</option>
-                            <option value="sim">Sim</option>
-                            <option value="parei">Parei recentemente</option>
-                        </select>
-                    </div>
-                    <div class="col-md-4 mb-3">
-                        <label for="alcool" class="form-label">Consome álcool?</label>
-                        <select class="form-select" id="alcool">
-                            <option value="nao">Não</option>
-                            <option value="social">Socialmente</option>
-                            <option value="regular">Regularmente</option>
-                        </select>
-                    </div>
-                    <div class="col-md-4 mb-3">
-                        <label for="atividade" class="form-label">Pratica atividade física?</label>
-                        <select class="form-select" id="atividade">
-                            <option value="nao">Não</option>
-                            <option value="leve">Leve</option>
-                            <option value="moderada">Moderada</option>
-                            <option value="intensa">Intensa</option>
-                        </select>
-                    </div>
-                </div>
-            </div>
-
-            <div class="warning-box">
-                <h6><i class="fas fa-exclamation-triangle me-2"></i>Importante</h6>
-                <p class="mb-0">Seja honesto sobre seu histórico médico. Essas informações são essenciais para sua segurança e a dos receptores.</p>
-            </div>
-        </div>
-
-        <!-- Seção 3: Critérios de Elegibilidade -->
-        <div class="form-section slide-in" id="section3" style="display: none;">
-            <h3 class="section-title">
-                <i class="fas fa-clipboard-check"></i>
-                Critérios de Elegibilidade
-            </h3>
-
-            <div class="mb-4">
-                <h5 class="mb-3">Verificação de Elegibilidade</h5>
-                
-                <div class="eligibility-card" id="eligibility-age">
-                    <div class="d-flex align-items-center">
-                        <i class="fas fa-birthday-cake me-3 text-primary"></i>
-                        <div>
-                            <h6 class="mb-1">Idade</h6>
-                            <p class="mb-0">Entre 16 e 69 anos (menores de 18 precisam de autorização dos pais)</p>
-                        </div>
-                        <div class="ms-auto">
-                            <i class="fas fa-check-circle text-success" style="display: none;"></i>
-                            <i class="fas fa-times-circle text-danger" style="display: none;"></i>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="eligibility-card" id="eligibility-weight">
-                    <div class="d-flex align-items-center">
-                        <i class="fas fa-weight me-3 text-primary"></i>
-                        <div>
-                            <h6 class="mb-1">Peso</h6>
-                            <p class="mb-0">Mínimo de 50kg</p>
-                        </div>
-                        <div class="ms-auto">
-                            <i class="fas fa-check-circle text-success" style="display: none;"></i>
-                            <i class="fas fa-times-circle text-danger" style="display: none;"></i>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="eligibility-card">
-                    <div class="d-flex align-items-center">
-                        <i class="fas fa-clock me-3 text-primary"></i>
-                        <div>
-                            <h6 class="mb-1">Intervalo entre doações</h6>
-                            <p class="mb-0">Homens: 60 dias | Mulheres: 90 dias</p>
-                        </div>
-                        <div class="ms-auto">
-                            <i class="fas fa-check-circle text-success"></i>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="mb-4">
-                <h5 class="mb-3">Questões de Segurança</h5>
-                
-                <div class="mb-3">
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" id="jejum" required>
-                        <label class="form-check-label" for="jejum">
-                            Confirmo que não estou em jejum (fiz uma refeição leve nas últimas 4 horas)
-                        </label>
-                    </div>
-                </div>
-
-                <div class="mb-3">
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" id="sono" required>
-                        <label class="form-check-label" for="sono">
-                            Dormi pelo menos 6 horas na noite passada
-                        </label>
-                    </div>
-                </div>
-
-                <div class="mb-3">
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" id="alcool24h" required>
-                        <label class="form-check-label" for="alcool24h">
-                            Não consumi bebidas alcoólicas nas últimas 24 horas
-                        </label>
-                    </div>
-                </div>
-
-                <div class="mb-3">
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" id="doenca" required>
-                        <label class="form-check-label" for="doenca">
-                            Não estou com sintomas de gripe, resfriado ou qualquer infecção
-                        </label>
-                    </div>
-                </div>
-
-                <div class="mb-3">
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" id="tatuagem" required>
-                        <label class="form-check-label" for="tatuagem">
-                            Não fiz tatuagem, piercing ou acupuntura nos últimos 12 meses
-                        </label>
-                    </div>
-                </div>
-            </div>
-
-            <div class="success-box">
-                <h6><i class="fas fa-shield-alt me-2"></i>Segurança em Primeiro Lugar</h6>
-                <p class="mb-0">Todos os materiais utilizados são descartáveis e estéreis. O processo é 100% seguro para o doador.</p>
-            </div>
-        </div>
-
-        <!-- Seção 4: Confirmação e Agendamento -->
-        <div class="form-section slide-in" id="section4" style="display: none;">
-            <h3 class="section-title">
-                <i class="fas fa-calendar-check"></i>
-                Confirmação e Agendamento
-            </h3>
-
-            <div class="mb-4">
-                <h5 class="mb-3">Resumo das Informações</h5>
-                <div id="summary" class="p-3 bg-light rounded">
-                    <!-- Resumo será preenchido dinamicamente -->
-                </div>
-            </div>
-
-            <div class="mb-4">
-                <h5 class="mb-3">Agendar Primeira Doação</h5>
-                <div class="row">
-                    <div class="col-md-6 mb-3">
-                        <label for="dataDoacao" class="form-label">Data preferida *</label>
-                        <input type="date" class="form-control" id="dataDoacao" required>
-                    </div>
-                    <div class="col-md-6 mb-3">
-                        <label for="horarioDoacao" class="form-label">Horário preferido *</label>
-                        <select class="form-select" id="horarioDoacao" required>
-                            <option value="">Selecione um horário</option>
-                            <option value="07:00">07:00</option>
-                            <option value="08:00">08:00</option>
-                            <option value="09:00">09:00</option>
-                            <option value="10:00">10:00</option>
-                            <option value="11:00">11:00</option>
-                            <option value="14:00">14:00</option>
-                            <option value="15:00">15:00</option>
-                            <option value="16:00">16:00</option>
-                            <option value="17:00">17:00</option>
-                        </select>
-                    </div>
-                </div>
-            </div>
-
-            <div class="mb-4">
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="termos" required>
-                    <label class="form-check-label" for="termos">
-                        Li e aceito os <a href="#" class="text-decoration-none">termos de consentimento</a> para doação de sangue
-                    </label>
-                </div>
-            </div>
-
-            <div class="mb-4">
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="contato">
-                    <label class="form-check-label" for="contato">
-                        Aceito receber lembretes sobre próximas doações e campanhas importantes
-                    </label>
-                </div>
-            </div>
-
-            <div class="info-box">
-                <h6><i class="fas fa-info-circle me-2"></i>Próximos Passos</h6>
-                <ul class="mb-0">
-                    <li>Você receberá uma confirmação por email e SMS</li>
-                    <li>Chegue 15 minutos antes do horário agendado</li>
-                    <li>Traga um documento oficial com foto</li>
-                    <li>O processo completo leva cerca de 45 minutos</li>
-                </ul>
-            </div>
-        </div>
-
-        <!-- Botões de Navegação -->
-        <div class="d-flex justify-content-between mb-4">
-            <button type="button" class="btn btn-outline-primary" id="prevBtn" onclick="changeStep(-1)" style="display: none;">
-                <i class="fas fa-arrow-left me-2"></i>Anterior
-            </button>
-            <button type="button" class="btn btn-primary" id="nextBtn" onclick="changeStep(1)">
-                Próximo<i class="fas fa-arrow-right ms-2"></i>
-            </button>
-            <a href="dashboard.html">
-            <button type="submit" class="btn btn-primary" id="submitBtn" style="display: none;">
-                <i class="fas fa-heart me-2"></i>Finalizar Cadastro
-            </button>
+        <div class="btn-container">
+            <a href="/colaborador/doacoes" class="btn btn-outline-secondary">
+                <i class="fas fa-arrow-left me-2"></i>Voltar
             </a>
         </div>
-    </form>
-</div>
+    </div>
+    {% else %}
+    <form method="POST" action="/colaborador/doacao/adicionar">
+        <!-- Seção 1: Seleção de Agendamento -->
+        <div class="form-card">
+            <h3 class="form-section-title">
+                <i class="fas fa-calendar"></i>
+                1. Selecione o Agendamento
+            </h3>
 
-<!-- Floating Help Button -->
-<div class="floating-action">
-    <button class="floating-btn" data-bs-toggle="modal" data-bs-target="#helpModal">
-        <i class="fas fa-question"></i>
-    </button>
-</div>
-
-<!-- Help Modal -->
-<div class="modal fade" id="helpModal" tabindex="-1">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">
-                    <i class="fas fa-question-circle me-2"></i>Precisa de Ajuda?
-                </h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-            </div>
-            <div class="modal-body">
-                <h6>Dúvidas Frequentes:</h6>
-                <div class="accordion" id="faqAccordion">
-                    <div class="accordion-item">
-                        <h2 class="accordion-header">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq1">
-                                Posso doar se tomar medicamentos?
-                            </button>
-                        </h2>
-                        <div id="faq1" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
-                            <div class="accordion-body">
-                                Depende do medicamento. Alguns são permitidos, outros podem impedir a doação temporariamente. Nossa equipe médica avaliará cada caso.
-                            </div>
+            <div class="agendamento-selector">
+                <div class="agendamento-list">
+                    {% for item in agendamentos %}
+                    <label class="agendamento-item" onclick="this.querySelector('input').checked = true;">
+                        <input type="radio" name="cod_agendamento" value="{{ item.agendamento.cod_agendamento }}" required>
+                        <div class="agendamento-info">
+                            <h6>{{ item.usuario.nome if item.usuario else "Doador desconhecido" }}</h6>
+                            <small>
+                                <i class="fas fa-phone me-1"></i> {{ item.usuario.telefone if item.usuario else "N/A" }}
+                            </small>
+                            <br>
+                            <small>
+                                <i class="fas fa-calendar-alt me-1"></i>
+                                {% if item.agendamento.data_hora %}
+                                    {{ item.agendamento.data_hora.strftime('%d/%m/%Y às %H:%M') }}
+                                {% else %}
+                                    Data não definida
+                                {% endif %}
+                            </small>
+                            {% if item.doador %}
+                            <br>
+                            <small>
+                                <i class="fas fa-tint me-1"></i> {{ item.doador.tipo_sanguineo }}{% if item.doador.fator_rh %}{{ item.doador.fator_rh }}{% endif %}
+                            </small>
+                            {% endif %}
                         </div>
-                    </div>
-                    <div class="accordion-item">
-                        <h2 class="accordion-header">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq2">
-                                Quanto tempo demora o processo?
-                            </button>
-                        </h2>
-                        <div id="faq2" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
-                            <div class="accordion-body">
-                                O processo completo leva cerca de 45 minutos, incluindo cadastro, triagem, coleta e lanche pós-doação.
-                            </div>
-                        </div>
-                    </div>
+                    </label>
+                    {% endfor %}
                 </div>
-                <hr>
-                <h6>Contato:</h6>
-                <p><i class="fas fa-phone me-2"></i>(28) 3333-4444</p>
-                <p><i class="fas fa-envelope me-2"></i>pihemotec@gmail.com</p>
+            </div>
+
+            <div class="info-box">
+                <i class="fas fa-info-circle me-2"></i>
+                <strong>Dica:</strong> Selecione o agendamento do doador para o qual deseja registrar a doação.
             </div>
         </div>
-    </div>
-</div>
-{% endblock %}
 
-{% block custom_js %}
-<script src="/static/js/colaborador/colaborador_doacao_adicionar.js"></script>
+        <!-- Seção 2: Dados da Doação -->
+        <div class="form-card">
+            <h3 class="form-section-title">
+                <i class="fas fa-vial"></i>
+                2. Dados da Doação
+            </h3>
+
+            <div class="row single">
+                <div class="mb-3">
+                    <label for="data_hora" class="form-label">
+                        <i class="fas fa-clock"></i>
+                        Data e Hora <span class="required">*</span>
+                    </label>
+                    <input type="datetime-local" class="form-control" id="data_hora" name="data_hora" required>
+                    <small class="text-muted d-block mt-1">
+                        <i class="fas fa-info-circle"></i> Informe a data e hora exata da coleta
+                    </small>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="mb-3">
+                    <label for="quantidade" class="form-label">
+                        <i class="fas fa-flask-vial"></i>
+                        Quantidade (ml) <span class="required">*</span>
+                    </label>
+                    <input type="number" class="form-control" id="quantidade" name="quantidade" 
+                           min="1" max="500" value="450" required
+                           placeholder="Ex: 450">
+                    <small class="text-muted d-block mt-1">
+                        <i class="fas fa-info-circle"></i> Quantidade em mililitros (típico: 450ml)
+                    </small>
+                </div>
+
+                <div class="mb-3">
+                    <label for="observacoes" class="form-label">
+                        <i class="fas fa-sticky-note"></i>
+                        Observações
+                    </label>
+                    <textarea class="form-control" id="observacoes" name="observacoes" 
+                              rows="3" placeholder="Digite observações adicionais se necessário..."></textarea>
+                    <small class="text-muted d-block mt-1">
+                        <i class="fas fa-info-circle"></i> Informações opcionais sobre a coleta
+                    </small>
+                </div>
+            </div>
+
+            <div class="info-box">
+                <i class="fas fa-heart me-2"></i>
+                <strong>Status da Doação:</strong> Será marcada como <strong>Concluída</strong> após salvar.
+            </div>
+        </div>
+
+        <!-- Seção 3: Confirmação -->
+        <div class="form-card">
+            <h3 class="form-section-title">
+                <i class="fas fa-check-circle"></i>
+                3. Confirmação
+            </h3>
+
+            <p class="text-muted mb-3">
+                Verifique todos os dados antes de confirmar o registro da doação. Após salvar, a doação será marcada como concluída.
+            </p>
+
+            <div class="btn-container">
+                <a href="/colaborador/doacoes" class="btn btn-outline-secondary">
+                    <i class="fas fa-times me-2"></i>Cancelar
+                </a>
+                <button type="submit" class="btn btn-primary">
+                    <i class="fas fa-save me-2"></i>Salvar Doação
+                </button>
+            </div>
+        </div>
+    </form>
+    {% endif %}
+</div>
 {% endblock %}

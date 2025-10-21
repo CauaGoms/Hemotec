@@ -110,6 +110,7 @@ from routes.colaborador.colaborador_doacao_detalhe import router as colaborador_
 from routes.colaborador.colaborador_doacao_triagem import router as colaborador_doacao_triagem_router
 from routes.colaborador.colaborador_doacao_anexar_resultado import router as colaborador_doacao_anexar_resultado_router
 from routes.colaborador.colaborador_disponibilidade_coleta import router as colaborador_disponibilidade_coleta_router
+from routes.colaborador.colaborador_meu_perfil import router as colaborador_meu_perfil_router
 
 # Importando os routers do administrador de unidade de coleta
 from routes.adm_unidade.administrador import router as administrador_router
@@ -240,6 +241,7 @@ app.include_router(colaborador_doacao_detalhe_router)
 app.include_router(colaborador_doacao_triagem_router)
 app.include_router(colaborador_doacao_anexar_resultado_router)
 app.include_router(colaborador_disponibilidade_coleta_router)
+app.include_router(colaborador_meu_perfil_router)
 
 #routers do adm_unidade
 app.include_router(administrador_router)
