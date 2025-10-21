@@ -190,10 +190,18 @@ async def criar_agendamento(request: CriarAgendamentoRequest):
         from data.repo import usuario_repo, doacao_repo
         sys.stderr.write(f"DEBUG - Dados recebidos: cod_usuario={request.cod_usuario}, cod_agenda={request.cod_agenda}, data={request.data}, horario={request.horario}\n")
         sys.stderr.flush()
-        # Verifica se já existe agendamento pendente para o usuário
+        
+        # Combina data e horário para criar datetime ANTES de validar conflitos
+        data_hora_str = f"{request.data} {request.horario}:00"
+        data_hora = datetime.strptime(data_hora_str, '%Y-%m-%d %H:%M:%S')
+        
+        # Verifica se já existe agendamento pendente para o usuário NA MESMA DATA E HORA
         agendamentos_pendentes = agendamento_repo.obter_por_usuario_status(request.cod_usuario, status=0)
         if agendamentos_pendentes:
-            raise HTTPException(status_code=400, detail="Você já possui um agendamento pendente. Aguarde ou cancele antes de criar outro.")
+            # Verifica se há conflito na mesma data/hora
+            for agendamento_existente in agendamentos_pendentes:
+                if agendamento_existente.data_hora == data_hora:
+                    raise HTTPException(status_code=400, detail="Você já possui um agendamento para este horário. Aguarde ou cancele antes de criar outro.")
         
         # Verifica se o usuário existe
         from data.repo import usuario_repo
@@ -214,10 +222,6 @@ async def criar_agendamento(request: CriarAgendamentoRequest):
         vagas_disponiveis = agenda.vagas - agenda.quantidade_doadores
         if vagas_disponiveis <= 0:
             raise HTTPException(status_code=400, detail="Não há mais vagas disponíveis para este horário")
-        
-        # Combina data e horário para criar datetime
-        data_hora_str = f"{request.data} {request.horario}:00"
-        data_hora = datetime.strptime(data_hora_str, '%Y-%m-%d %H:%M:%S')
         
         # --- Validação do intervalo mínimo entre doações ---
         # Buscar última doação do usuário
