@@ -20,11 +20,15 @@ def criar_tabela() -> bool:
 def inserir(agenda: Agenda) -> Optional[int]:
     with get_connection() as conn:
         cursor = conn.cursor()
+        # Converte date e time para string no formato adequado
+        data_str = agenda.data_agenda.strftime('%Y-%m-%d') if hasattr(agenda.data_agenda, 'strftime') else str(agenda.data_agenda)
+        hora_str = agenda.hora_agenda.strftime('%H:%M:%S') if hasattr(agenda.hora_agenda, 'strftime') else str(agenda.hora_agenda)
+        
         cursor.execute(INSERIR, (
             agenda.cod_unidade,
             agenda.cod_agendamento,
-            agenda.data_agenda,
-            agenda.hora_agenda,
+            data_str,
+            hora_str,
             agenda.vagas,
             agenda.quantidade_doadores
         ))
@@ -87,7 +91,9 @@ def obter_por_unidade(cod_unidade: int) -> list[Agenda]:
 def obter_por_data(data_agenda: date) -> list[Agenda]:
     with get_connection() as conn:
         cursor = conn.cursor()
-        cursor.execute(OBTER_POR_DATA, (data_agenda,))
+        # Converte date para string
+        data_str = data_agenda.strftime('%Y-%m-%d') if hasattr(data_agenda, 'strftime') else str(data_agenda)
+        cursor.execute(OBTER_POR_DATA, (data_str,))
         rows = cursor.fetchall()
         agendas = [
             Agenda(
@@ -105,7 +111,9 @@ def obter_por_data(data_agenda: date) -> list[Agenda]:
 def obter_por_unidade_e_data(cod_unidade: int, data_agenda: date) -> list[Agenda]:
     with get_connection() as conn:
         cursor = conn.cursor()
-        cursor.execute(OBTER_POR_UNIDADE_E_DATA, (cod_unidade, data_agenda))
+        # Converte date para string
+        data_str = data_agenda.strftime('%Y-%m-%d') if hasattr(data_agenda, 'strftime') else str(data_agenda)
+        cursor.execute(OBTER_POR_UNIDADE_E_DATA, (cod_unidade, data_str))
         rows = cursor.fetchall()
         agendas = [
             Agenda(
@@ -123,13 +131,17 @@ def obter_por_unidade_e_data(cod_unidade: int, data_agenda: date) -> list[Agenda
 def update(agenda: Agenda) -> bool:
     with get_connection() as conn:
         cursor = conn.cursor()
+        # Converte date e time para string no formato adequado
+        data_str = agenda.data_agenda.strftime('%Y-%m-%d') if hasattr(agenda.data_agenda, 'strftime') else str(agenda.data_agenda)
+        hora_str = agenda.hora_agenda.strftime('%H:%M:%S') if hasattr(agenda.hora_agenda, 'strftime') else str(agenda.hora_agenda)
+        
         cursor.execute(
             UPDATE,
             (
                 agenda.cod_unidade,
                 agenda.cod_agendamento,
-                agenda.data_agenda,
-                agenda.hora_agenda,
+                data_str,
+                hora_str,
                 agenda.vagas,
                 agenda.quantidade_doadores,
                 agenda.cod_agenda

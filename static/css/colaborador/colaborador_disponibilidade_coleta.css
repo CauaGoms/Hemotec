@@ -1,0 +1,566 @@
+:root {
+    --hemotec-red: #e02020;
+    --hemotec-dark-red: #c01010;
+    --hemotec-light-red: #ff4040;
+    --hemotec-bg-light: #f8f9fa;
+    --hemotec-text-dark: #333333;
+    --hemotec-accent: #0066cc;
+    --hemotec-success: #28a745;
+    --hemotec-warning: #ffc107;
+    --shadow-light: 0 2px 10px rgba(0, 0, 0, 0.08);
+    --shadow-medium: 0 4px 20px rgba(0, 0, 0, 0.12);
+    --shadow-heavy: 0 8px 30px rgba(0, 0, 0, 0.15);
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    min-height: 100vh;
+}
+
+/* Back Arrow */
+.back-arrow {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    z-index: 1000;
+    background: white;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: var(--shadow-medium);
+    transition: all 0.3s ease;
+    color: var(--hemotec-red);
+}
+
+.back-arrow:hover {
+    transform: translateX(-5px);
+    box-shadow: var(--shadow-heavy);
+    color: var(--hemotec-dark-red);
+}
+
+/* Hero Section */
+.hero-section {
+    background: linear-gradient(135deg, rgba(35, 40, 47, 0.8), rgba(80, 80, 90, 0.7)), url('https://images.unsplash.com/photo-1524178232363-1fb2b075b655?auto=format&fit=crop') no-repeat center center;
+    background-size: cover;
+    color: white;
+    padding: 6rem 0 5rem;
+    text-align: center;
+    border-radius: 0 0 50px 50px;
+    min-height: 350px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 3rem;
+}
+
+.hero-title {
+    font-size: 3rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    animation: slideDown 0.8s ease;
+}
+
+.hero-subtitle {
+    font-size: 1.2rem;
+    opacity: 0.95;
+    animation: slideUp 0.8s ease;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Progress Indicator */
+.progress-indicator {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.progress-step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+}
+
+.step-circle {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: white;
+    border: 3px solid #e0e0e0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    color: #999;
+    transition: all 0.3s ease;
+    box-shadow: var(--shadow-light);
+}
+
+.progress-step.active .step-circle {
+    background: var(--hemotec-red);
+    border-color: var(--hemotec-red);
+    color: white;
+    transform: scale(1.1);
+    box-shadow: var(--shadow-medium);
+}
+
+.progress-step.completed .step-circle {
+    background: var(--hemotec-success);
+    border-color: var(--hemotec-success);
+    color: white;
+}
+
+.step-label {
+    margin-top: 0.5rem;
+    font-size: 0.85rem;
+    color: #666;
+    font-weight: 500;
+}
+
+.progress-step.active .step-label {
+    color: var(--hemotec-red);
+    font-weight: 600;
+}
+
+.progress-line {
+    width: 60px;
+    height: 3px;
+    background: #e0e0e0;
+    transition: all 0.3s ease;
+}
+
+.progress-step.completed+.progress-line {
+    background: var(--hemotec-success);
+}
+
+/* Cards */
+.selection-card,
+.main-content-card {
+    background: white;
+    border-radius: 20px;
+    padding: 2rem;
+    box-shadow: var(--shadow-medium);
+    transition: all 0.3s ease;
+}
+
+.selection-card {
+    height: fit-content;
+    position: sticky;
+    top: 20px;
+}
+
+.section-title {
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: var(--hemotec-text-dark);
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+}
+
+/* Location Cards */
+.location-list {
+    max-height: 500px;
+    overflow-y: auto;
+    padding-right: 0.5rem;
+}
+
+.location-card {
+    background: white;
+    border: 2px solid #e0e0e0;
+    border-radius: 15px;
+    padding: 1.5rem;
+    margin-bottom: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.location-card:hover {
+    border-color: var(--hemotec-red);
+    box-shadow: var(--shadow-medium);
+    transform: translateY(-2px);
+}
+
+.location-card.selected {
+    border-color: var(--hemotec-red);
+    background: #fff5f5;
+    box-shadow: var(--shadow-medium);
+}
+
+.location-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.location-header h5 {
+    color: var(--hemotec-text-dark);
+    font-weight: 600;
+    margin: 0;
+}
+
+.location-details {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.detail-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: #666;
+    font-size: 0.9rem;
+}
+
+.detail-item i {
+    color: var(--hemotec-red);
+    width: 20px;
+}
+
+/* Info Card */
+.info-card {
+    background: #fff8f0;
+    border-left: 4px solid var(--hemotec-warning);
+    border-radius: 10px;
+    padding: 1.5rem;
+}
+
+.info-card h6 {
+    font-weight: 600;
+    margin-bottom: 1rem;
+    color: var(--hemotec-text-dark);
+}
+
+.info-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.info-list li {
+    padding: 0.5rem 0;
+    color: #666;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.info-list i {
+    color: var(--hemotec-success);
+}
+
+/* Empty State */
+.empty-state {
+    text-align: center;
+    padding: 4rem 2rem;
+    color: #999;
+}
+
+.empty-state i {
+    font-size: 4rem;
+    margin-bottom: 1rem;
+    opacity: 0.5;
+}
+
+.empty-state h4 {
+    margin-bottom: 0.5rem;
+    color: #666;
+}
+
+/* Calendar Section */
+.calendar-section {
+    margin-bottom: 2rem;
+}
+
+.calendar-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.calendar-month {
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin: 0;
+    color: var(--hemotec-text-dark);
+}
+
+.calendar-container {
+    background: white;
+    border-radius: 15px;
+    padding: 1rem;
+    border: 1px solid #e0e0e0;
+}
+
+.calendar-header {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.calendar-day-name {
+    text-align: center;
+    font-weight: 600;
+    color: #666;
+    padding: 0.5rem;
+    font-size: 0.9rem;
+}
+
+.calendar-body {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 0.5rem;
+}
+
+.calendar-day {
+    aspect-ratio: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-weight: 500;
+    position: relative;
+}
+
+.calendar-day:not(.disabled):hover {
+    background: #fff5f5;
+    transform: scale(1.05);
+}
+
+.calendar-day.disabled {
+    color: #ccc;
+    cursor: not-allowed;
+}
+
+.calendar-day.selected {
+    background: var(--hemotec-red);
+    color: white;
+    font-weight: 600;
+    box-shadow: var(--shadow-light);
+}
+
+.calendar-day.today {
+    border: 2px solid var(--hemotec-accent);
+}
+
+/* Time Slots */
+.time-section {
+    margin-bottom: 2rem;
+}
+
+.time-slots-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 1rem;
+}
+
+.time-slot {
+    background: white;
+    border: 2px solid #e0e0e0;
+    border-radius: 10px;
+    padding: 1rem;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.time-slot:hover {
+    border-color: var(--hemotec-red);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-light);
+}
+
+.time-slot.selected {
+    background: var(--hemotec-red);
+    border-color: var(--hemotec-red);
+    color: white;
+}
+
+.time-slot .time {
+    font-size: 1.1rem;
+    font-weight: 600;
+    display: block;
+    margin-bottom: 0.3rem;
+}
+
+.time-slot .vagas {
+    font-size: 0.85rem;
+    opacity: 0.8;
+}
+
+.empty-message {
+    text-align: center;
+    color: #999;
+    padding: 2rem;
+    grid-column: 1 / -1;
+}
+
+/* Summary Section */
+.summary-section {
+    background: #f8f9fa;
+    border-radius: 15px;
+    padding: 1.5rem;
+}
+
+.summary-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.summary-item i {
+    font-size: 2rem;
+}
+
+.summary-item div {
+    display: flex;
+    flex-direction: column;
+}
+
+.summary-item strong {
+    font-size: 1.5rem;
+    color: var(--hemotec-text-dark);
+}
+
+.summary-item span {
+    font-size: 0.9rem;
+    color: #666;
+}
+
+/* Confirmation Button */
+.confirmation-section {
+    text-align: center;
+    padding: 2rem 0;
+}
+
+.btn-confirm {
+    background: linear-gradient(135deg, var(--hemotec-red), var(--hemotec-dark-red));
+    border: none;
+    color: white;
+    padding: 1rem 3rem;
+    border-radius: 50px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    box-shadow: var(--shadow-medium);
+    transition: all 0.3s ease;
+}
+
+.btn-confirm:hover:not(:disabled) {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-heavy);
+    background: linear-gradient(135deg, var(--hemotec-dark-red), var(--hemotec-red));
+}
+
+.btn-confirm:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* Success Modal */
+.success-icon i {
+    font-size: 5rem;
+}
+
+/* Animations */
+.fade-in {
+    animation: fadeIn 0.5s ease;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Responsive */
+@media (max-width: 991px) {
+    .selection-card {
+        position: static;
+        margin-bottom: 2rem;
+    }
+
+    .hero-title {
+        font-size: 2rem;
+    }
+
+    .time-slots-container {
+        grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    }
+}
+
+@media (max-width: 576px) {
+    .hero-section {
+        padding: 4rem 0 3rem;
+    }
+
+    .progress-indicator {
+        gap: 0.5rem;
+    }
+
+    .step-circle {
+        width: 40px;
+        height: 40px;
+        font-size: 1rem;
+    }
+
+    .progress-line {
+        width: 30px;
+    }
+
+    .step-label {
+        font-size: 0.75rem;
+    }
+
+    .calendar-day-name {
+        font-size: 0.75rem;
+        padding: 0.25rem;
+    }
+
+    .time-slots-container {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}

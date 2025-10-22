@@ -7,6 +7,7 @@ from typing import Optional
 class Colaborador:
     cod_colaborador: int
     cod_usuario: int
+    cod_unidade: int
     nome: str
     email: str
     senha: str

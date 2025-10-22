@@ -1,20 +1,23 @@
 CRIAR_TABELA = """
 CREATE TABLE IF NOT EXISTS colaborador (
 cod_colaborador INTEGER PRIMARY KEY AUTOINCREMENT,
+cod_unidade INTEGER NOT NULL,
 funcao TEXT NOT NULL,
-FOREIGN KEY (cod_colaborador) REFERENCES usuario(cod_usuario)
+FOREIGN KEY (cod_colaborador) REFERENCES usuario(cod_usuario),
+FOREIGN KEY (cod_unidade) REFERENCES unidade_coleta(cod_unidade)
 )
 """
 
 INSERIR = """
-INSERT INTO colaborador (cod_colaborador, funcao) 
-VALUES (?, ?)
+INSERT INTO colaborador (cod_colaborador, cod_unidade, funcao) 
+VALUES (?, ?, ?)
 """
 
 OBTER_TODOS = """
 SELECT 
     c.cod_colaborador, 
     c.funcao,
+    c.cod_unidade,
     u.cod_usuario,
     u.nome,
     u.email,
@@ -34,7 +37,7 @@ JOIN usuario u ON c.cod_colaborador = u.cod_usuario
 
 UPDATE = """
 UPDATE colaborador
-SET funcao = ?
+SET funcao = ?, cod_unidade = ?
 WHERE cod_colaborador = ?;
 """
 
@@ -47,6 +50,7 @@ OBTER_POR_ID = """
 SELECT 
     c.cod_colaborador, 
     c.funcao,
+    c.cod_unidade,
     u.cod_usuario,
     u.nome,
     u.email,

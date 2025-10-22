@@ -2,7 +2,7 @@ CRIAR_TABELA = """
 CREATE TABLE IF NOT EXISTS agenda (
 cod_agenda INTEGER PRIMARY KEY AUTOINCREMENT,
 cod_unidade INTEGER NOT NULL,
-cod_agendamento INTEGER NOT NULL,
+cod_agendamento INTEGER,
 data_agenda DATE NOT NULL,
 hora_agenda TIME NOT NULL,
 vagas INTEGER NOT NULL,
@@ -21,7 +21,7 @@ OBTER_TODOS = """
 SELECT a.cod_agenda, a.cod_unidade, a.cod_agendamento, a.data_agenda, a.hora_agenda, a.vagas, a.quantidade_doadores
 FROM agenda a
 INNER JOIN unidade_coleta u ON a.cod_unidade = u.cod_unidade
-INNER JOIN agendamento ag ON a.cod_agendamento = ag.cod_agendamento
+LEFT JOIN agendamento ag ON a.cod_agendamento = ag.cod_agendamento
 """ 
 
 UPDATE = """
@@ -39,7 +39,7 @@ OBTER_POR_ID = """
 SELECT a.cod_agenda, a.cod_unidade, a.cod_agendamento, a.data_agenda, a.hora_agenda, a.vagas, a.quantidade_doadores
 FROM agenda a
 INNER JOIN unidade_coleta u ON a.cod_unidade = u.cod_unidade
-INNER JOIN agendamento ag ON a.cod_agendamento = ag.cod_agendamento
+LEFT JOIN agendamento ag ON a.cod_agendamento = ag.cod_agendamento
 WHERE a.cod_agenda = ?;
 """
 
@@ -54,7 +54,7 @@ OBTER_POR_DATA = """
 SELECT a.cod_agenda, a.cod_unidade, a.cod_agendamento, a.data_agenda, a.hora_agenda, a.vagas, a.quantidade_doadores
 FROM agenda a
 INNER JOIN unidade_coleta u ON a.cod_unidade = u.cod_unidade
-INNER JOIN agendamento ag ON a.cod_agendamento = ag.cod_agendamento
+LEFT JOIN agendamento ag ON a.cod_agendamento = ag.cod_agendamento
 WHERE a.data_agenda = ?
 ORDER BY a.hora_agenda;
 """

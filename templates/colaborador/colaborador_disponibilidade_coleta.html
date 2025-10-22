@@ -1,12 +1,325 @@
 {% extends "colaborador/colaborador__base.html" %}
 {% block custom_css %}
-<!-- <link href="/static/css" rel="stylesheet"> -->
+<link href="/static/css/colaborador/colaborador_disponibilidade_coleta.css?v=1" rel="stylesheet">
 {% endblock %}
 
 {% block conteudo %}
-<h1>colaborador_disponibilidade_coleta</h1>
+<a href="/colaborador" class="back-arrow">
+    <i class="fas fa-arrow-left"></i>
+</a>
+<!-- Hero Section -->
+<section class="hero-section">
+    <div class="container">
+        <div class="hero-header">
+            <div class="hero-content">
+                <h1 class="hero-title">
+                    Disponibilizar Horários de Coleta
+                </h1>
+                <p class="hero-subtitle">Selecione os dias e horários em que você estará disponível para atender doadores no próximo mês</p>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Main Content -->
+<div class="container">
+    <div class="booking-wizard fade-in">
+        <!-- Progress Indicator Container -->
+        <div class="progress-container mb-5" style="display: flex; align-items: center; justify-content: center; gap: 2rem; margin-top: 3rem;">
+            <div class="progress-indicator" style="margin: 0 auto;">
+                <div class="progress-step active" data-step="1">
+                    <div class="step-circle">
+                        <i class="fas fa-map-marker-alt"></i>
+                    </div>
+                    <span class="step-label">Unidade</span>
+                </div>
+                <div class="progress-line"></div>
+                <div class="progress-step" data-step="2">
+                    <div class="step-circle">
+                        <i class="fas fa-calendar-alt"></i>
+                    </div>
+                    <span class="step-label">Datas</span>
+                </div>
+                <div class="progress-line"></div>
+                <div class="progress-step" data-step="3">
+                    <div class="step-circle">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <span class="step-label">Horários</span>
+                </div>
+                <div class="progress-line"></div>
+                <div class="progress-step" data-step="4">
+                    <div class="step-circle">
+                        <i class="fas fa-check"></i>
+                    </div>
+                    <span class="step-label">Confirmar</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <!-- Sidebar com Unidades -->
+        <div class="col-lg-4">
+            <div class="selection-card">
+                <h3 class="section-title">
+                    <i class="fas fa-hospital me-2"></i>
+                    Selecione a Unidade
+                </h3>
+                <div class="location-list" id="location-list">
+                    {% if unidades %}
+                        {% for unidade in unidades %}
+                    <div
+                        class="location-card"
+                        onclick="selectLocation({{ unidade.cod_unidade }}, this)"
+                        data-cod="{{ unidade.cod_unidade }}"
+                        data-nome="{{ unidade.nome }}"
+                    >
+                        <div class="location-header">
+                            <h5>{{ unidade.nome }}</h5>
+                        </div>
+                        <div class="location-details">
+                            <div class="detail-item">
+                                <i class="fas fa-map-marker-alt"></i>
+                                {{ unidade.rua_unidade }} - {{ unidade.bairro_unidade }}
+                            </div>
+                            <div class="detail-item">
+                                <i class="far fa-clock"></i>
+                                Seg-Sex: 7h-18h
+                            </div>
+                            {% if unidade.telefone %}
+                            <div class="detail-item">
+                                <i class="fas fa-phone"></i>
+                                {{ unidade.telefone }}
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                    {% endfor %}
+                    {% else %}
+                    <p class="text-muted text-center py-4">Nenhuma unidade de coleta disponível.</p>
+                    {% endif %}
+                </div>
+                <div class="info-card mt-4">
+                    <h6>
+                        <i class="fas fa-info-circle me-2"></i>
+                        Informações
+                    </h6>
+                    <ul class="info-list">
+                        <li>
+                            <i class="fas fa-check-circle"></i>
+                            Selecione múltiplos dias e horários
+                        </li>
+                        <li>
+                            <i class="fas fa-check-circle"></i>
+                            Configure vagas por horário
+                        </li>
+                        <li>
+                            <i class="fas fa-check-circle"></i>
+                            Horários salvos na agenda
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!-- Main Content Area -->
+        <div class="col-lg-8">
+            <div class="main-content-card">
+                <div id="emptyState" class="empty-state">
+                    <i class="fas fa-hospital"></i>
+                    <h4>Selecione uma Unidade</h4>
+                    <p>Escolha uma unidade de coleta para configurar os horários disponíveis</p>
+                </div>
+                <div id="selectedLocation" style="display: none;">
+                    <!-- Calendar Section -->
+                    <div class="calendar-section mb-4">
+                        <h3 class="section-title">
+                            <i class="far fa-calendar-alt me-2"></i>
+                            Selecione as Datas
+                            <span class="badge bg-danger ms-2" id="selectedDatesCount">0 selecionadas</span>
+                        </h3>
+                        <div class="calendar-controls">
+                            <button class="btn btn-sm btn-outline-danger" onclick="changeMonth(-1)">
+                                <i class="fas fa-chevron-left"></i>
+                            </button>
+                            <h5 id="currentMonth" class="calendar-month">Outubro 2025</h5>
+                            <button class="btn btn-sm btn-outline-danger" onclick="changeMonth(1)">
+                                <i class="fas fa-chevron-right"></i>
+                            </button>
+                        </div>
+                        <div class="calendar-container">
+                            <div class="calendar-header">
+                                <div class="calendar-day-name">Dom</div>
+                                <div class="calendar-day-name">Seg</div>
+                                <div class="calendar-day-name">Ter</div>
+                                <div class="calendar-day-name">Qua</div>
+                                <div class="calendar-day-name">Qui</div>
+                                <div class="calendar-day-name">Sex</div>
+                                <div class="calendar-day-name">Sáb</div>
+                            </div>
+                            <div id="calendarDays" class="calendar-body">
+                                <!-- Dias serão preenchidos via JavaScript --></div>
+                        </div>
+                        <div class="alert alert-info mt-3">
+                            <i class="fas fa-info-circle me-2"></i>
+                            <small>Clique nos dias para selecioná-los. Você pode selecionar múltiplos dias.</small>
+                        </div>
+                    </div>
+                    <!-- Time Section -->
+                    <div class="time-section mb-4">
+                        <h3 class="section-title">
+                            <i class="far fa-clock me-2"></i>
+                            Configure os Horários
+                            <span class="badge bg-danger ms-2" id="selectedTimesCount">0 selecionados</span>
+                        </h3>
+                        <div class="row mb-3">
+                            <div class="col-md-4">
+                                <label class="form-label">Horário Inicial</label>
+                                <input
+                                    type="time"
+                                    class="form-control"
+                                    id="horaInicio"
+                                    value="08:00"
+                                >
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label">Horário Final</label>
+                                <input
+                                    type="time"
+                                    class="form-control"
+                                    id="horaFim"
+                                    value="17:00"
+                                >
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label">Intervalo (fixo)</label>
+                                <input
+                                    type="text"
+                                    class="form-control"
+                                    value="30 minutos"
+                                    readonly
+                                >
+                                <input type="hidden" id="intervalo" value="30">
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-12">
+                                <div class="d-flex gap-2 flex-wrap">
+                                    <button type="button" class="btn btn-outline-danger btn-sm" onclick="selectWorkingHours()">
+                                        <i class="fas fa-business-time me-1"></i>
+                                        Horário Comercial (8h-17h)
+                                    </button>
+                                    <button type="button" class="btn btn-outline-danger btn-sm" onclick="selectExtendedHours()">
+                                        <i class="fas fa-clock me-1"></i>
+                                        Horário Estendido (7h-19h)
+                                    </button>
+                                    <button type="button" class="btn btn-outline-danger btn-sm" onclick="clearTimeSelection()">
+                                        <i class="fas fa-times me-1"></i>
+                                        Limpar Horários
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label class="form-label">Vagas por Horário</label>
+                                <input
+                                    type="number"
+                                    class="form-control"
+                                    id="vagasHorario"
+                                    value="5"
+                                    min="1"
+                                    max="20"
+                                >
+                            </div>
+                            <div class="col-md-6 d-flex align-items-end">
+                                <button class="btn btn-danger w-100" onclick="gerarHorarios()">
+                                    <i class="fas fa-clock me-2"></i>
+                                    Gerar Horários
+                                </button>
+                            </div>
+                        </div>
+                        <div id="timeSlots" class="time-slots-container">
+                            <p class="empty-message">Configure e gere os horários acima</p>
+                        </div>
+                    </div>
+                    <!-- Summary Section -->
+                    <div class="summary-section mb-4" id="summarySection" style="display: none;">
+                        <h3 class="section-title">
+                            <i class="fas fa-list-check me-2"></i>
+                            Resumo da Disponibilidade
+                        </h3>
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="summary-item">
+                                            <i class="fas fa-calendar text-danger"></i>
+                                            <div>
+                                                <strong id="summaryDates">0</strong>
+                                                <span>Datas</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="summary-item">
+                                            <i class="fas fa-clock text-danger"></i>
+                                            <div>
+                                                <strong id="summaryTimes">0</strong>
+                                                <span>Horários</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="summary-item">
+                                            <i class="fas fa-users text-danger"></i>
+                                            <div>
+                                                <strong id="summaryTotal">0</strong>
+                                                <span>Total de Vagas</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Confirmation Button -->
+                    <div class="confirmation-section">
+                        <button
+                            id="confirmBtn"
+                            class="btn btn-confirm"
+                            onclick="confirmarDisponibilidade()"
+                            disabled
+                        >
+                            <i class="fas fa-check-circle me-2"></i>
+                            Salvar Disponibilidades
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Success Modal -->
+<div class="modal fade" id="successModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-body text-center p-5">
+                <div class="success-icon mb-3">
+                    <i class="fas fa-check-circle text-success"></i>
+                </div>
+                <h4 class="mb-3">Disponibilidade Salva!</h4>
+                <p class="text-muted mb-4">Os horários foram disponibilizados na agenda com sucesso.</p>
+                <button type="button" class="btn btn-danger" onclick="window.location.href='/colaborador'">
+                    Voltar ao Painel
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}
 
 {% block custom_js %}
-<!-- <script src="/static/js"></script> -->
+<script>
+    window.cod_colaborador = {{ usuario.get('cod_usuario') if usuario else 'null' }};
+</script>
+<script src="/static/js/colaborador/colaborador_disponibilidade_coleta.js?v=1"></script>
 {% endblock %}

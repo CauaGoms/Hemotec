@@ -23,7 +23,8 @@ def inserir(colaborador: Colaborador) -> Optional[int]:
     with get_connection() as conn:
         cursor = conn.cursor()
         usuario = Usuario(0, 
-            colaborador.nome, 
+            colaborador.nome,
+            colaborador.cod_unidade,
             colaborador.email, 
             colaborador.senha,
             colaborador.cpf,
@@ -38,6 +39,7 @@ def inserir(colaborador: Colaborador) -> Optional[int]:
         cod_colaborador = usuario_repo.inserir(usuario, cursor)
         cursor.execute(INSERIR, (
             cod_colaborador,
+            colaborador.cod_unidade,
             colaborador.funcao))
         return cod_colaborador
     
@@ -50,14 +52,15 @@ def obter_todos() -> list[Colaborador]:
         colaborador = [
             Colaborador(
                 cod_colaborador=row["cod_colaborador"],
+                cod_unidade=row["cod_unidade"],
                 nome=row["nome"],
                 email=row["email"],
                 cod_usuario=row["cod_usuario"],
                 senha=row["senha"],
                 cpf=row["cpf"],
-                data_nascimento=datetime.strptime(row["data_nascimento"], "%Y-%m-%d"),
+                data_nascimento=datetime.strptime(row["data_nascimento"], "%Y-%m-%d") if row["data_nascimento"] else datetime.now().date(),
                 status=row["status"],
-                data_cadastro=datetime.strptime(row["data_cadastro"], "%Y-%m-%d"),
+                data_cadastro=datetime.strptime(row["data_cadastro"], "%Y-%m-%d").date() if row["data_cadastro"] else datetime.now().date(),
                 rua_usuario=row["rua_usuario"],
                 bairro_usuario=row["bairro_usuario"],
                 cidade_usuario=row["cidade_usuario"],
@@ -76,15 +79,16 @@ def obter_por_id(cod_colaborador: int) -> Optional[Colaborador]:
             return None
         colaborador = Colaborador(
             cod_colaborador=row["cod_colaborador"],
+            cod_unidade=row["cod_unidade"],
             funcao=row["funcao"],
             cod_usuario=row["cod_usuario"],
             nome=row["nome"],
             email=row["email"],
             senha=row["senha"],
             cpf=row["cpf"],
-            data_nascimento=datetime.strptime(row["data_nascimento"], "%Y-%m-%d"),
+            data_nascimento=datetime.strptime(row["data_nascimento"], "%Y-%m-%d") if row["data_nascimento"] else datetime.now().date(),
             status=row["status"],
-            data_cadastro=datetime.strptime(row["data_cadastro"], "%Y-%m-%d"),
+            data_cadastro=datetime.strptime(row["data_cadastro"], "%Y-%m-%d").date() if row["data_cadastro"] else datetime.now().date(),
             rua_usuario=row["rua_usuario"],
             bairro_usuario=row["bairro_usuario"],
             cidade_usuario=row["cidade_usuario"],
@@ -97,6 +101,7 @@ def update(colaborador: Colaborador) -> bool:
         cursor = conn.cursor()
         usuario = Usuario(
             colaborador.cod_usuario,
+            colaborador.cod_unidade,
             colaborador.nome, 
             colaborador.email, 
             colaborador.senha,
@@ -112,6 +117,7 @@ def update(colaborador: Colaborador) -> bool:
         usuario_repo.update(usuario)
         cursor.execute(UPDATE, (
             colaborador.funcao,
+            colaborador.cod_unidade,
             colaborador.cod_colaborador))
         return (cursor.rowcount > 0)
 

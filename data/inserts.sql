@@ -161,9 +161,9 @@ INSERT INTO notificacao (cod_adm, tipo, mensagem, status, data_envio, titulo) VA
 (7, 'Campanha', 'Participe da nova campanha de doação de sangue "Doe Sangue, Salve Vidas".', 1, '2025-10-01', 'Doe Sangue'),
 (8, 'Agradecimento', 'Obrigado por sua doação de sangue! Sua contribuição é muito importante.', 1, '2025-10-01', 'Sua Doação é Importante');
 
-INSERT INTO colaborador (cod_colaborador, funcao) VALUES
-(5, 'Enfermeiro'),
-(6, 'Técnico de Laboratório');
+INSERT INTO colaborador (cod_colaborador, funcao, cod_unidade) VALUES
+(5, 'Enfermeiro', 1),
+(6, 'Técnico de Laboratório', 2);
 
 INSERT INTO doador (cod_doador, tipo_sanguineo, fator_rh, elegivel, altura, peso, profissao, contato_emergencia, telefone_emergencia) VALUES
 (1, 'O', 'negativo', 'elegivel', 1.75, 70.0, 'Estudante', 'Maria Silva', '11988887777'),
@@ -192,6 +192,7 @@ INSERT INTO prontuario (cod_doacao, data_criacao, data_atualizacao, jejum, diabe
 (2, '2023-10-06', '2023-10-06', 1, 0, 1, 0, 0, 1, 1, 'Hepatite A', 1, 1, 'Paracetamol', 0, 1, 0, 0, 1, 0, 0);
 
 -- Agendas de coleta (horários disponíveis para doação)
+-- Agendas com agendamentos já realizados (vinculados aos agendamentos acima)
 INSERT INTO agenda (cod_unidade, cod_agendamento, data_agenda, hora_agenda, vagas, quantidade_doadores) VALUES
 (1, 1, '2025-10-20', '08:00:00', 20, 5),
 (1, 2, '2025-10-20', '14:00:00', 20, 8),
@@ -200,9 +201,18 @@ INSERT INTO agenda (cod_unidade, cod_agendamento, data_agenda, hora_agenda, vaga
 (2, 1, '2025-10-20', '09:00:00', 15, 3),
 (2, 2, '2025-10-20', '15:00:00', 15, 6),
 (2, 3, '2025-10-21', '09:00:00', 18, 7),
-(2, 4, '2025-10-21', '15:00:00', 18, 9),
-(3, 1, '2025-10-22', '10:00:00', 30, 15),
-(3, 2, '2025-10-22', '16:00:00', 30, 18),
-(3, 3, '2025-10-23', '10:00:00', 35, 20),
-(3, 4, '2025-10-23', '16:00:00', 35, 22);
+(2, 4, '2025-10-21', '15:00:00', 18, 9);
+
+-- Horários disponíveis sem agendamento (criados pelo colaborador, cod_agendamento = NULL)
+INSERT INTO agenda (cod_unidade, cod_agendamento, data_agenda, hora_agenda, vagas, quantidade_doadores) VALUES
+(1, NULL, '2025-11-05', '08:00:00', 20, 0),
+(1, NULL, '2025-11-05', '08:30:00', 20, 0),
+(1, NULL, '2025-11-05', '09:00:00', 20, 0),
+(1, NULL, '2025-11-05', '14:00:00', 20, 0),
+(2, NULL, '2025-11-06', '09:00:00', 15, 0),
+(2, NULL, '2025-11-06', '09:30:00', 15, 0),
+(2, NULL, '2025-11-06', '15:00:00', 15, 0),
+(3, NULL, '2025-11-07', '10:00:00', 30, 0),
+(3, NULL, '2025-11-07', '10:30:00', 30, 0),
+(3, NULL, '2025-11-07', '16:00:00', 30, 0);
 
