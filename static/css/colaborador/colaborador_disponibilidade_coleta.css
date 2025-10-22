@@ -369,6 +369,16 @@ body {
     cursor: not-allowed;
 }
 
+.calendar-day.weekend:not(.disabled) {
+    background: #f8f9fa;
+    color: #6c757d;
+    font-style: italic;
+}
+
+.calendar-day.weekend:not(.disabled):hover {
+    background: #e9ecef;
+}
+
 .calendar-day.selected {
     background: var(--hemotec-red);
     color: white;
@@ -376,8 +386,131 @@ body {
     box-shadow: var(--shadow-light);
 }
 
+.calendar-day.selected.weekend {
+    background: #dc3545;
+    opacity: 0.85;
+}
+
 .calendar-day.today {
     border: 2px solid var(--hemotec-accent);
+}
+
+.calendar-day.has-schedule {
+    position: relative;
+    border: 2px solid #28a745;
+}
+
+.schedule-badge {
+    position: absolute;
+    top: 2px;
+    right: 2px;
+    background: #28a745;
+    color: white;
+    font-size: 0.6rem;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+.calendar-day.has-schedule.selected {
+    border-color: #28a745;
+}
+
+/* Existing Schedules Section */
+.existing-schedules-section {
+    background: white;
+    padding: 2rem;
+    border-radius: 15px;
+    box-shadow: var(--shadow-light);
+}
+
+.existing-schedules-list {
+    max-height: 500px;
+    overflow-y: auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.25rem;
+    padding: 0.5rem;
+}
+
+.existing-schedules-list::-webkit-scrollbar {
+    width: 8px;
+}
+
+.existing-schedules-list::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+}
+
+.existing-schedules-list::-webkit-scrollbar-thumb {
+    background: var(--hemotec-red);
+    border-radius: 10px;
+}
+
+.existing-schedules-list::-webkit-scrollbar-thumb:hover {
+    background: #a32932;
+}
+
+/* Card por dia */
+.schedule-day-card {
+    background: white;
+    border: 2px solid #e0e0e0;
+    border-radius: 12px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.schedule-day-card:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    transform: translateY(-2px);
+    border-color: var(--hemotec-red);
+}
+
+.schedule-day-header {
+    background: linear-gradient(135deg, var(--hemotec-red) 0%, #a32932 100%);
+    color: white;
+    padding: 1rem;
+    font-weight: 600;
+    font-size: 0.95rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.schedule-times-list {
+    padding: 0.75rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.schedule-time-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.625rem 0.75rem;
+    background: #f8f9fa;
+    border-radius: 6px;
+    transition: background 0.2s ease;
+}
+
+.schedule-time-item:hover {
+    background: #e9ecef;
+}
+
+.time-info {
+    display: flex;
+    align-items: center;
+    color: #495057;
+    font-size: 0.9rem;
+}
+
+.time-value {
+    font-weight: 500;
 }
 
 /* Time Slots */

@@ -191,6 +191,30 @@ def tem_vagas_disponiveis(cod_agenda: int) -> bool:
     """
     vagas = obter_vagas_disponiveis(cod_agenda)
     return vagas is not None and vagas > 0
+
+def obter_por_unidade_data_hora(cod_unidade: int, data_agenda: date, hora_agenda: time) -> Optional[Agenda]:
+    """
+    Obtém uma agenda específica por unidade, data e hora
+    """
+    with get_connection() as conn:
+        cursor = conn.cursor()
+        # Converte date e time para string
+        data_str = data_agenda.strftime('%Y-%m-%d') if hasattr(data_agenda, 'strftime') else str(data_agenda)
+        hora_str = hora_agenda.strftime('%H:%M:%S') if hasattr(hora_agenda, 'strftime') else str(hora_agenda)
+        
+        cursor.execute(OBTER_POR_UNIDADE_DATA_HORA, (cod_unidade, data_str, hora_str))
+        row = cursor.fetchone()
+        if row:
+            return Agenda(
+                cod_agenda=row["cod_agenda"],
+                cod_unidade=row["cod_unidade"],
+                cod_agendamento=row["cod_agendamento"],
+                data_agenda=datetime.strptime(row["data_agenda"], '%Y-%m-%d').date() if isinstance(row["data_agenda"], str) else row["data_agenda"],
+                hora_agenda=datetime.strptime(row["hora_agenda"], '%H:%M:%S').time() if isinstance(row["hora_agenda"], str) else row["hora_agenda"],
+                vagas=row["vagas"],
+                quantidade_doadores=row["quantidade_doadores"]
+            )
+        return None
     
 def inserir_dados_iniciais(conexao: Connection) -> None:
     lista = obter_todos()

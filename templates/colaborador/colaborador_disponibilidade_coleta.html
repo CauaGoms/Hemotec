@@ -145,6 +145,12 @@
                                 <i class="fas fa-chevron-right"></i>
                             </button>
                         </div>
+                        <div class="text-center mb-3">
+                            <button class="btn btn-sm btn-outline-primary" onclick="toggleMonthSelection()">
+                                <i class="fas fa-check-double me-1"></i>
+                                <span id="toggleMonthText">Selecionar Mês Inteiro</span>
+                            </button>
+                        </div>
                         <div class="calendar-container">
                             <div class="calendar-header">
                                 <div class="calendar-day-name">Dom</div>
@@ -160,8 +166,33 @@
                         </div>
                         <div class="alert alert-info mt-3">
                             <i class="fas fa-info-circle me-2"></i>
-                            <small>Clique nos dias para selecioná-los. Você pode selecionar múltiplos dias.</small>
+                            <div class="d-flex flex-column gap-1">
+                                <small>
+                                    <strong>Legenda:</strong>
+                                </small>
+                                <small>• Clique nos dias para selecioná-los</small>
+                                <small>• Dias com borda verde
+                                    <span class="text-success">(
+                                        <i class="fas fa-clock"></i>)
+                                    </span> já possuem horários cadastrados
+                                </small>
+                                <small>• Dias em cinza são finais de semana/feriados (podem ser selecionados se necessário)</small>
+                            </div>
                         </div>
+                    </div>
+                    <!-- Existing Schedules Section -->
+                    <div id="existingSchedulesSection" class="existing-schedules-section mb-4" style="display: none;">
+                        <h3 class="section-title">
+                            <i class="fas fa-list-check me-2"></i>
+                            Horários Já Cadastrados
+                            <span class="badge bg-success ms-2" id="existingSchedulesCount">0</span>
+                        </h3>
+                        <div class="alert alert-success">
+                            <i class="fas fa-info-circle me-2"></i>
+                            <small>Estes são os horários que já foram disponibilizados anteriormente para esta unidade.</small>
+                        </div>
+                        <div id="existingSchedulesList" class="existing-schedules-list">
+                            <!-- Será preenchido via JavaScript --></div>
                     </div>
                     <!-- Time Section -->
                     <div class="time-section mb-4">
@@ -308,9 +339,16 @@
                 </div>
                 <h4 class="mb-3">Disponibilidade Salva!</h4>
                 <p class="text-muted mb-4">Os horários foram disponibilizados na agenda com sucesso.</p>
-                <button type="button" class="btn btn-danger" onclick="window.location.href='/colaborador'">
-                    Voltar ao Painel
-                </button>
+                <div class="d-flex gap-2 justify-content-center">
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+                        <i class="fas fa-plus me-2"></i>
+                        Adicionar Mais Horários
+                    </button>
+                    <button type="button" class="btn btn-danger" onclick="window.location.href='/colaborador'">
+                        <i class="fas fa-home me-2"></i>
+                        Voltar ao Painel
+                    </button>
+                </div>
             </div>
         </div>
     </div>

@@ -26,6 +26,46 @@ async def get_colaborador_disponibilidade_coleta(request: Request, usuario_logad
     )
     return response
 
+@router.get("/api/colaborador/disponibilidade-coleta/{cod_unidade}")
+@requer_autenticacao(["colaborador"])
+async def get_disponibilidade_coleta(cod_unidade: int, request: Request, usuario_logado: dict = None):
+    """
+    Busca os horários já cadastrados para uma unidade específica
+    """
+    try:
+        # Busca todas as agendas da unidade
+        agendas = agenda_repo.obter_por_unidade(cod_unidade)
+        
+        # Formata os dados para o frontend
+        horarios_cadastrados = []
+        for agenda in agendas:
+            horarios_cadastrados.append({
+                "cod_agenda": agenda.cod_agenda,
+                "data_agenda": agenda.data_agenda.strftime('%Y-%m-%d'),
+                "hora_agenda": agenda.hora_agenda.strftime('%H:%M'),
+                "vagas": agenda.vagas,
+                "quantidade_doadores": agenda.quantidade_doadores
+            })
+        
+        return JSONResponse(
+            content={
+                "success": True,
+                "horarios": horarios_cadastrados
+            },
+            status_code=200
+        )
+    except Exception as e:
+        import sys
+        sys.stderr.write(f"Erro ao buscar disponibilidade: {str(e)}\n")
+        sys.stderr.flush()
+        return JSONResponse(
+            content={
+                "success": False,
+                "message": f"Erro ao buscar horários: {str(e)}"
+            },
+            status_code=500
+        )
+
 @router.post("/api/colaborador/disponibilidade-coleta")
 @requer_autenticacao(["colaborador"])
 async def post_disponibilidade_coleta(request: Request, usuario_logado: dict = None):
@@ -47,16 +87,26 @@ async def post_disponibilidade_coleta(request: Request, usuario_logado: dict = N
         
         # Inserir cada agendamento na tabela agenda
         inserted_count = 0
+        skipped_count = 0
         for agendamento_data in agendamentos:
             try:
                 # Converte strings para objetos date e time
                 data_agenda = datetime.strptime(agendamento_data['data_agenda'], '%Y-%m-%d').date()
                 hora_agenda = datetime.strptime(agendamento_data['hora_agenda'], '%H:%M:%S').time()
+                cod_unidade = agendamento_data['cod_unidade']
+                
+                # Verifica se já existe uma agenda para essa unidade, data e hora
+                agenda_existente = agenda_repo.obter_por_unidade_data_hora(cod_unidade, data_agenda, hora_agenda)
+                
+                if agenda_existente:
+                    # Já existe, pula este horário
+                    skipped_count += 1
+                    continue
                 
                 # Cria objeto Agenda
                 agenda = Agenda(
                     cod_agenda=None,  # Será gerado automaticamente
-                    cod_unidade=agendamento_data['cod_unidade'],
+                    cod_unidade=cod_unidade,
                     cod_agendamento=None,  # Null pois ainda não há agendamento
                     data_agenda=data_agenda,
                     hora_agenda=hora_agenda,
@@ -76,21 +126,31 @@ async def post_disponibilidade_coleta(request: Request, usuario_logado: dict = N
                 continue
         
         if inserted_count > 0:
+            message = f"{inserted_count} horários disponibilizados com sucesso!"
+            if skipped_count > 0:
+                message += f" ({skipped_count} horários já existiam e foram ignorados)"
+            
             return JSONResponse(
                 content={
                     "success": True,
-                    "message": f"{inserted_count} horários disponibilizados com sucesso!",
-                    "inserted_count": inserted_count
+                    "message": message,
+                    "inserted_count": inserted_count,
+                    "skipped_count": skipped_count
                 },
                 status_code=200
             )
         else:
+            message = "Nenhum horário foi inserido"
+            if skipped_count > 0:
+                message = f"Todos os {skipped_count} horários já existiam no sistema"
+            
             return JSONResponse(
                 content={
                     "success": False,
-                    "message": "Nenhum horário foi inserido"
+                    "message": message,
+                    "skipped_count": skipped_count
                 },
-                status_code=500
+                status_code=200
             )
             
     except Exception as e:

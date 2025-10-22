@@ -83,3 +83,9 @@ SELECT (a.vagas - a.quantidade_doadores) as vagas_disponiveis
 FROM agenda a
 WHERE a.cod_agenda = ?;
 """
+
+OBTER_POR_UNIDADE_DATA_HORA = """
+SELECT a.cod_agenda, a.cod_unidade, a.cod_agendamento, a.data_agenda, a.hora_agenda, a.vagas, a.quantidade_doadores
+FROM agenda a
+WHERE a.cod_unidade = ? AND a.data_agenda = ? AND a.hora_agenda = ?;
+"""
