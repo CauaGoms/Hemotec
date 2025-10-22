@@ -1,10 +1,28 @@
-from dataclasses import dataclass, field
-from datetime import datetime
+from dataclasses import dataclass
+from datetime import date
 from typing import Optional
-from data.model.usuario_model import Usuario
 
 
 @dataclass
-class Colaborador(Usuario):
-    cod_colaborador: int = 0
+class Colaborador:
+    cod_colaborador: int
+    cod_usuario: int
+    nome: str
+    email: str
+    senha: str
+    cpf: str
+    data_nascimento: date
+    status: bool
+    data_cadastro: date
+    rua_usuario: str
+    bairro_usuario: str
+    cidade_usuario: int
+    cep_usuario: str
+    telefone: str
+    genero: str = ''
+    perfil: str = 'colaborador'
+    foto: Optional[str] = None
+    token_redefinicao: Optional[str] = None
+    data_token: Optional[str] = None
+    estado_usuario: Optional[str] = None
     funcao: str = ""

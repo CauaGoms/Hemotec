@@ -320,6 +320,24 @@
    ======================================== */
 .stats-section {
     margin-bottom: 50px;
+    margin-top: 40px;
+}
+
+.stats-section .section-header {
+    margin-bottom: 30px;
+}
+
+.stats-section .section-title {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--hemotec-text-dark);
+    margin-bottom: 8px;
+}
+
+.stats-section .section-subtitle {
+    color: #6c757d;
+    font-size: 0.95rem;
+    margin: 0;
 }
 
 .stat-card {
@@ -332,6 +350,8 @@
     display: flex;
     align-items: center;
     gap: 20px;
+    min-height: 130px;
+    height: 100%;
 }
 
 .stat-card.primary {
@@ -597,6 +617,7 @@
     .stat-card {
         flex-direction: column;
         text-align: center;
+        min-height: 120px;
     }
 
     .stat-icon {

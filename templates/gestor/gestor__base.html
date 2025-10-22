@@ -63,7 +63,7 @@
                                 aria-expanded="false"
                             >
                                 <i class="fas fa-user-circle"></i>
-                                João Silva
+                                {{ usuario.nome if usuario else 'Usuário' }}
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <li>

@@ -3,6 +3,9 @@
    ======================================== */
 
 :root {
+    --hemotec-cyan: #0891b2;
+    --hemotec-cyan-light: #06b6d4;
+    --hemotec-cyan-dark: #0e7490;
     --hemotec-red: #e02020;
     --hemotec-dark-red: #c01010;
     --hemotec-light-red: #ff4040;
@@ -72,7 +75,7 @@
    HERO SECTION
    ======================================== */
 .hero-section {
-    background: linear-gradient(135deg, #e02020 0%, #b81818 50%, #8b0000 100%);
+    background: linear-gradient(135deg, #0891b2 0%, #0e7490 50%, #155e75 100%);
     color: white;
     padding: 100px 0 70px;
     margin-bottom: 50px;
@@ -218,7 +221,7 @@
 }
 
 .section-title i {
-    color: var(--hemotec-red);
+    color: var(--hemotec-cyan);
 }
 
 .section-subtitle {
@@ -281,7 +284,7 @@
 }
 
 .action-icon.primary {
-    background: linear-gradient(135deg, #e02020 0%, #ff4040 100%);
+    background: linear-gradient(135deg, #0891b2 0%, #06b6d4 100%);
 }
 
 .action-icon.info {
@@ -534,7 +537,7 @@
     padding: 25px;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
     transition: all 0.3s ease;
-    border-left: 4px solid var(--hemotec-red);
+    border-left: 4px solid var(--hemotec-cyan);
 }
 
 .stat-card:hover {
