@@ -128,6 +128,7 @@ from routes.adm_unidade.administrador_campanha_excluir import router as administ
 from routes.adm_unidade.administrador_campanha_detalhes import router as administrador_campanha_detalhes_router
 from routes.adm_unidade.administrador_campanha_alterar import router as administrador_campanha_alterar_router
 from routes.adm_unidade.administrador_campanha_adicionar import router as administrador_campanha_adicionar_router
+from routes.adm_unidade.administrador_meu_perfil import router as administrador_meu_perfil_router
 
 # Importando os routers do gestor
 from routes.gestor.gestor import router as gestor_router
@@ -259,6 +260,7 @@ app.include_router(administrador_campanha_excluir_router)
 app.include_router(administrador_campanha_detalhes_router)
 app.include_router(administrador_campanha_alterar_router)
 app.include_router(administrador_campanha_adicionar_router)
+app.include_router(administrador_meu_perfil_router)
 
 #routers do gestor
 app.include_router(gestor_router)

@@ -1,13 +1,269 @@
 {% extends "adm_unidade/administrador__base.html" %}
 {% block custom_css %}
-<link href="/static/css/" rel="stylesheet">
+<link href="/static/css/adm_unidade/administrador_campanha_adicionar.css" rel="stylesheet">
 {% endblock %}
 
 {% block conteudo %}
-<h1>Administrador Campanha Adicionar</h1>
+<!-- Conteúdo Principal -->
+        <div class="main-content" style="padding-top: 120px;">
+            <div class="container">
+                <!-- Header da Página -->
+                <div class="page-header">
+                    <div class="d-flex align-items-center mb-4">
+                        <a href="/administrador/campanha" class="btn-back">
+                            <i class="fas fa-arrow-left"></i>
+                        </a>
+                        <div class="ms-3">
+                            <h1 class="page-title">
+                                <i class="fas fa-plus-circle text-danger"></i>
+                                Adicionar Nova Campanha
+                            </h1>
+                            <p class="page-subtitle">Crie uma nova campanha de doação de sangue</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Formulário de Campanha -->
+                <div class="campaign-form-container">
+                    <form id="campaignForm" class="campaign-form" enctype="multipart/form-data">
+                        <!-- Seção: Informações Básicas -->
+                        <div class="form-section">
+                            <div class="section-header">
+                                <h3 class="section-title">
+                                    <i class="fas fa-info-circle"></i>
+                                    Informações Básicas
+                                </h3>
+                                <p class="section-description">Defina as informações principais da campanha</p>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label for="titulo" class="form-label">
+                                            <i class="fas fa-heading"></i>
+                                            Título da Campanha *
+                                        </label>
+                                        <input 
+                                            type="text" 
+                                            class="form-control" 
+                                            id="titulo" 
+                                            name="titulo" 
+                                            placeholder="Ex: Campanha de Doação de Sangue - Dezembro 2024"
+                                            required
+                                            maxlength="100"
+                                        >
+                                        <div class="form-feedback">
+                                            <small class="text-muted">Máximo 100 caracteres</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label for="descricao" class="form-label">
+                                            <i class="fas fa-align-left"></i>
+                                            Descrição da Campanha *
+                                        </label>
+                                        <textarea 
+                                            class="form-control" 
+                                            id="descricao" 
+                                            name="descricao" 
+                                            rows="5"
+                                            placeholder="Descreva os objetivos, importância e detalhes da campanha..."
+                                            required
+                                            maxlength="1000"
+                                        ></textarea>
+                                        <div class="form-feedback">
+                                            <small class="text-muted">Máximo 1000 caracteres</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Seção: Período da Campanha -->
+                        <div class="form-section">
+                            <div class="section-header">
+                                <h3 class="section-title">
+                                    <i class="fas fa-calendar-alt"></i>
+                                    Período da Campanha
+                                </h3>
+                                <p class="section-description">Defina quando a campanha será realizada</p>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="data_inicio" class="form-label">
+                                            <i class="fas fa-calendar-day"></i>
+                                            Data de Início *
+                                        </label>
+                                        <input 
+                                            type="date" 
+                                            class="form-control" 
+                                            id="data_inicio" 
+                                            name="data_inicio" 
+                                            required
+                                        >
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="data_fim" class="form-label">
+                                            <i class="fas fa-calendar-check"></i>
+                                            Data de Término *
+                                        </label>
+                                        <input 
+                                            type="date" 
+                                            class="form-control" 
+                                            id="data_fim" 
+                                            name="data_fim" 
+                                            required
+                                        >
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Seção: Imagem da Campanha -->
+                        <div class="form-section">
+                            <div class="section-header">
+                                <h3 class="section-title">
+                                    <i class="fas fa-image"></i>
+                                    Imagem da Campanha
+                                </h3>
+                                <p class="section-description">Adicione uma imagem representativa para a campanha</p>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label for="foto" class="form-label">
+                                            <i class="fas fa-upload"></i>
+                                            Foto da Campanha
+                                        </label>
+                                        <div class="file-upload-area" id="fileUploadArea">
+                                            <input 
+                                                type="file" 
+                                                class="form-control file-input" 
+                                                id="foto" 
+                                                name="foto" 
+                                                accept="image/*"
+                                                hidden
+                                            >
+                                            <div class="upload-placeholder" id="uploadPlaceholder">
+                                                <i class="fas fa-cloud-upload-alt upload-icon"></i>
+                                                <p class="upload-text">Clique aqui ou arraste uma imagem</p>
+                                                <small class="upload-hint">Formatos aceitos: JPG, PNG, GIF (máx. 5MB)</small>
+                                            </div>
+                                            <div class="image-preview" id="imagePreview" style="display: none;">
+                                                <img id="previewImg" src="" alt="Preview da imagem">
+                                                <div class="preview-overlay">
+                                                    <button type="button" class="btn-remove-image" id="removeImage">
+                                                        <i class="fas fa-trash"></i>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Botões de Ação -->
+                        <div class="form-actions">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <a href="/administrador/campanha" class="btn btn-outline-secondary">
+                                    <i class="fas fa-times"></i>
+                                    Cancelar
+                                </a>
+                                <div class="action-buttons">
+                                    <button type="button" class="btn btn-outline-primary me-2" id="previewBtn">
+                                        <i class="fas fa-eye"></i>
+                                        Visualizar
+                                    </button>
+                                    <button type="submit" class="btn btn-primary" id="submitBtn">
+                                        <i class="fas fa-save"></i>
+                                        Salvar Campanha
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal de Preview -->
+        <div class="modal fade" id="previewModal" tabindex="-1" aria-labelledby="previewModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="previewModalLabel">
+                            <i class="fas fa-eye"></i>
+                            Visualização da Campanha
+                        </h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="campaign-preview">
+                            <div class="preview-header">
+                                <h2 id="previewTitulo">Título da Campanha</h2>
+                                <div id="previewImagem" class="preview-image-container">
+                                    <!-- Imagem será inserida aqui -->
+                                </div>
+                                <p id="previewDescricao">Descrição da campanha...</p>
+                                <div class="preview-dates">
+                                    <span class="preview-date">
+                                        <i class="fas fa-calendar-day"></i>
+                                        <span id="previewDataInicio">Data de início</span>
+                                    </span>
+                                    <span class="preview-date">
+                                        <i class="fas fa-calendar-check"></i>
+                                        <span id="previewDataFim">Data de término</span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                        <button type="button" class="btn btn-primary" data-bs-dismiss="modal" onclick="document.getElementById('submitBtn').click()">
+                            <i class="fas fa-save"></i>
+                            Salvar Campanha
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal de Sucesso -->
+        <div class="modal fade" id="successModal" tabindex="-1" aria-labelledby="successModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header bg-success text-white">
+                        <h5 class="modal-title" id="successModalLabel">
+                            <i class="fas fa-check-circle"></i>
+                            Campanha Criada com Sucesso!
+                        </h5>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body text-center">
+                        <i class="fas fa-heart text-danger mb-3" style="font-size: 3rem;"></i>
+                        <h4>Parabéns!</h4>
+                        <p>Sua campanha foi criada com sucesso e já está disponível para os doadores.</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                        <a href="/administrador/campanha" class="btn btn-primary">Ver Campanhas</a>
+                    </div>
+                </div>
+            </div>
+        </div>
 {% endblock %}
 
 {% block custom_js %}
-<script src="/static/js/">  
-</script>
+<script src="/static/js/adm_unidade/administrador_campanha_adicionar.js"></script>
 {% endblock %}

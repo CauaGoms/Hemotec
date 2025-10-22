@@ -146,65 +146,6 @@
         </div>
     </section>
 
-    <!-- Estatísticas -->
-    <section class="stats-section" style="margin-bottom: 50px;">
-        <div class="section-header">
-            <div class="section-title-group">
-                <h2 class="section-title">
-                    <i class="fas fa-chart-line me-2"></i>
-                    Estatísticas Gerais
-                </h2>
-                <p class="section-subtitle">Métricas importantes da unidade</p>
-            </div>
-        </div>
-
-        <div class="stats-grid">
-            <!-- Card 1: Total de Campanhas -->
-            <div class="stat-card">
-                <div class="stat-icon" style="color: #e02020;">
-                    <i class="fas fa-bullhorn"></i>
-                </div>
-                <div class="stat-value" data-numero="{{ total_campanhas if total_campanhas else 0 }}">
-                    {{ total_campanhas if total_campanhas else 0 }}
-                </div>
-                <div class="stat-label">Campanhas Cadastradas</div>
-            </div>
-
-            <!-- Card 2: Total de Colaboradores -->
-            <div class="stat-card">
-                <div class="stat-icon" style="color: #28a745;">
-                    <i class="fas fa-users"></i>
-                </div>
-                <div class="stat-value" data-numero="{{ total_colaboradores if total_colaboradores else 0 }}">
-                    {{ total_colaboradores if total_colaboradores else 0 }}
-                </div>
-                <div class="stat-label">Colaboradores Ativos</div>
-            </div>
-
-            <!-- Card 3: Doações Realizadas -->
-            <div class="stat-card">
-                <div class="stat-icon" style="color: #ffc107;">
-                    <i class="fas fa-hand-holding-heart"></i>
-                </div>
-                <div class="stat-value" data-numero="{{ total_doacoes if total_doacoes else 0 }}">
-                    {{ total_doacoes if total_doacoes else 0 }}
-                </div>
-                <div class="stat-label">Doações Concluídas</div>
-            </div>
-
-            <!-- Card 4: Notificações Pendentes -->
-            <div class="stat-card">
-                <div class="stat-icon" style="color: #17a2b8;">
-                    <i class="fas fa-bell"></i>
-                </div>
-                <div class="stat-value" data-numero="{{ total_notificacoes_pendentes if total_notificacoes_pendentes else 0 }}">
-                    {{ total_notificacoes_pendentes if total_notificacoes_pendentes else 0 }}
-                </div>
-                <div class="stat-label">Notificações Pendentes</div>
-            </div>
-        </div>
-    </section>
-
     <!-- Campanhas em Destaque -->
     <section class="campanhas-section">
         <div class="section-header">

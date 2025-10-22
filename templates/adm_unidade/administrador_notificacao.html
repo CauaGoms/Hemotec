@@ -1,13 +1,136 @@
 {% extends "adm_unidade/administrador__base.html" %}
 {% block custom_css %}
-<link href="/static/css/" rel="stylesheet">
+<link href="/static/css/adm_unidade/administrador_notificacao.css" rel="stylesheet">
 {% endblock %}
 
 {% block conteudo %}
-<h1>Administrador Colaboradores Notificação</h1>
+<!-- Hero Section -->
+<section class="hero-section">
+    <div class="container">
+        <div class="hero-content">
+            <h1 class="hero-title">
+                <i class="fas fa-bell me-3"></i>
+                Notificações
+            </h1>
+            <p class="hero-subtitle">Acompanhe todas as atualizações importantes sobre doações, campanhas e alertas do sistema</p>
+        </div>
+    </div>
+</section>
+<div class="container">
+    <!-- Filtros e Ações -->
+    <div class="notification-controls fade-in">
+        <div class="row align-items-center mb-4">
+            <div class="col-md-6">
+                <div class="filter-buttons">
+                    <button class="filter-btn active" data-filter="all" onclick="filterNotifications('all')">
+                        <i class="fas fa-list me-2"></i>
+                        Todas
+                    </button>
+                    <button class="filter-btn" data-filter="unread" onclick="filterNotifications('unread')">
+                        <i class="fas fa-envelope me-2"></i>
+                        Não Lidas
+                    </button>
+                    <button class="filter-btn" data-filter="important" onclick="filterNotifications('important')">
+                        <i class="fas fa-exclamation-triangle me-2"></i>
+                        Importantes
+                    </button>
+                    <button class="filter-btn" data-filter="campaigns" onclick="filterNotifications('campaigns')">
+                        <i class="fas fa-bullhorn me-2"></i>
+                        Campanhas
+                    </button>
+                </div>
+            </div>
+            <div class="col-md-6 text-end">
+                <div class="action-buttons">
+                    <button class="btn btn-outline-secondary" onclick="markAllAsRead()">
+                        <i class="fas fa-check-double me-2"></i>
+                        Marcar Todas como Lidas
+                    </button>
+                    <button class="btn btn-outline-danger" onclick="clearAllNotifications()">
+                        <i class="fas fa-trash me-2"></i>
+                        Limpar Tudo
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Estatísticas -->
+    <div class="row mb-4 fade-in">
+        <div class="col-md-3">
+            <div class="stats-card">
+                <div class="stats-icon">
+                    <i class="fas fa-bell"></i>
+                </div>
+                <div class="stats-content">
+                    <h3 id="totalNotifications">0</h3>
+                    <p>Total de Notificações</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="stats-card">
+                <div class="stats-icon unread">
+                    <i class="fas fa-envelope-open"></i>
+                </div>
+                <div class="stats-content">
+                    <h3 id="unreadNotifications">0</h3>
+                    <p>Não Lidas</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="stats-card">
+                <div class="stats-icon important">
+                    <i class="fas fa-exclamation"></i>
+                </div>
+                <div class="stats-content">
+                    <h3 id="importantNotifications">0</h3>
+                    <p>Importantes</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="stats-card">
+                <div class="stats-icon today">
+                    <i class="fas fa-calendar-today"></i>
+                </div>
+                <div class="stats-content">
+                    <h3 id="todayNotifications">0</h3>
+                    <p>Hoje</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Lista de Notificações -->
+    <div class="notifications-container fade-in">
+        <div id="notifications-list"></div>
+        <div id="no-notifications" style="display: none; text-align: center; padding: 40px;">
+            <i class="fas fa-inbox fa-3x text-muted mb-3"></i>
+            <h4 class="text-muted">Nenhuma notificação</h4>
+            <p class="text-muted">Você está em dia com as notificações!</p>
+        </div>
+    </div>
+
+    <!-- Paginação -->
+    <div class="pagination-container">
+        <nav aria-label="Navegação de página">
+            <ul class="pagination justify-content-center">
+            </ul>
+        </nav>
+    </div>
+</div>
+
+<!-- Floating Action Button -->
+<div class="floating-action">
+    <button class="floating-btn" onclick="refreshNotifications()" title="Atualizar notificações">
+        <i class="fas fa-sync-alt"></i>
+    </button>
+</div>
 {% endblock %}
 
+<!-- Custom JavaScript -->
 {% block custom_js %}
-<script src="/static/js/">  
-</script>
+<script src="/static/js/adm_unidade/administrador_notificacao.js"></script>
 {% endblock %}
