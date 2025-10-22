@@ -230,56 +230,40 @@
                         {% for notif in notificacoes_recentes[:5] %}
                             {% set tipo_lower = notif.tipo.lower() if notif.tipo else 'geral' %}
                             {% if tipo_lower == 'estoque' %}
-                                {% set cor_borda = '#e02020' %}
-                                {% set cor_fundo = 'linear-gradient(135deg, #fff5f5 0%, #fff 100%)' %}
-                                {% set cor_icone_bg = '#fee2e2' %}
-                                {% set icone = 'exclamation-triangle' %}
-                                {% set cor_icone = 'text-danger' %}
+                                {% set classe_notif = 'notif-estoque' %}
+                                {% set tipo_icone = 'exclamation-triangle' %}
                             {% elif tipo_lower == 'campanha' %}
-                                {% set cor_borda = '#22c55e' %}
-                                {% set cor_fundo = 'linear-gradient(135deg, #f0fdf4 0%, #fff 100%)' %}
-                                {% set cor_icone_bg = '#dcfce7' %}
-                                {% set icone = 'bullhorn' %}
-                                {% set cor_icone = 'text-success' %}
+                                {% set classe_notif = 'notif-campanha' %}
+                                {% set tipo_icone = 'bullhorn' %}
                             {% elif tipo_lower == 'colaborador' %}
-                                {% set cor_borda = '#3b82f6' %}
-                                {% set cor_fundo = 'linear-gradient(135deg, #eff6ff 0%, #fff 100%)' %}
-                                {% set cor_icone_bg = '#dbeafe' %}
-                                {% set icone = 'user' %}
-                                {% set cor_icone = 'text-info' %}
+                                {% set classe_notif = 'notif-colaborador' %}
+                                {% set tipo_icone = 'user' %}
                             {% elif tipo_lower == 'relatorio' %}
-                                {% set cor_borda = '#f59e0b' %}
-                                {% set cor_fundo = 'linear-gradient(135deg, #fffbeb 0%, #fff 100%)' %}
-                                {% set cor_icone_bg = '#fef3c7' %}
-                                {% set icone = 'chart-bar' %}
-                                {% set cor_icone = 'text-warning' %}
+                                {% set classe_notif = 'notif-relatorio' %}
+                                {% set tipo_icone = 'chart-bar' %}
                             {% else %}
-                                {% set cor_borda = '#6b7280' %}
-                                {% set cor_fundo = 'linear-gradient(135deg, #f9fafb 0%, #fff 100%)' %}
-                                {% set cor_icone_bg = '#e5e7eb' %}
-                                {% set icone = 'bell' %}
-                                {% set cor_icone = 'text-secondary' %}
+                                {% set classe_notif = 'notif-geral' %}
+                                {% set tipo_icone = 'bell' %}
                             {% endif %}
-                        <div class="notification-item modern-notification" style="background: {{ cor_fundo }}; border-radius: 12px; padding: 20px; margin-bottom: 15px; border-left: 4px solid {{ cor_borda }}; box-shadow: 0 2px 10px rgba(0,0,0,0.05); transition: transform 0.3s ease; cursor: pointer;" onclick="window.location.href='/administrador/notificacao'">
+                        <div class="notification-item modern-notification {{ classe_notif }}" onclick="window.location.href='/administrador/notificacao'">
                             <div class="d-flex justify-content-between align-items-start">
                                 <div class="flex-grow-1">
                                     <div class="d-flex align-items-center mb-2">
-                                        <div class="notification-icon" style="background: {{ cor_icone_bg }}; width: 40px; height: 40px; border-radius: 10px; display: flex; align-items: center; justify-content: center; margin-right: 12px;">
-                                            <i class="fas fa-{{ icone }} {{ cor_icone }}"></i>
+                                        <div class="notification-icon">
+                                            <i class="fas fa-{{ tipo_icone }}"></i>
                                         </div>
                                         <div>
-                                            <h6 class="mb-1 fw-bold" style="color: #2c3e50;">{{ notif.titulo }}</h6>
+                                            <h6 class="mb-1 fw-bold">{{ notif.titulo }}</h6>
                                             <small class="text-muted" id="data-notif-{{ loop.index }}"></small>
                                         </div>
                                     </div>
-                                    <p class="mb-0 text-muted" style="font-size: 0.95rem; line-height: 1.5; margin-left: 52px;">
+                                    <p class="mb-0 text-muted">
                                         {{ notif.mensagem }}
                                     </p>
                                 </div>
                             </div>
                         </div>
                         <script>
-                            // Formatar data para "Há X horas/dias"
                             (function() {
                                 const dataStr = "{{ notif.data_envio }}";
                                 const data = new Date(dataStr);
