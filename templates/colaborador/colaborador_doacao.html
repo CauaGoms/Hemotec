@@ -116,8 +116,10 @@
                                         {% endif %}
                                     {% endif %}
                                     {% if item.doador %}
-                                        {% if item.doador.tipo_sanguineo %}
-                                        <span class="me-3"><i class="fas fa-tint me-1"></i> Tipo: {{ item.doador.tipo_sanguineo }}{{ item.doador.fator_rh if item.doador.fator_rh else '' }}</span>
+                                        {% if item.doador.tipo_sanguineo and item.doador.fator_rh %}
+                                        <span class="me-3"><i class="fas fa-tint me-1"></i> Tipo: {{ item.doador.tipo_sanguineo }}{% if item.doador.fator_rh == 'positivo' %}+{% else %}-{% endif %}</span>
+                                        {% elif item.doador.tipo_sanguineo %}
+                                        <span class="me-3"><i class="fas fa-tint me-1"></i> Tipo: {{ item.doador.tipo_sanguineo }}</span>
                                         {% endif %}
                                     {% endif %}
                                     {% if item.usuario and item.usuario.telefone %}

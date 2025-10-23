@@ -331,18 +331,18 @@
                                 <div class="profile-info-icon">
                                     <i class="fas fa-tint"></i>
                                 </div>
-                                <div class="profile-info-content">
-                                    <div class="profile-info-label">Tipo Sanguíneo</div>
-                                    <div class="profile-info-value">
-                                        {% if doador and doador.tipo_sanguineo and doador.fator_rh %}
-                                            {{doador.tipo_sanguineo}}{% if doador.fator_rh == 'positivo' %}+{% else %}-{% endif %} 
-                                        {% elif doador and doador.tipo_sanguineo %}
-                                            {{doador.tipo_sanguineo}}
-                                        {% else %}
-                                            Não informado
-                                        {% endif %}
+                                    <div class="profile-info-content">
+                                        <div class="profile-info-label">Tipo Sanguíneo</div>
+                                        <div class="profile-info-value">
+                                            {% if doador and doador.tipo_sanguineo and doador.fator_rh %}
+                                                {{doador.tipo_sanguineo}}{% if doador.fator_rh == 'positivo' %}+{% else %}-{% endif %} 
+                                            {% elif doador and doador.tipo_sanguineo %}
+                                                {{doador.tipo_sanguineo}}
+                                            {% else %}
+                                                Não informado
+                                            {% endif %}
+                                        </div>
                                     </div>
-                                </div>
                             </div>
                             <div class="profile-info-item">
                                 <div class="profile-info-icon">

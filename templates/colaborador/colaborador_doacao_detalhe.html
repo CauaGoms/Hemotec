@@ -202,7 +202,7 @@
             <div class="info-row">
                 <span class="info-label">Tipo Sanguíneo:</span>
                 <span class="info-value">
-                    <strong>{{ doador.tipo_sanguineo if doador else 'Não especificado' }}{{ doador.fator_rh if doador and doador.fator_rh else '' }}</strong>
+                    <strong>{% if doador and doador.tipo_sanguineo and doador.fator_rh %}{{ doador.tipo_sanguineo }}{% if doador.fator_rh == 'positivo' %}+{% else %}-{% endif %}{% elif doador and doador.tipo_sanguineo %}{{ doador.tipo_sanguineo }}{% else %}Não especificado{% endif %}</strong>
                 </span>
             </div>
             {% if doacao.quantidade %}
@@ -396,7 +396,7 @@
                     </div>
                     <div class="comprovante-detail">
                         <span class="comprovante-label">Tipo Sanguíneo:</span>
-                        <span class="comprovante-value">{{ doador.tipo_sanguineo if doador else 'Não especificado' }}{{ doador.fator_rh if doador and doador.fator_rh else '' }}</span>
+                        <span class="comprovante-value">{% if doador and doador.tipo_sanguineo and doador.fator_rh %}{{ doador.tipo_sanguineo }}{% if doador.fator_rh == 'positivo' %}+{% else %}-{% endif %}{% elif doador and doador.tipo_sanguineo %}{{ doador.tipo_sanguineo }}{% else %}Não especificado{% endif %}</span>
                     </div>
                     {% if doacao.quantidade %}
                     <div class="comprovante-detail">

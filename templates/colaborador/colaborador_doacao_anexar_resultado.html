@@ -422,7 +422,7 @@
                                 <i class="fas fa-tint"></i>
                                 Tipo Sanguíneo
                             </label>
-                            <input type="text" class="form-control" value="{{ doador.tipo_sanguineo }}{% if doador.fator_rh %}{{ doador.fator_rh }}{% endif %}" disabled>
+                            <input type="text" class="form-control" value="{% if doador and doador.tipo_sanguineo and doador.fator_rh %}{{ doador.tipo_sanguineo }}{% if doador.fator_rh == 'positivo' %}+{% else %}-{% endif %}{% elif doador and doador.tipo_sanguineo %}{{ doador.tipo_sanguineo }}{% endif %}" disabled>
                         </div>
 
                         <div class="form-group">

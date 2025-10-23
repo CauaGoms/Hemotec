@@ -56,7 +56,9 @@ async def get_api_estoque_unidade(cod_unidade: int):
         # Organiza os dados por tipo sanguíneo
         estoque_organizado = {}
         for item in estoque_lista:
-            tipo_completo = f"{item.tipo_sanguineo}{item.fator_rh}"
+            # Formatar tipo sanguíneo corretamente
+            fator_simbolo = "+" if item.fator_rh and item.fator_rh.lower() == "positivo" else "-"
+            tipo_completo = f"{item.tipo_sanguineo}{fator_simbolo}"
             nivel_info = calcular_nivel_estoque(item.quantidade)
             
             estoque_organizado[tipo_completo] = {

@@ -219,10 +219,19 @@ async def download_exames_pdf(request: Request, cod_doacao: int, usuario_logado:
         story.append(Spacer(1, 20))
         
         # Informações do doador
+        # Formatar tipo sanguíneo
+        tipo_sanguineo_formatado = "N/A"
+        if doador:
+            if doador.tipo_sanguineo and doador.fator_rh:
+                fator_simbolo = "+" if doador.fator_rh.lower() == "positivo" else "-"
+                tipo_sanguineo_formatado = f"{doador.tipo_sanguineo}{fator_simbolo}"
+            elif doador.tipo_sanguineo:
+                tipo_sanguineo_formatado = doador.tipo_sanguineo
+        
         info = Paragraph(f"""
             <b>Doador:</b> {usuario.nome if usuario else 'N/A'}<br/>
             <b>CPF:</b> {usuario.cpf if usuario else 'N/A'}<br/>
-            <b>Tipo Sanguíneo:</b> {doador.tipo_sanguineo if doador else 'N/A'}{doador.fator_rh if doador else ''}<br/>
+            <b>Tipo Sanguíneo:</b> {tipo_sanguineo_formatado}<br/>
             <br/>
             <b>Status:</b> Todos os exames foram aprovados<br/>
             <b>Data da Doação:</b> {doacao_obj.data_hora.strftime('%d/%m/%Y') if doacao_obj.data_hora else 'N/A'}<br/>

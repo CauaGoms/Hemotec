@@ -111,7 +111,18 @@
                 </div>
             </div>
 
-            <!-- Ação 6: Adicionar Campanha -->
+            <!-- Ação 6: Adicionar Doador -->
+            <div class="col-lg-3 col-md-6">
+                <div class="action-card" onclick="window.location.href='&#x2F;cadastrar'">
+                    <div class="action-icon accent">
+                        <i class="fas fa-user-plus"></i>
+                    </div>
+                    <h4 class="action-title">Adicionar Doador</h4>
+                    <p class="action-description">Registrar novo doador no sistema</p>
+                </div>
+            </div>
+
+            <!-- Ação 7: Adicionar Campanha -->
             <div class="col-lg-3 col-md-6">
                 <div class="action-card" onclick="window.location.href='/colaborador/campanha/adicionar'">
                     <div class="action-icon purple">
@@ -122,7 +133,7 @@
                 </div>
             </div>
 
-            <!-- Ação 7: Disponibilidade de Horários -->
+            <!-- Ação 8: Disponibilidade de Horários -->
             <div class="col-lg-3 col-md-6">
                 <div class="action-card" onclick="window.location.href='/colaborador/disponibilidade_coleta'">
                     <div class="action-icon secondary">
@@ -130,17 +141,6 @@
                     </div>
                     <h4 class="action-title">Disponibilidade</h4>
                     <p class="action-description">Gerenciar horários de coleta</p>
-                </div>
-            </div>
-
-            <!-- Ação 8: Funcionalidade em Desenvolvimento -->
-            <div class="col-lg-3 col-md-6">
-                <div class="action-card disabled" style="opacity: 0.7; cursor: not-allowed;">
-                    <div class="action-icon" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); position: relative;">
-                        <i class="fas fa-wrench"></i>
-                    </div>
-                    <h4 class="action-title">Funcionalidade em Desenvolvimento</h4>
-                    <p class="action-description">Novas features chegando em breve!</p>
                 </div>
             </div>
         </div>
@@ -172,7 +172,9 @@
                                         {{ agendamento.doador.nome if agendamento.doador else 'Doador não identificado' }}
                                     </div>
                                     <div class="agenda-item-details">
-                                        {% if agendamento.doador and agendamento.doador.tipo_sanguineo %}
+                                        {% if agendamento.doador and agendamento.doador.tipo_sanguineo and agendamento.doador.fator_rh %}
+                                        <span class="badge bg-danger me-2">{{ agendamento.doador.tipo_sanguineo }}{% if agendamento.doador.fator_rh == 'positivo' %}+{% else %}-{% endif %}</span>
+                                        {% elif agendamento.doador and agendamento.doador.tipo_sanguineo %}
                                         <span class="badge bg-danger me-2">{{ agendamento.doador.tipo_sanguineo }}</span>
                                         {% endif %}
                                         <span class="badge {{ 'bg-success' if agendamento.status == 1 else 'bg-warning' }}">
