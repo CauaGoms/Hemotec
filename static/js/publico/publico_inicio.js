@@ -731,15 +731,21 @@ function normalizarEstoque(estoque) {
     };
     const estoqueNormalizado = {};
     for (const key in estoque) {
+        // Se a chave já está no formato correto (A+, A-, etc.)
+        let tipoNormalizado = key;
+
+        // Se a chave está no formato antigo (Apositivo, etc.), mapear para o novo
         if (mapTipos[key]) {
-            estoqueNormalizado[mapTipos[key]] = {
-                unidades: estoque[key].quantidade,
-                // Normalize status to a lowercase Portuguese term for consistent mapping
-                status: (estoque[key].status || '').toString(),
-                // Server returns 'porcentagem' as fraction (0..1). Convert to 0..100
-                percent: Math.round((estoque[key].porcentagem || 0) * 100)
-            };
+            tipoNormalizado = mapTipos[key];
         }
+
+        estoqueNormalizado[tipoNormalizado] = {
+            unidades: estoque[key].quantidade,
+            // Normalize status to a lowercase Portuguese term for consistent mapping
+            status: (estoque[key].status || '').toString(),
+            // Server returns 'porcentagem' as fraction (0..1). Convert to 0..100
+            percent: Math.round((estoque[key].porcentagem || 0) * 100)
+        };
     }
     return estoqueNormalizado;
 }
