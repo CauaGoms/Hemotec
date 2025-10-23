@@ -75,19 +75,19 @@ function mostrarCompatibilidade(tipo) {
             function listarUnidades(unidadesParaMostrar = null) {
                 if (!listaUnidades) return;
                 listaUnidades.innerHTML = '';
-                
+
                 const unidadesAMostrar = unidadesParaMostrar || unidades;
-                
+
                 unidadesAMostrar.forEach(u => {
                     const { cod_unidade, nome, latitude: lat, longitude: lng, isCritica } = u;
 
                     const li = document.createElement('li');
-                    
+
                     let nomeExibicao = nome;
                     if (isCritica) {
                         nomeExibicao += ' ⚠️';
                     }
-                    
+
                     li.innerHTML = '<strong>' + nomeExibicao + '</strong><span>Coordenadas: ' + lat + ', ' + lng + '</span>';
                     const btn = document.createElement('button');
                     btn.type = 'button';
@@ -107,7 +107,7 @@ function mostrarCompatibilidade(tipo) {
                                 nomeUnidadeEl.textContent = `- ${nome}`;
                                 nomeUnidadeEl.classList.remove('text-muted');
                                 nomeUnidadeEl.classList.add('text-danger');
-                                
+
                                 let estoqueObj = resposta.estoque;
                                 if (typeof estoqueObj === 'string') {
                                     try { estoqueObj = JSON.parse(estoqueObj); } catch { }
@@ -270,14 +270,14 @@ function mostrarCompatibilidade(tipo) {
                             // Atualizar ambas as listas com unidades críticas
                             listarUnidades(unidadesCriticas);
                             listarUnidadesEstoque(unidadesCriticas);
-                            
+
                             // Mostrar estoque da primeira unidade mais crítica
                             const unidade = unidadesCriticas[0];
                             const nomeUnidadeEl = document.getElementById('nome-unidade-estoque');
                             nomeUnidadeEl.textContent = `- ${unidade.nome} (Estoque Crítico)`;
                             nomeUnidadeEl.classList.remove('text-muted');
                             nomeUnidadeEl.classList.add('text-danger');
-                            
+
                             let estoqueObj = unidade.estoque;
                             if (typeof estoqueObj === 'string') {
                                 try { estoqueObj = JSON.parse(estoqueObj); } catch { }
@@ -285,7 +285,7 @@ function mostrarCompatibilidade(tipo) {
                             if (estoqueObj) {
                                 renderizarEstoque(normalizarEstoque(estoqueObj));
                             }
-                            
+
                             statusEl.textContent = 'Exibindo unidades com maior necessidade de doações.';
                         }
                     });
@@ -307,22 +307,22 @@ function mostrarCompatibilidade(tipo) {
                         }).addTo(mapa).bindPopup('Você está aqui.').openPopup();
                     }
                     mapa.flyTo([latitude, longitude], 13, { duration: 0.8 });
-                    
+
                     // Encontrar as 2 unidades mais próximas
                     const unidadesComDistancia = unidades.map(u => {
                         const { cod_unidade, nome, latitude: lat, longitude: lng } = u;
                         const dist = Math.sqrt(Math.pow(lat - latitude, 2) + Math.pow(lng - longitude, 2));
                         return { ...u, distancia: dist };
                     });
-                    
+
                     // Ordenar por distância e pegar as 2 mais próximas
                     unidadesComDistancia.sort((a, b) => a.distancia - b.distancia);
                     const duasMaisProximas = unidadesComDistancia.slice(0, 2);
-                    
+
                     // Atualizar ambas as listas com as 2 mais próximas
                     listarUnidades(duasMaisProximas);
                     listarUnidadesEstoque(duasMaisProximas);
-                    
+
                     // Buscar e mostrar estoque da unidade mais próxima
                     if (duasMaisProximas.length > 0) {
                         const unidadeMaisProxima = duasMaisProximas[0];
@@ -333,7 +333,7 @@ function mostrarCompatibilidade(tipo) {
                                 nomeUnidadeEl.textContent = `- ${unidadeMaisProxima.nome}`;
                                 nomeUnidadeEl.classList.remove('text-muted');
                                 nomeUnidadeEl.classList.add('text-danger');
-                                
+
                                 let estoqueObj = resposta.estoque;
                                 if (typeof estoqueObj === 'string') {
                                     try { estoqueObj = JSON.parse(estoqueObj); } catch { }
@@ -356,14 +356,14 @@ function mostrarCompatibilidade(tipo) {
                             // Atualizar ambas as listas com unidades críticas
                             listarUnidades(unidadesCriticas);
                             listarUnidadesEstoque(unidadesCriticas);
-                            
+
                             // Mostrar estoque da primeira unidade mais crítica
                             const unidade = unidadesCriticas[0];
                             const nomeUnidadeEl = document.getElementById('nome-unidade-estoque');
                             nomeUnidadeEl.textContent = `- ${unidade.nome} (Estoque Crítico)`;
                             nomeUnidadeEl.classList.remove('text-muted');
                             nomeUnidadeEl.classList.add('text-danger');
-                            
+
                             let estoqueObj = unidade.estoque;
                             if (typeof estoqueObj === 'string') {
                                 try { estoqueObj = JSON.parse(estoqueObj); } catch { }
@@ -371,7 +371,7 @@ function mostrarCompatibilidade(tipo) {
                             if (estoqueObj) {
                                 renderizarEstoque(normalizarEstoque(estoqueObj));
                             }
-                            
+
                             statusEl.textContent = 'Exibindo unidades com maior necessidade de doações.';
                         }
                     });
@@ -434,14 +434,14 @@ function mostrarCompatibilidade(tipo) {
                         // Atualizar ambas as listas com unidades críticas
                         listarUnidades(unidadesCriticas);
                         listarUnidadesEstoque(unidadesCriticas);
-                        
+
                         // Mostrar estoque da primeira unidade mais crítica
                         const unidade = unidadesCriticas[0];
                         const nomeUnidadeEl = document.getElementById('nome-unidade-estoque');
                         nomeUnidadeEl.textContent = `- ${unidade.nome} (Estoque Crítico)`;
                         nomeUnidadeEl.classList.remove('text-muted');
                         nomeUnidadeEl.classList.add('text-danger');
-                        
+
                         let estoqueObj = unidade.estoque;
                         if (typeof estoqueObj === 'string') {
                             try { estoqueObj = JSON.parse(estoqueObj); } catch { }
@@ -541,15 +541,21 @@ function normalizarEstoque(estoque) {
     };
     const estoqueNormalizado = {};
     for (const key in estoque) {
+        // Se a chave já está no formato correto (A+, A-, etc.)
+        let tipoNormalizado = key;
+
+        // Se a chave está no formato antigo (Apositivo, etc.), mapear para o novo
         if (mapTipos[key]) {
-            estoqueNormalizado[mapTipos[key]] = {
-                unidades: estoque[key].quantidade,
-                // Normalize status to a lowercase Portuguese term for consistent mapping
-                status: (estoque[key].status || '').toString(),
-                // Server returns 'porcentagem' as fraction (0..1). Convert to 0..100
-                percent: Math.round((estoque[key].porcentagem || 0) * 100)
-            };
+            tipoNormalizado = mapTipos[key];
         }
+
+        estoqueNormalizado[tipoNormalizado] = {
+            unidades: estoque[key].quantidade,
+            // Normalize status to a lowercase Portuguese term for consistent mapping
+            status: (estoque[key].status || '').toString(),
+            // Server returns 'porcentagem' as fraction (0..1). Convert to 0..100
+            percent: Math.round((estoque[key].porcentagem || 0) * 100)
+        };
     }
     return estoqueNormalizado;
 }
