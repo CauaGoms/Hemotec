@@ -24,9 +24,17 @@
         <h2 class="recovery-title">Recuperar Senha</h2>
         <p>Informe seu e-mail para receber as instruções de recuperação de senha.</p>
         
-    <form action="/validar_token" method="post">
+    {% if erro %}
+        <div class="alert alert-danger" role="alert">
+            {{ erro }}
+        </div>
+        {% endif %}
+        
+        <div id="mensagem" class="alert" style="display: none;" role="alert"></div>
+        
+        <form id="formRecuperacao" method="post">
             <div class="mb-3">
-                <input type="email" class="form-control" id="email" placeholder="Seu e-mail" required>
+                <input type="email" class="form-control" id="email" name="email" placeholder="Seu e-mail" required>
             </div>
             <button type="submit" class="btn btn-primary btn-recovery">Enviar</button>
         </form>
@@ -34,5 +42,50 @@
 
     <!-- Bootstrap JS (optional, for interactive components) -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        document.getElementById('formRecuperacao').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const email = document.getElementById('email').value;
+            const mensagemDiv = document.getElementById('mensagem');
+            const btnSubmit = this.querySelector('button[type="submit"]');
+            
+            // Desabilita botão durante processamento
+            btnSubmit.disabled = true;
+            btnSubmit.textContent = 'Enviando...';
+            
+            try {
+                const formData = new FormData();
+                formData.append('email', email);
+                
+                const response = await fetch('/redefinir_senha', {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                const data = await response.json();
+                
+                // Exibe mensagem
+                mensagemDiv.style.display = 'block';
+                mensagemDiv.className = data.success ? 'alert alert-success' : 'alert alert-danger';
+                mensagemDiv.textContent = data.message;
+                
+                // Se sucesso, limpa formulário
+                if (data.success) {
+                    document.getElementById('email').value = '';
+                }
+                
+            } catch (error) {
+                mensagemDiv.style.display = 'block';
+                mensagemDiv.className = 'alert alert-danger';
+                mensagemDiv.textContent = 'Erro ao processar solicitação. Tente novamente.';
+            } finally {
+                // Reabilita botão
+                btnSubmit.disabled = false;
+                btnSubmit.textContent = 'Enviar';
+            }
+        });
+    </script>
 </body>
 </html>

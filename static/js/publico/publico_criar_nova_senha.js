@@ -1,10 +1,11 @@
 // Criar Nova Senha - JavaScript
 console.log('JS de criar nova senha carregado e executado');
 document.addEventListener('DOMContentLoaded', function() {
-    const form = document.querySelector('form');
+    const form = document.getElementById('formNovaSenha');
     const novaSenhaInput = document.getElementById('nova_senha');
     const confirmarSenhaInput = document.getElementById('confirmar_senha');
     const submitBtn = document.querySelector('.btn-recovery');
+    const tokenInput = document.getElementById('token');
     
     // Função para mostrar mensagens de erro
     function showError(message) {
@@ -152,31 +153,25 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
     
-    // Função para simular alteração de senha no servidor
-    async function changePassword(novaSenha) {
-        // Simula delay de requisição
-        await new Promise(resolve => setTimeout(resolve, 1500));
-        
-        // Simula diferentes cenários de resposta
-        const scenarios = [
-            { success: true, message: 'Senha alterada com sucesso' },
-            { success: false, message: 'Erro interno do servidor' },
-            { success: false, message: 'Sessão expirada. Tente novamente.' },
-            { success: false, message: 'A nova senha não pode ser igual à senha anterior' }
-        ];
-        
-        // Para demonstração, senhas específicas retornam cenários diferentes
-        if (novaSenha === 'MinhaNovaSenh@123') {
-            return scenarios[0]; // Sucesso
-        } else if (novaSenha === 'ErroServidor123!') {
-            return scenarios[1]; // Erro servidor
-        } else if (novaSenha === 'SessaoExpirada123!') {
-            return scenarios[2]; // Sessão expirada
-        } else if (novaSenha === 'SenhaAntiga123!') {
-            return scenarios[3]; // Senha igual à anterior
-        } else {
-            // Sucesso para outras senhas válidas
-            return scenarios[0];
+    // Função para alterar senha no servidor
+    async function changePassword(novaSenha, confirmarSenha, token) {
+        try {
+            const formData = new FormData();
+            formData.append('nova_senha', novaSenha);
+            formData.append('confirmar_senha', confirmarSenha);
+            formData.append('token', token);
+            
+            const response = await fetch('/redefinir-senha', {
+                method: 'POST',
+                body: formData
+            });
+            
+            const data = await response.json();
+            return data;
+            
+        } catch (error) {
+            console.error('Erro na requisição:', error);
+            return { success: false, message: 'Erro de conexão. Tente novamente.' };
         }
     }
     
@@ -198,6 +193,7 @@ document.addEventListener('DOMContentLoaded', function() {
         
         const novaSenha = novaSenhaInput.value.trim();
         const confirmarSenha = confirmarSenhaInput.value.trim();
+        const token = tokenInput.value;
         
         // Validações básicas
         if (!novaSenha) {
@@ -212,20 +208,6 @@ document.addEventListener('DOMContentLoaded', function() {
             return;
         }
         
-        // Validação de força da senha
-        const strengthValidation = validatePasswordStrength(novaSenha);
-        const strength = calculatePasswordStrength(novaSenha);
-        if (!strengthValidation.isValid) {
-            showError(strengthValidation.errors.join('<br>'));
-            novaSenhaInput.focus();
-            return;
-        }
-        if (strength < 40) {
-            showError('A senha está muito fraca. Crie uma senha mais forte!');
-            novaSenhaInput.focus();
-            return;
-        }
-        
         // Validação de confirmação
         if (novaSenha !== confirmarSenha) {
             showError('As senhas não coincidem. Verifique e tente novamente.');
@@ -233,26 +215,33 @@ document.addEventListener('DOMContentLoaded', function() {
             return;
         }
         
+        // Validação mínima de tamanho (backend valida também)
+        if (novaSenha.length < 6) {
+            showError('A senha deve ter pelo menos 6 caracteres.');
+            novaSenhaInput.focus();
+            return;
+        }
+        
         try {
             showLoading();
             
-            // Simula alteração no servidor
-            const result = await changePassword(novaSenha);
+            // Chama API para alterar senha
+            const result = await changePassword(novaSenha, confirmarSenha, token);
             
             hideLoading();
             
             if (result.success) {
-                showSuccess('Senha alterada com sucesso! Redirecionando...');
+                showSuccess('Senha alterada com sucesso! Redirecionando para o login...');
                 
                 // Redireciona após 2 segundos
                 setTimeout(() => {
-                    window.location.href = '/confirmar_redefinicao_senha';
+                    window.location.href = '/login';
                 }, 2000);
             } else {
                 showError(result.message);
                 
-                // Se for erro de sessão, redireciona para o início
-                if (result.message.includes('Sessão expirada')) {
+                // Se for erro de token expirado, redireciona para solicitar novo
+                if (result.message.includes('Token') || result.message.includes('expirado')) {
                     setTimeout(() => {
                         window.location.href = '/redefinir_senha';
                     }, 3000);

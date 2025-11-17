@@ -13,6 +13,7 @@ from data.model.gestor_model import Gestor
 from data.model.cidade_model import Cidade
 from util.security import criar_hash_senha
 from util.flash_messages import informar_sucesso, informar_erro
+from util.email_service import email_service
 from dtos.gestor_dtos import CriarGestorDTO
 
 router = APIRouter()
@@ -207,6 +208,28 @@ async def post_finalizar_cadastro(
             )
             conn.commit()
 
+        # Enviar email de boas-vindas
+        print(f"\n{'='*60}")
+        print(f"📧 TENTANDO ENVIAR EMAIL DE BOAS-VINDAS")
+        print(f"{'='*60}")
+        print(f"Email: {dados.email_gestor}")
+        print(f"Nome: {dados.nome_gestor}")
+        try:
+            resultado = email_service.enviar_boas_vindas(
+                para_email=dados.email_gestor,
+                para_nome=dados.nome_gestor
+            )
+            if resultado:
+                print(f"✅ Email de boas-vindas enviado com sucesso!")
+            else:
+                print(f"❌ Falha ao enviar email de boas-vindas (retornou False)")
+        except Exception as e:
+            print(f"❌ ERRO ao enviar email de boas-vindas: {e}")
+            import traceback
+            traceback.print_exc()
+            # Não falha o cadastro se o email não for enviado
+        print(f"{'='*60}\n")
+        
         # Redirecionar para login com mensagem de sucesso
         informar_sucesso(request, "Cadastro realizado com sucesso! Faça login para continuar.")
         return RedirectResponse(url="/login", status_code=303)

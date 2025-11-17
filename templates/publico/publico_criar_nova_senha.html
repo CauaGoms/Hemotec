@@ -16,19 +16,23 @@
     <link rel="icon" href="/static/img/logo_vermelha.svg">
 </head>
 <body>
-    <a href="/validar_token" class="back-arrow"><i class="fas fa-arrow-left"></i></a>
+    <a href="/redefinir_senha" class="back-arrow"><i class="fas fa-arrow-left"></i></a>
     <div class="recovery-container">
         <a href="/">
         <img src="/static/img/logo_vermelha.svg" alt="Hemotec Logo" class="logo-recovery">
         </a>
         <h2 class="recovery-title">Criar Nova Senha</h2>
         <p>Digite sua nova senha. Certifique-se de que seja segura e fácil de lembrar.</p>
-        <form>
+        
+        <div id="mensagem" class="alert" style="display: none;" role="alert"></div>
+        
+        <form id="formNovaSenha">
+            <input type="hidden" id="token" name="token" value="{{ token }}">
             <div class="mb-3">
-                <input type="password" class="form-control" id="nova_senha" placeholder="Nova senha" required>
+                <input type="password" class="form-control" id="nova_senha" name="nova_senha" placeholder="Nova senha (mínimo 6 caracteres)" required>
             </div>
             <div class="mb-3">
-                <input type="password" class="form-control" id="confirmar_senha" placeholder="Confirmar nova senha" required>
+                <input type="password" class="form-control" id="confirmar_senha" name="confirmar_senha" placeholder="Confirmar nova senha" required>
             </div>
             <button type="submit" class="btn btn-primary btn-recovery">Alterar Senha</button>
         </form>

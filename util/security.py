@@ -121,3 +121,20 @@ def gerar_senha_aleatoria(tamanho: int = 8) -> str:
     caracteres = string.ascii_letters + string.digits + "!@#$%"
     senha = ''.join(secrets.choice(caracteres) for _ in range(tamanho))
     return senha
+
+
+def validar_token_expiracao(data_token: str) -> bool:
+    """
+    Verifica se um token ainda está válido (não expirou)
+    
+    Args:
+        data_token: Data de expiração do token em formato ISO
+    
+    Returns:
+        True se o token ainda é válido, False se expirou
+    """
+    try:
+        data_expiracao = datetime.fromisoformat(data_token)
+        return datetime.now() < data_expiracao
+    except Exception:
+        return False
