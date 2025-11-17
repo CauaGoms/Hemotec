@@ -4,13 +4,17 @@ from typing import Optional
 
 class EmailService:
     def __init__(self):
-        self.api_key = os.getenv('RESEND_API_KEY')
-        self.from_email = os.getenv('RESEND_FROM_EMAIL', 'noreply@seudominio.com')
-        self.from_name = os.getenv('RESEND_FROM_NAME', 'Sistema')
+        # Remove espaços em branco extras da API key
+        self.api_key = os.getenv('RESEND_API_KEY', '').strip()
+        self.from_email = os.getenv('RESEND_FROM_EMAIL', 'noreply@seudominio.com').strip()
+        self.from_name = os.getenv('RESEND_FROM_NAME', 'Sistema').strip()
 
         # Configura a API key do Resend
         if self.api_key:
             resend.api_key = self.api_key
+            print(f"[EMAIL SERVICE INIT] ✅ Configurado com API key: {self.api_key[:10]}...")
+        else:
+            print(f"[EMAIL SERVICE INIT] ❌ API key não encontrada!")
 
     def enviar_email(
         self,

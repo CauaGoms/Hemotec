@@ -11,6 +11,7 @@ from dtos.usuario_dtos import CriarUsuarioDTO
 from util.auth_decorator import criar_sessao, requer_autenticacao
 from util.flash_messages import informar_sucesso, informar_erro
 from util.security import criar_hash_senha, verificar_senha
+from util.email_service import email_service
 
 router = APIRouter()
 templates = Jinja2Templates(directory="templates")
@@ -104,6 +105,10 @@ async def post_cadastro(
     senha: str = Form(...),
     confirmar_senha: str = Form(...),
 ):
+    print(f"\n{'🚀'*35}")
+    print(f"🚀 ROTA POST /cadastrar CHAMADA - Cadastrando doador: {nome}")
+    print(f"{'🚀'*35}\n")
+    
     dados_formulario = {
         "nome": nome,
         "cpf": cpf,
@@ -159,6 +164,31 @@ async def post_cadastro(
         try:
             usuario_id = usuario_repo.inserir(usuario)
             print(f"Usuário inserido, id: {usuario_id}")
+            
+            # ====================================================================
+            # IMPORTANTE: Enviar email de boas-vindas para o doador
+            # ====================================================================
+            print(f"\n{'='*70}")
+            print(f"🎉 CADASTRO CONCLUÍDO - ENVIANDO EMAIL DE BOAS-VINDAS")
+            print(f"{'='*70}")
+            print(f"👤 Nome: {dados.nome}")
+            print(f"📧 Email: {dados.email}")
+            print(f"🆔 ID do usuário: {usuario_id}")
+            try:
+                resultado = email_service.enviar_boas_vindas(
+                    para_email=dados.email,
+                    para_nome=dados.nome
+                )
+                if resultado:
+                    print(f"✅ Email de boas-vindas enviado com sucesso!")
+                else:
+                    print(f"❌ Falha ao enviar email de boas-vindas (retornou False)")
+            except Exception as e:
+                print(f"❌ ERRO ao enviar email de boas-vindas: {e}")
+                import traceback
+                traceback.print_exc()
+                # Não falha o cadastro se o email não for enviado
+            print(f"{'='*60}\n")
             
             informar_sucesso(request, f"Cadastro realizado com sucesso! Faça login para continuar.")
             return RedirectResponse("/login", status.HTTP_303_SEE_OTHER)
