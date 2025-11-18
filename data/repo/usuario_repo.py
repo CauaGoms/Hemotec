@@ -177,6 +177,7 @@ def atualizar_senha(cod_usuario: int, senha: str) -> bool:
     with get_connection() as conn:
         cursor = conn.cursor()
         cursor.execute(ALTERAR_SENHA, (senha, cod_usuario))
+        conn.commit()
         return (cursor.rowcount > 0)
 
 def delete(cod_usuario: int, cursor=None) -> bool:
