@@ -66,7 +66,7 @@ document.addEventListener('DOMContentLoaded', function () {
         novaSenhaInput.addEventListener('input', function () {
             showPasswordStrength(this.value);
         });
-        
+
         // Auto-focus no primeiro campo
         novaSenhaInput.focus();
     }
