@@ -1,13 +1,157 @@
 {% extends "adm_unidade/administrador__base.html" %}
+
 {% block custom_css %}
-<link href="/static/css/" rel="stylesheet">
+<link href="/static/css/adm_unidade/administrador_relatorios_por_tipo_sanguineo.css" rel="stylesheet">
 {% endblock %}
 
 {% block conteudo %}
-<h1>Administrador Colaboradores Relatórios Por Tipo Sanguíneo</h1>
+<div class="relatorios-tipo-container">
+    <!-- Hero Section -->
+    <div class="hero-section">
+        <a href="/administrador/relatorio" class="btn-back">
+            <i class="fas fa-arrow-left"></i>
+        </a>
+        <div class="hero-content">
+            <h1><i class="fas fa-tint"></i> Relatório por Tipo Sanguíneo</h1>
+            <p class="hero-subtitle">Analise doações e estoque por tipo sanguíneo</p>
+        </div>
+    </div>
+
+    <!-- Filtros -->
+    <div class="filters-section">
+        <form id="filtroForm" class="filter-form">
+            <div class="filter-group">
+                <label for="tipo_sanguineo">
+                    <i class="fas fa-filter"></i> Filtrar por Tipo
+                </label>
+                <select id="tipo_sanguineo" name="tipo_sanguineo" class="form-select">
+                    <option value="todos" {% if tipo_sanguineo_filtro == 'todos' %}selected{% endif %}>Todos os Tipos</option>
+                    {% for tipo in tipos_sanguineos %}
+                    <option value="{{ tipo }}" {% if tipo_sanguineo_filtro == tipo %}selected{% endif %}>{{ tipo }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            
+            <button type="submit" class="btn-filter">
+                <i class="fas fa-search"></i> Filtrar
+            </button>
+            
+            <button type="button" class="btn-export" id="btnExportPDF">
+                <i class="fas fa-file-pdf"></i> Exportar PDF
+            </button>
+        </form>
+    </div>
+
+    <!-- Grid de Estatísticas por Tipo -->
+    <div class="blood-types-grid">
+        {% for tipo, stats in estatisticas.items() %}
+        <div class="blood-type-card">
+            <div class="blood-icon">
+                <i class="fas fa-tint"></i>
+            </div>
+            <h3 class="blood-type">{{ tipo }}</h3>
+            <div class="blood-stats">
+                <div class="stat-item">
+                    <span class="stat-label">Doações</span>
+                    <span class="stat-value">{{ stats.total_doacoes }}</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">Estoque</span>
+                    <span class="stat-value">{{ stats.quantidade_estoque }}</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">Doadores</span>
+                    <span class="stat-value">{{ stats.total_doadores }}</span>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <!-- Tabela de Estoque -->
+    <div class="table-section">
+        <h2 class="section-title">
+            <i class="fas fa-boxes"></i> Estoque por Tipo Sanguíneo
+        </h2>
+        <div class="table-container">
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Tipo Sanguíneo</th>
+                        <th>Quantidade (Bolsas)</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% if estoque %}
+                        {% for item in estoque %}
+                        <tr>
+                            <td><strong>{{ item.tipo_sanguineo }}</strong></td>
+                            <td>{{ item.quantidade }}</td>
+                            <td>
+                                {% if item.quantidade > 50 %}
+                                <span class="badge badge-success">Suficiente</span>
+                                {% elif item.quantidade > 20 %}
+                                <span class="badge badge-warning">Atenção</span>
+                                {% else %}
+                                <span class="badge badge-danger">Crítico</span>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    {% else %}
+                        <tr>
+                            <td colspan="3" class="no-data">
+                                <i class="fas fa-inbox"></i> Nenhum item em estoque
+                            </td>
+                        </tr>
+                    {% endif %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Tabela de Doações -->
+    {% if tipo_sanguineo_filtro != 'todos' %}
+    <div class="table-section">
+        <h2 class="section-title">
+            <i class="fas fa-list"></i> Doações do Tipo {{ tipo_sanguineo_filtro }}
+        </h2>
+        <div class="table-container">
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Código</th>
+                        <th>Doador</th>
+                        <th>Data</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% if doacoes %}
+                        {% for doacao in doacoes %}
+                        <tr>
+                            <td>#{{ doacao.cod_doacao }}</td>
+                            <td>Doador {{ doacao.cod_doador }}</td>
+                            <td>{{ doacao.data_doacao.strftime('%d/%m/%Y') }}</td>
+                            <td><span class="badge badge-success">Realizada</span></td>
+                        </tr>
+                        {% endfor %}
+                    {% else %}
+                        <tr>
+                            <td colspan="4" class="no-data">
+                                <i class="fas fa-inbox"></i> Nenhuma doação encontrada
+                            </td>
+                        </tr>
+                    {% endif %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    {% endif %}
+</div>
 {% endblock %}
 
 {% block custom_js %}
-<script src="/static/js/">  
-</script>
+<script src="/static/js/adm_unidade/administrador_relatorios_por_tipo_sanguineo.js"></script>
 {% endblock %}

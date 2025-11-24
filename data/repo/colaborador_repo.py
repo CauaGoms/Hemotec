@@ -22,21 +22,28 @@ def criar_tabela() -> bool:
 def inserir(colaborador: Colaborador) -> Optional[int]:
     with get_connection() as conn:
         cursor = conn.cursor()
-        usuario = Usuario(0, 
-            colaborador.nome,
-            colaborador.cod_unidade,
-            colaborador.email, 
-            colaborador.senha,
-            colaborador.cpf,
-            colaborador.data_nascimento,
-            colaborador.status,
-            colaborador.data_cadastro,
-            colaborador.rua_usuario,
-            colaborador.bairro_usuario,
-            colaborador.cidade_usuario,
-            colaborador.cep_usuario,
-            colaborador.telefone)
-        cod_colaborador = usuario_repo.inserir(usuario, cursor)
+        usuario = Usuario(
+            cod_usuario=0,
+            nome=colaborador.nome,
+            email=colaborador.email,
+            senha=colaborador.senha,
+            cpf=colaborador.cpf,
+            data_nascimento=colaborador.data_nascimento,
+            status=colaborador.status,
+            rua_usuario=colaborador.rua_usuario,
+            bairro_usuario=colaborador.bairro_usuario,
+            cidade_usuario=colaborador.cidade_usuario,
+            cep_usuario=colaborador.cep_usuario,
+            telefone=colaborador.telefone,
+            genero='',
+            perfil='colaborador',
+            data_cadastro=colaborador.data_cadastro,
+            foto=None,
+            token_redefinicao=None,
+            data_token=None,
+            estado_usuario=None
+        )
+        cod_colaborador = usuario_repo.inserir(usuario)
         cursor.execute(INSERIR, (
             cod_colaborador,
             colaborador.cod_unidade,
@@ -66,7 +73,13 @@ def obter_todos() -> list[Colaborador]:
                 cidade_usuario=row["cidade_usuario"],
                 cep_usuario=row["cep_usuario"],
                 telefone=row["telefone"],
-                funcao=row["funcao"])  
+                funcao=row["funcao"],
+                genero=row["genero"] if row["genero"] else '',
+                perfil=row["perfil"] if row["perfil"] else 'colaborador',
+                foto=row["foto"],
+                token_redefinicao=row["token_redefinicao"],
+                data_token=row["data_token"],
+                estado_usuario=row["estado_usuario"])  
                 for row in rows]
         return colaborador
     
@@ -93,28 +106,40 @@ def obter_por_id(cod_colaborador: int) -> Optional[Colaborador]:
             bairro_usuario=row["bairro_usuario"],
             cidade_usuario=row["cidade_usuario"],
             cep_usuario=row["cep_usuario"],
-            telefone=row["telefone"])
+            telefone=row["telefone"],
+            genero=row["genero"] if row["genero"] else '',
+            perfil=row["perfil"] if row["perfil"] else 'colaborador',
+            foto=row["foto"],
+            token_redefinicao=row["token_redefinicao"],
+            data_token=row["data_token"],
+            estado_usuario=row["estado_usuario"])
         return colaborador
     
 def update(colaborador: Colaborador) -> bool:
     with get_connection() as conn:
         cursor = conn.cursor()
         usuario = Usuario(
-            colaborador.cod_usuario,
-            colaborador.cod_unidade,
-            colaborador.nome, 
-            colaborador.email, 
-            colaborador.senha,
-            colaborador.cpf,
-            colaborador.data_nascimento,
-            colaborador.status,
-            colaborador.data_cadastro,
-            colaborador.rua_usuario,
-            colaborador.bairro_usuario,
-            colaborador.cidade_usuario,
-            colaborador.cep_usuario,
-            colaborador.telefone)
-        usuario_repo.update(usuario)
+            cod_usuario=colaborador.cod_usuario,
+            nome=colaborador.nome,
+            email=colaborador.email,
+            senha=colaborador.senha,
+            cpf=colaborador.cpf,
+            data_nascimento=colaborador.data_nascimento,
+            status=colaborador.status,
+            rua_usuario=colaborador.rua_usuario,
+            bairro_usuario=colaborador.bairro_usuario,
+            cidade_usuario=colaborador.cidade_usuario,
+            cep_usuario=colaborador.cep_usuario,
+            telefone=colaborador.telefone,
+            genero=colaborador.genero if colaborador.genero else '',
+            perfil='colaborador',
+            data_cadastro=colaborador.data_cadastro,
+            foto=colaborador.foto,
+            token_redefinicao=colaborador.token_redefinicao,
+            data_token=colaborador.data_token,
+            estado_usuario=colaborador.estado_usuario
+        )
+        usuario_repo.update(usuario, cursor)
         cursor.execute(UPDATE, (
             colaborador.funcao,
             colaborador.cod_unidade,

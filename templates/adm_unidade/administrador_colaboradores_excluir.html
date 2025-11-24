@@ -1,13 +1,188 @@
 {% extends "adm_unidade/administrador__base.html" %}
 {% block custom_css %}
-<link href="/static/css/" rel="stylesheet">
+<link href="/static/css/adm_unidade/administrador_campanha_detalhes.css" rel="stylesheet">
+<style>
+.delete-warning {
+    background: linear-gradient(135deg, #fff3cd 0%, #ffe8a1 100%);
+    border-left: 5px solid #ffc107;
+    padding: 1.5rem;
+    border-radius: 10px;
+    margin: 2rem 0;
+}
+.collaborator-summary {
+    background: white;
+    border-radius: 15px;
+    padding: 2rem;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+</style>
 {% endblock %}
 
 {% block conteudo %}
-<h1>Administrador Colaboradores Excluir</h1>
+<div class="campaign-container" style="padding-top: 80px;">
+    <div class="campaign-card">
+        <div class="campaign-header-modern">
+            <div class="text-center mb-4">
+                <i class="fas fa-exclamation-triangle text-warning" style="font-size: 4rem;"></i>
+                <h1 class="campaign-title-modern mt-3">Confirmar Exclusão</h1>
+                <p class="campaign-description-modern">Você está prestes a excluir este colaborador</p>
+            </div>
+        </div>
+
+        <div class="campaign-body">
+            <div class="delete-warning">
+                <h5 class="mb-3"><i class="fas fa-exclamation-circle"></i> Atenção!</h5>
+                <ul class="mb-0">
+                    <li>Esta ação não poderá ser desfeita</li>
+                    <li>Todos os dados do colaborador serão permanentemente removidos</li>
+                    <li>O colaborador perderá acesso ao sistema</li>
+                </ul>
+            </div>
+
+            <div class="collaborator-summary">
+                <h4 class="text-center mb-4 text-danger">Dados do Colaborador</h4>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="info-box mb-3">
+                            <i class="fas fa-user text-danger"></i>
+                            <div>
+                                <small class="text-muted">Nome</small>
+                                <p class="mb-0 fw-bold">{{ colaborador.nome }}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="info-box mb-3">
+                            <i class="fas fa-id-card text-danger"></i>
+                            <div>
+                                <small class="text-muted">CPF</small>
+                                <p class="mb-0 fw-bold">{{ colaborador.cpf }}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="info-box mb-3">
+                            <i class="fas fa-envelope text-danger"></i>
+                            <div>
+                                <small class="text-muted">E-mail</small>
+                                <p class="mb-0 fw-bold">{{ colaborador.email }}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="info-box mb-3">
+                            <i class="fas fa-user-tag text-danger"></i>
+                            <div>
+                                <small class="text-muted">Função</small>
+                                <p class="mb-0 fw-bold">{{ colaborador.funcao or 'Não especificado' }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-actions mt-4">
+                <div class="d-flex justify-content-between gap-3">
+                    <a href="/administrador/colaboradores" class="btn btn-outline-secondary btn-lg flex-grow-1">
+                        <i class="fas fa-times"></i> Cancelar
+                    </a>
+                    <button type="button" class="btn btn-danger btn-lg flex-grow-1" id="confirmDeleteBtn">
+                        <i class="fas fa-trash"></i> Confirmar Exclusão
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal de Sucesso -->
+<div class="modal fade" id="successModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header bg-success text-white">
+                <h5 class="modal-title"><i class="fas fa-check-circle"></i> Colaborador Excluído!</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body text-center">
+                <i class="fas fa-user-times text-success mb-3" style="font-size: 3rem;"></i>
+                <h4>Sucesso!</h4>
+                <p>O colaborador foi excluído com sucesso do sistema.</p>
+            </div>
+            <div class="modal-footer">
+                <a href="/administrador/colaboradores" class="btn btn-primary">Ver Colaboradores</a>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}
 
 {% block custom_js %}
-<script src="/static/js/">  
+<script>
+function showToast(message, type = 'info') {
+    const existingToasts = document.querySelectorAll('.toast-notification');
+    existingToasts.forEach(toast => toast.remove());
+
+    const toast = document.createElement('div');
+    toast.className = `toast-notification toast-${type}`;
+    toast.innerHTML = `
+        <div class="toast-content">
+            <i class="fas fa-${type === 'success' ? 'check-circle' : 'times-circle'} me-2"></i>
+            ${message}
+        </div>
+    `;
+
+    toast.style.cssText = `
+        position: fixed; top: 20px; right: 20px;
+        background: ${type === 'success' ? '#28a745' : '#dc3545'};
+        color: white; padding: 1rem 1.5rem; border-radius: 10px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.2); z-index: 9999;
+        animation: slideIn 0.3s ease;
+    `;
+
+    document.body.appendChild(toast);
+    setTimeout(() => {
+        toast.style.animation = 'slideOut 0.3s ease';
+        setTimeout(() => toast.remove(), 300);
+    }, 3000);
+}
+
+document.getElementById('confirmDeleteBtn').addEventListener('click', async () => {
+    const btn = event.target;
+    btn.disabled = true;
+    btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Excluindo...';
+    
+    try {
+        const response = await fetch('/api/administrador/colaboradores/excluir/{{ colaborador.cod_colaborador }}', {
+            method: 'DELETE',
+            headers: { 'Content-Type': 'application/json' }
+        });
+        
+        const result = await response.json();
+        
+        if (result.success) {
+            const successModal = new bootstrap.Modal(document.getElementById('successModal'));
+            successModal.show();
+        } else {
+            showToast(result.message || 'Erro ao excluir colaborador', 'error');
+            btn.disabled = false;
+            btn.innerHTML = '<i class="fas fa-trash"></i> Confirmar Exclusão';
+        }
+    } catch (error) {
+        console.error('Erro:', error);
+        showToast('Erro ao excluir colaborador', 'error');
+        btn.disabled = false;
+        btn.innerHTML = '<i class="fas fa-trash"></i> Confirmar Exclusão';
+    }
+});
+
+const style = document.createElement('style');
+style.textContent = `
+    @keyframes slideIn { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+    @keyframes slideOut { from { transform: translateX(0); opacity: 1; } to { transform: translateX(100%); opacity: 0; } }
+    .info-box { display: flex; align-items: center; gap: 1rem; padding: 1rem;
+        background: #f8f9fa; border-radius: 10px; border-left: 4px solid var(--hemotec-red); }
+    .info-box i { font-size: 1.5rem; }
+`;
+document.head.appendChild(style);
 </script>
 {% endblock %}

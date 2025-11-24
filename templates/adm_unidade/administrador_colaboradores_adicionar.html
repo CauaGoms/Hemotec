@@ -1,13 +1,345 @@
 {% extends "adm_unidade/administrador__base.html" %}
 {% block custom_css %}
-<link href="/static/css/" rel="stylesheet">
+<link href="/static/css/adm_unidade/administrador_colaboradores_adicionar.css" rel="stylesheet">
 {% endblock %}
 
 {% block conteudo %}
-<h1>Administrador Colaboradores Adicionar</h1>
+<!-- Conteúdo Principal -->
+<div class="main-content" style="padding-top: 120px;">
+    <div class="container">
+        <!-- Header da Página -->
+        <div class="page-header">
+            <div class="d-flex align-items-center mb-4">
+                <a href="/administrador/colaboradores" class="btn-back">
+                    <i class="fas fa-arrow-left"></i>
+                </a>
+                <div class="ms-3">
+                    <h1 class="page-title">
+                        <i class="fas fa-plus-circle text-danger"></i>
+                        Adicionar Novo Colaborador
+                    </h1>
+                    <p class="page-subtitle">Cadastre um novo colaborador na unidade de coleta</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Formulário de Colaborador -->
+        <div class="collaborator-form-container">
+            <form id="collaboratorForm" class="collaborator-form">
+                <!-- Seção: Informações Pessoais -->
+                <div class="form-section">
+                    <div class="section-header">
+                        <h3 class="section-title">
+                            <i class="fas fa-user"></i>
+                            Informações Pessoais
+                        </h3>
+                        <p class="section-description">Dados pessoais do colaborador</p>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-8">
+                            <div class="form-group">
+                                <label for="nome" class="form-label">
+                                    <i class="fas fa-user"></i>
+                                    Nome Completo *
+                                </label>
+                                <input 
+                                    type="text" 
+                                    class="form-control" 
+                                    id="nome" 
+                                    name="nome" 
+                                    placeholder="Ex: João Silva"
+                                    required
+                                    maxlength="100"
+                                >
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="data_nascimento" class="form-label">
+                                    <i class="fas fa-calendar"></i>
+                                    Data de Nascimento *
+                                </label>
+                                <input 
+                                    type="date" 
+                                    class="form-control" 
+                                    id="data_nascimento" 
+                                    name="data_nascimento" 
+                                    required
+                                >
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="cpf" class="form-label">
+                                    <i class="fas fa-id-card"></i>
+                                    CPF *
+                                </label>
+                                <input 
+                                    type="text" 
+                                    class="form-control" 
+                                    id="cpf" 
+                                    name="cpf" 
+                                    placeholder="000.000.000-00"
+                                    required
+                                    maxlength="14"
+                                >
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="telefone" class="form-label">
+                                    <i class="fas fa-phone"></i>
+                                    Telefone *
+                                </label>
+                                <input 
+                                    type="text" 
+                                    class="form-control" 
+                                    id="telefone" 
+                                    name="telefone" 
+                                    placeholder="(00) 00000-0000"
+                                    required
+                                    maxlength="15"
+                                >
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Seção: Dados de Acesso -->
+                <div class="form-section">
+                    <div class="section-header">
+                        <h3 class="section-title">
+                            <i class="fas fa-key"></i>
+                            Dados de Acesso
+                        </h3>
+                        <p class="section-description">Credenciais para login no sistema</p>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="email" class="form-label">
+                                    <i class="fas fa-envelope"></i>
+                                    E-mail *
+                                </label>
+                                <input 
+                                    type="email" 
+                                    class="form-control" 
+                                    id="email" 
+                                    name="email" 
+                                    placeholder="colaborador@exemplo.com"
+                                    required
+                                >
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="senha" class="form-label">
+                                    <i class="fas fa-lock"></i>
+                                    Senha *
+                                </label>
+                                <div class="password-container">
+                                    <input 
+                                        type="password" 
+                                        class="form-control" 
+                                        id="senha" 
+                                        name="senha" 
+                                        placeholder="Mínimo 6 caracteres"
+                                        required
+                                        minlength="6"
+                                    >
+                                    <button type="button" class="btn-toggle-password" onclick="togglePassword('senha')">
+                                        <i class="fas fa-eye" id="senha-icon"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Seção: Informações Profissionais -->
+                <div class="form-section">
+                    <div class="section-header">
+                        <h3 class="section-title">
+                            <i class="fas fa-briefcase"></i>
+                            Informações Profissionais
+                        </h3>
+                        <p class="section-description">Dados relacionados ao trabalho</p>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="cod_unidade" class="form-label">
+                                    <i class="fas fa-hospital"></i>
+                                    Unidade de Coleta *
+                                </label>
+                                <select 
+                                    class="form-control" 
+                                    id="cod_unidade" 
+                                    name="cod_unidade" 
+                                    required
+                                >
+                                    <option value="">Selecione uma unidade</option>
+                                    {% for unidade in unidades %}
+                                    <option value="{{ unidade.cod_unidade }}">{{ unidade.nome }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="funcao" class="form-label">
+                                    <i class="fas fa-user-tag"></i>
+                                    Função
+                                </label>
+                                <input 
+                                    type="text" 
+                                    class="form-control" 
+                                    id="funcao" 
+                                    name="funcao" 
+                                    placeholder="Ex: Enfermeiro, Recepcionista, Técnico"
+                                    maxlength="50"
+                                >
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Seção: Endereço -->
+                <div class="form-section">
+                    <div class="section-header">
+                        <h3 class="section-title">
+                            <i class="fas fa-map-marker-alt"></i>
+                            Endereço
+                        </h3>
+                        <p class="section-description">Localização do colaborador</p>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-8">
+                            <div class="form-group">
+                                <label for="rua_usuario" class="form-label">
+                                    <i class="fas fa-road"></i>
+                                    Rua *
+                                </label>
+                                <input 
+                                    type="text" 
+                                    class="form-control" 
+                                    id="rua_usuario" 
+                                    name="rua_usuario" 
+                                    placeholder="Nome da rua, número"
+                                    required
+                                    maxlength="100"
+                                >
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="cep_usuario" class="form-label">
+                                    <i class="fas fa-mail-bulk"></i>
+                                    CEP *
+                                </label>
+                                <input 
+                                    type="text" 
+                                    class="form-control" 
+                                    id="cep_usuario" 
+                                    name="cep_usuario" 
+                                    placeholder="00000-000"
+                                    required
+                                    maxlength="9"
+                                >
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="bairro_usuario" class="form-label">
+                                    <i class="fas fa-map"></i>
+                                    Bairro *
+                                </label>
+                                <input 
+                                    type="text" 
+                                    class="form-control" 
+                                    id="bairro_usuario" 
+                                    name="bairro_usuario" 
+                                    placeholder="Nome do bairro"
+                                    required
+                                    maxlength="50"
+                                >
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="cidade_usuario" class="form-label">
+                                    <i class="fas fa-city"></i>
+                                    Cidade *
+                                </label>
+                                <select 
+                                    class="form-control" 
+                                    id="cidade_usuario" 
+                                    name="cidade_usuario" 
+                                    required
+                                >
+                                    <option value="">Selecione uma cidade</option>
+                                    {% for cidade in cidades %}
+                                    <option value="{{ cidade.cod_cidade }}">{{ cidade.nome_cidade }} - {{ cidade.sigla_estado }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Botões de Ação -->
+                <div class="form-actions">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <a href="/administrador/colaboradores" class="btn btn-outline-secondary">
+                            <i class="fas fa-times"></i>
+                            Cancelar
+                        </a>
+                        <button type="submit" class="btn btn-primary" id="submitBtn">
+                            <i class="fas fa-save"></i>
+                            Salvar Colaborador
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Modal de Sucesso -->
+<div class="modal fade" id="successModal" tabindex="-1" aria-labelledby="successModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header bg-success text-white">
+                <h5 class="modal-title" id="successModalLabel">
+                    <i class="fas fa-check-circle"></i>
+                    Colaborador Criado com Sucesso!
+                </h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body text-center">
+                <i class="fas fa-user-check text-success mb-3" style="font-size: 3rem;"></i>
+                <h4>Parabéns!</h4>
+                <p>O colaborador foi cadastrado com sucesso no sistema.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                <a href="/administrador/colaboradores" class="btn btn-primary">Ver Colaboradores</a>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}
 
 {% block custom_js %}
-<script src="/static/js/">  
-</script>
+<script src="/static/js/adm_unidade/administrador_colaboradores_adicionar.js"></script>
 {% endblock %}

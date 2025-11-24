@@ -1,13 +1,180 @@
 {% extends "adm_unidade/administrador__base.html" %}
+
 {% block custom_css %}
-<link href="/static/css/" rel="stylesheet">
+<link href="/static/css/adm_unidade/administrador_relatorios_por_periodo.css" rel="stylesheet">
 {% endblock %}
 
 {% block conteudo %}
-<h1>Administrador Colaboradores Relatórios Por Período</h1>
+<div class="relatorios-periodo-container">
+    <!-- Hero Section -->
+    <div class="hero-section">
+        <a href="/administrador/relatorio" class="btn-back">
+            <i class="fas fa-arrow-left"></i>
+        </a>
+        <div class="hero-content">
+            <h1><i class="fas fa-calendar-alt"></i> Relatório por Período</h1>
+            <p class="hero-subtitle">Analise doações e agendamentos em um intervalo de datas</p>
+        </div>
+    </div>
+
+    <!-- Filtros -->
+    <div class="filters-section">
+        <form id="filtroForm" class="filter-form">
+            <div class="filter-group">
+                <label for="data_inicio">
+                    <i class="fas fa-calendar"></i> Data Início
+                </label>
+                <input type="date" id="data_inicio" name="data_inicio" 
+                       value="{{ data_inicio }}" required>
+            </div>
+            
+            <div class="filter-group">
+                <label for="data_fim">
+                    <i class="fas fa-calendar"></i> Data Fim
+                </label>
+                <input type="date" id="data_fim" name="data_fim" 
+                       value="{{ data_fim }}" required>
+            </div>
+            
+            <button type="submit" class="btn-filter">
+                <i class="fas fa-search"></i> Filtrar
+            </button>
+            
+            <button type="button" class="btn-export" id="btnExportPDF">
+                <i class="fas fa-file-pdf"></i> Exportar PDF
+            </button>
+        </form>
+    </div>
+
+    <!-- Cards de Estatísticas -->
+    <div class="stats-grid">
+        <div class="stat-card doacoes">
+            <div class="stat-icon">
+                <i class="fas fa-hand-holding-heart"></i>
+            </div>
+            <div class="stat-content">
+                <h3 class="stat-value">{{ total_doacoes }}</h3>
+                <p class="stat-label">Total de Doações</p>
+            </div>
+        </div>
+
+        <div class="stat-card agendamentos">
+            <div class="stat-icon">
+                <i class="fas fa-calendar-check"></i>
+            </div>
+            <div class="stat-content">
+                <h3 class="stat-value">{{ total_agendamentos }}</h3>
+                <p class="stat-label">Total de Agendamentos</p>
+            </div>
+        </div>
+
+        <div class="stat-card confirmados">
+            <div class="stat-icon">
+                <i class="fas fa-check-circle"></i>
+            </div>
+            <div class="stat-content">
+                <h3 class="stat-value">{{ agendamentos_confirmados }}</h3>
+                <p class="stat-label">Agendamentos Confirmados</p>
+            </div>
+        </div>
+
+        <div class="stat-card estoque">
+            <div class="stat-icon">
+                <i class="fas fa-boxes"></i>
+            </div>
+            <div class="stat-content">
+                <h3 class="stat-value">{{ estoque_total }}</h3>
+                <p class="stat-label">Bolsas em Estoque</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tabela de Doações -->
+    <div class="table-section">
+        <h2 class="section-title">
+            <i class="fas fa-list"></i> Doações do Período
+        </h2>
+        <div class="table-container">
+            <table class="data-table" id="tabelaDoacoes">
+                <thead>
+                    <tr>
+                        <th>Código</th>
+                        <th>Doador</th>
+                        <th>Data</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% if doacoes %}
+                        {% for doacao in doacoes %}
+                        <tr>
+                            <td>{{ doacao.cod_doacao }}</td>
+                            <td>{{ doacao.cod_doador }}</td>
+                            <td>{{ doacao.data_hora.strftime('%d/%m/%Y %H:%M') if doacao.data_hora else '-' }}</td>
+                            <td><span class="badge badge-success">Realizada</span></td>
+                        </tr>
+                        {% endfor %}
+                    {% else %}
+                        <tr>
+                            <td colspan="4" class="no-data">
+                                <i class="fas fa-inbox"></i> Nenhuma doação encontrada no período
+                            </td>
+                        </tr>
+                    {% endif %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Tabela de Agendamentos -->
+    <div class="table-section">
+        <h2 class="section-title">
+            <i class="fas fa-calendar-alt"></i> Agendamentos do Período
+        </h2>
+        <div class="table-container">
+            <table class="data-table" id="tabelaAgendamentos">
+                <thead>
+                    <tr>
+                        <th>Código</th>
+                        <th>Doador</th>
+                        <th>Data</th>
+                        <th>Horário</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% if agendamentos %}
+                        {% for agendamento in agendamentos %}
+                        <tr>
+                            <td>#{{ agendamento.cod_agendamento }}</td>
+                            <td>Doador {{ agendamento.cod_usuario }}</td>
+                            <td>{{ agendamento.data_hora.strftime('%d/%m/%Y %H:%M') if agendamento.data_hora else '-' }}</td>
+                            <td>{{ agendamento.tipo_agendamento }}</td>
+                            <td>
+                                {% if agendamento.status == 1 %}
+                                <span class="badge badge-success">Confirmado</span>
+                                {% elif agendamento.status == 2 %}
+                                <span class="badge badge-danger">Cancelado</span>
+                                {% else %}
+                                <span class="badge badge-warning">Pendente</span>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    {% else %}
+                        <tr>
+                            <td colspan="5" class="no-data">
+                                <i class="fas fa-inbox"></i> Nenhum agendamento encontrado no período
+                            </td>
+                        </tr>
+                    {% endif %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
 {% endblock %}
 
 {% block custom_js %}
-<script src="/static/js/">  
-</script>
+<script src="/static/js/adm_unidade/administrador_relatorios_por_periodo.js"></script>
 {% endblock %}

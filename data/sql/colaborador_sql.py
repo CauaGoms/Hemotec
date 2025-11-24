@@ -30,7 +30,13 @@ SELECT
     u.bairro_usuario,
     u.cidade_usuario,
     u.cep_usuario,
-    u.telefone
+    u.telefone,
+    u.genero,
+    u.perfil,
+    u.foto,
+    u.token_redefinicao,
+    u.data_token,
+    u.estado_usuario
 FROM colaborador c
 JOIN usuario u ON c.cod_colaborador = u.cod_usuario
 """
@@ -63,7 +69,13 @@ SELECT
     u.bairro_usuario,
     u.cidade_usuario,
     u.cep_usuario,
-    u.telefone
+    u.telefone,
+    u.genero,
+    u.perfil,
+    u.foto,
+    u.token_redefinicao,
+    u.data_token,
+    u.estado_usuario
 FROM colaborador c
 JOIN usuario u ON c.cod_colaborador = u.cod_usuario
 WHERE c.cod_colaborador = ?;

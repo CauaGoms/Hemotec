@@ -1,13 +1,138 @@
 {% extends "adm_unidade/administrador__base.html" %}
 {% block custom_css %}
-<link href="/static/css/" rel="stylesheet">
+<link href="/static/css/adm_unidade/administrador_colaboradores.css" rel="stylesheet">
 {% endblock %}
 
 {% block conteudo %}
-<h1>Administrador Colaboradores</h1>
+<!-- Hero Section -->
+<section class="hero-section">
+    <div class="floating-elements">
+        <i class="fas fa-user-tie floating-element" style="font-size: 3rem;"></i>
+        <i class="fas fa-users floating-element" style="font-size: 2.5rem;"></i>
+        <i class="fas fa-user-check floating-element" style="font-size: 3.5rem;"></i>
+    </div>
+    <div class="container">
+        <div class="hero-content">
+            <h1 class="hero-title">Gestão de Colaboradores</h1>
+            <p class="hero-subtitle">Gerencie os colaboradores da unidade de coleta. Nossa equipe faz a diferença!</p>
+            <a href="/administrador/colaboradores/adicionar" class="btn btn-light btn-lg px-4 py-3 mt-3" style="border-radius: 25px; font-weight: 600;">
+                <i class="fas fa-plus me-2"></i>
+                Adicionar Novo Colaborador
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- Filtros e Busca -->
+<section class="container" style="margin-top: 60px;">
+    <div class="collaborator-filter fade-in">
+        <div class="row align-items-center">
+            <div class="col-md-6">
+                <div class="search-box">
+                    <i class="fas fa-search search-icon"></i>
+                    <input
+                        type="text"
+                        class="search-input"
+                        placeholder="Buscar colaboradores por nome, CPF ou função..."
+                        id="searchInput"
+                    >
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="text-center">
+                    <button class="filter-btn active" data-filter="all">Todos</button>
+                    <button class="filter-btn" data-filter="active">Ativos</button>
+                    <button class="filter-btn" data-filter="inactive">Inativos</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Lista de Colaboradores -->
+<section class="container mb-5">
+    <div class="text-center mb-5">
+        <h2 class="section-title">Todos os Colaboradores</h2>
+    </div>
+    <div class="row" id="collaboratorsList">
+        {% if colaboradores %}
+            {% for colaborador in colaboradores %}
+        {% set status_class = 'status-active' if colaborador.status else 'status-inactive' %}
+        {% set status_texto = 'Ativo' if colaborador.status else 'Inativo' %}
+        <div class="col-md-6 col-lg-4 collaborator-item fade-in mb-5" 
+             data-category="{{ 'active' if colaborador.status else 'inactive' }}" 
+             data-title="{{ colaborador.nome|lower }}"
+             data-cpf="{{ colaborador.cpf }}"
+             data-funcao="{{ colaborador.funcao|lower }}">
+            <div class="collaborator-card">
+                <div class="position-relative">
+                    <div class="collaborator-avatar">
+                        {% if colaborador.foto %}
+                            <img src="{{ colaborador.foto }}" alt="{{ colaborador.nome }}">
+                        {% else %}
+                            <i class="fas fa-user"></i>
+                        {% endif %}
+                    </div>
+                    <div class="collaborator-status {{ status_class }}">
+                        {{ status_texto }}
+                    </div>
+                </div>
+                <div class="collaborator-body">
+                    <h5 class="collaborator-name">{{ colaborador.nome }}</h5>
+                    <div class="collaborator-meta">
+                        <div class="meta-item">
+                            <i class="fas fa-briefcase"></i>
+                            <span>{{ colaborador.funcao or 'Não especificado' }}</span>
+                        </div>
+                        <div class="meta-item">
+                            <i class="fas fa-envelope"></i>
+                            <span>{{ colaborador.email }}</span>
+                        </div>
+                        <div class="meta-item">
+                            <i class="fas fa-phone"></i>
+                            <span>{{ colaborador.telefone }}</span>
+                        </div>
+                        <div class="meta-item">
+                            <i class="fas fa-id-card"></i>
+                            <span>CPF: {{ colaborador.cpf }}</span>
+                        </div>
+                    </div>
+                    
+                    <div class="collaborator-actions">
+                        <a href="/administrador/colaboradores/detalhes/{{ colaborador.cod_colaborador }}" class="btn-collaborator-view">
+                            <i class="fas fa-eye"></i>
+                            <span>Visualizar</span>
+                        </a>
+                        <div class="collaborator-actions-secondary">
+                            <a href="/administrador/colaboradores/alterar/{{ colaborador.cod_colaborador }}" class="btn-collaborator-edit" title="Editar">
+                                <i class="fas fa-edit"></i>
+                            </a>
+                            <a href="/administrador/colaboradores/excluir/{{ colaborador.cod_colaborador }}" class="btn-collaborator-delete" title="Excluir">
+                                <i class="fas fa-trash-alt"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+        {% else %}
+        <div class="col-12 text-center">
+            <div class="empty-state">
+                <i class="fas fa-user-tie fa-3x text-muted mb-3"></i>
+                <h4 class="text-muted">Nenhum colaborador cadastrado</h4>
+                <p class="text-muted">Adicione o primeiro colaborador para começar!</p>
+                <a href="/administrador/colaboradores/adicionar" class="btn btn-primary mt-3">
+                    <i class="fas fa-plus me-2"></i>Adicionar Colaborador
+                </a>
+            </div>
+        </div>
+        {% endif %}        
+    </div>
+</section>
 {% endblock %}
 
+<!-- Custom JavaScript -->
 {% block custom_js %}
-<script src="/static/js/">  
-</script>
+<script src="/static/js/adm_unidade/administrador_colaboradores.js"></script>
 {% endblock %}

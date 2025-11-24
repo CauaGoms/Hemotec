@@ -1,13 +1,234 @@
 {% extends "adm_unidade/administrador__base.html" %}
+
 {% block custom_css %}
-<link href="/static/css/" rel="stylesheet">
+<link href="/static/css/adm_unidade/administrador_campanha_detalhes.css" rel="stylesheet">
 {% endblock %}
 
 {% block conteudo %}
-<h1>Administrador Colaboradores Detalhes</h1>
+<div class="campaign-container" style="padding-top: 80px;">
+    <div class="campaign-card">
+        <!-- Header do Colaborador -->
+        <div class="campaign-header-modern">
+            <div class="d-flex justify-content-between align-items-start w-100 mb-4">
+                <div class="d-flex align-items-center gap-3 flex-grow-1">
+                    <div class="collaborator-avatar-large">
+                        {% if colaborador.foto %}
+                            <img src="{{ colaborador.foto }}" alt="{{ colaborador.nome }}">
+                        {% else %}
+                            <i class="fas fa-user"></i>
+                        {% endif %}
+                    </div>
+                    <div>
+                        <h1 class="campaign-title-modern mb-2">{{ colaborador.nome }}</h1>
+                        <span class="badge {% if colaborador.status %}bg-success{% else %}bg-secondary{% endif %} fs-6">
+                            {% if colaborador.status %}Ativo{% else %}Inativo{% endif %}
+                        </span>
+                    </div>
+                </div>
+                <div class="action-buttons">
+                    <a href="/administrador/colaboradores/alterar/{{ colaborador.cod_colaborador }}" class="btn btn-primary btn-action">
+                        <i class="fas fa-edit me-2"></i>Editar
+                    </a>
+                    <a href="/administrador/colaboradores/excluir/{{ colaborador.cod_colaborador }}" class="btn btn-danger btn-action">
+                        <i class="fas fa-trash me-2"></i>Excluir
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Corpo - Informações do Colaborador -->
+        <div class="campaign-body">
+            <!-- Informações Pessoais -->
+            <div class="campaign-section">
+                <h3 class="section-title">
+                    <i class="fas fa-user"></i>
+                    Informações Pessoais
+                </h3>
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <div class="info-box">
+                            <i class="fas fa-id-card text-danger"></i>
+                            <div>
+                                <small class="text-muted">CPF</small>
+                                <p class="mb-0 fw-bold">{{ colaborador.cpf }}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <div class="info-box">
+                            <i class="fas fa-calendar text-danger"></i>
+                            <div>
+                                <small class="text-muted">Data de Nascimento</small>
+                                <p class="mb-0 fw-bold">{{ colaborador.data_nascimento.strftime('%d/%m/%Y') if colaborador.data_nascimento else 'N/A' }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Dados de Contato -->
+            <div class="campaign-section">
+                <h3 class="section-title">
+                    <i class="fas fa-address-book"></i>
+                    Dados de Contato
+                </h3>
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <div class="info-box">
+                            <i class="fas fa-envelope text-danger"></i>
+                            <div>
+                                <small class="text-muted">E-mail</small>
+                                <p class="mb-0 fw-bold">{{ colaborador.email }}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <div class="info-box">
+                            <i class="fas fa-phone text-danger"></i>
+                            <div>
+                                <small class="text-muted">Telefone</small>
+                                <p class="mb-0 fw-bold">{{ colaborador.telefone }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Informações Profissionais -->
+            <div class="campaign-section">
+                <h3 class="section-title">
+                    <i class="fas fa-briefcase"></i>
+                    Informações Profissionais
+                </h3>
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <div class="info-box">
+                            <i class="fas fa-hospital text-danger"></i>
+                            <div>
+                                <small class="text-muted">Unidade de Coleta</small>
+                                <p class="mb-0 fw-bold">{{ unidade.nome if unidade else 'N/A' }}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <div class="info-box">
+                            <i class="fas fa-user-tag text-danger"></i>
+                            <div>
+                                <small class="text-muted">Função</small>
+                                <p class="mb-0 fw-bold">{{ colaborador.funcao or 'Não especificado' }}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <div class="info-box">
+                            <i class="fas fa-calendar-plus text-danger"></i>
+                            <div>
+                                <small class="text-muted">Data de Cadastro</small>
+                                <p class="mb-0 fw-bold">{{ colaborador.data_cadastro.strftime('%d/%m/%Y') if colaborador.data_cadastro else 'N/A' }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Endereço -->
+            <div class="campaign-section">
+                <h3 class="section-title">
+                    <i class="fas fa-map-marker-alt"></i>
+                    Endereço
+                </h3>
+                <div class="row">
+                    <div class="col-md-8 mb-3">
+                        <div class="info-box">
+                            <i class="fas fa-road text-danger"></i>
+                            <div>
+                                <small class="text-muted">Rua</small>
+                                <p class="mb-0 fw-bold">{{ colaborador.rua_usuario }}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <div class="info-box">
+                            <i class="fas fa-mail-bulk text-danger"></i>
+                            <div>
+                                <small class="text-muted">CEP</small>
+                                <p class="mb-0 fw-bold">{{ colaborador.cep_usuario }}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <div class="info-box">
+                            <i class="fas fa-map text-danger"></i>
+                            <div>
+                                <small class="text-muted">Bairro</small>
+                                <p class="mb-0 fw-bold">{{ colaborador.bairro_usuario }}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <div class="info-box">
+                            <i class="fas fa-city text-danger"></i>
+                            <div>
+                                <small class="text-muted">Cidade</small>
+                                <p class="mb-0 fw-bold">{{ cidade.nome_cidade if cidade else 'N/A' }} - {{ cidade.sigla_estado if cidade else '' }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Botão Voltar -->
+            <div class="text-center mt-4">
+                <a href="/administrador/colaboradores" class="btn btn-outline-secondary btn-lg">
+                    <i class="fas fa-arrow-left me-2"></i>Voltar para Lista
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.collaborator-avatar-large {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    overflow: hidden;
+    border: 4px solid white;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.collaborator-avatar-large img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.collaborator-avatar-large i {
+    font-size: 3rem;
+    color: var(--hemotec-red);
+    opacity: 0.3;
+}
+
+.info-box {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+    background: #f8f9fa;
+    border-radius: 10px;
+    border-left: 4px solid var(--hemotec-red);
+}
+
+.info-box i {
+    font-size: 1.5rem;
+}
+</style>
 {% endblock %}
 
 {% block custom_js %}
-<script src="/static/js/">  
-</script>
+<script src="/static/js/adm_unidade/administrador_campanha_detalhes.js"></script>
 {% endblock %}

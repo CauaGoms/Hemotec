@@ -1,13 +1,250 @@
 {% extends "adm_unidade/administrador__base.html" %}
 {% block custom_css %}
-<link href="/static/css/" rel="stylesheet">
+<link href="/static/css/adm_unidade/administrador_colaboradores_adicionar.css" rel="stylesheet">
 {% endblock %}
 
 {% block conteudo %}
-<h1>Administrador Colaboradores Alterar</h1>
+<div class="main-content" style="padding-top: 120px;">
+    <div class="container">
+        <div class="page-header">
+            <div class="d-flex align-items-center mb-4">
+                <a href="/administrador/colaboradores" class="btn-back">
+                    <i class="fas fa-arrow-left"></i>
+                </a>
+                <div class="ms-3">
+                    <h1 class="page-title">
+                        <i class="fas fa-edit text-danger"></i>
+                        Editar Colaborador
+                    </h1>
+                    <p class="page-subtitle">Altere as informações do colaborador</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="collaborator-form-container">
+            <form id="collaboratorForm" class="collaborator-form">
+                <input type="hidden" name="cod_colaborador" value="{{ colaborador.cod_colaborador }}">
+                
+                <!-- Informações Pessoais -->
+                <div class="form-section">
+                    <div class="section-header">
+                        <h3 class="section-title"><i class="fas fa-user"></i> Informações Pessoais</h3>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-8">
+                            <div class="form-group">
+                                <label for="nome" class="form-label"><i class="fas fa-user"></i> Nome Completo *</label>
+                                <input type="text" class="form-control" id="nome" name="nome" value="{{ colaborador.nome }}" required maxlength="100">
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="data_nascimento" class="form-label"><i class="fas fa-calendar"></i> Data de Nascimento *</label>
+                                <input type="date" class="form-control" id="data_nascimento" name="data_nascimento" value="{{ colaborador.data_nascimento.strftime('%Y-%m-%d') if colaborador.data_nascimento else '' }}" required>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="cpf" class="form-label"><i class="fas fa-id-card"></i> CPF *</label>
+                                <input type="text" class="form-control" id="cpf" name="cpf" value="{{ colaborador.cpf }}" required maxlength="14">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="telefone" class="form-label"><i class="fas fa-phone"></i> Telefone *</label>
+                                <input type="text" class="form-control" id="telefone" name="telefone" value="{{ colaborador.telefone }}" required maxlength="15">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Dados de Acesso -->
+                <div class="form-section">
+                    <div class="section-header">
+                        <h3 class="section-title"><i class="fas fa-key"></i> Dados de Acesso</h3>
+                        <p class="section-description">Deixe a senha em branco para manter a atual</p>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="email" class="form-label"><i class="fas fa-envelope"></i> E-mail *</label>
+                                <input type="email" class="form-control" id="email" name="email" value="{{ colaborador.email }}" required>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="senha" class="form-label"><i class="fas fa-lock"></i> Nova Senha (opcional)</label>
+                                <div class="password-container">
+                                    <input type="password" class="form-control" id="senha" name="senha" placeholder="Deixe em branco para não alterar" minlength="6">
+                                    <button type="button" class="btn-toggle-password" onclick="togglePassword('senha')">
+                                        <i class="fas fa-eye" id="senha-icon"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Informações Profissionais -->
+                <div class="form-section">
+                    <div class="section-header">
+                        <h3 class="section-title"><i class="fas fa-briefcase"></i> Informações Profissionais</h3>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="cod_unidade" class="form-label"><i class="fas fa-hospital"></i> Unidade de Coleta *</label>
+                                <select class="form-control" id="cod_unidade" name="cod_unidade" required>
+                                    {% for unidade in unidades %}
+                                    <option value="{{ unidade.cod_unidade }}" {% if unidade.cod_unidade == colaborador.cod_unidade %}selected{% endif %}>{{ unidade.nome }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="funcao" class="form-label"><i class="fas fa-user-tag"></i> Função</label>
+                                <input type="text" class="form-control" id="funcao" name="funcao" value="{{ colaborador.funcao or '' }}" maxlength="50">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="status" class="form-label"><i class="fas fa-toggle-on"></i> Status</label>
+                                <select class="form-control" id="status" name="status" required>
+                                    <option value="1" {% if colaborador.status %}selected{% endif %}>Ativo</option>
+                                    <option value="0" {% if not colaborador.status %}selected{% endif %}>Inativo</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Endereço -->
+                <div class="form-section">
+                    <div class="section-header">
+                        <h3 class="section-title"><i class="fas fa-map-marker-alt"></i> Endereço</h3>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-8">
+                            <div class="form-group">
+                                <label for="rua_usuario" class="form-label"><i class="fas fa-road"></i> Rua *</label>
+                                <input type="text" class="form-control" id="rua_usuario" name="rua_usuario" value="{{ colaborador.rua_usuario }}" required maxlength="100">
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="cep_usuario" class="form-label"><i class="fas fa-mail-bulk"></i> CEP *</label>
+                                <input type="text" class="form-control" id="cep_usuario" name="cep_usuario" value="{{ colaborador.cep_usuario }}" required maxlength="9">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="bairro_usuario" class="form-label"><i class="fas fa-map"></i> Bairro *</label>
+                                <input type="text" class="form-control" id="bairro_usuario" name="bairro_usuario" value="{{ colaborador.bairro_usuario }}" required maxlength="50">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="cidade_usuario" class="form-label"><i class="fas fa-city"></i> Cidade *</label>
+                                <select class="form-control" id="cidade_usuario" name="cidade_usuario" required>
+                                    {% for cidade in cidades %}
+                                    <option value="{{ cidade.cod_cidade }}" {% if cidade.cod_cidade == colaborador.cidade_usuario %}selected{% endif %}>{{ cidade.nome_cidade }} - {{ cidade.sigla_estado }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Botões de Ação -->
+                <div class="form-actions">
+                    <div class="d-flex justify-content-between">
+                        <a href="/administrador/colaboradores" class="btn btn-outline-secondary">
+                            <i class="fas fa-times"></i> Cancelar
+                        </a>
+                        <button type="submit" class="btn btn-primary" id="submitBtn">
+                            <i class="fas fa-save"></i> Atualizar Colaborador
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Modal de Sucesso -->
+<div class="modal fade" id="successModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header bg-success text-white">
+                <h5 class="modal-title"><i class="fas fa-check-circle"></i> Colaborador Atualizado!</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body text-center">
+                <i class="fas fa-user-check text-success mb-3" style="font-size: 3rem;"></i>
+                <h4>Sucesso!</h4>
+                <p>As informações do colaborador foram atualizadas.</p>
+            </div>
+            <div class="modal-footer">
+                <a href="/administrador/colaboradores" class="btn btn-primary">Ver Colaboradores</a>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}
 
 {% block custom_js %}
-<script src="/static/js/">  
+<script src="/static/js/adm_unidade/administrador_colaboradores_adicionar.js"></script>
+<script>
+
+// Sobrescrever apenas o submit para usar PUT/POST de atualização
+document.getElementById('collaboratorForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    
+    const cpf = document.getElementById('cpf').value;
+    if (!validateCPF(cpf)) {
+        showToast('CPF inválido!', 'error');
+        return;
+    }
+    
+    const senha = document.getElementById('senha').value;
+    if (senha && senha.length < 6) {
+        showToast('A senha deve ter no mínimo 6 caracteres!', 'error');
+        return;
+    }
+    
+    const submitBtn = document.getElementById('submitBtn');
+    submitBtn.disabled = true;
+    submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Atualizando...';
+    
+    try {
+        const formData = new FormData(e.target);
+        const response = await fetch('/api/administrador/colaboradores/alterar/{{ colaborador.cod_colaborador }}', {
+            method: 'POST',
+            body: formData
+        });
+        
+        const result = await response.json();
+        
+        if (result.success) {
+            const successModal = new bootstrap.Modal(document.getElementById('successModal'));
+            successModal.show();
+        } else {
+            showToast(result.message || 'Erro ao atualizar colaborador', 'error');
+        }
+    } catch (error) {
+        console.error('Erro:', error);
+        showToast('Erro ao atualizar colaborador', 'error');
+    } finally {
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = '<i class="fas fa-save"></i> Atualizar Colaborador';
+    }
+});
 </script>
 {% endblock %}

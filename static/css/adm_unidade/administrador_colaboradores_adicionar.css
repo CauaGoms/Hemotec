@@ -1,0 +1,61 @@
+/* Reutiliza o CSS base de campanhas */
+@import url('administrador_campanha_adicionar.css');
+
+/* Customizações específicas para colaboradores */
+.collaborator-form-container {
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.collaborator-form-container:hover {
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.15);
+}
+
+.collaborator-form {
+    padding: 2.5rem;
+}
+
+/* Container de senha com botão de toggle */
+.password-container {
+    position: relative;
+}
+
+.password-container .form-control {
+    padding-right: 3rem;
+}
+
+.btn-toggle-password {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: #6c757d;
+    cursor: pointer;
+    padding: 0.5rem;
+    transition: color 0.3s ease;
+}
+
+.btn-toggle-password:hover {
+    color: var(--hemotec-red);
+}
+
+/* Ajustes para campos select */
+.form-control option {
+    padding: 0.5rem;
+}
+
+/* Responsividade adicional para campos específicos */
+@media (max-width: 768px) {
+    .collaborator-form {
+        padding: 1.5rem;
+    }
+    
+    .password-container .form-control {
+        padding-right: 2.5rem;
+    }
+}

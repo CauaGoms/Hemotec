@@ -1,13 +1,66 @@
 {% extends "adm_unidade/administrador__base.html" %}
+
 {% block custom_css %}
-<link href="/static/css/" rel="stylesheet">
+<link href="/static/css/adm_unidade/administrador_relatorios.css" rel="stylesheet">
 {% endblock %}
 
 {% block conteudo %}
-<h1>Administrador Colaboradores Relatórios</h1>
+<div class="relatorios-container">
+    <!-- Hero Section -->
+    <div class="hero-section">
+        <div class="hero-content">
+            <h1><i class="fas fa-chart-bar"></i> Relatórios</h1>
+            <p class="hero-subtitle">Escolha o tipo de relatório que deseja visualizar</p>
+        </div>
+    </div>
+
+    <!-- Cards de Seleção -->
+    <div class="selection-container">
+        <div class="report-cards">
+            <!-- Card Relatório por Período -->
+            <div class="report-card" id="card-periodo">
+                <div class="card-icon">
+                    <i class="fas fa-calendar-alt"></i>
+                </div>
+                <h3 class="card-title">Relatório por Período</h3>
+                <p class="card-description">
+                    Visualize doações, agendamentos e estatísticas filtradas por intervalo de datas.
+                </p>
+                <div class="card-features">
+                    <span class="feature"><i class="fas fa-check"></i> Doações realizadas</span>
+                    <span class="feature"><i class="fas fa-check"></i> Agendamentos</span>
+                    <span class="feature"><i class="fas fa-check"></i> Estatísticas gerais</span>
+                    <span class="feature"><i class="fas fa-check"></i> Exportar PDF</span>
+                </div>
+                <a href="/administrador/relatorios/periodo" class="btn-card">
+                    <i class="fas fa-arrow-right"></i> Acessar Relatório
+                </a>
+            </div>
+
+            <!-- Card Relatório por Tipo Sanguíneo -->
+            <div class="report-card" id="card-tipo">
+                <div class="card-icon tipo-sanguineo">
+                    <i class="fas fa-tint"></i>
+                </div>
+                <h3 class="card-title">Relatório por Tipo Sanguíneo</h3>
+                <p class="card-description">
+                    Analise doações e estoque organizados por tipo sanguíneo (A+, O-, etc).
+                </p>
+                <div class="card-features">
+                    <span class="feature"><i class="fas fa-check"></i> Doações por tipo</span>
+                    <span class="feature"><i class="fas fa-check"></i> Estoque atual</span>
+                    <span class="feature"><i class="fas fa-check"></i> Total de doadores</span>
+                    <span class="feature"><i class="fas fa-check"></i> Exportar PDF</span>
+                </div>
+                <a href="/administrador/relatorios/tipo_sanguineo" class="btn-card">
+                    <i class="fas fa-arrow-right"></i> Acessar Relatório
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}
 
 {% block custom_js %}
-<script src="/static/js/">  
-</script>
+<script src="/static/js/adm_unidade/administrador_relatorios.js"></script>
 {% endblock %}
