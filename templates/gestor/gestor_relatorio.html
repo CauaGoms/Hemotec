@@ -1,13 +1,68 @@
 {% extends "gestor/gestor__base.html" %}
+
 {% block custom_css %}
-<!-- <link href="/static/css/" rel="stylesheet"> -->
+<link href="/static/css/gestor/gestor_relatorio.css" rel="stylesheet">
 {% endblock %}
 
 {% block conteudo %}
-<h1>gestor_relatorio</h1>
+<!-- Hero Section -->
+<div class="hero-section">
+    <div class="container">
+        <div class="hero-content">
+            <h1><i class="fas fa-chart-bar"></i> Relatórios</h1>
+            <p class="hero-subtitle">Escolha o tipo de relatório que deseja visualizar</p>
+        </div>
+    </div>
+</div>
+
+<div class="container relatorios-container">
+    <!-- Cards de Seleção -->
+    <div class="selection-container">
+        <div class="report-cards">
+            <!-- Card Relatório de Doadores -->
+            <div class="report-card" id="card-doadores">
+                <div class="card-icon">
+                    <i class="fas fa-users"></i>
+                </div>
+                <h3 class="card-title">Relatório de Doadores</h3>
+                <p class="card-description">
+                    Visualize dados de doadores cadastrados, novos doadores e estatísticas por tipo sanguíneo.
+                </p>
+                <div class="card-features">
+                    <span class="feature"><i class="fas fa-check"></i> Novos doadores</span>
+                    <span class="feature"><i class="fas fa-check"></i> Doadores ativos</span>
+                    <span class="feature"><i class="fas fa-check"></i> Por tipo sanguíneo</span>
+                    <span class="feature"><i class="fas fa-check"></i> Exportar PDF</span>
+                </div>
+                <a href="/gestor/relatorio/doador" class="btn-card">
+                    <i class="fas fa-arrow-right"></i> Acessar Relatório
+                </a>
+            </div>
+
+            <!-- Card Relatório de Colaboradores -->
+            <div class="report-card" id="card-colaboradores">
+                <div class="card-icon colaborador">
+                    <i class="fas fa-user-tie"></i>
+                </div>
+                <h3 class="card-title">Relatório de Colaboradores</h3>
+                <p class="card-description">
+                    Analise a equipe de colaboradores, novos cadastros e distribuição por função.
+                </p>
+                <div class="card-features">
+                    <span class="feature"><i class="fas fa-check"></i> Novos colaboradores</span>
+                    <span class="feature"><i class="fas fa-check"></i> Colaboradores ativos</span>
+                    <span class="feature"><i class="fas fa-check"></i> Por função</span>
+                    <span class="feature"><i class="fas fa-check"></i> Exportar PDF</span>
+                </div>
+                <a href="/gestor/relatorio/colaborador" class="btn-card">
+                    <i class="fas fa-arrow-right"></i> Acessar Relatório
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}
 
-<!-- Custom JavaScript -->
 {% block custom_js %}
-<!-- <script src="/static/js/"></script> -->
+<script src="/static/js/gestor/gestor_relatorio.js"></script>
 {% endblock %}

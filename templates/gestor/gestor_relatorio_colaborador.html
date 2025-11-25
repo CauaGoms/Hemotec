@@ -1,12 +1,169 @@
 {% extends "gestor/gestor__base.html" %}
+
 {% block custom_css %}
-<!-- <link href="/static/css/" rel="stylesheet"> -->
+<link href="/static/css/gestor/gestor_relatorio_colaborador.css" rel="stylesheet">
 {% endblock %}
 
 {% block conteudo %}
-<h1>gestor_relatorio_colaborador</h1>
+<!-- Hero Section -->
+<div class="hero-section">
+    <div class="container">
+        <a href="/gestor/relatorio" class="btn-back">
+            <i class="fas fa-arrow-left"></i>
+        </a>
+        <div class="hero-content">
+            <h1><i class="fas fa-user-tie"></i> Relatório de Colaboradores</h1>
+            <p class="hero-subtitle">Analise dados da equipe de colaboradores</p>
+        </div>
+    </div>
+</div>
+
+<div class="container relatorios-colaborador-container">
+
+    <!-- Filtros -->
+    <div class="filters-section">
+        <form id="filtroForm" class="filter-form">
+            <div class="filter-group">
+                <label for="data_inicio">
+                    <i class="fas fa-calendar"></i> Data Início
+                </label>
+                <input type="date" id="data_inicio" name="data_inicio" 
+                       value="{{ data_inicio }}" required>
+            </div>
+            
+            <div class="filter-group">
+                <label for="data_fim">
+                    <i class="fas fa-calendar"></i> Data Fim
+                </label>
+                <input type="date" id="data_fim" name="data_fim" 
+                       value="{{ data_fim }}" required>
+            </div>
+            
+            <button type="submit" class="btn-filter">
+                <i class="fas fa-search"></i> Filtrar
+            </button>
+            
+            <button type="button" class="btn-export" id="btnExportPDF">
+                <i class="fas fa-file-pdf"></i> Exportar PDF
+            </button>
+        </form>
+    </div>
+
+    <!-- Cards de Estatísticas -->
+    <div class="stats-grid">
+        <div class="stat-card total">
+            <div class="stat-icon">
+                <i class="fas fa-user-tie"></i>
+            </div>
+            <div class="stat-content">
+                <h3 class="stat-value">{{ total_colaboradores }}</h3>
+                <p class="stat-label">Total de Colaboradores</p>
+            </div>
+        </div>
+
+        <div class="stat-card novos">
+            <div class="stat-icon">
+                <i class="fas fa-user-plus"></i>
+            </div>
+            <div class="stat-content">
+                <h3 class="stat-value">{{ novos_colaboradores_periodo }}</h3>
+                <p class="stat-label">Novos no Período</p>
+            </div>
+        </div>
+
+        <div class="stat-card ativos">
+            <div class="stat-icon">
+                <i class="fas fa-user-check"></i>
+            </div>
+            <div class="stat-content">
+                <h3 class="stat-value">{{ colaboradores_ativos }}</h3>
+                <p class="stat-label">Colaboradores Ativos</p>
+            </div>
+        </div>
+
+        <div class="stat-card funcoes">
+            <div class="stat-icon">
+                <i class="fas fa-briefcase"></i>
+            </div>
+            <div class="stat-content">
+                <h3 class="stat-value">{{ funcoes|length }}</h3>
+                <p class="stat-label">Funções Diferentes</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tabela de Novos Colaboradores -->
+    <div class="table-section">
+        <h2 class="section-title">
+            <i class="fas fa-list"></i> Novos Colaboradores do Período
+        </h2>
+        <div class="table-container">
+            <table class="data-table" id="tabelaNovosColaboradores">
+                <thead>
+                    <tr>
+                        <th>Código</th>
+                        <th>Nome</th>
+                        <th>E-mail</th>
+                        <th>Função</th>
+                        <th>Data Cadastro</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% if novos_colaboradores %}
+                        {% for colaborador in novos_colaboradores %}
+                        <tr>
+                            <td>{{ colaborador.cod_colaborador }}</td>
+                            <td>{{ colaborador.nome }}</td>
+                            <td>{{ colaborador.email }}</td>
+                            <td><span class="badge-funcao">{{ colaborador.funcao if colaborador.funcao else 'Não especificada' }}</span></td>
+                            <td>{{ colaborador.data_cadastro.strftime('%d/%m/%Y') if colaborador.data_cadastro else '-' }}</td>
+                            <td>
+                                {% if colaborador.status %}
+                                    <span class="badge badge-success">Ativo</span>
+                                {% else %}
+                                    <span class="badge badge-secondary">Inativo</span>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    {% else %}
+                        <tr>
+                            <td colspan="6" class="no-data">
+                                <i class="fas fa-inbox"></i> Nenhum novo colaborador cadastrado no período
+                            </td>
+                        </tr>
+                    {% endif %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Distribuição por Função -->
+    <div class="chart-section">
+        <h2 class="section-title">
+            <i class="fas fa-chart-bar"></i> Distribuição por Função
+        </h2>
+        <div class="chart-container">
+            <div class="funcoes-grid">
+                {% for funcao, quantidade in funcoes.items() %}
+                <div class="funcao-card">
+                    <div class="funcao-icon">
+                        <i class="fas fa-briefcase"></i>
+                    </div>
+                    <div class="funcao-info">
+                        <h4 class="funcao-label">{{ funcao }}</h4>
+                        <p class="funcao-value">{{ quantidade }} colaborador{{ 'es' if quantidade != 1 else '' }}</p>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+</div>
 {% endblock %}
-<!-- Custom JavaScript -->
+
 {% block custom_js %}
-<!-- <script src="/static/js/"></script> -->
+<script src="/static/js/gestor/gestor_relatorio_colaborador.js"></script>
 {% endblock %}
