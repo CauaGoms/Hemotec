@@ -1,12 +1,140 @@
 {% extends "gestor/gestor__base.html" %}
 {% block custom_css %}
-<!-- <link href="/static/css/" rel="stylesheet"> -->
+<link href="/static/css/gestor/gestor_administrador_excluir.css" rel="stylesheet">
 {% endblock %}
 
 {% block conteudo %}
-<h1>gestor_administrador_excluir</h1>
+<!-- Page Header -->
+<div class="page-header">
+    <div class="container">
+        <div class="page-header-content">
+            <a href="/gestor/administrador" class="btn-back">
+                <i class="fas fa-arrow-left"></i>
+                Voltar
+            </a>
+            <h1 class="page-title">
+                <i class="fas fa-user-times"></i>
+                Excluir Administrador
+            </h1>
+            <p class="page-description">Confirme a exclusão do administrador do sistema</p>
+        </div>
+    </div>
+</div>
+
+<!-- Main Content -->
+<div class="container" style="margin-top: 100px; margin-bottom: 80px;">
+    <div class="delete-container">
+        <!-- Warning Alert -->
+        <div class="warning-alert">
+            <div class="warning-icon">
+                <i class="fas fa-exclamation-triangle"></i>
+            </div>
+            <div class="warning-content">
+                <h3>Atenção: Esta ação é irreversível!</h3>
+                <p>Você está prestes a excluir permanentemente este administrador do sistema. Todos os dados associados serão removidos.</p>
+            </div>
+        </div>
+
+        <!-- Admin Info Card -->
+        <div class="admin-info-card">
+            <div class="admin-info-header">
+                <div class="admin-avatar-delete">
+                    <i class="fas fa-user-shield"></i>
+                </div>
+                <div class="admin-info-title">
+                    <h4>{{ administrador.nome }}</h4>
+                    <p>Administrador de Unidade</p>
+                </div>
+            </div>
+
+            <div class="admin-info-grid">
+                <div class="info-item">
+                    <div class="info-icon">
+                        <i class="fas fa-envelope"></i>
+                    </div>
+                    <div class="info-content">
+                        <div class="info-label">E-mail</div>
+                        <div class="info-value">{{ administrador.email }}</div>
+                    </div>
+                </div>
+
+                <div class="info-item">
+                    <div class="info-icon">
+                        <i class="fas fa-id-card"></i>
+                    </div>
+                    <div class="info-content">
+                        <div class="info-label">CPF</div>
+                        <div class="info-value">{{ administrador.cpf }}</div>
+                    </div>
+                </div>
+
+                <div class="info-item">
+                    <div class="info-icon">
+                        <i class="fas fa-phone"></i>
+                    </div>
+                    <div class="info-content">
+                        <div class="info-label">Telefone</div>
+                        <div class="info-value">{{ administrador.telefone }}</div>
+                    </div>
+                </div>
+
+                <div class="info-item">
+                    <div class="info-icon">
+                        <i class="fas fa-hospital"></i>
+                    </div>
+                    <div class="info-content">
+                        <div class="info-label">Unidade</div>
+                        <div class="info-value">{{ unidade.nome if unidade else '-' }}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Confirmation Section -->
+        <div class="confirmation-section">
+            <div class="confirmation-title">
+                <i class="fas fa-clipboard-list"></i>
+                O que será excluído:
+            </div>
+            <ul class="confirmation-list">
+                <li>
+                    <i class="fas fa-check"></i>
+                    Todos os dados cadastrais do administrador
+                </li>
+                <li>
+                    <i class="fas fa-check"></i>
+                    Acesso ao sistema será revogado imediatamente
+                </li>
+                <li>
+                    <i class="fas fa-check"></i>
+                    Histórico de atividades será mantido para auditoria
+                </li>
+                <li>
+                    <i class="fas fa-check"></i>
+                    A unidade de coleta não será afetada
+                </li>
+            </ul>
+        </div>
+
+        <!-- Delete Form -->
+        <form id="formExcluirAdmin">
+            <div class="delete-actions">
+                <a href="/gestor/administrador" class="btn-cancel">
+                    <i class="fas fa-times"></i>
+                    Cancelar
+                </a>
+                <button type="submit" class="btn-confirm-delete">
+                    <i class="fas fa-trash-alt"></i>
+                    Confirmar Exclusão
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
 {% endblock %}
-<!-- Custom JavaScript -->
+
 {% block custom_js %}
-<!-- <script src="/static/js/"></script> -->
+<script src="/static/js/gestor/gestor_administrador_excluir.js"></script>
 {% endblock %}
+
+

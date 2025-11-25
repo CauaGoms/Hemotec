@@ -1,0 +1,388 @@
+/* Gestão de Administradores - Estilos Gerais */
+
+/* Hero Section */
+.hero-section {
+    background: linear-gradient(135deg, #2C3E50 0%, #34495E 100%);
+    color: white;
+    padding: 150px 0 100px 0;
+    position: relative;
+    overflow: hidden;
+    margin-top: 80px;
+}
+
+.hero-section::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -10%;
+    width: 600px;
+    height: 600px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 50%;
+}
+
+.floating-elements {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+}
+
+.floating-element {
+    position: absolute;
+    color: rgba(255, 255, 255, 0.1);
+    animation: float 6s ease-in-out infinite;
+}
+
+.floating-element:nth-child(1) {
+    top: 20%;
+    left: 10%;
+    animation-delay: 0s;
+}
+
+.floating-element:nth-child(2) {
+    top: 60%;
+    right: 15%;
+    animation-delay: 2s;
+}
+
+.floating-element:nth-child(3) {
+    bottom: 20%;
+    left: 60%;
+    animation-delay: 4s;
+}
+
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0) rotate(0deg);
+    }
+    50% {
+        transform: translateY(-20px) rotate(5deg);
+    }
+}
+
+.hero-content {
+    position: relative;
+    z-index: 1;
+}
+
+.hero-title {
+    font-size: 3.5rem;
+    font-weight: 700;
+    margin-bottom: 20px;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+}
+
+.hero-subtitle {
+    font-size: 1.3rem;
+    opacity: 0.9;
+    margin-bottom: 30px;
+}
+
+/* Filtros */
+.admin-filter {
+    background: white;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    margin-bottom: 40px;
+}
+
+.search-box {
+    position: relative;
+}
+
+.search-icon {
+    position: absolute;
+    left: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #7F8C8D;
+    font-size: 1.2rem;
+}
+
+.search-input {
+    width: 100%;
+    padding: 15px 20px 15px 55px;
+    border: 2px solid #E0E0E0;
+    border-radius: 25px;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+.search-input:focus {
+    outline: none;
+    border-color: #2C3E50;
+    box-shadow: 0 0 0 3px rgba(44, 62, 80, 0.1);
+}
+
+.filter-btn {
+    background: white;
+    border: 2px solid #E0E0E0;
+    padding: 10px 25px;
+    border-radius: 25px;
+    margin: 0 5px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.filter-btn:hover {
+    border-color: #2C3E50;
+    color: #2C3E50;
+}
+
+.filter-btn.active {
+    background: #2C3E50;
+    border-color: #2C3E50;
+    color: white;
+}
+
+/* Section Title */
+.section-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #2C3E50;
+    position: relative;
+    display: inline-block;
+}
+
+.section-title::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 4px;
+    background: linear-gradient(90deg, #2C3E50, #34495E);
+    border-radius: 2px;
+}
+
+/* Admin Cards */
+.admin-card {
+    background: white;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    transition: all 0.4s ease;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.admin-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 12px 40px rgba(44, 62, 80, 0.15);
+}
+
+.admin-avatar {
+    width: 120px;
+    height: 120px;
+    background: linear-gradient(135deg, #2C3E50, #34495E);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 30px auto 20px;
+    box-shadow: 0 8px 20px rgba(44, 62, 80, 0.3);
+    position: relative;
+    overflow: hidden;
+}
+
+.admin-avatar i {
+    font-size: 3.5rem;
+    color: white;
+}
+
+.admin-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.admin-status {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.status-active {
+    background: #D5F4E6;
+    color: #27AE60;
+}
+
+.status-inactive {
+    background: #FCE4EC;
+    color: #E74C3C;
+}
+
+.admin-body {
+    padding: 0 25px 25px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.admin-name {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #2C3E50;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+.admin-meta {
+    flex: 1;
+}
+
+.meta-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 0;
+    border-bottom: 1px solid #F0F0F0;
+    color: #7F8C8D;
+    font-size: 0.95rem;
+}
+
+.meta-item:last-child {
+    border-bottom: none;
+}
+
+.meta-item i {
+    color: #2C3E50;
+    font-size: 1.1rem;
+    width: 20px;
+}
+
+.meta-item span {
+    word-break: break-word;
+}
+
+/* Admin Actions */
+.admin-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.btn-admin-view {
+    flex: 1;
+    background: linear-gradient(135deg, #2C3E50, #34495E);
+    color: white;
+    padding: 12px 20px;
+    border-radius: 10px;
+    text-decoration: none;
+    text-align: center;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.btn-admin-view:hover {
+    background: linear-gradient(135deg, #34495E, #2C3E50);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(44, 62, 80, 0.3);
+    color: white;
+}
+
+.admin-actions-secondary {
+    display: flex;
+    gap: 10px;
+}
+
+.btn-admin-edit,
+.btn-admin-delete {
+    width: 45px;
+    height: 45px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.btn-admin-edit {
+    background: #E8F4F8;
+    color: #3498DB;
+}
+
+.btn-admin-edit:hover {
+    background: #3498DB;
+    color: white;
+    transform: translateY(-2px);
+}
+
+.btn-admin-delete {
+    background: #FCE4EC;
+    color: #E74C3C;
+}
+
+.btn-admin-delete:hover {
+    background: #E74C3C;
+    color: white;
+    transform: translateY(-2px);
+}
+
+/* Empty State */
+.empty-state {
+    padding: 60px 20px;
+}
+
+.empty-state i {
+    opacity: 0.3;
+}
+
+/* Animations */
+.fade-in {
+    animation: fadeIn 0.6s ease-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .hero-title {
+        font-size: 2.5rem;
+    }
+
+    .hero-subtitle {
+        font-size: 1.1rem;
+    }
+
+    .section-title {
+        font-size: 2rem;
+    }
+
+    .admin-filter {
+        padding: 20px;
+    }
+
+    .filter-btn {
+        padding: 8px 15px;
+        font-size: 0.9rem;
+        margin: 5px 3px;
+    }
+}

@@ -91,6 +91,7 @@ from routes.doador.doador_agendamento_api import router as doador_agendamento_ap
 
 # Importando os routers de API
 from routes.api.api_agenda import router as api_agenda_router
+from routes.api.cidades_api import router as cidades_api_router
 
 # Importando os routers do colaborador
 from routes.colaborador.colaborador import router as colaborador_router
@@ -223,6 +224,7 @@ app.include_router(doador_agendamento_api_router)
 
 #routers de API
 app.include_router(api_agenda_router)
+app.include_router(cidades_api_router)
 
 #routers do colaborador
 app.include_router(colaborador_router)

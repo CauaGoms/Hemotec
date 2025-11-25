@@ -1,7 +1,6 @@
 import os
 from sqlite3 import Connection
 from typing import Optional
-from data.repo import usuario_repo
 from data.model.adm_unidade_model import Adm_unidade
 from data.sql.adm_unidade_sql import *
 from data.model.usuario_model import Usuario
@@ -20,51 +19,43 @@ def criar_tabela() -> bool:
     
 
 def inserir(adm_unidade: Adm_unidade, cursor=None) -> Optional[int]:
-    if cursor is not None:
-        usuario = Usuario(0, 
-            adm_unidade.nome, 
-            adm_unidade.email, 
-            adm_unidade.senha,
-            adm_unidade.cpf,
-            adm_unidade.data_nascimento,
-            adm_unidade.status,
-            adm_unidade.data_cadastro,
-            adm_unidade.rua_usuario,
-            adm_unidade.bairro_usuario,
-            adm_unidade.cidade_usuario,
-            adm_unidade.cep_usuario,
-            adm_unidade.telefone)
-        cod_adm_unidade = usuario_repo.inserir(usuario, cursor)
+    from data.repo import usuario_repo
+    
+    # Criar objeto Usuario com todos os campos necessários
+    usuario = Usuario(
+        cod_usuario=0,
+        nome=adm_unidade.nome, 
+        email=adm_unidade.email, 
+        senha=adm_unidade.senha,
+        cpf=adm_unidade.cpf,
+        data_nascimento=adm_unidade.data_nascimento,
+        status=adm_unidade.status,
+        rua_usuario=adm_unidade.rua_usuario,
+        bairro_usuario=adm_unidade.bairro_usuario,
+        cidade_usuario=adm_unidade.cidade_usuario,
+        cep_usuario=adm_unidade.cep_usuario,
+        telefone=adm_unidade.telefone,
+        genero=adm_unidade.genero or '',
+        perfil='adm_unidade',
+        data_cadastro=adm_unidade.data_cadastro,
+        foto=adm_unidade.foto,
+        estado_usuario=None
+    )
+    
+    # Inserir usuário primeiro (cria sua própria transação)
+    cod_adm_unidade = usuario_repo.inserir(usuario)
+    
+    # Depois inserir na tabela adm_unidade
+    with get_connection() as conn:
+        cursor = conn.cursor()
         cursor.execute(INSERIR, (
             cod_adm_unidade,
             adm_unidade.cod_unidade, 
             adm_unidade.permissao_envio_campanha,
             adm_unidade.permissao_envio_notificacao))
-        return cod_adm_unidade
-        
-    elif cursor is None:
-        with get_connection() as conn:
-            cursor = conn.cursor()
-            usuario = Usuario(0, 
-                adm_unidade.nome, 
-                adm_unidade.email, 
-                adm_unidade.senha,
-                adm_unidade.cpf,
-                adm_unidade.data_nascimento,
-                adm_unidade.status,
-                adm_unidade.data_cadastro,
-                adm_unidade.rua_usuario,
-                adm_unidade.bairro_usuario,
-                adm_unidade.cidade_usuario,
-                adm_unidade.cep_usuario,
-                adm_unidade.telefone)
-            cod_adm_unidade = usuario_repo.inserir(usuario, cursor)
-            cursor.execute(INSERIR, (
-                cod_adm_unidade,
-                adm_unidade.cod_unidade, 
-                adm_unidade.permissao_envio_campanha,
-                adm_unidade.permissao_envio_notificacao))
-            return cod_adm_unidade
+        conn.commit()
+    
+    return cod_adm_unidade
     
 
 def obter_todos() -> list[Adm_unidade]:
@@ -74,7 +65,6 @@ def obter_todos() -> list[Adm_unidade]:
         rows = cursor.fetchall()
         adm_unidade = [
             Adm_unidade(
-                cod_usuario=row["cod_adm"],
                 cod_adm=row["cod_adm"],
                 nome=row["nome"],
                 email=row["email"],
@@ -109,7 +99,6 @@ def obter_por_id(cod_adm: int) -> Optional[Adm_unidade]:
         if isinstance(data_cadastro, str):
             data_cadastro = datetime.strptime(data_cadastro, "%Y-%m-%d").date()
         adm_unidade = Adm_unidade(
-            cod_usuario=row["cod_adm"],
             cod_adm=row["cod_adm"],
             nome=row["nome"],
             email=row["email"],
@@ -129,23 +118,30 @@ def obter_por_id(cod_adm: int) -> Optional[Adm_unidade]:
         return adm_unidade
     
 def update(adm_unidade: Adm_unidade) -> bool:
+    from data.repo import usuario_repo
     with get_connection() as conn:
         cursor = conn.cursor()
         usuario = Usuario(
-            adm_unidade.cod_adm, 
-            adm_unidade.nome, 
-            adm_unidade.email, 
-            adm_unidade.senha,
-            adm_unidade.cpf,
-            adm_unidade.data_nascimento,
-            adm_unidade.status,
-            adm_unidade.data_cadastro,
-            adm_unidade.rua_usuario,
-            adm_unidade.bairro_usuario,
-            adm_unidade.cidade_usuario,
-            adm_unidade.cep_usuario,
-            adm_unidade.telefone)
-        usuario_repo.update(usuario)
+            cod_usuario=adm_unidade.cod_adm, 
+            nome=adm_unidade.nome, 
+            email=adm_unidade.email, 
+            senha=adm_unidade.senha,
+            cpf=adm_unidade.cpf,
+            data_nascimento=adm_unidade.data_nascimento,
+            status=adm_unidade.status,
+            rua_usuario=adm_unidade.rua_usuario,
+            bairro_usuario=adm_unidade.bairro_usuario,
+            cidade_usuario=adm_unidade.cidade_usuario,
+            cep_usuario=adm_unidade.cep_usuario,
+            telefone=adm_unidade.telefone,
+            genero=adm_unidade.genero,
+            perfil=adm_unidade.perfil,
+            data_cadastro=adm_unidade.data_cadastro,
+            foto=adm_unidade.foto,
+            token_redefinicao=None,
+            data_token=None,
+            estado_usuario=None)
+        usuario_repo.update(usuario, cursor)
         cursor.execute(UPDATE, (
             adm_unidade.cod_unidade,
             adm_unidade.permissao_envio_campanha,
@@ -154,6 +150,7 @@ def update(adm_unidade: Adm_unidade) -> bool:
         return (cursor.rowcount > 0)
 
 def delete(cod_adm: int) -> bool:
+    from data.repo import usuario_repo
     with get_connection() as conn:
         cursor = conn.cursor()
         cursor.execute(DELETE, (cod_adm,))

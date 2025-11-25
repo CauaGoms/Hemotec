@@ -1,12 +1,232 @@
 {% extends "gestor/gestor__base.html" %}
 {% block custom_css %}
-<!-- <link href="/static/css/" rel="stylesheet"> -->
+<link href="/static/css/gestor/gestor_administrador_detalhe.css" rel="stylesheet">
 {% endblock %}
 
 {% block conteudo %}
-<h1>gestor_administrador_detalhe</h1>
+<!-- Page Header -->
+<div class="page-header">
+    <div class="container">
+        <div class="page-header-content">
+            <a href="/gestor/administrador" class="btn-back">
+                <i class="fas fa-arrow-left"></i>
+                Voltar
+            </a>
+            <h1 class="page-title">
+                <i class="fas fa-user-circle"></i>
+                Detalhes do Administrador
+            </h1>
+        </div>
+    </div>
+</div>
+
+<!-- Main Content -->
+<div class="container" style="margin-top: 100px; margin-bottom: 80px;">
+    <div class="detail-container">
+        <!-- Admin Header -->
+        <div class="admin-header">
+            <div class="admin-avatar-large">
+                <i class="fas fa-user-shield"></i>
+            </div>
+            <div class="admin-header-info">
+                <h2 class="admin-name-large">{{ administrador.nome }}</h2>
+                <p class="admin-role">Administrador de Unidade</p>
+                <span class="admin-status-badge status-{{ 'active' if administrador.status else 'inactive' }}">
+                    <i class="fas fa-circle"></i>
+                    {{ 'Ativo' if administrador.status else 'Inativo' }}
+                </span>
+            </div>
+        </div>
+
+        <!-- Informações Pessoais -->
+        <div class="detail-section">
+            <div class="section-header">
+                <div class="section-icon">
+                    <i class="fas fa-user"></i>
+                </div>
+                <h3 class="section-title">Informações Pessoais</h3>
+            </div>
+            
+            <div class="detail-grid">
+                <div class="detail-item">
+                    <div class="detail-label">
+                        <i class="fas fa-id-card"></i>
+                        CPF
+                    </div>
+                    <div class="detail-value">{{ administrador.cpf | formatar_cpf }}</div>
+                </div>
+                
+                <div class="detail-item">
+                    <div class="detail-label">
+                        <i class="fas fa-calendar"></i>
+                        Data de Nascimento
+                    </div>
+                    <div class="detail-value">{{ administrador.data_nascimento.strftime('%d/%m/%Y') if administrador.data_nascimento else '-' }}</div>
+                </div>
+                
+                <div class="detail-item">
+                    <div class="detail-label">
+                        <i class="fas fa-phone"></i>
+                        Telefone
+                    </div>
+                    <div class="detail-value">{{ administrador.telefone | formatar_telefone }}</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Dados de Acesso -->
+        <div class="detail-section">
+            <div class="section-header">
+                <div class="section-icon">
+                    <i class="fas fa-key"></i>
+                </div>
+                <h3 class="section-title">Dados de Acesso</h3>
+            </div>
+            
+            <div class="detail-grid">
+                <div class="detail-item">
+                    <div class="detail-label">
+                        <i class="fas fa-envelope"></i>
+                        E-mail
+                    </div>
+                    <div class="detail-value">{{ administrador.email }}</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Unidade de Coleta -->
+        <div class="detail-section">
+            <div class="section-header">
+                <div class="section-icon">
+                    <i class="fas fa-hospital"></i>
+                </div>
+                <h3 class="section-title">Unidade de Coleta</h3>
+            </div>
+            
+            <div class="detail-grid">
+                <div class="detail-item">
+                    <div class="detail-label">
+                        <i class="fas fa-hospital-alt"></i>
+                        Unidade
+                    </div>
+                    <div class="detail-value">{{ unidade.nome if unidade else '-' }}</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Permissões -->
+        <div class="detail-section">
+            <div class="section-header">
+                <div class="section-icon">
+                    <i class="fas fa-shield-alt"></i>
+                </div>
+                <h3 class="section-title">Permissões</h3>
+            </div>
+            
+            <div class="permission-badges">
+                <span class="permission-badge permission-{{ 'enabled' if administrador.permissao_envio_campanha else 'disabled' }}">
+                    <i class="fas fa-{{ 'check-circle' if administrador.permissao_envio_campanha else 'times-circle' }}"></i>
+                    Envio de Campanhas
+                </span>
+                <span class="permission-badge permission-{{ 'enabled' if administrador.permissao_envio_notificacao else 'disabled' }}">
+                    <i class="fas fa-{{ 'check-circle' if administrador.permissao_envio_notificacao else 'times-circle' }}"></i>
+                    Envio de Notificações
+                </span>
+            </div>
+        </div>
+
+        <!-- Endereço -->
+        <div class="detail-section">
+            <div class="section-header">
+                <div class="section-icon">
+                    <i class="fas fa-map-marker-alt"></i>
+                </div>
+                <h3 class="section-title">Endereço</h3>
+            </div>
+            
+            <div class="detail-grid">
+                <div class="detail-item">
+                    <div class="detail-label">
+                        <i class="fas fa-mail-bulk"></i>
+                        CEP
+                    </div>
+                    <div class="detail-value">{{ administrador.cep_usuario or '-' }}</div>
+                </div>
+                
+                <div class="detail-item">
+                    <div class="detail-label">
+                        <i class="fas fa-road"></i>
+                        Logradouro
+                    </div>
+                    <div class="detail-value">{{ administrador.rua_usuario or '-' }}</div>
+                </div>
+                
+                <div class="detail-item">
+                    <div class="detail-label">
+                        <i class="fas fa-hashtag"></i>
+                        Número
+                    </div>
+                    <div class="detail-value">{{ administrador.rua_usuario or '-' }}</div>
+                </div>
+                
+                <div class="detail-item">
+                    <div class="detail-label">
+                        <i class="fas fa-map"></i>
+                        Bairro
+                    </div>
+                    <div class="detail-value">{{ administrador.bairro_usuario or '-' }}</div>
+                </div>
+                
+                <div class="detail-item">
+                    <div class="detail-label">
+                        <i class="fas fa-home"></i>
+                        Complemento
+                    </div>
+                    <div class="detail-value {{ 'empty' if not administrador.rua_usuario }}">
+                        {{ administrador.rua_usuario or 'Não informado' }}
+                    </div>
+                </div>
+                
+                <div class="detail-item">
+                    <div class="detail-label">
+                        <i class="fas fa-city"></i>
+                        Cidade
+                    </div>
+                    <div class="detail-value">
+                        {{ cidade.nome_cidade + ' - ' + cidade.sigla_estado if cidade else '-' }}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="detail-actions">
+            <a href="/gestor/administrador/alterar/{{ administrador.cod_adm }}" class="btn-edit">
+                <i class="fas fa-edit"></i>
+                Editar Administrador
+            </a>
+            <a href="/gestor/administrador/excluir/{{ administrador.cod_adm }}" class="btn-delete">
+                <i class="fas fa-trash-alt"></i>
+                Excluir Administrador
+            </a>
+        </div>
+    </div>
+</div>
 {% endblock %}
-<!-- Custom JavaScript -->
+
 {% block custom_js %}
-<!-- <script src="/static/js/"></script> -->
+<script>
+    // Add animation on load
+    document.addEventListener('DOMContentLoaded', function() {
+        const sections = document.querySelectorAll('.detail-section');
+        sections.forEach((section, index) => {
+            setTimeout(() => {
+                section.style.animation = 'fadeIn 0.5s ease';
+            }, index * 100);
+        });
+    });
+</script>
 {% endblock %}
+
+
+

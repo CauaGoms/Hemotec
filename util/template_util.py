@@ -49,4 +49,41 @@ def criar_templates(diretorio_especifico: Optional[Union[str, List[str]]] = None
     # O FileSystemLoader tentará encontrar templates em ordem nos diretórios listados
     templates.env.loader = FileSystemLoader(diretorios)
     
+    # Adicionar filtros personalizados
+    templates.env.filters['formatar_cpf'] = formatar_cpf
+    templates.env.filters['formatar_telefone'] = formatar_telefone
+    templates.env.filters['formatar_cep'] = formatar_cep
+    
     return templates
+
+
+def formatar_cpf(cpf):
+    """Formata CPF para o padrão XXX.XXX.XXX-XX"""
+    if not cpf:
+        return ''
+    cpf = ''.join(filter(str.isdigit, str(cpf)))
+    if len(cpf) == 11:
+        return f'{cpf[:3]}.{cpf[3:6]}.{cpf[6:9]}-{cpf[9:]}'
+    return cpf
+
+
+def formatar_telefone(telefone):
+    """Formata telefone para o padrão (XX) XXXXX-XXXX ou (XX) XXXX-XXXX"""
+    if not telefone:
+        return ''
+    telefone = ''.join(filter(str.isdigit, str(telefone)))
+    if len(telefone) == 11:
+        return f'({telefone[:2]}) {telefone[2:7]}-{telefone[7:]}'
+    elif len(telefone) == 10:
+        return f'({telefone[:2]}) {telefone[2:6]}-{telefone[6:]}'
+    return telefone
+
+
+def formatar_cep(cep):
+    """Formata CEP para o padrão XXXXX-XXX"""
+    if not cep:
+        return ''
+    cep = ''.join(filter(str.isdigit, str(cep)))
+    if len(cep) == 8:
+        return f'{cep[:5]}-{cep[5:]}'
+    return cep

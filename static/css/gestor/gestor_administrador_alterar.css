@@ -1,0 +1,123 @@
+/* Alterar Administrador - Estilos */
+
+/* Herda estilos do adicionar */
+@import url('gestor_administrador_adicionar.css');
+
+/* Page Header - Alteração */
+.page-header {
+    background: linear-gradient(135deg, #3498DB 0%, #2980B9 100%);
+}
+
+.section-icon {
+    background: linear-gradient(135deg, #3498DB, #2980B9);
+}
+
+.form-control:focus {
+    border-color: #3498DB;
+    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+}
+
+.form-select:focus {
+    border-color: #3498DB;
+    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+}
+
+.checkbox-item:hover {
+    border-color: #3498DB;
+}
+
+.checkbox-item input[type="checkbox"] {
+    accent-color: #3498DB;
+}
+
+.btn-submit {
+    background: linear-gradient(135deg, #3498DB, #2980B9);
+}
+
+.btn-submit:hover {
+    background: linear-gradient(135deg, #2980B9, #3498DB);
+    box-shadow: 0 8px 20px rgba(52, 152, 219, 0.3);
+}
+
+/* Password Change Section */
+.password-change-toggle {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 15px;
+    background: #E8F4F8;
+    border: 2px solid #D4E9F1;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-bottom: 20px;
+}
+
+.password-change-toggle:hover {
+    background: #D4E9F1;
+}
+
+.password-change-toggle input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    accent-color: #3498DB;
+}
+
+.password-change-label {
+    flex: 1;
+    cursor: pointer;
+}
+
+.password-change-title {
+    font-weight: 600;
+    color: #3498DB;
+    margin-bottom: 3px;
+}
+
+.password-change-description {
+    font-size: 0.875rem;
+    color: #7F8C8D;
+}
+
+.password-fields {
+    display: none;
+    margin-top: 20px;
+    padding: 20px;
+    background: #FAFAFA;
+    border: 2px solid #E0E0E0;
+    border-radius: 10px;
+}
+
+.password-fields.active {
+    display: block;
+    animation: slideDown 0.3s ease;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Info Alert */
+.info-alert {
+    background: #E8F4F8;
+    color: #3498DB;
+    border-left: 4px solid #3498DB;
+    padding: 15px 20px;
+    border-radius: 10px;
+    margin-bottom: 25px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.info-alert i {
+    font-size: 1.3rem;
+}
