@@ -1,23 +1,23 @@
 /* Relatórios por Tipo Sanguíneo */
 
-.relatorios-container {
+.relatorios-tipo-container {
     max-width: 1400px;
     margin: 0 auto;
-    padding: 20px;
+    padding: 40px 20px;
 }
 
 /* Hero Section */
 .hero-section {
     background: linear-gradient(135deg, #DC143C 0%, #B8111D 100%);
     color: white;
-    padding: 50px 40px;
+    padding: 60px 50px;
     border-radius: 20px;
-    margin-bottom: 30px;
+    margin-bottom: 40px;
     box-shadow: 0 10px 30px rgba(220, 20, 60, 0.3);
     position: relative;
     display: flex;
     align-items: center;
-    gap: 20px;
+    gap: 25px;
 }
 
 .btn-back {
@@ -61,37 +61,37 @@
 }
 
 /* Filter Section */
-.filter-section {
+.filters-section {
     background: white;
-    padding: 30px;
+    padding: 35px;
     border-radius: 15px;
-    margin-bottom: 30px;
+    margin-bottom: 40px;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
 }
 
 .filter-form {
     display: flex;
     flex-wrap: wrap;
-    gap: 15px;
+    gap: 20px;
     align-items: end;
 }
 
-.form-group {
+.filter-group {
     flex: 1;
     min-width: 250px;
 }
 
-.form-group label {
+.filter-group label {
     display: block;
-    margin-bottom: 8px;
+    margin-bottom: 10px;
     color: #34495E;
     font-weight: 600;
     font-size: 0.95rem;
 }
 
-.form-control {
+.form-select {
     width: 100%;
-    padding: 12px 15px;
+    padding: 14px 16px;
     border: 2px solid #E0E0E0;
     border-radius: 10px;
     font-size: 1rem;
@@ -99,14 +99,14 @@
     background: white;
 }
 
-.form-control:focus {
+.form-select:focus {
     outline: none;
     border-color: #DC143C;
     box-shadow: 0 0 0 3px rgba(220, 20, 60, 0.1);
 }
 
 .btn-filter, .btn-export {
-    padding: 12px 25px;
+    padding: 14px 28px;
     border: none;
     border-radius: 10px;
     font-weight: 600;
@@ -115,7 +115,7 @@
     transition: all 0.3s ease;
     display: inline-flex;
     align-items: center;
-    gap: 8px;
+    gap: 10px;
 }
 
 .btn-filter {
@@ -143,32 +143,16 @@
 }
 
 /* Blood Types Grid */
-.blood-types-section {
-    margin-bottom: 30px;
-}
-
-.blood-types-section h2 {
-    font-size: 1.8rem;
-    color: #2C3E50;
-    margin-bottom: 20px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
-.blood-types-section h2 i {
-    color: #DC143C;
-}
-
 .blood-types-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 20px;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 25px;
+    margin-bottom: 50px;
 }
 
 .blood-type-card {
     background: white;
-    padding: 25px;
+    padding: 30px;
     border-radius: 15px;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
     transition: all 0.3s ease;
@@ -213,113 +197,126 @@
 }
 
 .blood-icon {
-    font-size: 2.5rem;
+    font-size: 2.8rem;
     color: var(--blood-color);
-    margin-bottom: 15px;
+    margin-bottom: 18px;
     display: block;
 }
 
 .blood-type {
-    font-size: 1.8rem;
+    font-size: 2rem;
     font-weight: 700;
     color: #2C3E50;
-    margin-bottom: 20px;
+    margin-bottom: 25px;
 }
 
 .blood-stats {
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 15px;
 }
 
-.blood-stat {
+.stat-item {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 10px;
+    padding: 12px 15px;
     background: #F8F9FA;
-    border-radius: 8px;
+    border-radius: 10px;
 }
 
-.blood-stat-label {
+.stat-label {
     color: #7F8C8D;
-    font-size: 0.9rem;
+    font-size: 0.95rem;
     font-weight: 500;
 }
 
-.blood-stat-value {
+.stat-value {
     color: #2C3E50;
-    font-size: 1.2rem;
+    font-size: 1.3rem;
     font-weight: 700;
 }
 
 /* Tables Section */
-.tables-section {
-    display: flex;
-    flex-direction: column;
-    gap: 30px;
-}
-
-.table-container {
+.table-section {
     background: white;
-    padding: 30px;
+    padding: 35px;
     border-radius: 15px;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    margin-bottom: 35px;
 }
 
-.table-container h2 {
-    font-size: 1.5rem;
+.section-title {
+    font-size: 1.6rem;
     color: #2C3E50;
-    margin-bottom: 20px;
+    margin-bottom: 25px;
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 12px;
+    font-weight: 700;
 }
 
-.table-container h2 i {
+.section-title i {
     color: #DC143C;
 }
 
-.table-responsive {
+.table-container {
     overflow-x: auto;
+    border-radius: 10px;
+    border: 1px solid #ECF0F1;
 }
 
-table {
+.data-table {
     width: 100%;
     border-collapse: collapse;
 }
 
-thead {
+.data-table thead {
     background: linear-gradient(135deg, #F8F9FA, #ECF0F1);
 }
 
-th {
-    padding: 15px;
+.data-table th {
+    padding: 18px 20px;
     text-align: left;
     color: #34495E;
-    font-weight: 600;
+    font-weight: 700;
     font-size: 0.95rem;
-    border-bottom: 2px solid #DC143C;
+    border-bottom: 3px solid #DC143C;
 }
 
-td {
-    padding: 15px;
+.data-table td {
+    padding: 18px 20px;
     color: #555;
     border-bottom: 1px solid #ECF0F1;
+    font-size: 0.95rem;
 }
 
-tbody tr {
+.data-table tbody tr {
     transition: all 0.2s ease;
 }
 
-tbody tr:hover {
+.data-table tbody tr:hover {
     background: #F8F9FA;
+}
+
+.no-data {
+    text-align: center !important;
+    padding: 40px 20px !important;
+    color: #7F8C8D;
+    font-size: 1rem;
+}
+
+.no-data i {
+    display: block;
+    font-size: 2.5rem;
+    margin-bottom: 15px;
+    opacity: 0.5;
 }
 
 /* Badges */
 .badge {
     display: inline-block;
-    padding: 6px 12px;
+    padding: 7px 14px;
     border-radius: 20px;
     font-size: 0.85rem;
     font-weight: 600;
