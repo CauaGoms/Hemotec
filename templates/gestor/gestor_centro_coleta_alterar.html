@@ -1,12 +1,97 @@
-{% extends "gestor/gestor__base.html" %}
+﻿{% extends "gestor/gestor__base.html" %}
 {% block custom_css %}
-<!-- <link href="/static/css/" rel="stylesheet"> -->
+<link href="/static/css/gestor/gestor_centro_coleta_alterar.css" rel="stylesheet">
 {% endblock %}
 
 {% block conteudo %}
-<h1>gestor_centro_coleta_alterar</h1>
+<div class="container" style="margin-top: 100px;">
+    <div class="page-header">
+        <a href="/gestor/centro-coleta" class="btn btn-secondary"><i class="fas fa-arrow-left"></i> Voltar</a>
+        <h1><i class="fas fa-edit"></i> Editar Centro de Coleta</h1>
+    </div>
+
+    <div class="card">
+        <div class="card-body">
+            <form id="formAlterarCentro">
+                <div class="row">
+                    <div class="col-md-8">
+                        <div class="mb-3">
+                            <label for="nome" class="form-label">Nome do Centro *</label>
+                            <input type="text" class="form-control" id="nome" name="nome" value="{{ unidade.nome }}" required>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="mb-3">
+                            <label for="telefone" class="form-label">Telefone *</label>
+                            <input type="text" class="form-control" id="telefone" name="telefone" value="{{ unidade.telefone }}" required>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Email *</label>
+                            <input type="email" class="form-control" id="email" name="email" value="{{ unidade.email }}" required>
+                        </div>
+                    </div>
+                </div>
+
+                <h5 class="mt-4 mb-3">Endereço</h5>
+                
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="mb-3">
+                            <label for="cep" class="form-label">CEP *</label>
+                            <input type="text" class="form-control" id="cep" name="cep" value="{{ unidade.cep_unidade }}" required>
+                        </div>
+                    </div>
+                    <div class="col-md-7">
+                        <div class="mb-3">
+                            <label for="logradouro" class="form-label">Logradouro *</label>
+                            <input type="text" class="form-control" id="logradouro" name="logradouro" value="{{ unidade.rua_unidade }}" required>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="mb-3">
+                            <label for="numero" class="form-label">Número</label>
+                            <input type="text" class="form-control" id="numero" name="numero" value="">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="mb-3">
+                            <label for="bairro" class="form-label">Bairro *</label>
+                            <input type="text" class="form-control" id="bairro" name="bairro" value="{{ unidade.bairro_unidade }}" required>
+                        </div>
+                    </div>
+                    <div class="col-md-5">
+                        <div class="mb-3">
+                            <label for="cidade" class="form-label">Cidade *</label>
+                            <input type="text" class="form-control" id="cidade" name="cidade" readonly required value="{% for c in cidades %}{% if c.cod_cidade == unidade.cidade_unidade %}{{ c.nome_cidade }} - {{ c.sigla_estado }}{% endif %}{% endfor %}">
+                            <input type="hidden" id="cod_cidade" name="cod_cidade" value="{{ unidade.cidade_unidade }}">
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="mb-3">
+                            <label for="complemento" class="form-label">Complemento</label>
+                            <input type="text" class="form-control" id="complemento" name="complemento" value="">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-4">
+                    <button type="submit" class="btn btn-success"><i class="fas fa-save"></i> Salvar Alterações</button>
+                    <a href="/gestor/centro-coleta" class="btn btn-secondary">Cancelar</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 {% endblock %}
-<!-- Custom JavaScript -->
+
 {% block custom_js %}
-<!-- <script src="/static/js/"></script> -->
+<script src="/static/js/gestor/gestor_centro_coleta_alterar.js"></script>
 {% endblock %}

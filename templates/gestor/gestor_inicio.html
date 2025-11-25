@@ -58,7 +58,7 @@
         <div class="row g-4">
             <!-- Ação 1: Gerenciar Centros de Coleta -->
             <div class="col-lg-3 col-md-6">
-                <div class="action-card" onclick="window.location.href='/gestor/centrocoleta'">
+                <div class="action-card" onclick="window.location.href='/gestor/centro-coleta'">
                     <div class="action-icon primary">
                         <i class="fas fa-hospital"></i>
                     </div>
@@ -69,7 +69,7 @@
 
             <!-- Ação 2: Adicionar Centro de Coleta -->
             <div class="col-lg-3 col-md-6">
-                <div class="action-card" onclick="window.location.href='/gestor/centrocoleta/adicionar'">
+                <div class="action-card" onclick="window.location.href='/gestor/centro-coleta/adicionar'">
                     <div class="action-icon success">
                         <i class="fas fa-plus-circle"></i>
                     </div>
@@ -213,14 +213,14 @@
                 <i class="fas fa-star me-2"></i>
                 Centros de Coleta
             </h2>
-            <a href="/gestor/centro_coleta" class="view-all-link">Ver todos <i class="fas fa-arrow-right"></i></a>
+            <a href="/gestor/centro-coleta" class="view-all-link">Ver todos <i class="fas fa-arrow-right"></i></a>
         </div>
 
         <div class="row g-4">
             {% if centros_coleta and centros_coleta|length > 0 %}
                 {% for centro in centros_coleta[:3] %}
                 <div class="col-lg-4 col-md-6">
-                    <div class="card centro-card h-100" onclick="window.location.href='/gestor/centro_coleta'">
+                    <div class="card centro-card h-100" onclick="window.location.href='/gestor/centro-coleta'">
                         <div class="card-img-top centro-img">
                             <i class="fas fa-hospital fa-3x"></i>
                         </div>
@@ -248,7 +248,7 @@
                     <div class="empty-state-large">
                         <i class="fas fa-hospital"></i>
                         <p>Nenhum centro de coleta cadastrado</p>
-                        <a href="/gestor/centro_coleta/adicionar" class="btn btn-primary">
+                        <a href="/gestor/centro-coleta/adicionar" class="btn btn-primary">
                             <i class="fas fa-plus me-2"></i>Criar Novo Centro
                         </a>
                     </div>

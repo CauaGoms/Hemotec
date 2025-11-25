@@ -1,12 +1,140 @@
 {% extends "gestor/gestor__base.html" %}
 {% block custom_css %}
-<!-- <link href="/static/css/" rel="stylesheet"> -->
+<link href="/static/css/gestor/gestor_centro_coleta.css" rel="stylesheet">
 {% endblock %}
 
 {% block conteudo %}
-<h1>gestor_centro_coleta</h1>
+<!-- Hero Section -->
+<section class="hero-section">
+    <div class="floating-elements">
+        <i class="fas fa-hospital floating-element" style="font-size: 3rem;"></i>
+        <i class="fas fa-heartbeat floating-element" style="font-size: 2.5rem;"></i>
+        <i class="fas fa-clinic-medical floating-element" style="font-size: 3.5rem;"></i>
+    </div>
+    <div class="container">
+        <div class="hero-content">
+            <h1 class="hero-title">Gestão de Centros de Coleta</h1>
+            <p class="hero-subtitle">Gerencie os centros de coleta de sangue. Salvando vidas através da organização!</p>
+            <a href="/gestor/centro-coleta/adicionar" class="btn btn-light btn-lg px-4 py-3 mt-3" style="border-radius: 25px; font-weight: 600;">
+                <i class="fas fa-plus me-2"></i>
+                Adicionar Novo Centro
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- Filtros e Busca -->
+<section class="container" style="margin-top: 60px;">
+    <div class="centro-filter fade-in">
+        <div class="row align-items-center">
+            <div class="col-md-6">
+                <div class="search-box">
+                    <i class="fas fa-search search-icon"></i>
+                    <input
+                        type="text"
+                        class="search-input"
+                        placeholder="Buscar centros por nome, email ou cidade..."
+                        id="searchInput"
+                    >
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="text-center">
+                    <select class="form-select filter-select" id="cidadeFilter">
+                        <option value="">Todas as Cidades</option>
+                        {% for cidade in cidades %}
+                        <option value="{{ cidade.cod_cidade }}">{{ cidade.nome_cidade }} - {{ cidade.sigla_estado }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Lista de Centros -->
+<section class="container mb-5">
+    <div class="text-center mb-5">
+        <h2 class="section-title">Todos os Centros de Coleta</h2>
+    </div>
+    <div class="row" id="centrosList">
+        {% if unidades %}
+            {% for unidade in unidades %}
+        <div class="col-md-6 col-lg-4 centro-item fade-in mb-5" 
+             data-title="{{ unidade.nome|lower }}"
+             data-email="{{ unidade.email|lower if unidade.email else '' }}"
+             data-cidade="{{ unidade.cidade_unidade }}">
+            <div class="centro-card">
+                <div class="position-relative">
+                    <div class="centro-avatar">
+                        <i class="fas fa-hospital"></i>
+                    </div>
+                    <div class="centro-status status-active">
+                        Ativo
+                    </div>
+                </div>
+                <div class="centro-body">
+                    <h5 class="centro-name">{{ unidade.nome }}</h5>
+                    <div class="centro-meta">
+                        <div class="meta-item">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>{{ unidade.rua_unidade }}, {{ unidade.bairro_unidade }}</span>
+                        </div>
+                        <div class="meta-item">
+                            <i class="fas fa-city"></i>
+                            <span>
+                                {% for cidade in cidades %}
+                                    {% if cidade.cod_cidade == unidade.cidade_unidade %}
+                                        {{ cidade.nome_cidade }} - {{ cidade.sigla_estado }}
+                                    {% endif %}
+                                {% endfor %}
+                            </span>
+                        </div>
+                        <div class="meta-item">
+                            <i class="fas fa-envelope"></i>
+                            <span>{{ unidade.email or 'Sem email' }}</span>
+                        </div>
+                        <div class="meta-item">
+                            <i class="fas fa-phone"></i>
+                            <span>{{ unidade.telefone | formatar_telefone }}</span>
+                        </div>
+                    </div>
+                    
+                    <div class="centro-actions">
+                        <a href="/gestor/centro-coleta/detalhe/{{ unidade.cod_unidade }}" class="btn-centro-view">
+                            <i class="fas fa-eye"></i>
+                            <span>Visualizar</span>
+                        </a>
+                        <div class="centro-actions-secondary">
+                            <a href="/gestor/centro-coleta/alterar/{{ unidade.cod_unidade }}" class="btn-centro-edit" title="Editar">
+                                <i class="fas fa-edit"></i>
+                            </a>
+                            <a href="/gestor/centro-coleta/excluir/{{ unidade.cod_unidade }}" class="btn-centro-delete" title="Excluir">
+                                <i class="fas fa-trash-alt"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+        {% else %}
+        <div class="col-12 text-center">
+            <div class="empty-state">
+                <i class="fas fa-hospital fa-3x text-muted mb-3"></i>
+                <h4 class="text-muted">Nenhum centro de coleta cadastrado</h4>
+                <p class="text-muted">Adicione o primeiro centro para começar!</p>
+                <a href="/gestor/centro-coleta/adicionar" class="btn btn-primary mt-3">
+                    <i class="fas fa-plus me-2"></i>Adicionar Centro
+                </a>
+            </div>
+        </div>
+        {% endif %}        
+    </div>
+</section>
 {% endblock %}
+
 <!-- Custom JavaScript -->
 {% block custom_js %}
-<!-- <script src="/static/js/"></script> -->
+<script src="/static/js/gestor/gestor_centro_coleta.js"></script>
 {% endblock %}
