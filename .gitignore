@@ -1,8 +1,147 @@
-.venv
-venv
-__pycache__
-.pytest_cache
+# ========================================
+# HEMOTEC - .gitignore
+# ========================================
+# Arquivos e diretórios que não devem ser
+# versionados no Git
+# ========================================
+
+# ----------------------------------------
+# Variáveis de Ambiente e Secrets
+# ----------------------------------------
+.env
+.env.local
+.env.*.local
+*.key
+*.pem
+secrets.yaml
+credentials.json
+
+# ----------------------------------------
+# Python
+# ----------------------------------------
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
 *.pyc
 *.pyo
 *.pyd
-*.coverage
+
+# C extensions
+*.so
+
+# Distribution / packaging
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+pip-wheel-metadata/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+.pytest_cache/
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+
+# Environments
+.venv/
+venv/
+env/
+ENV/
+env.bak/
+venv.bak/
+
+# ----------------------------------------
+# Banco de Dados
+# ----------------------------------------
+*.db
+*.sqlite
+*.sqlite3
+dados.db
+test_dados.db
+*.db-journal
+
+# Backups de banco
+backups/
+*.sql.gz
+*.dump
+
+# ----------------------------------------
+# IDEs e Editores
+# ----------------------------------------
+# VSCode
+.vscode/
+*.code-workspace
+
+# PyCharm
+.idea/
+*.iml
+*.iws
+
+# ----------------------------------------
+# Sistema Operacional
+# ----------------------------------------
+# Windows
+Thumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# macOS
+.DS_Store
+._*
+
+# ----------------------------------------
+# Logs
+# ----------------------------------------
+*.log
+logs/
+log/
+
+# ----------------------------------------
+# Arquivos Temporários
+# ----------------------------------------
+tmp/
+temp/
+*.tmp
+*.bak
+
+# ----------------------------------------
+# Uploads e Assets
+# ----------------------------------------
+static/uploads/*
+!static/uploads/.gitkeep
+
+# ----------------------------------------
+# Certificados SSL
+# ----------------------------------------
+*.crt
+*.key
+*.pem
+
+# ========================================
+# IMPORTANTE: Sempre commite .gitkeep
+# em pastas vazias que precisam existir
+# ========================================
+!.gitkeep
