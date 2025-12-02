@@ -1,26 +1,97 @@
-# pip install -r .\requirements.txt
-fastapi[standard]
-uvicorn[standard]
-jinja2
-Babel
-python-multipart
-itsdangerous
-passlib[bcrypt]
-python-jose[cryptography]
-Pillow
-reportlab
-mailersend
-python-dotenv
+# ========================================
+# HEMOTEC - Dependências do Projeto
+# ========================================
+#
+# Instalação: pip install -r requirements.txt
+#
+# ========================================
+
+# ----------------------------------------
+# Framework Web
+# ----------------------------------------
+fastapi[standard]>=0.109.0
+uvicorn[standard]>=0.27.0
+
+# ----------------------------------------
+# Templates e Frontend
+# ----------------------------------------
+jinja2>=3.1.0
+Babel>=2.12.0
+
+# ----------------------------------------
+# Formulários e Upload
+# ----------------------------------------
+python-multipart>=0.0.6
+
+# ----------------------------------------
+# Segurança e Autenticação
+# ----------------------------------------
+itsdangerous>=2.1.0
+passlib[bcrypt]>=1.7.4
+python-jose[cryptography]>=3.3.0
+bcrypt>=3.2.0,<4.0.0
+
+# ----------------------------------------
+# Processamento de Imagens e PDFs
+# ----------------------------------------
+Pillow>=10.0.0
+reportlab>=4.0.0
+
+# ----------------------------------------
+# Serviços de Email
+# ----------------------------------------
 resend>=0.8.0
 
-# Dependências de teste
-pytest
-pytest-asyncio
-pytest-cov
+# ----------------------------------------
+# Variáveis de Ambiente
+# ----------------------------------------
+python-dotenv>=1.0.0
+
+# ----------------------------------------
+# Validação de Dados
+# ----------------------------------------
 pydantic>=2.0.0
 email-validator>=2.0.0
-bcrypt
 
-bcrypt>=3.2.0,<4.0.0
-email-validator>=2.0.0
-resend
+# ========================================
+# DEPENDÊNCIAS DE TESTE
+# ========================================
+
+# ----------------------------------------
+# Framework de Testes
+# ----------------------------------------
+pytest>=7.4.0
+pytest-asyncio>=0.21.0
+pytest-cov>=4.1.0
+
+# ========================================
+# DEPENDÊNCIAS OPCIONAIS
+# ========================================
+# Descomente conforme necessário:
+
+# ----------------------------------------
+# Banco de Dados
+# ----------------------------------------
+# sqlalchemy>=2.0.0          # ORM (se decidir migrar)
+# alembic>=1.12.0            # Migrations
+
+# ----------------------------------------
+# Cache e Performance
+# ----------------------------------------
+# redis>=5.0.0               # Cache distribuído
+# hiredis>=2.2.0             # Performance do Redis
+
+# ----------------------------------------
+# Monitoramento
+# ----------------------------------------
+# sentry-sdk[fastapi]>=1.40.0  # Rastreamento de erros
+
+# ----------------------------------------
+# Documentação
+# ----------------------------------------
+# mkdocs>=1.5.0              # Documentação
+# mkdocs-material>=9.4.0     # Tema Material
+
+# ========================================
+# FIM DO ARQUIVO
+# ========================================
