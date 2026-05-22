@@ -1,12 +1,12 @@
 from fastapi import APIRouter, Request
-from fastapi.templating import Jinja2Templates
+from util.jinja_custom import CorrecaoJinjaTemplates
 from util.auth_decorator import requer_autenticacao
 from util.formatacoes import formatar_cpf, formatar_data, formatar_tipo_sanguineo
 from datetime import datetime
 from data.repo import doador_repo, doacao_repo
 
 router = APIRouter()
-templates = Jinja2Templates(directory="templates")
+templates = CorrecaoJinjaTemplates(directory="templates")
 
 @router.get("/doador/carteira")
 @requer_autenticacao(["doador"])

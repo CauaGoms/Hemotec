@@ -1,12 +1,12 @@
 from fastapi import APIRouter, Request, Form
 from fastapi.responses import JSONResponse, RedirectResponse
-from fastapi.templating import Jinja2Templates
+from util.jinja_custom import CorrecaoJinjaTemplates
 from data.repo import usuario_repo
 from util.security import gerar_token_redefinicao, obter_data_expiracao_token, criar_hash_senha, validar_token_expiracao
 from util.email_service import email_service
 
 router = APIRouter()
-templates = Jinja2Templates(directory="templates")
+templates = CorrecaoJinjaTemplates(directory="templates")
 
 @router.get("/redefinir_senha")
 async def get_redefinir_senha(request: Request):

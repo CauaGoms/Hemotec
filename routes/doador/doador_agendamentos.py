@@ -1,11 +1,11 @@
 import datetime
 from fastapi import APIRouter, Request
-from fastapi.templating import Jinja2Templates
+from util.jinja_custom import CorrecaoJinjaTemplates
 from data.repo import agendamento_repo, unidade_coleta_repo
 from util.auth_decorator import requer_autenticacao
 
 router = APIRouter()
-templates = Jinja2Templates(directory="templates")
+templates = CorrecaoJinjaTemplates(directory="templates")
 
 @router.get("/doador/agendamento")
 @requer_autenticacao(["doador"])

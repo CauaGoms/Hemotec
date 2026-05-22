@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Request, Query
 from fastapi.responses import Response
-from fastapi.templating import Jinja2Templates
+from util.jinja_custom import CorrecaoJinjaTemplates
 from util.auth_decorator import requer_autenticacao
 from data.repo import colaborador_repo
 from datetime import datetime, date
@@ -13,7 +13,7 @@ from reportlab.lib import colors
 from reportlab.lib.units import inch
 
 router = APIRouter()
-templates = Jinja2Templates(directory="templates")
+templates = CorrecaoJinjaTemplates(directory="templates")
 
 @router.get("/gestor/relatorio/colaborador")
 @requer_autenticacao(["gestor"])

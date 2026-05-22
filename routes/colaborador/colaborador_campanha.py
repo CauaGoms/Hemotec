@@ -1,10 +1,10 @@
 from fastapi import APIRouter, Request
-from fastapi.templating import Jinja2Templates
+from util.jinja_custom import CorrecaoJinjaTemplates
 from data.repo import campanha_repo
 from datetime import date
 
 router = APIRouter()
-templates = Jinja2Templates(directory="templates")
+templates = CorrecaoJinjaTemplates(directory="templates")
 
 @router.get("/colaborador/campanha")
 async def get_colaborador_campanha(request: Request):

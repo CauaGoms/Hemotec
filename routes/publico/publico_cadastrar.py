@@ -1,11 +1,11 @@
 from fastapi import APIRouter, Form, Request, status
 from fastapi.responses import RedirectResponse
-from fastapi.templating import Jinja2Templates
+from util.jinja_custom import CorrecaoJinjaTemplates
 
 from util.auth_decorator import esta_logado
 
 router = APIRouter()
-templates = Jinja2Templates(directory="templates")
+templates = CorrecaoJinjaTemplates(directory="templates")
 
 @router.get("/cadastrar")
 async def get_cadastro(request: Request):

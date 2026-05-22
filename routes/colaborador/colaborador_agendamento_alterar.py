@@ -1,5 +1,5 @@
 from fastapi import APIRouter, Request
-from fastapi.templating import Jinja2Templates
+from util.jinja_custom import CorrecaoJinjaTemplates
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel
 from datetime import datetime
@@ -7,7 +7,7 @@ from data.repo import agendamento_repo, unidade_coleta_repo, doador_repo, usuari
 from util.auth_decorator import requer_autenticacao
 
 router = APIRouter()
-templates = Jinja2Templates(directory="templates")
+templates = CorrecaoJinjaTemplates(directory="templates")
 
 class AlterarAgendamentoRequest(BaseModel):
     local_agendamento: int

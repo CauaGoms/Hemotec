@@ -1,12 +1,12 @@
 from fastapi import APIRouter, Request, Form
-from fastapi.templating import Jinja2Templates
+from util.jinja_custom import CorrecaoJinjaTemplates
 from fastapi.responses import JSONResponse, RedirectResponse
 
 from data.repo import possivel_gestor_repo
 from data.model.possivel_gestor_model import Possivel_Gestor
 
 router = APIRouter()
-templates = Jinja2Templates(directory="templates")
+templates = CorrecaoJinjaTemplates(directory="templates")
 
 @router.get("/cadastrar_possivel_gestor")
 async def get_cadastrar_possivel_gestor(request: Request):

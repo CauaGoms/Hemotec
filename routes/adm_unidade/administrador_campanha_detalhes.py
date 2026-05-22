@@ -1,10 +1,10 @@
 from fastapi import APIRouter, Request, HTTPException
-from fastapi.templating import Jinja2Templates
+from util.jinja_custom import CorrecaoJinjaTemplates
 from data.repo import campanha_repo
 from datetime import date
 
 router = APIRouter()
-templates = Jinja2Templates(directory="templates")
+templates = CorrecaoJinjaTemplates(directory="templates")
 
 @router.get("/administrador/campanha/detalhes/{cod_campanha}")
 async def get_administrador_campanha_detalhes(request: Request, cod_campanha: int):

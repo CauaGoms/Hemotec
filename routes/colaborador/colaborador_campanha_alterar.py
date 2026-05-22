@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Request, HTTPException, Form, UploadFile, File
 from fastapi.responses import JSONResponse, RedirectResponse
-from fastapi.templating import Jinja2Templates
+from util.jinja_custom import CorrecaoJinjaTemplates
 from util.auth_decorator import requer_autenticacao
 from data.repo import campanha_repo
 from data.model.campanha_model import Campanha
@@ -8,7 +8,7 @@ from datetime import datetime
 import os
 
 router = APIRouter()
-templates = Jinja2Templates(directory="templates")
+templates = CorrecaoJinjaTemplates(directory="templates")
 
 @router.get("/colaborador/campanha/editar/{cod_campanha}")
 @requer_autenticacao(["colaborador"])

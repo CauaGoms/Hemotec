@@ -1,5 +1,5 @@
 from fastapi import APIRouter, Request, Form
-from fastapi.templating import Jinja2Templates
+from util.jinja_custom import CorrecaoJinjaTemplates
 from fastapi.responses import RedirectResponse, JSONResponse
 from datetime import datetime
 from pydantic_core import ValidationError
@@ -17,7 +17,7 @@ from util.email_service import email_service
 from dtos.gestor_dtos import CriarGestorDTO
 
 router = APIRouter()
-templates = Jinja2Templates(directory="templates")
+templates = CorrecaoJinjaTemplates(directory="templates")
 
 
 @router.get("/finalizar_cadastro")

@@ -1,14 +1,14 @@
 import os
 from fastapi import APIRouter, File, Request, UploadFile, status
 from fastapi.responses import RedirectResponse
-from fastapi.templating import Jinja2Templates
+from util.jinja_custom import CorrecaoJinjaTemplates
 
 from data.repo import cidade_repo, doador_repo, prontuario_repo, usuario_repo
 from util.auth_decorator import requer_autenticacao
 from util.doacao_utils import calcular_intervalo_doacao, obter_ultima_doacao_doador
 
 router = APIRouter()
-templates = Jinja2Templates(directory="templates")
+templates = CorrecaoJinjaTemplates(directory="templates")
 
 @router.get("/colaborador/meu_perfil")
 @requer_autenticacao()

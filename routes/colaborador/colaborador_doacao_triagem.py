@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Request, Form, status
 from fastapi.responses import JSONResponse
-from fastapi.templating import Jinja2Templates
+from util.jinja_custom import CorrecaoJinjaTemplates
 from datetime import datetime
 from typing import Optional
 from data.model.prontuario_model import Prontuario
@@ -13,7 +13,7 @@ import data.repo.usuario_repo as usuario_repo
 from util.auth_decorator import obter_usuario_logado
 
 router = APIRouter()
-templates = Jinja2Templates(directory="templates")
+templates = CorrecaoJinjaTemplates(directory="templates")
 
 @router.get("/colaborador/doacao/triagem")
 async def get_colaborador_doacao_triagem(request: Request):

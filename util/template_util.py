@@ -1,11 +1,11 @@
 from typing import List, Optional, Union
 from jinja2 import FileSystemLoader
-from fastapi.templating import Jinja2Templates
+from util.jinja_custom import CorrecaoJinjaTemplates
 
 
-def criar_templates(diretorio_especifico: Optional[Union[str, List[str]]] = None) -> Jinja2Templates:
+def criar_templates(diretorio_especifico: Optional[Union[str, List[str]]] = None) -> CorrecaoJinjaTemplates:
     """
-    Cria um objeto Jinja2Templates configurado com múltiplos diretórios.
+    Cria um objeto CorrecaoJinjaTemplates configurado com múltiplos diretórios.
     
     O diretório raiz "templates" é sempre incluído automaticamente para garantir
     acesso aos templates base como base.html.
@@ -17,7 +17,7 @@ def criar_templates(diretorio_especifico: Optional[Union[str, List[str]]] = None
                                      ["templates/admin", "templates/public"]
     
     Returns:
-        Objeto Jinja2Templates configurado com os diretórios especificados
+        Objeto CorrecaoJinjaTemplates configurado com os diretórios especificados
     
     Exemplo de uso:
         # Para um diretório específico
@@ -41,9 +41,9 @@ def criar_templates(diretorio_especifico: Optional[Union[str, List[str]]] = None
             # Se for uma lista, estende a lista de diretórios
             diretorios.extend(diretorio_especifico)
     
-    # Criar o objeto Jinja2Templates com diretório base como "."
+    # Criar o objeto CorrecaoJinjaTemplates com diretório base como "."
     # Isso é necessário para que o FileSystemLoader funcione corretamente
-    templates = Jinja2Templates(directory=".")
+    templates = CorrecaoJinjaTemplates(directory=".")
     
     # Configurar o loader com múltiplos diretórios
     # O FileSystemLoader tentará encontrar templates em ordem nos diretórios listados

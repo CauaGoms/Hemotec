@@ -1,10 +1,10 @@
 from fastapi import APIRouter, Request, HTTPException
 from fastapi.responses import RedirectResponse
-from fastapi.templating import Jinja2Templates
+from util.jinja_custom import CorrecaoJinjaTemplates
 from data.repo import campanha_repo
 
 router = APIRouter()
-templates = Jinja2Templates(directory="templates")
+templates = CorrecaoJinjaTemplates(directory="templates")
 
 @router.get("/administrador/campanha/excluir/{cod_campanha}")
 async def get_administrador_campanha_excluir(request: Request, cod_campanha: int):

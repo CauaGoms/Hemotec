@@ -1,7 +1,7 @@
 from datetime import datetime
 from fastapi import APIRouter, Form, Request, status
 from fastapi.responses import RedirectResponse
-from fastapi.templating import Jinja2Templates
+from util.jinja_custom import CorrecaoJinjaTemplates
 from pydantic_core import ValidationError
 import sqlite3
 from data.model.cidade_model import Cidade
@@ -14,7 +14,7 @@ from util.security import criar_hash_senha, verificar_senha
 from util.email_service import email_service
 
 router = APIRouter()
-templates = Jinja2Templates(directory="templates")
+templates = CorrecaoJinjaTemplates(directory="templates")
 
 # Rota de login
 @router.post("/login")

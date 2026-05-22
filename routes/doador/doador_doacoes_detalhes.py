@@ -1,12 +1,12 @@
 from fastapi import APIRouter, Request, HTTPException
-from fastapi.templating import Jinja2Templates
+from util.jinja_custom import CorrecaoJinjaTemplates
 from fastapi.responses import RedirectResponse, StreamingResponse
 from util.auth_decorator import requer_autenticacao
 from data.repo import doacao_repo, prontuario_repo, exame_repo
 from util.pdf_generator import gerar_pdf_comprovante
 
 router = APIRouter()
-templates = Jinja2Templates(directory="templates")
+templates = CorrecaoJinjaTemplates(directory="templates")
 
 @router.get("/doador/doacoes/detalhes/{cod_doacao}")
 @requer_autenticacao(["doador"])

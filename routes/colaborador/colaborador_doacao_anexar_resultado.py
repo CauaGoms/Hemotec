@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Request, HTTPException, Form, UploadFile, File
 from fastapi.responses import RedirectResponse
-from fastapi.templating import Jinja2Templates
+from util.jinja_custom import CorrecaoJinjaTemplates
 import os
 from datetime import datetime
 
@@ -9,7 +9,7 @@ from data.model.doacao_model import Doacao
 from util.auth_decorator import requer_autenticacao
 
 router = APIRouter()
-templates = Jinja2Templates(directory="templates")
+templates = CorrecaoJinjaTemplates(directory="templates")
 
 @router.get("/colaborador/doacao/anexar_resultado/{cod_doacao}")
 @requer_autenticacao(["colaborador"])

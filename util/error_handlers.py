@@ -1,7 +1,7 @@
 import functools
 from typing import Callable, Optional
 from fastapi import Request
-from fastapi.templating import Jinja2Templates
+from util.jinja_custom import CorrecaoJinjaTemplates
 from pydantic import ValidationError
 from util.exceptions import ValidacaoError, RecursoNaoEncontradoError, HemotecError
 from util.flash_messages import informar_erro, informar_sucesso
@@ -22,7 +22,7 @@ def tratar_erro_rota(template_erro: Optional[str] = None,
                 #              erro=error_msg, rota=str(request.url))
 
                 if template_erro:
-                    templates = Jinja2Templates(directory="templates")
+                    templates = CorrecaoJinjaTemplates(directory="templates")
                     return templates.TemplateResponse(template_erro, {
                         "request": request,
                         "erro": error_msg
@@ -34,7 +34,7 @@ def tratar_erro_rota(template_erro: Optional[str] = None,
                 informar_erro(request, f"Dados inválidos: {e.mensagem}")
 
                 if template_erro:
-                    templates = Jinja2Templates(directory="templates")
+                    templates = CorrecaoJinjaTemplates(directory="templates")
                     return templates.TemplateResponse(template_erro, {
                         "request": request,
                         "erro": e.mensagem
@@ -57,7 +57,7 @@ def tratar_erro_rota(template_erro: Optional[str] = None,
                 from fastapi.responses import RedirectResponse
                 return RedirectResponse(redirect_erro)
             elif template_erro:
-                templates = Jinja2Templates(directory="templates")
+                templates = CorrecaoJinjaTemplates(directory="templates")
                 return templates.TemplateResponse(template_erro, {
                     "request": request,
                     "erro": "Ocorreu um erro. Tente novamente."

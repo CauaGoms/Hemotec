@@ -1,11 +1,11 @@
 from fastapi import APIRouter, Request, HTTPException
 from fastapi.responses import JSONResponse, RedirectResponse
-from fastapi.templating import Jinja2Templates
+from util.jinja_custom import CorrecaoJinjaTemplates
 from util.auth_decorator import requer_autenticacao
 from data.repo import colaborador_repo
 
 router = APIRouter()
-templates = Jinja2Templates(directory="templates")
+templates = CorrecaoJinjaTemplates(directory="templates")
 
 @router.get("/administrador/colaboradores/excluir/{cod_colaborador}")
 @requer_autenticacao(["administrador"])

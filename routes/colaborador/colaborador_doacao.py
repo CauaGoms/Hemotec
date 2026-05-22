@@ -1,13 +1,13 @@
 import datetime
 from fastapi import APIRouter, Request, HTTPException
-from fastapi.templating import Jinja2Templates
+from util.jinja_custom import CorrecaoJinjaTemplates
 from fastapi.responses import RedirectResponse, StreamingResponse
 from data.repo import doacao_repo, doador_repo, usuario_repo, agendamento_repo, prontuario_repo
 from util.auth_decorator import requer_autenticacao
 from util.pdf_generator import gerar_pdf_comprovante
 
 router = APIRouter()
-templates = Jinja2Templates(directory="templates")
+templates = CorrecaoJinjaTemplates(directory="templates")
 
 @router.get("/colaborador/doacao")
 @router.get("/colaborador/doacoes")

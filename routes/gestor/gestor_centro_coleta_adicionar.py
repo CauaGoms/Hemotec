@@ -1,12 +1,12 @@
 from fastapi import APIRouter, Request, HTTPException
 from fastapi.responses import JSONResponse
-from fastapi.templating import Jinja2Templates
+from util.jinja_custom import CorrecaoJinjaTemplates
 from util.auth_decorator import requer_autenticacao
 from data.model.unidade_coleta_model import Unidade_coleta
 from datetime import datetime
 
 router = APIRouter()
-templates = Jinja2Templates(directory="templates")
+templates = CorrecaoJinjaTemplates(directory="templates")
 
 @router.get("/gestor/centro-coleta/adicionar")
 @requer_autenticacao(["gestor"])

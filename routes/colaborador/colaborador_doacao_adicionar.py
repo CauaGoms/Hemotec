@@ -1,7 +1,7 @@
 from datetime import datetime
 from fastapi import APIRouter, Form, Request, HTTPException
 from fastapi.responses import RedirectResponse
-from fastapi.templating import Jinja2Templates
+from util.jinja_custom import CorrecaoJinjaTemplates
 
 from data.model.doacao_model import Doacao
 from data.repo import doacao_repo, doador_repo, usuario_repo, agendamento_repo
@@ -9,7 +9,7 @@ from util.auth_decorator import requer_autenticacao
 from util.database import get_connection
 
 router = APIRouter()
-templates = Jinja2Templates(directory="templates")
+templates = CorrecaoJinjaTemplates(directory="templates")
 
 @router.get("/colaborador/doacao/adicionar/{cod_doacao}")
 @requer_autenticacao(["colaborador"])

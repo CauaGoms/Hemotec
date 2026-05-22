@@ -1,5 +1,5 @@
 from fastapi import APIRouter, Request, HTTPException
-from fastapi.templating import Jinja2Templates
+from util.jinja_custom import CorrecaoJinjaTemplates
 from data.repo import unidade_coleta_repo
 from typing import Dict, Any
 
@@ -25,7 +25,7 @@ def calcular_nivel_estoque(quantidade: int) -> Dict[str, Any]:
 
 
 router = APIRouter()
-templates = Jinja2Templates(directory="templates")
+templates = CorrecaoJinjaTemplates(directory="templates")
 
 @router.get("/api/unidades")
 async def get_api_unidades():

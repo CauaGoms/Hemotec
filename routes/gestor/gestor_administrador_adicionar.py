@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Request, Form
 from fastapi.responses import JSONResponse
-from fastapi.templating import Jinja2Templates
+from util.jinja_custom import CorrecaoJinjaTemplates
 from util.auth_decorator import requer_autenticacao
 from data.model.adm_unidade_model import Adm_unidade
 from util.security import criar_hash_senha
@@ -8,7 +8,7 @@ from datetime import datetime, date
 from util.template_util import formatar_cpf, formatar_telefone, formatar_cep
 
 router = APIRouter()
-templates = Jinja2Templates(directory="templates")
+templates = CorrecaoJinjaTemplates(directory="templates")
 templates.env.filters['formatar_cpf'] = formatar_cpf
 templates.env.filters['formatar_telefone'] = formatar_telefone
 templates.env.filters['formatar_cep'] = formatar_cep
