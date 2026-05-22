@@ -200,8 +200,6 @@ pip install -r requirements.txt
 ```bash
 # Copie o arquivo de exemplo
 cp .env.example .env
-
-# Edite o arquivo .env com suas configurações
 ```
 
 ---
